@@ -1,0 +1,1 @@
+Stop starting new work. Finish or safely park the current task. Update pm/PROGRESS.md (ticks + phase %), append a pm/SESSION_LOG.md entry (date, done, files touched, next, blockers), add any new decisions to pm/DECISIONS.md, add any new client needs to pm/CLIENT_INPUTS_NEEDED.md, then commit everything with a Conventional Commit message.

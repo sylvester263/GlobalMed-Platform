@@ -1,0 +1,11 @@
+node_modules
+.next
+coverage
+package-lock.json
+lib/db/types.ts
+supabase/migrations
+*.zip
+docs
+pm
+*.md
+.mcp.json

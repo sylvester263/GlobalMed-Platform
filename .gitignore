@@ -1,0 +1,17 @@
+node_modules
+.next
+.env
+.env.local
+.env*.local
+.vercel
+coverage
+playwright-report
+test-results
+supabase/.branches
+supabase/.temp
+.DS_Store
+next-env.d.ts
+*.tsbuildinfo
+npm-debug.log*
+.eslintcache
+*.zip

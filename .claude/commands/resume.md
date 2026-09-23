@@ -1,0 +1,1 @@
+Read pm/PROGRESS.md and the last 3 entries of pm/SESSION_LOG.md. Run `git status`. In no more than 5 lines tell me: current phase, % complete, last finished task, next task, any blockers. Then start the next task immediately.

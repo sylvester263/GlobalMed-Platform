@@ -7,8 +7,16 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
+  // Only routes that use the session. Static marketing pages skip the Supabase round-trip.
+  // Webhooks are excluded: they verify their own signatures.
   matcher: [
-    // Skip static assets, images and webhooks (webhooks verify their own signatures).
-    "/((?!_next/static|_next/image|favicon.ico|api/stripe/webhook|api/whatsapp/webhook|.*\.(?:svg|png|jpg|jpeg|gif|webp|avif|ico|lottie|riv)$).*)",
+    "/dashboard/:path*",
+    "/learn/:path*",
+    "/login",
+    "/signup",
+    "/reset-password/:path*",
+    "/mfa",
+    "/auth/:path*",
+    "/api/((?!stripe/webhook|whatsapp/webhook).*)",
   ],
 };

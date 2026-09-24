@@ -110,3 +110,15 @@
 - Context: Forms depend on Supabase, Resend, Turnstile and Upstash, none of which are provisioned yet.
 - Decision: Without Turnstile or storage, submissions are refused with a clear message; a lead is only reported as sent once it's stored. FORMS_DRY_RUN=true allows local click-through outside production only. Rate limiting falls back to per-instance memory when Upstash is missing (production must set Upstash). Newsletter confirmation happens on POST so link scanners can't subscribe people.
 - Consequences: Forms can't go live until the accounts in pm/CLIENT_INPUTS_NEEDED.md are provided.
+
+## ADR-018: Dashboards live under /dashboard/{area}
+- Date: 2026-09-24 · Status: accepted
+- Context: CLAUDE.md §4 names app/(dashboard)/student|instructor|admin, which would serve /student etc., while docs/05 (sitemap) and robots rules use /dashboard/student.
+- Decision: app/(dashboard)/dashboard/{student,instructor,admin,sales} plus /dashboard/account; /dashboard redirects to the role's home. The (dashboard) group still holds all dashboard code.
+- Consequences: One prefix to protect in middleware and robots. CLAUDE.md §4's folder names are read as "inside (dashboard)".
+
+## ADR-019: Auth design
+- Date: 2026-09-24 · Status: accepted
+- Context: docs/11 §2–3 (verified email, MFA for admins, server-side role checks, rate limits).
+- Decision: Supabase Auth via server actions (no client SDK sign-in), token-hash email links through /auth/confirm, role read from profiles on every request (never from the client), admins require aal2 for every dashboard area and admin action, same response for existing/non-existing accounts on sign-up and reset, same-site-only redirects. Middleware only runs on session routes.
+- Consequences: Supabase email templates must be edited (docs/16 §2). Marketing pages stay static and fast.

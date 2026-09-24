@@ -70,6 +70,25 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** Supabase/Vercel/GitHub access (Phase 0); WhatsApp number; Turnstile, Upstash and Resend accounts; motion assets; practice logos and testimonials; counsel review of legal pages.
 - **Notes:** .env.local was regenerated from .env.example this session (all values were empty placeholders). `next start` runs in production mode, so forms correctly refuse submissions locally without Turnstile keys; use `npm run dev` with FORMS_DRY_RUN=true to click through the success path.
 
+---
+### Session 004 — Phase 3 auth, roles and dashboard shells
+- **Date:** 2026-09-24
+- **Done:**
+  - P3-1 Auth: sign-up (email confirmation), log in, password reset + update, verify-email page, sign-out. Server actions with zod, per-IP rate limits, no account enumeration (reset and sign-up answer the same either way), friendly Supabase error mapping (weak/breached password, unconfirmed email). Forms post without JavaScript (useActionState). `/auth/confirm` (token-hash email links) and `/auth/callback` (OAuth/PKCE).
+  - P3-2 Google sign-in via server action (works without JS).
+  - P3-3 lib/auth/session.ts: `getSessionUser` (verified getUser + profiles role, per-request cache), `requireUser`, `requireArea`, `authorize` for actions. `safeNext` blocks open redirects. Middleware now runs only on session routes and gates /dashboard and /learn (fails closed without Supabase); marketing pages no longer pay a Supabase round-trip.
+  - P3-4/P3-5 DashboardShell (collapsible sidebar, top bar, notifications menu with mark-all-read, account menu with dashboard switcher, mobile sheet) and four area shells at /dashboard/{student,instructor,admin,sales} (ADR-018). Overviews query real tables through RLS: student enrollments, instructor courses, admin counts (enrollments, payments to approve, new leads, chat handoffs), sales list of the latest website leads. Every sidebar section resolves (placeholder naming the phase that builds it).
+  - A-4 account settings for all roles: profile incl. name on certificates, password change, two-step verification.
+  - P3-6 Admin MFA: TOTP enrolment (QR + manual key), /mfa challenge; admins need aal2 for every dashboard area and for admin actions.
+  - P3-7 DM-1 sidebar layout animation + route fade, DM-9 overlays on motion tokens, DM-10 skeleton loaders.
+  - docs/16_AUTH_SETUP.md: Supabase URL config, email templates, Google provider, MFA, password rules, first-admin SQL, post-set-up checks.
+  - Tests: 63 unit (safeNext against open-redirect payloads, role/area matrix, protected paths, schemas); 173 Playwright checks including fail-closed dashboard redirects, auth page states, open-redirect rejection, and the real shell on a sample-data screen.
+- **Bugs found and fixed:** dashboards were being prerendered as static redirects when built without Supabase env (now `connection()` forces per-request rendering); zod v4 rejected emails with surrounding whitespace (autofill) on every form, including Phase 2 lead forms, because the format check ran before trim.
+- **Files touched:** app/(auth)/**, app/(dashboard)/**, app/auth/**, components/{auth,dashboard}/**, components/motion/{motion-features,motion-provider}.tsx, components/ui/{dialog,sheet,dropdown-menu}.tsx, lib/auth/**, lib/{notifications,notifications-actions}.ts, lib/validation/{auth,leads}.ts, lib/db/middleware.ts, middleware.ts, lib/security/rate-limit.ts, app/globals.css, app/styleguide/screens/dashboard-shell, docs/16_AUTH_SETUP.md, tests/**, pm/*
+- **Next:** Phase 4 (LMS core): course builder, Bunny upload + signed playback, player with resume/rewatch, progress. Real sign-up/login/MFA verification as soon as Supabase exists.
+- **Blockers:** Supabase projects (P0-4) for any live auth test; Google OAuth client; Bunny account for Phase 4 video.
+- **Notes:** Everything auth-related is type-checked against supabase-js 2.117 but has not run against a real Supabase project yet — the first staging session must walk through docs/16 §7.
+
 <!-- Template
 ---
 ### Session NNN — <title>

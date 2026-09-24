@@ -5,12 +5,28 @@ import { getSupabasePublicConfig, isSupabaseConfigured } from "@/lib/env";
 
 import type { Database } from "./types";
 
-/** Refreshes the Supabase auth session cookie on every matched request. */
+/** Paths that need a signed-in user. Role checks happen in layouts and actions (requireArea). */
+export function isProtectedPath(pathname: string): boolean {
+  return /^\/(dashboard|learn)(\/|$)/.test(pathname);
+}
+
+function redirectToLogin(request: NextRequest): NextResponse {
+  const url = request.nextUrl.clone();
+  url.pathname = "/login";
+  url.search = `?next=${encodeURIComponent(`${request.nextUrl.pathname}${request.nextUrl.search}`)}`;
+  return NextResponse.redirect(url);
+}
+
+/**
+ * Refreshes the Supabase session cookie and gates protected paths. Without Supabase
+ * configured, protected paths fail closed to /login.
+ */
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
+  const protectedPath = isProtectedPath(request.nextUrl.pathname);
 
   if (!isSupabaseConfigured()) {
-    return response;
+    return protectedPath ? redirectToLogin(request) : response;
   }
 
   const { url, anonKey } = getSupabasePublicConfig();
@@ -32,7 +48,10 @@ export async function updateSession(request: NextRequest) {
   });
 
   // Do not put code between createServerClient and getUser(): it revalidates the session.
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
+  if (!user && protectedPath) return redirectToLogin(request);
   return response;
 }

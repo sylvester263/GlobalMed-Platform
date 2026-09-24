@@ -1,13 +1,13 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-09-24 · Current phase: **2 — Public website** (build done; client review, assets and perf verification open) · Overall: **22%**
+Last updated: 2026-09-24 · Current phase: **3 — Auth & dashboard shells** (built; live verification needs Supabase) · Overall: **30%**
 
 | Phase | Status | % |
 |---|---|---|
 | 0 Foundation | 🟥 Blocked on client accounts (P0-4, P0-9) | 75 |
 | 1 Design system | 🟨 Built; awaiting client sign-off (P1-7, P1-10) | 85 |
 | 2 Public website | 🟨 Pages built; awaiting content review, motion assets, perf check on Vercel | 80 |
-| 3 Auth & dashboard shells | ⬜ | 0 |
+| 3 Auth & dashboard shells | 🟨 Built and tested without Supabase; end-to-end auth verification pending P0-4 | 90 |
 | 4 LMS core | ⬜ | 0 |
 | 5 Payments & enrollment | ⬜ | 0 |
 | 6 Quizzes, exams, certificates | ⬜ | 0 |
@@ -65,13 +65,13 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [ ] P2-21 Motion performance + reduced-motion QA — 🟨 reduced motion + CLS 0 verified; mobile perf 73–90 locally, re-measure on Vercel preview
 
 ## Phase 3 — Auth & dashboard shells
-- [ ] P3-1 Sign up / login / reset / verify email
-- [ ] P3-2 Google OAuth
-- [ ] P3-3 Role guards + requireRole helper
-- [ ] P3-4 Dashboard shell (sidebar, topbar, notifications)
-- [ ] P3-5 Student, instructor, admin, sales shells
-- [ ] P3-6 Admin MFA
-- [ ] P3-7 Dashboard motion DM-1, DM-9, DM-10
+- [x] P3-1 Sign up / login / reset / verify email — server actions + /auth/confirm; live once Supabase is set up per docs/16
+- [x] P3-2 Google OAuth — needs Google OAuth client in Supabase (docs/16 §3)
+- [x] P3-3 Role guards + requireRole helper — requireUser / requireArea / authorize in lib/auth/session.ts
+- [x] P3-4 Dashboard shell (sidebar, topbar, notifications)
+- [x] P3-5 Student, instructor, admin, sales shells
+- [x] P3-6 Admin MFA — TOTP enrolment + /mfa challenge; admins need aal2 for every area
+- [x] P3-7 Dashboard motion DM-1, DM-9, DM-10
 
 ## Phase 4 — LMS core
 - [ ] P4-1 Course builder (modules/lessons CRUD, drag order)

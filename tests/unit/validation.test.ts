@@ -62,3 +62,16 @@ describe("certificateCodeSchema", () => {
     expect(certificateCodeSchema.safeParse("ZZZZZZZZZZZZ").success).toBe(false);
   });
 });
+
+describe("email fields", () => {
+  it("accept addresses with surrounding whitespace (autofill) and trim them", () => {
+    const result = contactLeadSchema.safeParse({
+      name: "Sam Taylor",
+      email: " sam@example.com ",
+      interest: "Something else",
+      message: "A message long enough to pass.",
+    });
+    expect(result.success).toBe(true);
+    expect(result.data?.email).toBe("sam@example.com");
+  });
+});

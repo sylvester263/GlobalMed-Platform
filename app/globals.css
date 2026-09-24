@@ -413,3 +413,13 @@
     animation: cta-settle 360ms var(--ease-standard) calc(1s + var(--i) * 60ms) both;
   }
 }
+
+/* DM-1: dashboard route content fades in. Opacity only, so nothing shifts. */
+@keyframes route-fade {
+  from {
+    opacity: 0;
+  }
+}
+.route-fade {
+  animation: route-fade var(--duration-fast) var(--ease-enter) both;
+}

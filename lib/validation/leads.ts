@@ -10,10 +10,13 @@ const name = z
   .trim()
   .min(2, "Enter your full name.")
   .max(120, "Keep your name under 120 characters.");
+// Trim BEFORE validating: zod runs the email check first otherwise, and autofill often
+// adds a trailing space.
 const email = z
-  .email("Enter an email address in the format name@practice.com.")
+  .string()
   .trim()
-  .max(254, "That email address is too long.");
+  .max(254, "That email address is too long.")
+  .pipe(z.email("Enter an email address in the format name@practice.com."));
 const phone = z
   .string()
   .trim()

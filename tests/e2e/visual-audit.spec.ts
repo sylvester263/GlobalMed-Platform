@@ -38,6 +38,10 @@ const pages = [
   { path: "/verify/7F3A9C21B04D", name: "verify-result" },
   { path: "/newsletter/confirm", name: "newsletter-confirm" },
   { path: "/login", name: "login" },
+  { path: "/signup?course=cpc-exam-preparation", name: "signup" },
+  { path: "/reset-password", name: "reset-password" },
+  { path: "/verify-email?email=person%40example.com", name: "verify-email" },
+  { path: "/styleguide/screens/dashboard-shell", name: "dashboard-shell" },
   { path: "/does-not-exist", name: "not-found" },
   { path: "/styleguide", name: "styleguide" },
 ];
@@ -53,6 +57,8 @@ const screenshotted = new Set([
   "post",
   "contact",
   "verify-result",
+  "login",
+  "dashboard-shell",
 ]);
 const widths = [360, 768, 1280];
 

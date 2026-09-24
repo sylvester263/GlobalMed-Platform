@@ -1,12 +1,54 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
-import { AccountsComingSoon } from "../_components/accounts-coming-soon";
+import { AuthCard, Divider } from "@/components/auth/auth-card";
+import { SignupForm } from "@/components/auth/auth-forms";
+import { GoogleButton } from "@/components/auth/google-button";
+import { getCourse, getPathway } from "@/lib/content";
+import { nextFromEnrollParams, safeNext } from "@/lib/auth/redirect";
+import { pageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Create an account",
-  robots: { index: false, follow: false },
-};
+  description: "Create your GlobalMed student account.",
+  path: "/signup",
+  noindex: true,
+});
 
-export default function Page() {
-  return <AccountsComingSoon heading="Create your student account" />;
+type Props = { searchParams: Promise<Record<string, string | undefined>> };
+
+export default async function SignupPage({ searchParams }: Props) {
+  const params = await searchParams;
+  const next = safeNext(params.next ?? nextFromEnrollParams(params));
+  // When they came from an Enroll button, say which course they'll return to.
+  const course = params.course ? getCourse(params.course) : undefined;
+  const pathway = params.pathway ? getPathway(params.pathway) : undefined;
+  const target = course?.title ?? pathway?.title;
+  const loginHref = `/login${next !== "/dashboard" ? `?next=${encodeURIComponent(next)}` : ""}`;
+
+  return (
+    <AuthCard
+      title="Create your account"
+      intro={
+        target
+          ? `You'll come back to ${target} to finish enrolling once your account is ready.`
+          : "One account for courses, certificates and your orders."
+      }
+      footer={
+        <>
+          Already have an account?{" "}
+          <Link
+            href={loginHref}
+            className="font-semibold text-primary underline underline-offset-4"
+          >
+            Log in
+          </Link>
+        </>
+      }
+    >
+      <GoogleButton next={next} label="Sign up with Google" />
+      <Divider label="or sign up with email" />
+      <SignupForm next={next} />
+    </AuthCard>
+  );
 }

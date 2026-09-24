@@ -16,6 +16,8 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Resend newsletter segment + sales inbox for lead notifications (RESEND_SEGMENT_ID, ADMIN_NOTIFY_EMAIL)
 - ⬜ LLM provider choice + API key with billing enabled
 - ⬜ Google Analytics / Search Console / GTM access
+- ⬜ Google Cloud OAuth client for "Sign in with Google" (docs/16 §3)
+- ⬜ Email of the first admin (owner) account (docs/16 §6)
 - ⬜ GitHub repository (client-owned, SylJo Tech as maintainer) so the code can be pushed and CI can run
 - ⬜ Sentry organisation/project (or approval to use SylJo Tech's) → SENTRY_DSN, NEXT_PUBLIC_SENTRY_DSN
 

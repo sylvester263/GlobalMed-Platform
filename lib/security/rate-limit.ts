@@ -12,6 +12,10 @@ export const limits = {
   leadForm: { requests: 5, windowSeconds: 600 },
   newsletter: { requests: 5, windowSeconds: 600 },
   verify: { requests: 30, windowSeconds: 60 },
+  authLogin: { requests: 10, windowSeconds: 300 },
+  authSignup: { requests: 5, windowSeconds: 3600 },
+  authReset: { requests: 5, windowSeconds: 3600 },
+  authMfa: { requests: 10, windowSeconds: 300 },
 } satisfies Record<string, Limit>;
 
 const redis =

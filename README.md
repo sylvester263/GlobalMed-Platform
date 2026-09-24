@@ -43,6 +43,7 @@ Behind both faces sit dashboards for students, instructors and admins, plus an A
 | `docs/13_TESTING_QA.md` | Test strategy and release checklist |
 | `docs/14_DEPLOYMENT_DEVOPS.md` | Environments, CI/CD, backups, monitoring |
 | `docs/15_MOTION_DESIGN.md` | Motion graphics, animation tokens, performance and accessibility rules |
+| `docs/16_AUTH_SETUP.md` | Supabase Auth set-up runbook: URLs, email templates, Google, MFA, first admin |
 | `pm/PROJECT_PLAN.md` | Phases, milestones, timeline, payment gates |
 | `pm/PROGRESS.md` | Live progress tracker (single source of truth) |
 | `pm/TASKS.md` | Full task backlog by phase |

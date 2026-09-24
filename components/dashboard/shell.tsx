@@ -4,6 +4,7 @@ import {
   Award,
   Bell,
   BookOpen,
+  CalendarClock,
   ChartColumn,
   ChevronsLeft,
   ChevronsRight,
@@ -75,6 +76,7 @@ const icons: Record<NavIcon, LucideIcon> = {
   leads: ChartColumn,
   inbox: Inbox,
   reports: TrendingUp,
+  live: CalendarClock,
 };
 
 export type ShellNavItem = { href: string; label: string; icon: NavIcon; exact?: boolean };

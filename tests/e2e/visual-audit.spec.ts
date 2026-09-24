@@ -42,12 +42,14 @@ const pages = [
   { path: "/reset-password", name: "reset-password" },
   { path: "/verify-email?email=person%40example.com", name: "verify-email" },
   { path: "/styleguide/screens/dashboard-shell", name: "dashboard-shell" },
+  { path: "/styleguide/screens/lms", name: "lms" },
   { path: "/does-not-exist", name: "not-found" },
   { path: "/styleguide", name: "styleguide" },
 ];
 
 // Full-page screenshots are slow, so only the key templates get them.
 const screenshotted = new Set([
+  "lms",
   "home",
   "service-coding",
   "audit",

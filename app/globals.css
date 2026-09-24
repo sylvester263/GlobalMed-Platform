@@ -423,3 +423,28 @@
 .route-fade {
   animation: route-fade var(--duration-fast) var(--ease-enter) both;
 }
+
+/* Course video watermark (docs/08 §2): drifts slowly between corners so it can't be cropped out. */
+@keyframes watermark-drift {
+  0%,
+  22% {
+    transform: translate(0, 0);
+  }
+  25%,
+  47% {
+    transform: translate(calc(100cqw - 100% - 2rem), 0);
+  }
+  50%,
+  72% {
+    transform: translate(calc(100cqw - 100% - 2rem), calc(100cqh - 100% - 2rem));
+  }
+  75%,
+  97% {
+    transform: translate(0, calc(100cqh - 100% - 2rem));
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .video-watermark {
+    animation: watermark-drift 120s steps(1, end) infinite;
+  }
+}

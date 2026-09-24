@@ -89,6 +89,55 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** Supabase projects (P0-4) for any live auth test; Google OAuth client; Bunny account for Phase 4 video.
 - **Notes:** Everything auth-related is type-checked against supabase-js 2.117 but has not run against a real Supabase project yet — the first staging session must walk through docs/16 §7.
 
+---
+### Session 005 — Phase 4 LMS core
+- **Date:** 2026-09-24
+- **Done:**
+  - Migration 0003_lms:
+    - lesson video state, required flag and PDF path
+    - notes; Q&A policies tightened (answers are no longer public)
+    - batches with sessions, members and announcements
+    - private `lesson-files` bucket
+    - `lesson_progress` is read-only to students
+    - course-governance trigger
+    - All new tables ship with RLS.
+  - P4-1 Course builder (/dashboard/instructor/courses):
+    - Course list and draft creation.
+    - Course details form, plus an admin-only publishing/pricing form (audited).
+    - Curriculum editor with dnd-kit drag, keyboard drag and up/down buttons.
+    - Lesson editor: type, preview, required, text/brief, live link, move to another module, delete.
+    - Admin /dashboard/admin/courses.
+  - P4-2 tus upload straight to Bunny (up to 5 GB, resumable), with credentials from /api/video/upload. The webhook re-fetches the video status from Bunny; there's also a manual "Check status".
+  - P4-3/P4-4 Signed 2 h HLS playback via /api/video/token. hls.js player with resume, speed, captions, a drifting watermark and token refresh.
+  - P4-5 Progress:
+    - Only the server writes it (ADR-020), with clamped positions; video completes at 90%.
+    - Student "My courses" and "Continue learning" on the overview, with DM-2.
+  - P4-6:
+    - Resources and PDFs: signed uploads and 10-min downloads.
+    - Notes with autosave.
+    - Lesson Q&A, plus an instructor Q&A inbox (unanswered first).
+    - Instructor Students page (progress, last activity).
+    - Instructor overview shows real counts.
+  - P4-7 Drip rules in the lesson editor (after lesson / days after enroll / date), evaluated server-side.
+  - P4-8 Live batches (instructor/admin): create batch, schedule sessions (stored UTC, shown in the viewer's zone), add enrolled students, announcements that send notifications. Student "Live classes" page.
+  - P4-9 DM-2 ClaimProgress in the outline and cards; DM-3 lesson-complete stamp and next-lesson slide.
+  - docs/17_LMS_VIDEO_SETUP.md: Bunny library, token auth, webhook, and staging verification steps.
+  - Tests:
+    - 92 unit tests (LMS rules, Bunny signing, course/batch validation).
+    - 177 Playwright checks, including a new /styleguide/screens/lms screen at 360/768/1280 with axe.
+- **Bugs found and fixed:**
+  - Locked lessons in the player outline failed contrast, because `opacity-80` sat on muted text. Found by the new axe screen.
+  - Lesson titles in the curriculum editor were truncated to a few characters at 360px.
+  - The lesson editor shipped the Supabase browser client up front (244 → 151 kB first load); it now loads only when a file is chosen.
+- **Files touched:** supabase/migrations/0003_lms.sql, scripts/gen-provisional-types.mjs, lib/db/types.ts, lib/lms/**, lib/video/**, lib/validation/{course,batch}.ts, lib/auth/roles.ts, app/api/{video,progress}/**, app/learn/**, app/(dashboard)/dashboard/{instructor,admin,student}/**, components/lms/**, components/dashboard/shell.tsx, app/globals.css, app/styleguide/screens/lms, middleware.ts, tests/**, docs/17_LMS_VIDEO_SETUP.md, .env.example, package.json, pm/*
+- **Next:** Phase 5 (payments and enrollment: Stripe Checkout + webhook → enrollment, manual bank transfer with admin approval, USD/PKR pricing, coupons).
+- **Blockers:**
+  - Supabase (P0-4) to apply 0001–0003 and test for real.
+  - Bunny account/library to verify the tus and CDN token formats (docs/17 §4).
+- **Notes:**
+  - Nothing in Phase 4 has run against a real Supabase or Bunny yet. The first staging session must walk through docs/17 §4.
+  - Courses must share their slug with content/courses.ts until Phase 8 (ADR-022).
+
 <!-- Template
 ---
 ### Session NNN — <title>

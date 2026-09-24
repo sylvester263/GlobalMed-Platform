@@ -49,7 +49,8 @@ export type NavIcon =
   | "audit"
   | "leads"
   | "inbox"
-  | "reports";
+  | "reports"
+  | "live";
 
 export type DashboardSection = {
   slug: string;
@@ -75,6 +76,13 @@ export const dashboardSections: Record<DashboardArea, DashboardSection[]> = {
       icon: "courses",
       phase: 4,
       description: "Every course you're enrolled in, with progress and access dates.",
+    },
+    {
+      slug: "live",
+      label: "Live classes",
+      icon: "live",
+      phase: 4,
+      description: "Upcoming live sessions and announcements from your batch.",
     },
     {
       slug: "quizzes",
@@ -133,6 +141,13 @@ export const dashboardSections: Record<DashboardArea, DashboardSection[]> = {
       icon: "qa",
       phase: 4,
       description: "Student questions, unanswered first.",
+    },
+    {
+      slug: "batches",
+      label: "Live batches",
+      icon: "live",
+      phase: 4,
+      description: "Cohorts with a start date, live sessions and announcements.",
     },
   ],
   admin: [

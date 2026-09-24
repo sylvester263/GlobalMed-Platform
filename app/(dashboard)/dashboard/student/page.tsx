@@ -3,25 +3,26 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { DashboardPageHeader } from "@/components/dashboard/page-header";
+import { MyCourseCard } from "@/components/lms/my-course-card";
 import { PathwayLine } from "@/components/motion/pathway-line";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { buttonVariants } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { getPathway } from "@/lib/content";
 import { requireArea } from "@/lib/auth/session";
-import { createClient } from "@/lib/db/server";
+import { getMyCourses } from "@/lib/lms/course-data";
 
 export const metadata: Metadata = { title: "Overview" };
 
-/** Student overview (docs/07 §1). Continue-learning and progress fill in with Phase 4. */
+/** Student overview (docs/07 §1): continue where you left off, then the certification route. */
 export default async function StudentOverviewPage() {
   const session = await requireArea("student", "/dashboard/student");
-  const supabase = await createClient();
-  const { count } = await supabase
-    .from("enrollments")
-    .select("id", { count: "exact", head: true })
-    .eq("user_id", session.user.id)
-    .eq("status", "active");
+  const courses = (await getMyCourses(session.user.id)).filter((c) => c.active);
+  // The course touched most recently comes first; untouched courses keep enrollment order.
+  const recent = [...courses].sort((a, b) =>
+    (b.lastTouchedAt ?? "").localeCompare(a.lastTouchedAt ?? ""),
+  );
+  const current = recent[0];
   const pathway = getPathway("billing-and-coding-career");
   const firstName = session.profile.full_name?.split(/\s+/)[0];
 
@@ -43,7 +44,7 @@ export default async function StudentOverviewPage() {
         </Alert>
       )}
 
-      {(count ?? 0) === 0 ? (
+      {!current ? (
         <EmptyState
           icon={BookOpen}
           title="You haven't enrolled in a course yet"
@@ -55,23 +56,21 @@ export default async function StudentOverviewPage() {
           }
         />
       ) : (
-        <section
-          aria-labelledby="continue"
-          className="flex flex-col gap-3 rounded-lg border bg-card p-6"
-        >
-          <h2 id="continue" className="text-xl">
-            Continue learning
-          </h2>
-          <p className="text-muted-foreground">
-            You&apos;re enrolled in {count} {count === 1 ? "course" : "courses"}. The course player
-            and progress tracking open soon.
-          </p>
-          <Link
-            href="/dashboard/student/courses"
-            className={buttonVariants({ variant: "secondary", className: "self-start" })}
-          >
-            My courses
-          </Link>
+        <section aria-labelledby="continue" className="flex flex-col gap-3">
+          <div className="flex flex-wrap items-end justify-between gap-2">
+            <h2 id="continue" className="text-xl">
+              Continue learning
+            </h2>
+            {courses.length > 1 && (
+              <Link
+                href="/dashboard/student/courses"
+                className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                All {courses.length} courses
+              </Link>
+            )}
+          </div>
+          <MyCourseCard item={current} />
         </section>
       )}
 

@@ -7,7 +7,7 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Current website admin access + list of important URLs (for redirects)
 - ⬜ Vercel team (invite SylJo Tech)
 - ⬜ Supabase organisation (invite SylJo Tech)
-- ⬜ Bunny.net account
+- ⬜ Bunny.net account + Stream library per environment (library ID, API key, CDN hostname, token-auth key; webhook set up per docs/17 §2)
 - ⬜ Stripe account (business verification started)
 - ⬜ Bank / JazzCash / Easypaisa details for manual payments
 - ⬜ Resend account + sending domain decision

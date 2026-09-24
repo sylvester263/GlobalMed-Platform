@@ -122,3 +122,22 @@
 - Context: docs/11 §2–3 (verified email, MFA for admins, server-side role checks, rate limits).
 - Decision: Supabase Auth via server actions (no client SDK sign-in), token-hash email links through /auth/confirm, role read from profiles on every request (never from the client), admins require aal2 for every dashboard area and admin action, same response for existing/non-existing accounts on sign-up and reset, same-site-only redirects. Middleware only runs on session routes.
 - Consequences: Supabase email templates must be edited (docs/16 §2). Marketing pages stay static and fast.
+
+## ADR-020: Progress is written only by the server; course governance in the database
+- Date: 2026-09-24 · Status: accepted
+- Context: progress drives certificates (docs/08 §3). Instructors own course content but not publishing or pricing (docs/07 §3).
+- Decision: students get read-only RLS on `lesson_progress`. All writes go through `lib/lms/progress-service.ts` (service role). It checks the enrollment and unlock state and clamps position jumps: the first save is capped at 60 s, and after that each save may advance at most elapsed×2+30 s. Videos complete at 90% of their duration, and completion is never undone. A trigger (`guard_course_admin_fields`) stops non-admins from changing status, prices, access period or instructor, even through the REST API.
+- Consequences: a bit more server load per heartbeat (every 15 s plus a beacon on leave). Certificate logic in Phase 6 can trust `lesson_progress`.
+
+## ADR-021: Bunny Stream with direct HLS and a directory token
+- Date: 2026-09-24 · Status: accepted (pending staging verification, docs/17 §4)
+- Context: we need signed, short-lived playback, our own player (resume, speed, watermark, progress), and uploads of up to 5 GB without passing them through Vercel.
+- Decision: the browser uploads with tus straight to Bunny, using a signature from `/api/video/upload`. Playback uses a native `<video>` plus hls.js (Safari plays HLS natively), fed a 2-hour CDN directory-token URL from `/api/video/token`. The Bunny embed iframe is not used. The webhook is authenticated by a secret query token, and it re-fetches the video status from the Bunny API rather than trusting the payload.
+- Consequences: we maintain our own player. The token format must be confirmed against a live library.
+
+## ADR-022: Public catalog stays on content files until Phase 8
+- Date: 2026-09-24 · Status: accepted
+- Context: the LMS now has DB courses, but the marketing catalog (ADR-014) is static, SEO-tuned content.
+- Decision: `/school/courses/*` keeps reading `content/courses.ts`. The LMS (`/learn`, dashboards) reads the database. The two are matched by slug. Phase 8 (CMS) moves the catalog to the database.
+- Consequences: a course has to exist in both places, with the same slug, until Phase 8. Admins are reminded of this in docs/17.
+

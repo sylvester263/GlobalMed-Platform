@@ -1,6 +1,6 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-09-24 · Current phase: **3 — Auth & dashboard shells** (built; live verification needs Supabase) · Overall: **30%**
+Last updated: 2026-09-24 · Current phase: **4 — LMS core** (built; live verification needs Supabase + Bunny) · Overall: **40%**
 
 | Phase | Status | % |
 |---|---|---|
@@ -8,7 +8,7 @@ Last updated: 2026-09-24 · Current phase: **3 — Auth & dashboard shells** (bu
 | 1 Design system | 🟨 Built; awaiting client sign-off (P1-7, P1-10) | 85 |
 | 2 Public website | 🟨 Pages built; awaiting content review, motion assets, perf check on Vercel | 80 |
 | 3 Auth & dashboard shells | 🟨 Built and tested without Supabase; end-to-end auth verification pending P0-4 | 90 |
-| 4 LMS core | ⬜ | 0 |
+| 4 LMS core | 🟨 Built and tested without Supabase/Bunny; signing formats + webhook verification pending (docs/17 §4) | 90 |
 | 5 Payments & enrollment | ⬜ | 0 |
 | 6 Quizzes, exams, certificates | ⬜ | 0 |
 | 7 AI chatbot + WhatsApp | ⬜ | 0 |
@@ -74,15 +74,15 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [x] P3-7 Dashboard motion DM-1, DM-9, DM-10
 
 ## Phase 4 — LMS core
-- [ ] P4-1 Course builder (modules/lessons CRUD, drag order)
-- [ ] P4-2 Bunny upload (tus) + webhook for processing status
-- [ ] P4-3 Signed playback + player
-- [ ] P4-4 Resume position + rewatch
-- [ ] P4-5 Progress + continue learning
-- [ ] P4-6 Resources, notes, Q&A
-- [ ] P4-7 Drip rules
-- [ ] P4-8 Batches (P1)
-- [ ] P4-9 DM-2 progress animation + DM-3 lesson-complete animation
+- [x] P4-1 Course builder (modules/lessons CRUD, drag order) — dnd-kit + keyboard + up/down buttons; admin-only publish/price (DB trigger)
+- [x] P4-2 Bunny upload (tus) + webhook for processing status — ⚠ signature verify on staging (docs/17 §4)
+- [x] P4-3 Signed playback + player — 2h directory token, hls.js, watermark, captions, speed
+- [x] P4-4 Resume position + rewatch
+- [x] P4-5 Progress + continue learning — server-only writes, clamped positions; My courses + overview
+- [x] P4-6 Resources, notes, Q&A — plus instructor Q&A inbox and Students page
+- [x] P4-7 Drip rules — after lesson / days after enroll / date
+- [x] P4-8 Batches (P1) — sessions (local time zones), members, announcements → notifications
+- [x] P4-9 DM-2 progress animation + DM-3 lesson-complete animation
 
 ## Phase 5 — Payments & enrollment
 - [ ] P5-1 Orders + Stripe Checkout

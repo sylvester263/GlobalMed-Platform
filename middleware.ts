@@ -17,6 +17,6 @@ export const config = {
     "/reset-password/:path*",
     "/mfa",
     "/auth/:path*",
-    "/api/((?!stripe/webhook|whatsapp/webhook).*)",
+    "/api/((?!stripe/webhook|whatsapp/webhook|video/webhook).*)",
   ],
 };

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ClaimJourney } from "@/components/marketing/home/claim-journey";
+import { HeroClaimForm } from "@/components/marketing/hero-claim-form";
 import { HeroCtas } from "@/components/marketing/home/hero-ctas";
 import { CourseCard, CtaBand, FaqList, Section, StatsStrip } from "@/components/marketing/sections";
 import { ServiceIcon } from "@/components/marketing/service-icon";
@@ -53,15 +54,19 @@ export default function HomePage() {
             <p className="max-w-prose text-lg text-muted-foreground">{hero.intro}</p>
             <HeroCtas />
           </div>
-          {/* MG-2: poster until the Lottie asset is delivered (P2-15). */}
-          <LottiePlayer
-            src={motionAssets.heroClaimForm}
-            poster="/motion/posters/hero-claim-form.svg"
-            alt="A claim form fills itself in: codes appear, a denial flag turns green, and the status changes to Paid."
-            width={480}
-            height={320}
-            className="w-full"
-          />
+          {/* MG-2: coded SVG loop; a designer's Lottie replaces it once delivered (P2-15). */}
+          {motionAssets.heroClaimForm ? (
+            <LottiePlayer
+              src={motionAssets.heroClaimForm}
+              poster="/motion/posters/hero-claim-form.svg"
+              alt="A claim form fills itself in: codes appear, a denial flag turns green, and the status changes to Paid."
+              width={480}
+              height={320}
+              className="w-full"
+            />
+          ) : (
+            <HeroClaimForm className="w-full" />
+          )}
         </div>
       </section>
 

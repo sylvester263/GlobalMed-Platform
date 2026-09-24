@@ -138,7 +138,14 @@ Newest entry at the bottom. One entry per Claude Code session.
   - Nothing in Phase 4 has run against a real Supabase or Bunny yet. The first staging session must walk through docs/17 §4.
   - Courses must share their slug with content/courses.ts until Phase 8 (ADR-022).
 
-<!-- Template
+---
+### Session 005b — Home hero motion fix
+- **Date:** 2026-09-24
+- **Done:** The home hero motion graphic (MG-2) was only a static poster, because it waited for a Lottie file (P2-15) that hasn't been delivered. It's now built in code as an animated SVG with CSS (ADR-015), as docs/15 allows. It runs an 8s loop: codes appear, Denied with a red flag, then Paid with a green check, then the claim line fills with the gold end tick and check stamp. It animates only transform and opacity. Reduced-motion visitors see the final Paid frame, and the loop pauses off-screen. This also removes the dev warning about the poster image being the LCP. A delivered Lottie still replaces it automatically once `lib/motion-assets.ts` points to the file.
+- **Files touched:** components/marketing/hero-claim-form.tsx, components/motion/pause-offscreen.tsx, app/(marketing)/page.tsx, app/globals.css
+- **Next:** Phase 5.
+
+
 ---
 ### Session NNN — <title>
 - **Date:**

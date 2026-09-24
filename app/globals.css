@@ -448,3 +448,268 @@
     animation: watermark-drift 120s steps(1, end) infinite;
   }
 }
+
+/*
+ * MG-2 hero claim form (components/marketing/hero-claim-form.tsx). One 8s loop; every
+ * element's keyframes are percentages of that loop. Resting styles are the final "Paid"
+ * frame, so reduced motion shows a finished, static claim.
+ */
+.hero-claim .hc-denied {
+  opacity: 0;
+}
+.hero-claim :is(.hc-grow, .hc-pop, .hc-chip, .hc-tick, .hc-gold, .hc-stamp) {
+  transform-box: fill-box;
+}
+.hero-claim .hc-grow {
+  transform-origin: 0% 50%;
+}
+.hero-claim :is(.hc-pop, .hc-stamp, .hc-chip) {
+  transform-origin: 50% 50%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-claim * {
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+    animation-timing-function: var(--ease-standard);
+    animation-fill-mode: both;
+  }
+  .hero-claim[data-paused] * {
+    animation-play-state: paused;
+  }
+  .hero-claim .hc-stage {
+    animation-name: hc-stage;
+  }
+  .hero-claim .hc-header {
+    animation-name: hc-header;
+  }
+  .hero-claim .hc-chip-0 {
+    animation-name: hc-chip-0;
+  }
+  .hero-claim .hc-chip-1 {
+    animation-name: hc-chip-1;
+  }
+  .hero-claim .hc-chip-2 {
+    animation-name: hc-chip-2;
+  }
+  .hero-claim .hc-lines {
+    animation-name: hc-lines;
+  }
+  .hero-claim .hc-denied {
+    animation-name: hc-denied;
+  }
+  .hero-claim .hc-paid {
+    animation-name: hc-paid;
+  }
+  .hero-claim .hc-claim {
+    animation-name: hc-claim;
+  }
+  .hero-claim .hc-tick-0 {
+    animation-name: hc-tick-0;
+  }
+  .hero-claim .hc-tick-1 {
+    animation-name: hc-tick-1;
+  }
+  .hero-claim .hc-tick-2 {
+    animation-name: hc-tick-2;
+  }
+  .hero-claim .hc-tick-3 {
+    animation-name: hc-tick-3;
+  }
+  .hero-claim .hc-tick-4 {
+    animation-name: hc-tick-4;
+  }
+  .hero-claim .hc-gold {
+    animation-name: hc-gold;
+  }
+  .hero-claim .hc-stamp {
+    animation-name: hc-stamp;
+  }
+}
+
+/* Whole card fades in at the start and out at the end, so the loop restart is soft. */
+@keyframes hc-stage {
+  0% {
+    opacity: 0;
+  }
+  4%,
+  94% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes hc-header {
+  0%,
+  3% {
+    transform: scaleX(0);
+  }
+  11%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes hc-chip-0 {
+  0%,
+  11% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.92);
+  }
+  15%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hc-chip-1 {
+  0%,
+  15% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.92);
+  }
+  19%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hc-chip-2 {
+  0%,
+  19% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.92);
+  }
+  23%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hc-lines {
+  0%,
+  22% {
+    transform: scaleX(0);
+  }
+  31%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes hc-denied {
+  0%,
+  33% {
+    opacity: 0;
+  }
+  36%,
+  52% {
+    opacity: 1;
+  }
+  55%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes hc-paid {
+  0%,
+  53% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  57% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+  60%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes hc-claim {
+  0%,
+  60% {
+    transform: scaleX(0);
+  }
+  74%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+/* Ticks light up as the fill passes them (60% → 74%, one keyframe set per tick). */
+@keyframes hc-tick-0 {
+  0%,
+  60% {
+    opacity: 0;
+  }
+  63%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes hc-tick-1 {
+  0%,
+  63.5% {
+    opacity: 0;
+  }
+  66.5%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes hc-tick-2 {
+  0%,
+  67% {
+    opacity: 0;
+  }
+  70%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes hc-tick-3 {
+  0%,
+  70.5% {
+    opacity: 0;
+  }
+  73.5%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes hc-tick-4 {
+  0%,
+  74% {
+    opacity: 0;
+  }
+  77%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes hc-gold {
+  0%,
+  74% {
+    opacity: 0;
+  }
+  77%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes hc-stamp {
+  0%,
+  77% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  81% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  84%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

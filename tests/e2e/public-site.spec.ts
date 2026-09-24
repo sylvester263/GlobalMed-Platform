@@ -129,3 +129,48 @@ test.describe("navigation and SEO", () => {
     expect(res.status()).toBe(404);
   });
 });
+
+test.describe("home motion (desktop, motion allowed)", () => {
+  test.use({ viewport: { width: 1280, height: 720 }, reducedMotion: "no-preference" });
+
+  test("How we work pins with scroll space, so the next section never covers it", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const section = page.locator("#how-we-work");
+    await section.scrollIntoViewIfNeeded();
+    const spacer = page.locator(".pin-spacer").filter({ has: section });
+    await expect(spacer).toHaveCount(1);
+    const padding = await spacer.evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom));
+    expect(padding).toBeGreaterThan(0);
+
+    // Scroll into the middle of the pin: the heading and CTA stay on screen.
+    const top = await spacer.evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+    await page.evaluate((y) => window.scrollTo(0, y), top + padding / 2);
+    await expect(
+      page.getByRole("heading", { name: "How we work with your practice" }),
+    ).toBeInViewport();
+    await expect(section.getByRole("link", { name: /free billing audit/i })).toBeInViewport();
+
+    // The section after it starts below the spacer, not on top of the pinned section.
+    const overlap = await spacer.evaluate((el) => {
+      const next = el.nextElementSibling;
+      return next
+        ? next.getBoundingClientRect().top < el.getBoundingClientRect().bottom - 1
+        : false;
+    });
+    expect(overlap).toBe(false);
+  });
+
+  test("the hero claim form loops and pauses off-screen", async ({ page }) => {
+    await page.goto("/");
+    const hero = page.locator(".hero-claim");
+    await expect(hero).not.toHaveAttribute("data-paused");
+    const running = await hero.evaluate(
+      (el) => el.getAnimations({ subtree: true }).filter((a) => a.playState === "running").length,
+    );
+    expect(running).toBeGreaterThan(10);
+    await page.locator("#how-we-work").scrollIntoViewIfNeeded();
+    await expect(hero).toHaveAttribute("data-paused", "true");
+  });
+});

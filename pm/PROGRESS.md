@@ -1,11 +1,11 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-09-24 · Current phase: **0 — Foundation** (remaining items blocked on client accounts) · Overall: **7%**
+Last updated: 2026-09-24 · Current phase: **1 — Design system** (awaiting client sign-off P1-7, P1-10) · Overall: **14%**
 
 | Phase | Status | % |
 |---|---|---|
 | 0 Foundation | 🟥 Blocked on client accounts (P0-4, P0-9) | 75 |
-| 1 Design system | ⬜ | 0 |
+| 1 Design system | 🟨 Built; awaiting client sign-off (P1-7, P1-10) | 85 |
 | 2 Public website | ⬜ | 0 |
 | 3 Auth & dashboard shells | ⬜ | 0 |
 | 4 LMS core | ⬜ | 0 |
@@ -30,16 +30,16 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [x] P0-10 Sentry installed (inert until SENTRY_DSN / NEXT_PUBLIC_SENTRY_DSN set)
 
 ## Phase 1 — Design system
-- [ ] P1-1 Run ui-ux-pro-max design system generation
-- [ ] P1-2 Write design-system/MASTER.md
-- [ ] P1-3 Tokens in globals.css + fonts via next/font
-- [ ] P1-4 Base components (docs/06 §6)
-- [ ] P1-5 /styleguide page
-- [ ] P1-6 Key screen designs: home, course detail, student dashboard, admin overview
-- [ ] P1-7 Client design sign-off
-- [ ] P1-8 Motion tokens + lib/motion.ts + components/motion primitives
-- [ ] P1-9 Motion section in /styleguide with reduced-motion toggle
-- [ ] P1-10 Motion graphics storyboard (hero, claim journey, pathway, exam-passed) approved by client
+- [x] P1-1 Run ui-ux-pro-max design system generation
+- [x] P1-2 Write design-system/MASTER.md
+- [x] P1-3 Tokens in globals.css + fonts via next/font
+- [x] P1-4 Base components (docs/06 §6)
+- [x] P1-5 /styleguide page
+- [x] P1-6 Key screen designs: home, course detail, student dashboard, admin overview
+- [ ] P1-7 Client design sign-off — 🟨 ready: /styleguide + /styleguide/screens/* + design-system/screens/*.png
+- [x] P1-8 Motion tokens + lib/motion.ts + components/motion primitives
+- [x] P1-9 Motion section in /styleguide with reduced-motion toggle
+- [ ] P1-10 Motion graphics storyboard (hero, claim journey, pathway, exam-passed) approved by client — 🟨 storyboards in design-system/motion-storyboards/, awaiting approval
 
 ## Phase 2 — Public website
 - [ ] P2-1 Header/mega menu + footer

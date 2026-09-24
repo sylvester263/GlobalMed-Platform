@@ -62,3 +62,27 @@
 - Context: CLAUDE.md requires typed clients from `supabase gen types`, but the Supabase project isn't available yet.
 - Decision: Generate `lib/db/types.ts` from `supabase/migrations/0001_init.sql` in the same shape (no relationship metadata). Replace with `npm run db:types` as soon as P0-4 is done.
 - Consequences: Nested-select typing is weaker until real types land; any schema change must also regenerate the file.
+
+## ADR-010: CSS scroll-driven reveal instead of Motion whileInView
+- Date: 2026-09-24 · Status: accepted
+- Context: Motion's `whileInView` writes opacity:0 into server HTML, so below-the-fold content is invisible without JavaScript, in print, and until scrolled into view. docs/15 requires that content never depend on animation.
+- Decision: Reveal/StaggerGroup are server components using CSS `animation-timeline: view()` inside `@supports` and `prefers-reduced-motion: no-preference`. All other docs/15 motion still uses Motion.
+- Consequences: Zero JS for reveals and content always visible. Reveals scrub with scroll instead of playing once; Firefox shows content without animation.
+
+## ADR-011: TanStack Table v9
+- Date: 2026-09-24 · Status: accepted
+- Context: npm's latest is v9 (feature-registration API); most examples online are v8.
+- Decision: Use v9. `components/dashboard/data-table.tsx` registers sorting + pagination; define columns with `dataTableColumns<T>()`.
+- Consequences: Add features (filtering, selection) to `dataTableFeatures` when needed; don't copy v8 snippets.
+
+## ADR-012: Components built from shadcn/ui while 21st.dev Magic is unavailable
+- Date: 2026-09-24 · Status: accepted (temporary)
+- Context: CLAUDE.md §5 asks for 21st.dev Magic generation; the Magic MCP isn't connected in this environment (needs TWENTYFIRST_API_KEY).
+- Decision: Build base components from shadcn/ui (Base UI), restyled to MASTER.md tokens. Use Magic for richer marketing sections once connected, always restyled to tokens.
+- Consequences: None for consistency: every component follows MASTER.md.
+
+## ADR-013: Sentry browser SDK loads lazily
+- Date: 2026-09-24 · Status: accepted
+- Context: The Sentry browser SDK added ~65 kB gzipped to every page, even without a DSN, threatening Lighthouse ≥ 90.
+- Decision: `instrumentation-client.ts` dynamically imports Sentry only when NEXT_PUBLIC_SENTRY_DSN is set. Server/edge Sentry unchanged.
+- Consequences: Client errors in roughly the first second, before the SDK loads, aren't captured.

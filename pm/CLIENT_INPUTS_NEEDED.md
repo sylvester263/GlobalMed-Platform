@@ -23,7 +23,9 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Team and office photos
 - ⬜ AAPC written permission + partner logo usage guidelines (if/when available)
 
-- ⬜ Approval of motion storyboards (hero, claim journey, pathway, exam-passed moment)
+- ⬜ Design sign-off: review /styleguide and the key screens (/styleguide/screens/home, course, student, admin) — P1-7
+- ⬜ Approval of motion storyboards (hero, claim journey, pathway, exam-passed moment) — design-system/motion-storyboards/ — P1-10
+- ⬜ Logo files (SVG) are also needed for P2-1: screens currently use a placeholder "GM" wordmark
 - ⬜ Real stats for animated counters (or approval to label them illustrative)
 
 ## Content

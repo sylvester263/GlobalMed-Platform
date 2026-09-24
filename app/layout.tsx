@@ -1,19 +1,29 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono, Public_Sans, Source_Serif_4 } from "next/font/google";
 
+import { MotionProvider } from "@/components/motion/motion-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { publicEnv } from "@/lib/env";
 
 import "./globals.css";
 
-// Placeholder fonts; replaced by the locked pairing in design-system/MASTER.md (Phase 1).
-const geistSans = Geist({
-  variable: "--font-sans",
+const publicSans = Public_Sans({
+  variable: "--font-public-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -32,8 +42,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+    <html
+      lang="en"
+      className={`${publicSans.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="antialiased">
+        <MotionProvider>
+          <TooltipProvider>{children}</TooltipProvider>
+          <Toaster />
+        </MotionProvider>
+      </body>
     </html>
   );
 }

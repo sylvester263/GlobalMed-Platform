@@ -16,6 +16,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { StatBlock } from "@/components/ui/stat-block";
+import { motionAssets } from "@/lib/motion-assets";
 import { cn } from "@/lib/utils";
 
 import { MarketingFrame } from "../_components/frames";
@@ -79,7 +80,7 @@ export default function HomeScreen() {
             </div>
           </div>
           <LottiePlayer
-            src="/motion/hero-claim-form.lottie"
+            src={motionAssets.heroClaimForm}
             poster="/motion/posters/hero-claim-form.svg"
             alt="A claim form fills itself in: codes appear, a denial flag turns green, and the status changes to Paid."
             width={480}

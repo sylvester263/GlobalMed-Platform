@@ -86,3 +86,27 @@
 - Context: The Sentry browser SDK added ~65 kB gzipped to every page, even without a DSN, threatening Lighthouse ≥ 90.
 - Decision: `instrumentation-client.ts` dynamically imports Sentry only when NEXT_PUBLIC_SENTRY_DSN is set. Server/edge Sentry unchanged.
 - Consequences: Client errors in roughly the first second, before the SDK loads, aren't captured.
+
+## ADR-014: Typed content files until the CMS exists
+- Date: 2026-09-24 · Status: accepted
+- Context: CLAUDE.md asks for copy in content/*.md, but services, courses and FAQs are structured data used across many pages; the CMS tables arrive in Phase 8 and courses move to Supabase in Phase 4.
+- Decision: Structured content in content/*.ts validated by zod schemas (lib/content/schema.ts) at build time; long-form blog and legal copy in Markdown with validated frontmatter. Pages read through lib/content so the source can swap to Supabase without touching callers.
+- Consequences: Content edits need a deploy until Phase 8. A content-integrity unit test catches broken references, long titles and bundle pricing errors.
+
+## ADR-015: CSS-first motion primitives; Motion only where physics matter
+- Date: 2026-09-24 · Status: accepted (refines docs/15 §1 and ADR-006)
+- Context: Lighthouse showed the Motion runtime hydrating dozens of decorative claim-line elements on every page (over 1 s of throttled mobile CPU).
+- Decision: ClaimLine, PathwayLine, Reveal/StaggerGroup, PageTransition and the hero CTA settle are CSS (keyframes and scroll-driven timelines, final state where unsupported). CountUp uses a small rAF loop. Motion (m.* inside <MotionFeatures>) remains for quiz feedback, seal/check stamps, service-page graphics and future dashboard motion. GSAP is loaded only on desktop for MG-3.
+- Consequences: Motion loads only on pages that need it; "inView" draws scrub with scroll rather than playing once; Firefox shows final states. Visual intent of docs/15 is unchanged.
+
+## ADR-016: Disclosure navigation instead of a menu widget
+- Date: 2026-09-24 · Status: accepted
+- Context: Base UI's NavigationMenu (with its positioning engine) was the heaviest client component on every page. WAI-ARIA recommends the disclosure pattern for site navigation.
+- Decision: components/marketing/mega-menu.tsx uses buttons with aria-expanded and plain link panels; Escape/click-outside/route change close; focus returns to the trigger. The mobile sheet is loaded on first interaction.
+- Consequences: Lighter header; arrow-key roving between top-level items isn't provided (not required by the disclosure pattern).
+
+## ADR-017: Public forms fail closed
+- Date: 2026-09-24 · Status: accepted
+- Context: Forms depend on Supabase, Resend, Turnstile and Upstash, none of which are provisioned yet.
+- Decision: Without Turnstile or storage, submissions are refused with a clear message; a lead is only reported as sent once it's stored. FORMS_DRY_RUN=true allows local click-through outside production only. Rate limiting falls back to per-instance memory when Upstash is missing (production must set Upstash). Newsletter confirmation happens on POST so link scanners can't subscribe people.
+- Consequences: Forms can't go live until the accounts in pm/CLIENT_INPUTS_NEEDED.md are provided.

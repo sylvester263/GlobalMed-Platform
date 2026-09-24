@@ -15,6 +15,7 @@ import { StaggerGroup, StaggerItem } from "@/components/motion/stagger-group";
 import { Button } from "@/components/ui/button";
 import { ChoiceField } from "@/components/ui/choice-field";
 import { Switch } from "@/components/ui/switch";
+import { motionAssets } from "@/lib/motion-assets";
 
 const pathway = [
   { label: "Foundations", description: "Anatomy, terminology" },
@@ -152,7 +153,7 @@ export function MotionLab() {
             note="Lazy dotLottie with poster, off-screen pause and a pause control. Hero asset (MG-2) is not delivered yet, so the poster shows."
           >
             <LottiePlayer
-              src="/motion/hero-claim-form.lottie"
+              src={motionAssets.heroClaimForm}
               poster="/motion/posters/hero-claim-form.svg"
               alt="A claim form fills itself in: codes appear, a denial flag turns green, and the status changes to Paid."
               width={480}

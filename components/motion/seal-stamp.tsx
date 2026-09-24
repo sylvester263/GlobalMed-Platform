@@ -1,8 +1,9 @@
 "use client";
 
 import { Check, X } from "lucide-react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 
+import { MotionFeatures } from "@/components/motion/motion-features";
 import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
 import { dur, ease, spring } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -42,41 +43,43 @@ export function SealStamp({
   const Icon = valid ? Check : X;
 
   return (
-    <div className={cn("inline-flex flex-col items-center gap-2", className)}>
-      <motion.svg
-        viewBox="0 0 100 100"
-        width={size}
-        height={size}
-        aria-hidden="true"
-        focusable="false"
-        initial={animateIn && !reduced ? { scale: 1.35, opacity: 0, rotate: -12 } : false}
-        animate={{ scale: 1, opacity: 1, rotate: 0 }}
-        transition={
-          reduced
-            ? { duration: 0 }
-            : { ...spring.snappy, opacity: { duration: dur.fast, ease: ease.enter } }
-        }
-      >
-        <polygon points={SEAL_POINTS} className={valid ? "fill-gold" : "fill-alert"} />
-        <circle
-          cx="50"
-          cy="50"
-          r="36"
-          className="fill-none stroke-white/70"
-          strokeWidth="1.5"
-          strokeDasharray="2 3"
-        />
-        <circle cx="50" cy="50" r="30" className={valid ? "fill-gold-ink" : "fill-alert"} />
-        <Icon x={32} y={32} width={36} height={36} className="text-white" strokeWidth={2.5} />
-      </motion.svg>
-      <span
-        className={cn(
-          "text-sm font-semibold tracking-[0.12em] uppercase",
-          valid ? "text-gold-ink" : "text-destructive",
-        )}
-      >
-        {text}
-      </span>
-    </div>
+    <MotionFeatures>
+      <div className={cn("inline-flex flex-col items-center gap-2", className)}>
+        <m.svg
+          viewBox="0 0 100 100"
+          width={size}
+          height={size}
+          aria-hidden="true"
+          focusable="false"
+          initial={animateIn && !reduced ? { scale: 1.35, opacity: 0, rotate: -12 } : false}
+          animate={{ scale: 1, opacity: 1, rotate: 0 }}
+          transition={
+            reduced
+              ? { duration: 0 }
+              : { ...spring.snappy, opacity: { duration: dur.fast, ease: ease.enter } }
+          }
+        >
+          <polygon points={SEAL_POINTS} className={valid ? "fill-gold" : "fill-alert"} />
+          <circle
+            cx="50"
+            cy="50"
+            r="36"
+            className="fill-none stroke-white/70"
+            strokeWidth="1.5"
+            strokeDasharray="2 3"
+          />
+          <circle cx="50" cy="50" r="30" className={valid ? "fill-gold-ink" : "fill-alert"} />
+          <Icon x={32} y={32} width={36} height={36} className="text-white" strokeWidth={2.5} />
+        </m.svg>
+        <span
+          className={cn(
+            "text-sm font-semibold tracking-[0.12em] uppercase",
+            valid ? "text-gold-ink" : "text-destructive",
+          )}
+        >
+          {text}
+        </span>
+      </div>
+    </MotionFeatures>
   );
 }

@@ -1,10 +1,3 @@
-"use client";
-
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
-
-import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
-import { dur, ease } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type ClaimLineProps = {
@@ -14,17 +7,22 @@ type ClaimLineProps = {
   filled?: number;
   /** Mark the last tick gold when it is reached (achievement). */
   goldEnd?: boolean;
-  /** When the draw starts. `static` renders the final state with no animation. */
+  /**
+   * `mount`: draws on page load. `inView`: draws as it scrolls into view (CSS scroll-driven
+   * timeline; final state where unsupported). `static`: final state, no animation.
+   */
   trigger?: "mount" | "inView" | "static";
-  /** Extra delay before drawing, in seconds. */
+  /** Extra delay before a `mount` draw, in seconds. */
   delay?: number;
   className?: string;
 };
 
 /**
  * The brand signature (MASTER.md §4): a ledger rule with tick marks that draws
- * left-to-right while ticks light up in sequence. Decorative: pair it with text,
- * or use ClaimProgress when it conveys progress.
+ * left-to-right while ticks light up in sequence. Pure SVG + CSS (ADR-015): no client JS,
+ * the line uses scaleX (pathLength breaks on a stretched SVG), and reduced motion shows the
+ * final state. Decorative — pair it with text, or use ClaimProgress when it conveys progress.
+ * Styles: `.claim-line` in app/globals.css.
  */
 export function ClaimLine({
   ticks = 8,
@@ -34,26 +32,20 @@ export function ClaimLine({
   delay = 0,
   className,
 }: ClaimLineProps) {
-  const ref = useRef<SVGSVGElement>(null);
-  const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
-  const reduced = usePrefersReducedMotion();
-
   const count = Math.max(2, ticks);
   const reached = Math.min(count, Math.max(0, filled ?? count));
   const positions = Array.from({ length: count }, (_, i) => (i / (count - 1)) * 100);
   const fraction = reached <= 1 ? 0 : (positions[reached - 1] ?? 0) / 100;
 
-  const settled = trigger === "static" || reduced;
-  const play = settled || trigger === "mount" || inView;
-
   return (
     <svg
-      ref={ref}
       aria-hidden="true"
       focusable="false"
       viewBox="0 0 100 12"
       preserveAspectRatio="none"
-      className={cn("block h-3 w-full overflow-visible", className)}
+      data-trigger={trigger}
+      style={{ "--delay": `${delay}s`, "--fraction": fraction } as React.CSSProperties}
+      className={cn("claim-line block h-3 w-full overflow-visible", className)}
     >
       <line
         x1="0"
@@ -77,40 +69,29 @@ export function ClaimLine({
         />
       ))}
       {fraction > 0 && (
-        <motion.line
+        <line
           x1="0"
           y1="6"
           x2={fraction * 100}
           y2="6"
-          className="stroke-teal"
+          className="claim-fill stroke-teal"
           strokeWidth="2"
           vectorEffect="non-scaling-stroke"
-          // scaleX, not pathLength: dash-based drawing breaks on a stretched SVG.
-          style={{ transformBox: "fill-box", transformOrigin: "0% 50%" }}
-          initial={settled ? false : { scaleX: 0 }}
-          animate={{ scaleX: play ? 1 : 0 }}
-          transition={{ duration: dur.story * fraction, ease: ease.standard, delay }}
         />
       )}
       {positions.slice(0, reached).map((x, i) => {
         const isGold = goldEnd && i === count - 1;
         return (
-          <motion.line
+          <line
             key={`on-${x}`}
             x1={x}
             y1="1"
             x2={x}
             y2="11"
-            className={isGold ? "stroke-gold" : "stroke-teal"}
+            style={{ "--pos": x / 100 } as React.CSSProperties}
+            className={cn("claim-tick", isGold ? "stroke-gold" : "stroke-teal")}
             strokeWidth={isGold ? 3 : 2}
             vectorEffect="non-scaling-stroke"
-            initial={settled ? false : { opacity: 0 }}
-            animate={{ opacity: play ? 1 : 0 }}
-            transition={{
-              duration: dur.fast,
-              ease: ease.enter,
-              delay: delay + (x / 100) * dur.story,
-            }}
           />
         );
       })}

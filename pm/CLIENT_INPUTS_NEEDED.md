@@ -11,7 +11,9 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Stripe account (business verification started)
 - ⬜ Bank / JazzCash / Easypaisa details for manual payments
 - ⬜ Resend account + sending domain decision
-- ⬜ Meta Business Manager + WhatsApp Business number
+- ⬜ Meta Business Manager + WhatsApp Business number (also enables the site's click-to-chat buttons: NEXT_PUBLIC_WHATSAPP_NUMBER)
+- ⬜ Cloudflare Turnstile keys and Upstash Redis (public forms stay closed without them)
+- ⬜ Resend newsletter segment + sales inbox for lead notifications (RESEND_SEGMENT_ID, ADMIN_NOTIFY_EMAIL)
 - ⬜ LLM provider choice + API key with billing enabled
 - ⬜ Google Analytics / Search Console / GTM access
 - ⬜ GitHub repository (client-owned, SylJo Tech as maintainer) so the code can be pushed and CI can run
@@ -31,7 +33,9 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 ## Content
 - ⬜ Final list of services offered (incl. credentialing? denial management? specialties?)
 - ⬜ Company facts: founding year, claims processed, clean-claim %, clients served, students trained
-- ⬜ Testimonials (practices and students) with permission
+- ⬜ Testimonials (practices and students) with permission — the home page section stays hidden until provided
+- ⬜ Practice client logos with permission (MG-12 marquee)
+- ⬜ Content review of all pages: 55 [CLIENT TO CONFIRM] markers (P2-14) — contact details, services list, course list/prices, team, batches, results figures
 - ⬜ Course list: titles, outlines, level, duration, prices (USD + PKR), access period
 - ⬜ Lesson videos + resources for launch courses (minimum 3)
 - ⬜ Question banks per course (Aiken or CSV)

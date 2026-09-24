@@ -25,6 +25,7 @@
   --color-gold-ink: var(--gold-ink);
   --color-gold-soft: var(--gold-soft);
   --color-alert: var(--alert);
+  --color-alert-bright: var(--alert-bright);
   --color-tick: var(--tick);
 
   /* Semantic (shadcn) */
@@ -129,6 +130,7 @@
   --gold-ink: #8a6414;
   --gold-soft: #f6ebd3;
   --alert: #b42318;
+  --alert-bright: #ffb4ab;
   --tick: #c9d3cf;
 
   --background: var(--ledger);
@@ -245,5 +247,169 @@
     [data-reduced-motion] .motion-reveal {
       animation: none;
     }
+  }
+}
+
+/* MG-17: mega-menu items reveal in sequence (8px rise, 60ms stagger). */
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .menu-stagger [style*="--i"] {
+    animation: menu-in var(--duration-fast) var(--ease-enter) both;
+    animation-delay: calc(var(--i) * 60ms);
+  }
+}
+
+/* MG-11: the first preview-lesson play icon pulses once to show it's watchable. */
+@keyframes pulse-once {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--teal) 45%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 12px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pulse-once {
+    animation: pulse-once 1.2s var(--ease-exit) 0.6s 1 both;
+  }
+}
+
+/* Keep the floating WhatsApp button clear of mobile sticky CTA bars. */
+@media (width < 64rem) {
+  /* Scoped to <main> (not body) to keep :has() style invalidation cheap. */
+  main:has([data-sticky-cta]) ~ .whatsapp-float {
+    bottom: 5.75rem;
+  }
+}
+
+/* ---------- CSS-only motion primitives (ADR-015) ---------- */
+
+/* ClaimLine: fill draws with scaleX from the left; ticks fade on as the fill passes them. */
+.claim-fill {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+}
+
+@keyframes claim-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes fade-on {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .claim-line[data-trigger="mount"] .claim-fill {
+    animation: claim-draw calc(var(--duration-story) * var(--fraction)) var(--ease-standard)
+      var(--delay) both;
+  }
+  .claim-line[data-trigger="mount"] .claim-tick {
+    animation: fade-on var(--duration-fast) var(--ease-enter)
+      calc(var(--delay) + var(--pos) * var(--duration-story)) both;
+  }
+}
+
+/* PathwayLine: connector fills to the learner's progress; nodes pop in along it. */
+.pathway-fill-x {
+  transform: scaleX(var(--progress));
+}
+.pathway-fill-y {
+  transform: scaleY(var(--progress));
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes grow-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes node-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+/* inView = scroll-driven where supported; everywhere else the final state simply shows. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .claim-line[data-trigger="inView"] {
+      view-timeline-name: --claim;
+    }
+    .claim-line[data-trigger="inView"] .claim-fill {
+      animation: claim-draw linear both;
+      animation-timeline: --claim;
+      animation-range: cover 15% cover 45%;
+    }
+    .claim-line[data-trigger="inView"] .claim-tick {
+      animation: fade-on linear both;
+      animation-timeline: --claim;
+      animation-range: cover calc(15% + var(--pos) * 30%) cover calc(17% + var(--pos) * 30%);
+    }
+
+    .pathway {
+      view-timeline-name: --pathway;
+    }
+    .pathway-fill-x {
+      animation: grow-x linear both;
+      animation-timeline: --pathway;
+      animation-range: cover 15% cover 45%;
+    }
+    .pathway-fill-y {
+      animation: grow-y linear both;
+      animation-timeline: --pathway;
+      animation-range: cover 10% cover 50%;
+    }
+    .pathway-node {
+      animation: node-pop linear both;
+      animation-timeline: --pathway;
+      animation-range: cover calc(12% + var(--pos) * 30%) cover calc(16% + var(--pos) * 30%);
+    }
+  }
+}
+
+/* The /styleguide reduced-motion preview also stops scroll-driven animations. */
+[data-reduced-motion] .claim-line *,
+[data-reduced-motion] .pathway *,
+[data-reduced-motion] .motion-reveal,
+[data-reduced-motion] .cta-settle {
+  animation: none !important;
+}
+
+/* MG-16 page enter, applied only on client-side navigations (PageTransition). */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.page-enter {
+  animation: page-enter var(--duration-slow) var(--ease-enter) both;
+}
+
+/* MG-1 frame 7: the hero CTAs settle with a 4px lift once the claim line lands. */
+@keyframes cta-settle {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cta-settle {
+    animation: cta-settle 360ms var(--ease-standard) calc(1s + var(--i) * 60ms) both;
   }
 }

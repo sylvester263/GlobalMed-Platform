@@ -24,6 +24,8 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
+  // Used only for codes and IDs; don't let it compete with the LCP text for bandwidth.
+  preload: false,
 });
 
 export const metadata: Metadata = {

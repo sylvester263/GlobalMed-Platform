@@ -35,6 +35,7 @@
 | `gold-ink` | `#8A6414` | Gold-coloured **text** on light backgrounds |
 | `gold-soft` | `#F6EBD3` | Achievement badges' background |
 | `alert` | `#B42318` | Errors, denied states, destructive actions |
+| `alert-bright` | `#FFB4AB` | Error text on `ink` backgrounds only (8.72:1) |
 
 ### 1.2 Semantic tokens (CSS variables in `app/globals.css`, shadcn names)
 | Variable | Value | Notes |
@@ -72,6 +73,7 @@
 | warning on white / warning-soft | 5.19 / 4.66 | text |
 | input border on white / ledger / mint | 3.61 / 3.39 / 3.19 | control boundaries |
 | teal-bright on ink | 7.34 | links on dark bands |
+| alert-bright on ink | 8.72 | error text on dark bands |
 
 ## 2. Typography
 
@@ -138,6 +140,7 @@ A thin horizontal rule with evenly spaced tick marks, borrowed from billing ledg
 | Badge / status chip | `components/ui/badge.tsx` | `success`, `warning`, `destructive`, `gold`, `neutral`, `secondary` |
 | Alert, Toast | `components/ui/alert.tsx`, `components/ui/sonner.tsx` | Toaster mounted in root layout |
 | Dialog, Sheet, Dropdown, Tabs, Accordion, Tooltip | `components/ui/*` | TooltipProvider in root layout |
+| Primary navigation | `components/marketing/mega-menu.tsx` | WAI-ARIA disclosure pattern (buttons + panels), no positioning engine |
 | Table (TanStack v9) | `components/dashboard/data-table.tsx` | Use `dataTableColumns<T>()` for typed columns |
 | Pagination | `components/ui/pagination.tsx` (links), built into DataTable | |
 | Stat block | `components/ui/stat-block.tsx` | `illustrative` flag for unconfirmed figures |

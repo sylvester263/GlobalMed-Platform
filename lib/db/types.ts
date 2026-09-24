@@ -1,4 +1,4 @@
-// PROVISIONAL — generated from supabase/migrations by a local script because the
+// PROVISIONAL — generated from supabase/migrations (0001 + 0002 details column) by a local script because the
 // Supabase project is not linked yet. Replace with `npm run db:types` once linked.
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
@@ -567,6 +567,7 @@ export type Database = {
           status: Database["public"]["Enums"]["lead_status"];
           assigned_to: string | null;
           created_at: string;
+          details: Json;
         };
         Insert: {
           id?: string;
@@ -582,6 +583,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["lead_status"];
           assigned_to?: string | null;
           created_at?: string;
+          details?: Json;
         };
         Update: {
           id?: string;
@@ -597,6 +599,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["lead_status"];
           assigned_to?: string | null;
           created_at?: string;
+          details?: Json;
         };
         Relationships: [];
       };

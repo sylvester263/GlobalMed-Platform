@@ -1,15 +1,25 @@
 "use client";
 
-import { MotionConfig, useReducedMotion as useOsReducedMotion } from "motion/react";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useSyncExternalStore } from "react";
 
-type ReducedMotionSetting = "user" | "always";
+export type ReducedMotionSetting = "user" | "always";
 
-const ReducedMotionContext = createContext<ReducedMotionSetting>("user");
+export const ReducedMotionContext = createContext<ReducedMotionSetting>("user");
+
+const QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribe(onChange: () => void): () => void {
+  const mq = window.matchMedia(QUERY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
 
 /**
- * Root motion settings (docs/15 §8). `reducedMotion="always"` lets a subtree (e.g. the
- * /styleguide toggle) preview the reduced-motion version regardless of the OS setting.
+ * Root reduced-motion setting (docs/15 §8). Deliberately imports nothing from `motion`:
+ * most pages animate with CSS only (ADR-015), so the Motion runtime loads only where a
+ * component opts in via <MotionFeatures>. `reducedMotion="always"` lets a subtree (the
+ * /styleguide toggle) preview the reduced version regardless of the OS setting; the data
+ * attribute also switches off CSS animations underneath it (globals.css).
  */
 export function MotionProvider({
   children,
@@ -20,11 +30,9 @@ export function MotionProvider({
 }) {
   return (
     <ReducedMotionContext.Provider value={reducedMotion}>
-      <MotionConfig reducedMotion={reducedMotion}>
-        <div data-reduced-motion={reducedMotion === "always" || undefined} className="contents">
-          {children}
-        </div>
-      </MotionConfig>
+      <div data-reduced-motion={reducedMotion === "always" || undefined} className="contents">
+        {children}
+      </div>
     </ReducedMotionContext.Provider>
   );
 }
@@ -32,6 +40,10 @@ export function MotionProvider({
 /** True when the OS asks for reduced motion or a parent MotionProvider forces it. */
 export function usePrefersReducedMotion(): boolean {
   const setting = useContext(ReducedMotionContext);
-  const os = useOsReducedMotion();
-  return setting === "always" || Boolean(os);
+  const os = useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(QUERY).matches,
+    () => false,
+  );
+  return setting === "always" || os;
 }

@@ -1,12 +1,12 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-09-24 · Current phase: **1 — Design system** (awaiting client sign-off P1-7, P1-10) · Overall: **14%**
+Last updated: 2026-09-24 · Current phase: **2 — Public website** (build done; client review, assets and perf verification open) · Overall: **22%**
 
 | Phase | Status | % |
 |---|---|---|
 | 0 Foundation | 🟥 Blocked on client accounts (P0-4, P0-9) | 75 |
 | 1 Design system | 🟨 Built; awaiting client sign-off (P1-7, P1-10) | 85 |
-| 2 Public website | ⬜ | 0 |
+| 2 Public website | 🟨 Pages built; awaiting content review, motion assets, perf check on Vercel | 80 |
 | 3 Auth & dashboard shells | ⬜ | 0 |
 | 4 LMS core | ⬜ | 0 |
 | 5 Payments & enrollment | ⬜ | 0 |
@@ -42,27 +42,27 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [ ] P1-10 Motion graphics storyboard (hero, claim journey, pathway, exam-passed) approved by client — 🟨 storyboards in design-system/motion-storyboards/, awaiting approval
 
 ## Phase 2 — Public website
-- [ ] P2-1 Header/mega menu + footer
-- [ ] P2-2 Home
-- [ ] P2-3 Service pages (template + 6 pages)
-- [ ] P2-4 Specialties index + template
-- [ ] P2-5 Free billing audit form → leads
-- [ ] P2-6 School landing + catalog + course detail
-- [ ] P2-7 Pathways + exam prep + batches + corporate training
-- [ ] P2-8 Blog index/category/post
-- [ ] P2-9 About, team, careers, contact, FAQ
-- [ ] P2-10 Legal pages
-- [ ] P2-11 Verify certificate page
-- [ ] P2-12 Metadata, sitemap, robots, JSON-LD, llms.txt
-- [ ] P2-13 WhatsApp click-to-chat + newsletter
-- [ ] P2-14 Content review with client
-- [ ] P2-15 Motion graphics produced (Lottie/Rive assets per docs/15 §6)
-- [ ] P2-16 MG-1 hero sequence + MG-2 claim-form animation
-- [ ] P2-17 MG-3 scroll-scrubbed claim journey
-- [ ] P2-18 MG-4 to MG-8 service & trust animations
-- [ ] P2-19 MG-9 to MG-13 school & course animations
-- [ ] P2-20 MG-14 to MG-18 forms, verify, page transitions, menu, chat launcher
-- [ ] P2-21 Motion performance + reduced-motion QA
+- [x] P2-1 Header/mega menu + footer
+- [x] P2-2 Home
+- [x] P2-3 Service pages (template + 6 pages)
+- [x] P2-4 Specialties index + template
+- [x] P2-5 Free billing audit form → leads — live once Supabase, Resend, Turnstile and Upstash keys are set (fails closed until then)
+- [x] P2-6 School landing + catalog + course detail
+- [x] P2-7 Pathways + exam prep + batches + corporate training
+- [x] P2-8 Blog index/category/post
+- [x] P2-9 About, team, careers, contact, FAQ
+- [x] P2-10 Legal pages — drafts; counsel/compliance review required before launch
+- [x] P2-11 Verify certificate page — live once Supabase is linked (P0-4)
+- [x] P2-12 Metadata, sitemap, robots, JSON-LD, llms.txt
+- [x] P2-13 WhatsApp click-to-chat + newsletter — needs the WhatsApp number and Resend segment
+- [ ] P2-14 Content review with client — ⬜ 55 [CLIENT TO CONFIRM] markers across content/ and pages
+- [ ] P2-15 Motion graphics produced (Lottie/Rive assets per docs/15 §6) — 🟥 external (motion designer); lib/motion-assets.ts switches each on
+- [ ] P2-16 MG-1 hero sequence + MG-2 claim-form animation — 🟨 MG-1 done; MG-2 shows its poster until the asset arrives
+- [x] P2-17 MG-3 scroll-scrubbed claim journey
+- [ ] P2-18 MG-4 to MG-8 service & trust animations — 🟨 MG-4, MG-6, MG-7, MG-8 done; MG-5 icon animations need the Lottie icon set
+- [ ] P2-19 MG-9 to MG-13 school & course animations — 🟨 MG-9, MG-11 done; MG-10 static until asset; MG-12 needs practice logos; MG-13 needs AAPC permission
+- [ ] P2-20 MG-14 to MG-18 forms, verify, page transitions, menu, chat launcher — 🟨 MG-14–17 done; MG-18 moves to P7-4 with the chat widget
+- [ ] P2-21 Motion performance + reduced-motion QA — 🟨 reduced motion + CLS 0 verified; mobile perf 73–90 locally, re-measure on Vercel preview
 
 ## Phase 3 — Auth & dashboard shells
 - [ ] P3-1 Sign up / login / reset / verify email

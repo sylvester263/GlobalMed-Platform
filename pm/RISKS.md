@@ -12,5 +12,5 @@
 | R8 | Scope creep (portal, mobile app, live classes) | Medium | High | Change requests via DECISIONS.md with price/time before work | Both |
 | R9 | Claude Code session limits interrupt work | High | Low | /checkpoint discipline, SESSION_LOG, small tasks | SylJo |
 | R10 | Video piracy | Medium | Medium | Signed URLs, watermark, concurrent-session limit | SylJo |
-| R12 | Heavy animation hurts page speed / SEO | Medium | Medium | Performance budget docs/15 §7, lazy-load GSAP/Lottie, Lighthouse CI gate | SylJo |
+| R12 | Heavy animation hurts page speed / SEO | Medium | Medium | Performance budget docs/15 §7, CSS-first primitives (ADR-015), lazy GSAP/Lottie, Lighthouse CI gate. Local mobile perf 73–90 at Phase 2; verify on Vercel preview | SylJo |
 | R11 | SEO loss from migrating old site | Medium | Medium | Crawl old site, 301 map, Search Console monitoring | SylJo |

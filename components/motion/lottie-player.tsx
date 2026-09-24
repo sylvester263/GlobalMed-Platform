@@ -16,8 +16,11 @@ const DotLottieReact = dynamic(
 );
 
 type LottiePlayerProps = {
-  /** `.lottie` file under /public/motion. */
-  src: string;
+  /**
+   * `.lottie` file under /public/motion. Omit until the asset is delivered: the poster shows
+   * and the ~165 kB dotLottie runtime is never downloaded.
+   */
+  src?: string;
   /** Static poster under /public/motion/posters, shown until loaded and for reduced motion. */
   poster: string;
   /** Describes what the animation shows; empty string if purely decorative. */
@@ -55,7 +58,11 @@ export function LottiePlayer({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry) return;
-        if (entry.isIntersecting) setNear(true);
+        // Load the runtime when the browser is idle, so it never competes with first paint.
+        if (entry.isIntersecting && src) {
+          if ("requestIdleCallback" in window) window.requestIdleCallback(() => setNear(true));
+          else setNear(true);
+        }
         if (player) {
           if (entry.isIntersecting && !paused) player.play();
           else player.pause();
@@ -65,7 +72,7 @@ export function LottiePlayer({
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [reduced, player, paused]);
+  }, [reduced, player, paused, src]);
 
   useEffect(() => {
     if (!player) return;
@@ -97,7 +104,7 @@ export function LottiePlayer({
         sizes={`${width}px`}
         className={cn("object-contain", loaded && !reduced && "invisible")}
       />
-      {!reduced && near && (
+      {!reduced && near && src && (
         <DotLottieReact
           src={src}
           loop={loop}

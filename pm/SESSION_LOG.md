@@ -52,6 +52,24 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** Client design sign-off and storyboard approval; logo SVG (screens use a placeholder "GM" wordmark); Supabase/Vercel/GitHub access from Phase 0.
 - **Notes:** 21st.dev Magic MCP isn't connected here, so components were built from shadcn/ui directly (ADR-012). Playwright's Chromium download times out on this network; tests use installed Chrome locally (CI installs Chromium). On Windows, never leave a shell's cwd inside .next: it locks the folder and `next build` hangs silently.
 
+---
+### Session 003 — Phase 2 public website
+- **Date:** 2026-09-24
+- **Done:**
+  - P2-1 Header with disclosure-pattern mega menu (ADR-016), lazily loaded mobile sheet, footer with newsletter, legal nav and SylJo credit; skip link; floating WhatsApp button; Organization JSON-LD; MG-16 page transition; MG-17 menu stagger.
+  - Content layer (ADR-014): typed, zod-validated content in content/*.ts (6 services, 6 specialties, 6 courses, 2 pathways, FAQs, company) and Markdown for 4 blog posts and 5 legal drafts. 55 [CLIENT TO CONFIRM] markers; stats labelled illustrative; no fabricated reviews.
+  - Pages: home, services (+6), specialties (+6), free billing audit (+ thank-you), school, catalog with URL filters, course detail (+6), pathways (+2), exam prep, batches, corporate training, AAPC (flag-gated 404), blog (+ categories, posts), about, team, careers, contact, FAQ, guides, legal (+5), verify (+ result), newsletter confirm, 404, login/signup placeholders.
+  - Forms: audit (2-step, MG-14) and contact → leads via Server Actions (zod → rate limit → Turnstile → service-role insert → sales email). Newsletter double opt-in with signed 48h tokens; confirmation happens on a button press so link scanners can't subscribe people. Migration 0002 adds leads.details.
+  - SEO (P2-12): per-page metadata + canonical + OG, default OG image, sitemap, robots, llms.txt, JSON-LD (Organization, Breadcrumb, Service, Course, FAQPage, Article).
+  - Motion: MG-1, MG-3 (GSAP, desktop only, lazy), MG-4, MG-6, MG-7, MG-8, MG-9, MG-11, MG-14, MG-15, MG-16, MG-17.
+  - Tests: 30 unit tests (catalog, content integrity, tokens, schemas); 145 Playwright checks — 32 pages × 360/768/1280 with no horizontal scroll and 0 serious/critical axe issues, plus form, catalog, verify, navigation and SEO flows.
+  - Performance work (P2-21): dotLottie runtime no longer loads without an asset (−165 kB), newsletter form without RHF/zod, CSS-only motion primitives (ADR-015), disclosure nav, lazy mobile nav, inline CSS, GSAP skipped on mobile, mono font not preloaded. Home first-load JS 196 → 143 kB. Lighthouse mobile (local, noisy machine): Accessibility/Best Practices/SEO 100 everywhere; Performance blog 90, services 86, service 80, audit 78, home 75–78, course 73–74; CLS 0 (services 0.013).
+- **Bugs found and fixed in QA:** the audit form's Continue click submitted the form (React reused the button, which became type="submit" mid-event) and flooded step 2 with errors; breadcrumb list semantics broken by wrapper spans (axe, every page); newsletter GET confirmation vulnerable to link pre-fetching; floating WhatsApp overlapping the mobile sticky enroll bar.
+- **Files touched:** app/(marketing)/**, app/(auth)/**, app/{layout,not-found,sitemap,robots,opengraph-image}.tsx, app/llms.txt, app/globals.css, components/{marketing,motion,lms,ui}/**, content/**, lib/{content,leads,newsletter,email,security,certificates,seo,validation,hooks}/**, lib/{site,server-env,analytics,motion-assets}.ts, supabase/migrations/0002_leads_details.sql, tests/**, next.config.ts, vitest.config.mts, .env.example, package.json, design-system/MASTER.md, pm/*
+- **Next:** Phase 3 (auth, roles, dashboard shells). In parallel: client content review (P2-14), motion assets (P2-15), and Lighthouse on the Vercel preview once P0-9 is unblocked.
+- **Blockers:** Supabase/Vercel/GitHub access (Phase 0); WhatsApp number; Turnstile, Upstash and Resend accounts; motion assets; practice logos and testimonials; counsel review of legal pages.
+- **Notes:** .env.local was regenerated from .env.example this session (all values were empty placeholders). `next start` runs in production mode, so forms correctly refuse submissions locally without Turnstile keys; use `npm run dev` with FORMS_DRY_RUN=true to click through the success path.
+
 <!-- Template
 ---
 ### Session NNN — <title>

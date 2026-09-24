@@ -17,6 +17,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  experimental: {
+    // Inline the (small, Tailwind-purged) CSS so it no longer blocks first render (P2-21).
+    inlineCss: true,
+  },
   // A stray lockfile higher up the tree would otherwise be picked as the workspace root.
   outputFileTracingRoot: path.resolve(__dirname),
   async headers() {

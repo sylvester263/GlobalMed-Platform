@@ -192,7 +192,11 @@ export function CtaBand({
         {body && <p className="max-w-prose text-white/80">{body}</p>}
         <ClaimLine trigger="inView" ticks={8} goldEnd className="max-w-md" />
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Link href={href} className={buttonVariants({ size: "lg" })}>
+          {/* Sky with ink text: a navy button would disappear on the dark band. */}
+          <Link
+            href={href}
+            className={cn(buttonVariants({ size: "lg" }), "bg-sky text-ink hover:bg-white")}
+          >
             {label} <ArrowRight aria-hidden="true" />
           </Link>
           {secondary && (

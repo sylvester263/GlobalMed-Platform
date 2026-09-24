@@ -8,7 +8,7 @@ import { isActivePath, mainNav, simpleNav } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const triggerClass =
-  "inline-flex h-10 cursor-pointer items-center gap-1 rounded-md px-3 text-sm font-semibold transition-colors hover:bg-mint aria-expanded:bg-mint";
+  "inline-flex h-10 cursor-pointer items-center gap-1 rounded-md px-3 text-sm font-semibold text-primary transition-colors hover:bg-mint aria-expanded:bg-mint";
 
 /**
  * Desktop primary navigation using the WAI-ARIA disclosure pattern (buttons with

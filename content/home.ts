@@ -1,44 +1,194 @@
-// [CLIENT TO CONFIRM] Home page copy and the claim-journey figures (illustrative until confirmed).
+import type { Faq } from "@/lib/content/schema";
+
+// [CLIENT TO CONFIRM] Home page copy. The home page leads with CPC® and CPB® training as
+// AAPC's strategic partner in Pakistan; US billing services follow further down.
+// AAPC partnership wording needs AAPC's written permission (pm/CLIENT_INPUTS_NEEDED.md).
+
+export const cpcCourseSlug = "cpc-certified-professional-coder";
+export const cpbCourseSlug = "cpb-certified-professional-biller";
 
 export const hero = {
-  eyebrow: "Medical billing · coding · transcription · education",
-  headline: "Clean claims for your practice. Career-ready skills for your future.",
+  badge: "Strategic Partner of AAPC in Pakistan",
+  headline: "AAPC-Certified Medical Coding & Billing Training in Pakistan",
   intro:
-    "GlobalMed runs billing, coding and documentation for US practices, and trains the next generation of billers and coders at the GlobalMed School of Billing and Coding.",
+    "Prepare for the CPC® and CPB® credentials with GlobalMed Transcriptions, AAPC's strategic training partner, and start a global career in healthcare revenue cycle.",
 };
 
-/** MG-3: the stages of a claim, drawn along the claim line (docs/15 §3). */
-export const claimJourney = [
+/** MG-4 count-up proof points. Every figure is a placeholder until the client confirms it. */
+export const partnership = {
+  statement:
+    "GlobalMed Transcriptions × AAPC: bringing internationally recognised medical coding and billing certification training to Pakistan.",
+  confirmed: false,
+  stats: [
+    { label: "Students trained", value: 1500, suffix: "+" },
+    { label: "Training batches completed", value: 40, suffix: "+" },
+    { label: "Certified instructors", value: 8, suffix: "" },
+    { label: "Years in US healthcare revenue cycle", value: 12, suffix: "" },
+  ],
+};
+
+export const programs = [
   {
-    stage: "Patient visit",
-    caption:
-      "Your team sees the patient. Encounter details reach us through your existing secure system.",
-    stat: "Eligibility checked before the visit",
+    slug: cpcCourseSlug,
+    credential: "CPC®",
+    name: "Certified Professional Coder",
+    audience:
+      "Graduates, nursing and pharmacy professionals, and billers who want to become medical coders for US healthcare.",
+    topics: [
+      "ICD-10-CM diagnosis coding",
+      "CPT® procedure coding",
+      "HCPCS Level II",
+      "Modifiers",
+      "Medical terminology & anatomy",
+      "Coding guidelines & compliance",
+    ],
+    format: "Live classes (onsite in Lahore or online), recorded lessons and timed mock exams",
+    duration: "[CLIENT TO CONFIRM]",
+    cta: "View CPC Course",
   },
   {
-    stage: "Coding",
-    caption: "Certified coders assign ICD-10-CM, CPT and HCPCS codes from the documentation.",
-    stat: "95%+ coding accuracy target",
+    slug: cpbCourseSlug,
+    credential: "CPB®",
+    name: "Certified Professional Biller",
+    audience:
+      "Career-starters, front-desk and AR staff, and anyone who wants to work in US medical billing.",
+    topics: [
+      "Claims submission",
+      "Payer rules",
+      "Denials & appeals",
+      "AR follow-up",
+      "Patient billing",
+      "Compliance",
+    ],
+    format: "Live classes (onsite in Lahore or online), recorded lessons and timed mock exams",
+    duration: "[CLIENT TO CONFIRM]",
+    cta: "View CPB Course",
+  },
+] as const;
+
+export const whyUs = [
+  {
+    title: "Learn from working coders and billers",
+    body: "Your instructors code and bill for US practices every week, so lessons use the scenarios employers actually test.",
   },
   {
-    stage: "Claim submitted",
-    caption:
-      "Claims go out within 24–48 hours, and clearinghouse rejections are fixed the same day.",
-    stat: "24–48h submission",
+    title: "AAPC-aligned curriculum and exam preparation",
+    body: "Modules follow the CPC® and CPB® exam content, with section-by-section review and exam strategy.",
   },
   {
-    stage: "Scrubbed",
-    caption: "Every claim is checked against payer rules before and after submission.",
-    stat: "98% clean-claim target",
+    title: "Mock exams and recorded lessons",
+    body: "Sit timed mock exams in exam format and rewatch any recorded lesson as often as you need.",
   },
   {
-    stage: "Paid",
-    caption: "Payments are posted, denials worked, and you see it all in one monthly report.",
-    stat: "Monthly results review",
+    title: "Career support",
+    body: "Interview preparation and pathways into GlobalMed and international healthcare BPO roles. [CLIENT TO CONFIRM]",
   },
 ];
 
-/** [CLIENT TO CONFIRM] Consent-approved testimonials. The section stays hidden while empty. */
+/** The route to certification, drawn along the claim line (MG-3). */
+export const certificationPath = [
+  {
+    stage: "Enroll",
+    caption: "Choose CPC® or CPB® training, onsite in Lahore or online.",
+    stat: "Free career counselling first",
+  },
+  {
+    stage: "Learn",
+    caption: "Live classes with an instructor, plus recorded lessons you can rewatch.",
+    stat: "Live + recorded",
+  },
+  {
+    stage: "Practice & mock exams",
+    caption: "Practice sets after every module and timed mock exams in exam format.",
+    stat: "Timed, exam-style",
+  },
+  {
+    stage: "Sit the AAPC exam",
+    caption: "You register for and sit the exam with AAPC when you're ready.",
+    stat: "Exam logistics [CLIENT TO CONFIRM]",
+  },
+  {
+    stage: "Get certified",
+    caption: "Pass the exam to earn your AAPC credential.",
+    stat: "CPC® or CPB®",
+  },
+  {
+    stage: "Career support",
+    caption: "Interview preparation and introductions to employers.",
+    stat: "[CLIENT TO CONFIRM]",
+  },
+];
+
+/** [CLIENT TO CONFIRM] Next CPC® and CPB® batches: dates, modes and seats. */
+export const upcomingBatches = [
+  {
+    credential: "CPC®",
+    title: "CPC® training batch",
+    starts: "[CLIENT TO CONFIRM]",
+    mode: "Onsite Lahore / Online",
+    seatsLeft: "[CLIENT TO CONFIRM]",
+  },
+  {
+    credential: "CPB®",
+    title: "CPB® training batch",
+    starts: "[CLIENT TO CONFIRM]",
+    mode: "Onsite Lahore / Online",
+    seatsLeft: "[CLIENT TO CONFIRM]",
+  },
+];
+
+/** Services for US practices, shown lower on the page. */
+export const serviceSlugs = [
+  "medical-billing",
+  "medical-coding",
+  "medical-transcription",
+  "ai-clinical-documentation",
+] as const;
+
+export const faqs: Faq[] = [
+  {
+    question: "What are CPC® and CPB®?",
+    answer:
+      "CPC® (Certified Professional Coder) and CPB® (Certified Professional Biller) are professional credentials awarded by AAPC. CPC® covers medical coding; CPB® covers medical billing and the revenue cycle.",
+  },
+  {
+    question: "Who should take CPC® vs CPB®?",
+    answer:
+      "Choose CPC® if you want to assign diagnosis and procedure codes from medical documentation. Choose CPB® if you prefer claims, payer follow-up, denials and payments. Our advisors can help you decide in a free counselling session.",
+  },
+  {
+    question: "Do I need a medical background?",
+    answer:
+      "No. Both programs start with the fundamentals, including medical terminology and anatomy for coders. A background in life sciences, nursing or pharmacy helps but isn't required.",
+  },
+  {
+    question: "Is the course online or in Lahore?",
+    answer:
+      "Both. Batches run onsite in Lahore and live online, and every class is recorded so you can rewatch it. Batch dates and modes are [CLIENT TO CONFIRM].",
+  },
+  {
+    question: "How does exam preparation work?",
+    answer:
+      "Each module ends with practice questions, and you sit timed mock exams in exam format with a review of every answer. Instructors help you focus on your weakest sections before exam day.",
+  },
+  {
+    question: "Will I get a certificate from GlobalMed?",
+    answer:
+      "Yes. You receive a GlobalMed certificate of completion that employers can verify online. The CPC® or CPB® credential itself is awarded by AAPC when you pass their exam.",
+  },
+  {
+    question: "How do I register for the AAPC exam?",
+    answer:
+      "The exam is registered for and taken with AAPC. How GlobalMed supports registration, exam fees and scheduling is [CLIENT TO CONFIRM].",
+  },
+  {
+    question: "What are the fees, and can I pay in installments?",
+    answer:
+      "Course fees and installment options are [CLIENT TO CONFIRM]. Book a free counselling session and an advisor will share the current fees for your batch.",
+  },
+];
+
+/** [CLIENT TO CONFIRM] Consent-approved testimonials. Each group stays hidden while empty. */
 export const testimonials: {
   quote: string;
   name: string;

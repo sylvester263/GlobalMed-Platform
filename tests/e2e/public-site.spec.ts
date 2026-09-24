@@ -133,11 +133,11 @@ test.describe("navigation and SEO", () => {
 test.describe("home motion (desktop, motion allowed)", () => {
   test.use({ viewport: { width: 1280, height: 720 }, reducedMotion: "no-preference" });
 
-  test("How we work pins with scroll space, so the next section never covers it", async ({
+  test("the certification path pins with scroll space, so the next section never covers it", async ({
     page,
   }) => {
     await page.goto("/");
-    const section = page.locator("#how-we-work");
+    const section = page.locator("#certification-path");
     await section.scrollIntoViewIfNeeded();
     const spacer = page.locator(".pin-spacer").filter({ has: section });
     await expect(spacer).toHaveCount(1);
@@ -148,9 +148,9 @@ test.describe("home motion (desktop, motion allowed)", () => {
     const top = await spacer.evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
     await page.evaluate((y) => window.scrollTo(0, y), top + padding / 2);
     await expect(
-      page.getByRole("heading", { name: "How we work with your practice" }),
+      page.getByRole("heading", { name: "Your path to certification" }),
     ).toBeInViewport();
-    await expect(section.getByRole("link", { name: /free billing audit/i })).toBeInViewport();
+    await expect(section.getByRole("link", { name: /enroll in cpc training/i })).toBeInViewport();
 
     // The section after it starts below the spacer, not on top of the pinned section.
     const overlap = await spacer.evaluate((el) => {
@@ -170,7 +170,7 @@ test.describe("home motion (desktop, motion allowed)", () => {
       (el) => el.getAnimations({ subtree: true }).filter((a) => a.playState === "running").length,
     );
     expect(running).toBeGreaterThan(10);
-    await page.locator("#how-we-work").scrollIntoViewIfNeeded();
+    await page.locator("#certification-path").scrollIntoViewIfNeeded();
     await expect(hero).toHaveAttribute("data-paused", "true");
   });
 });

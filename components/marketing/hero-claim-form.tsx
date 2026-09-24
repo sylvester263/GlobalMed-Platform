@@ -80,7 +80,7 @@ export function HeroClaimForm({ className }: { className?: string }) {
               textAnchor="middle"
               fontSize="11"
               fontWeight="700"
-              fill="var(--success)"
+              fill="var(--success-ink)"
               className="font-sans"
             >
               PAID
@@ -155,7 +155,7 @@ export function HeroClaimForm({ className }: { className?: string }) {
             fill="var(--muted)"
           />
 
-          {/* Claim line: track, then the teal fill and ticks, then the gold end mark */}
+          {/* Claim line: track, then the navy fill, sky ticks and the sky end mark */}
           <g strokeLinecap="round">
             <line x1="120" y1="232" x2="360" y2="232" stroke="var(--border)" strokeWidth="2" />
             <line
@@ -175,7 +175,7 @@ export function HeroClaimForm({ className }: { className?: string }) {
                 y1="224"
                 x2={x}
                 y2="240"
-                stroke="var(--teal)"
+                stroke="var(--sky)"
                 strokeWidth="2"
               />
             ))}

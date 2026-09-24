@@ -107,11 +107,22 @@ export function ClaimJourney({ stages }: { stages: Stage[] }) {
       {/* Desktop connector; mobile uses the vertical rule on the list. */}
       <div
         aria-hidden="true"
-        className="absolute top-4 right-[10%] left-[10%] hidden h-0.5 bg-tick lg:block"
+        className="absolute top-4 hidden h-0.5 bg-tick lg:block"
+        style={{
+          left: `calc(100% / ${stages.length * 2})`,
+          right: `calc(100% / ${stages.length * 2})`,
+        }}
       >
         <div data-journey-line className="absolute inset-0 origin-left bg-teal" />
       </div>
-      <ol className="relative grid gap-8 border-l-2 border-teal pl-6 lg:grid-cols-5 lg:gap-6 lg:border-0 lg:pl-0">
+      <ol
+        style={
+          {
+            "--journey-cols": `repeat(${stages.length}, minmax(0, 1fr))`,
+          } as React.CSSProperties
+        }
+        className="relative grid gap-8 border-l-2 border-teal pl-6 lg:grid-cols-(--journey-cols) lg:gap-6 lg:border-0 lg:pl-0"
+      >
         {stages.map((s, i) => (
           <li
             key={s.stage}

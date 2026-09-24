@@ -36,7 +36,7 @@ export function MobileNav({ open, onOpenChange, pathname }: MobileNavProps) {
       <SheetContent side="right" className="w-full overflow-y-auto sm:max-w-sm">
         <SheetHeader>
           <SheetTitle>
-            <Wordmark />
+            <Wordmark size="compact" />
           </SheetTitle>
           <SheetDescription className="sr-only">Site navigation</SheetDescription>
         </SheetHeader>

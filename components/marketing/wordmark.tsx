@@ -1,25 +1,52 @@
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
-/** Placeholder brand mark until the client's logo SVG arrives (pm/CLIENT_INPUTS_NEEDED.md). */
+/** The client's official logo (public/logo.png, 561 × 143). Use as supplied: never recolour or redraw it. */
+const logo = { src: "/logo.png", width: 561, height: 143 } as const;
+
+const heights = {
+  /** Site header and auth pages: 36px on mobile, 44px from md. */
+  header: "h-9 md:h-11",
+  /** Footer: 48px. */
+  footer: "h-12",
+  /** Dashboard sidebar, sheets and the course player bar: 36px. */
+  compact: "h-9",
+} as const;
+
 export function Wordmark({
+  size = "header",
+  iconOnly = false,
+  onDark = false,
+  priority = false,
   className,
-  inverted = false,
 }: {
+  size?: keyof typeof heights;
+  /** Crop to the circular icon with object-position (collapsed dashboard sidebar). */
+  iconOnly?: boolean;
+  /** The logo is navy on transparent, so on dark bands it sits on a white plate. */
+  onDark?: boolean;
+  priority?: boolean;
   className?: string;
-  inverted?: boolean;
 }) {
+  const image = (
+    <Image
+      src={logo.src}
+      width={logo.width}
+      height={logo.height}
+      alt="GlobalMed Transcriptions logo"
+      priority={priority}
+      className={cn(
+        iconOnly ? "size-10 object-cover object-left" : cn("w-auto", heights[size]),
+        !onDark && className,
+      )}
+    />
+  );
+
+  if (!onDark) return image;
   return (
-    <span className={cn("flex items-center gap-2 font-serif text-xl font-semibold", className)}>
-      <span
-        aria-hidden="true"
-        className={cn(
-          "flex size-8 items-center justify-center rounded-md font-sans text-sm font-bold",
-          inverted ? "bg-white text-ink" : "bg-teal text-white",
-        )}
-      >
-        GM
-      </span>
-      GlobalMed
+    <span className={cn("inline-flex self-start rounded-md bg-white px-3 py-2", className)}>
+      {image}
     </span>
   );
 }

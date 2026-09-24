@@ -87,6 +87,11 @@ export const mainNav: NavGroup[] = [
     href: "/school",
     links: [
       {
+        label: "CPC & CPB Training",
+        href: "/#certification-programs",
+        description: "AAPC certification training in Lahore and online",
+      },
+      {
         label: "All courses",
         href: "/school/courses",
         description: "Billing, coding and exam prep",

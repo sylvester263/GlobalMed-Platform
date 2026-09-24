@@ -48,7 +48,7 @@ export default async function LessonPage({ params }: Props) {
         <ArrowLeft aria-hidden="true" className="size-5" />
       </Link>
       <Link href="/" aria-label="GlobalMed home" className="hidden sm:block">
-        <Wordmark />
+        <Wordmark size="compact" />
       </Link>
       <p className="truncate font-semibold sm:border-l sm:pl-4">{course.title}</p>
       {(course.enrollmentActive || course.isStaff) && (

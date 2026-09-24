@@ -1,5 +1,6 @@
 import { QrCode } from "lucide-react";
 
+import { Wordmark } from "@/components/marketing/wordmark";
 import { ClaimLine } from "@/components/motion/claim-line";
 import { SealStamp } from "@/components/motion/seal-stamp";
 import { cn } from "@/lib/utils";
@@ -19,7 +20,8 @@ const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "long" });
 
 /**
  * On-screen certificate (docs/08, X-2). The PDF (P6-5) mirrors this layout.
- * Reveal: the claim line underlines the name, then the gold seal stamps in (docs/15 §3).
+ * Reveal: the claim line underlines the name, then the seal stamps in (docs/15 §3).
+ * Palette: navy border, sky-blue seal ring.
  * The QR code is generated in P6-5; a placeholder marks its position.
  */
 export function CertificatePreview({
@@ -39,9 +41,10 @@ export function CertificatePreview({
         className,
       )}
     >
-      <div className="pointer-events-none absolute inset-[2.5%] rounded-md border border-gold/60" />
+      <div className="pointer-events-none absolute inset-[2.5%] rounded-md border-2 border-primary" />
       <div className="relative flex h-full flex-col items-center justify-between gap-6 py-4 text-center sm:gap-0 sm:py-0">
         <div className="flex flex-col items-center gap-[0.5cqw]">
+          <Wordmark size="compact" className="mb-[1cqw] h-[max(28px,6cqw)]" />
           <p className="text-[max(10px,1.6cqw)] font-semibold tracking-[0.2em] text-teal-deep uppercase">
             GlobalMed School of Billing and Coding
           </p>

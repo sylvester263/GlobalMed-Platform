@@ -20,60 +20,57 @@
 
 ## 1. Colors
 
-### 1.1 Brand tokens
+### 1.1 Brand tokens (logo palette, ADR-023)
+The palette comes from the official logo (`public/logo.png`). Older token names are kept as aliases in `app/globals.css`, so existing classes still work: `teal` = navy, `teal-bright` = sky, `gold` = sky, `gold-ink` = navy, `mint` = sky-soft, `ledger` = surface-soft.
+
 | Token | Hex | Use |
 |---|---|---|
-| `ink` | `#0F2A3D` | Primary text, headings, footer, dark bands |
-| `teal` | `#0E7C7B` | Primary actions, links, focus ring, active states |
-| `teal-hover` | `#0A6463` | Hover/pressed for teal surfaces |
-| `teal-deep` | `#0A5857` | Teal **text** on `mint` backgrounds |
-| `teal-bright` | `#5FC7C0` | Teal accents/links on `ink` backgrounds only |
-| `mint` | `#E6F4F1` | Section bands, soft highlights, selected rows |
-| `ledger` | `#F7F8F6` | Page background (paper white, faintly green) |
-| `white` | `#FFFFFF` | Cards, inputs, popovers |
-| `gold` | `#C8962E` | **Decorative only**: seals, certificate ornaments, achievement icons, gold on `ink` |
-| `gold-ink` | `#8A6414` | Gold-coloured **text** on light backgrounds |
-| `gold-soft` | `#F6EBD3` | Achievement badges' background |
-| `alert` | `#B42318` | Errors, denied states, destructive actions |
-| `alert-bright` | `#FFB4AB` | Error text on `ink` backgrounds only (8.72:1) |
+| `navy` (`teal`, `primary`) | `#283F93` | Headings, primary buttons, header links, footer background, active states, focus ring |
+| `navy-hover` (`teal-hover`, `teal-deep`) | `#1F3278` | Hover/pressed navy; navy text on tinted surfaces |
+| `sky` (`teal-bright`, `gold`) | `#51ACE3` | Highlights, icons, claim-line ticks, progress fills, seal ring, links on `ink`. **Never white text on sky**: use ink text (5.43:1) |
+| `mid-blue` (`secondary`) | `#3A73C2` | Secondary buttons, charts, hover accents |
+| `ink` | `#1B2A5E` | Body text; dark bands (CTA band) |
+| `surface-soft` (`ledger`) | `#EEF6FC` | Light section backgrounds |
+| `sky-soft` (`mint`, `gold-soft`, `accent`) | sky 20% on white | Icon chips, hover states, soft badges |
+| `white` (`background`) | `#FFFFFF` | Page background, cards, inputs |
+| `alert` (`destructive`) | `#C0392B` | Errors, denied states |
+| `alert-bright` | `#FFB4AB` | Error text on dark bands |
+
+Gradients: only where one already exists, `#283F93 → #3A73C2`. Don't add new ones.
 
 ### 1.2 Semantic tokens (CSS variables in `app/globals.css`, shadcn names)
 | Variable | Value | Notes |
 |---|---|---|
-| `--background` | ledger | |
+| `--background` | `#FFFFFF` | |
 | `--foreground` | ink | |
-| `--card` / `--popover` | white | `-foreground`: ink |
-| `--primary` | teal | `--primary-foreground`: white |
-| `--secondary` | mint | `--secondary-foreground`: teal-deep |
-| `--muted` | `#EDF0EE` | `--muted-foreground`: `#4F6470` |
-| `--accent` | mint | `--accent-foreground`: ink |
-| `--destructive` | alert | |
-| `--success` | `#1D7A43` | soft: `#E7F4EC` |
-| `--warning` | `#A15C07` | soft: `#FDF1E2` (exam timer amber, pending states) |
-| `--border` | `#D9E0DC` | Decorative dividers, card outlines (no contrast requirement) |
-| `--input` | `#7A8A88` | Form control borders: ≥ 3:1 on white, ledger and mint (WCAG 1.4.11) |
-| `--ring` | teal | 2px ring + 2px offset |
-| `--tick` | `#C9D3CF` | Unfilled claim-line ticks (decorative) |
+| `--primary` | navy | `--primary-foreground`: white |
+| `--secondary` | mid-blue | `--secondary-foreground`: white. Secondary buttons are mid-blue outline, filled on hover |
+| `--muted` | `#EDF2F8` | `--muted-foreground`: `#5B6785` |
+| `--accent` | sky-soft | `--accent-foreground`: ink |
+| `--success` | `#1E8E5A` | Fills and icons. Text uses `--success-ink` `#17734A`; soft `#E8F5EE` |
+| `--warning` | `#D98A0B` | Fills only. Text and icons use `--warning-ink` `#8A5A06`; soft `#FDF3E1` |
+| `--border` | `#D9E3F0` | Dividers, card outlines, unfilled ticks (`--tick`) |
+| `--input` | `#6E7B99` | Form control borders, ≥ 3:1 on white (4.24) |
+| `--ring` | navy | 2px ring + 2px offset |
 
-**Dark mode:** not in launch scope. Marketing and dashboards ship light only. A dark theme needs its own contrast pass and an ADR.
+**Dark mode:** not in launch scope.
 
 ### 1.3 Verified contrast (WCAG 2.1, computed)
 | Pair | Ratio | Allowed use |
 |---|---|---|
-| ink on ledger / white | 13.89 / 14.80 | all text |
-| teal on white / ledger | 5.01 / 4.71 | text, links |
-| teal on mint | 4.44 ❌ | **not for text**: use teal-deep (7.29) |
-| white on teal / teal-hover | 5.01 / 6.96 | button labels |
-| muted-fg on ledger / white / mint / muted | 5.82 / 6.20 / 5.48 / 5.40 | secondary text |
-| gold on white | 2.67 ❌ | decorative only |
-| gold on ink | 5.54 | text allowed on dark bands |
-| gold-ink on white / ledger / gold-soft | 5.37 / 5.04 / 4.53 | text |
-| alert on white / ledger / alert-soft | 6.57 / 6.17 / 5.75 | error text |
-| success on white / success-soft | 5.36 / 4.74 | text |
-| warning on white / warning-soft | 5.19 / 4.66 | text |
-| input border on white / ledger / mint | 3.61 / 3.39 / 3.19 | control boundaries |
-| teal-bright on ink | 7.34 | links on dark bands |
-| alert-bright on ink | 8.72 | error text on dark bands |
+| white on navy / navy-hover / mid-blue | 9.45 / 11.76 / 4.76 | button labels, text on bands |
+| navy on white / surface-soft / sky-soft | 9.45 / 8.65 / 7.94 | text, links |
+| ink on surface-soft | 12.49 | all text |
+| muted-fg on white / surface-soft / sky-soft | 5.64 / 5.16 / 4.74 | secondary text |
+| mid-blue on white | 4.76 | secondary button text (not on surface-soft: 4.36 ❌) |
+| sky on white | 2.51 ❌ | decorative only |
+| sky on navy | 3.76 | icons and large text only (≥ 24px) |
+| sky on ink / ink on sky | 5.43 | text, buttons on dark bands |
+| navy on sky | 3.76 ❌ | not for text: use ink on sky |
+| success on white | 4.14 ❌ | icons only; text uses success-ink (5.85) |
+| warning on white | 2.77 ❌ | fills only; text and icons use warning-ink (5.92) |
+| alert on white / destructive-soft | 5.44 / 4.76 | error text |
+| alert-bright on navy | 5.57 | error text on the footer |
 
 ## 2. Typography
 
@@ -112,15 +109,15 @@ Rules: headings use `font-serif`, weight 600, `tracking-tight`, `text-balance`. 
 
 A thin horizontal rule with evenly spaced tick marks, borrowed from billing ledgers. **Spend boldness here only.**
 
-- Anatomy: 1px (`--border`) or 2px (`teal`, when active) rule; ticks 6px tall, 1px wide, every 24px or at step positions; filled ticks are `teal`; the final tick can be `gold` for achievement.
+- Anatomy: 1px (`--border`) or 2px (`teal`, when active) rule; ticks 6px tall, 1px wide, every 24px or at step positions; the fill rule is navy (`teal`), filled ticks are sky; the final tick is a heavier sky mark (`gold` alias) for achievement.
 - Used as: section dividers (static), course progress bars (ticks = lessons), certification pathway (ticks = stages), multi-step form progress, certificate name underline, hero draw-in (MG-1).
 - Components: `components/ui/claim-progress.tsx` (static, accessible `role="progressbar"`) and `components/motion/claim-line.tsx` (animated).
 
 ## 5. Component rules
 
 - Build on shadcn/ui (Base UI primitives) in `components/ui/`. Restyle with tokens only: **no hex values in components**.
-- **Buttons:** variants `primary` (teal), `secondary` (white + input border), `ghost`, `destructive`, `link`. Sizes `sm` 32px · `default` 40px · `lg` 48px. Labels are verbs that describe the outcome ("Book your free billing audit"). `loading` shows a spinner, keeps the width and sets `aria-busy`.
-- **Links** in body copy are teal and underlined (`underline-offset-4`). Never colour-only.
+- **Buttons:** variants `primary` (navy), `secondary` (mid-blue outline, filled on hover), `ghost`, `destructive`, `link`. Sizes `sm` 32px · `default` 40px · `lg` 48px. Labels are verbs that describe the outcome ("Book your free billing audit"). `loading` shows a spinner, keeps the width and sets `aria-busy`.
+- **Links** in body copy are navy and underlined (`underline-offset-4`). Never colour-only.
 - **Forms:** visible label above every field; helper text below; error text in `alert` below the field with an icon, linked with `aria-describedby`; required fields marked "(required)" in text, not only `*`. Every public form shows the notice: *"Do not include patient information."*
 - **Status chips:** pill, soft background + strong text (`success-soft`/`success`, etc.), always with a text label.
 - **Cards:** white, `border`, `radius-lg`, 24px padding. Only for genuinely repeated items (courses, posts, testimonials).
@@ -185,7 +182,7 @@ Rules: animate only `transform` and `opacity` (the claim line draws with `scaleX
 - The SylJo/Claude clay-orange accent
 - Identical card grids for every section; everything centred
 - Hex colours or ad-hoc durations inside components
-- Gold text on light backgrounds (use `gold-ink`); teal text on mint (use `teal-deep`)
+- Sky text on light backgrounds, white text on sky, or navy text on sky (use ink); mid-blue text on surface-soft
 - Placeholder-only labels; errors only at the top of a form; colour as the only signal
 - Removing focus outlines; icon-only buttons without labels; emoji icons
 - Animating width/height/top/left; bouncy overshoot; auto-playing carousels without pause

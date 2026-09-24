@@ -75,7 +75,10 @@ export default async function ServicePage({ params }: Props) {
           <ul className="flex flex-col gap-4">
             {service.problems.map((problem) => (
               <li key={problem} className="flex items-start gap-3 text-lg">
-                <TriangleAlert aria-hidden="true" className="mt-1 size-5 shrink-0 text-warning" />
+                <TriangleAlert
+                  aria-hidden="true"
+                  className="mt-1 size-5 shrink-0 text-warning-ink"
+                />
                 {problem}
               </li>
             ))}

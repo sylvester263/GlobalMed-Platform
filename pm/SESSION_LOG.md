@@ -147,6 +147,20 @@ Newest entry at the bottom. One entry per Claude Code session.
 
 
 ---
+### Session 005c — Logo, logo palette and CPC®/CPB® home page
+- **Date:** 2026-09-24
+- **Done:**
+  - Logo: the supplied logo is now `public/logo.png`, byte-identical to the original. It's in the header (36/44px), footer (48px, on a white plate), auth pages, dashboard sidebar (cropped to the icon when collapsed), mobile sheets, course player bar, certificate, OG image and styleguide frames. Favicon cropped from the icon.
+  - Palette: logo colours via tokens only (ADR-023). Contrast fixes: success-ink/warning-ink for text, sky-on-ink buttons on dark bands, secondary buttons mid-blue outline. Certificate has a navy border and a sky seal ring.
+  - Home rewritten around CPC®/CPB® training as AAPC's strategic partner, in 10 sections. The claim-line path now takes any number of steps. New title, description and EducationalOrganization JSON-LD. The FAQPage JSON-LD is kept.
+  - Added CPC® and CPB® courses to content/school.ts (placeholders marked). Added "CPC & CPB Training" as the first School menu item. Added the AAPC trademark line to the footer.
+  - Verified: tsc, eslint, 92 unit tests, build, public-site + auth e2e (27 tests), 360px (no horizontal scroll) and 1280px screenshots.
+- **Files touched:** see the commit.
+- **Next:** Phase 5. Client to confirm the new [CLIENT TO CONFIRM] items and AAPC permission.
+- **Blockers:** AAPC written permission for the partnership claim and logo.
+
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

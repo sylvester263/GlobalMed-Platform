@@ -58,7 +58,12 @@ export function NewsletterForm() {
           aria-describedby={error ? "newsletter-error" : undefined}
           className="sm:flex-1"
         />
-        <Button type="submit" size="lg" loading={pending} className="h-10">
+        <Button
+          type="submit"
+          size="lg"
+          loading={pending}
+          className="h-10 bg-sky text-ink hover:bg-white"
+        >
           Subscribe
         </Button>
       </div>

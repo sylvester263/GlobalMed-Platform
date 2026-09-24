@@ -131,7 +131,7 @@ export function LessonBody({
       {justCompleted ? (
         <LessonComplete next={next} courseHref="/dashboard/student/courses" />
       ) : completed ? (
-        <p className="flex items-center gap-2 font-semibold text-success">
+        <p className="flex items-center gap-2 font-semibold text-success-ink">
           <CheckCircle2 aria-hidden="true" className="size-5" /> Completed. You can revisit this
           lesson any time.
         </p>

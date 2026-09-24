@@ -1,58 +1,124 @@
-import { ArrowRight } from "lucide-react";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
+import {
+  ArrowRight,
+  BookOpenCheck,
+  Briefcase,
+  CalendarDays,
+  Check,
+  MapPin,
+  PlayCircle,
+  Users,
+} from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 import { ClaimJourney } from "@/components/marketing/home/claim-journey";
 import { HeroClaimForm } from "@/components/marketing/hero-claim-form";
 import { HeroCtas } from "@/components/marketing/home/hero-ctas";
-import { CourseCard, CtaBand, FaqList, Section, StatsStrip } from "@/components/marketing/sections";
+import { CtaBand, FaqList, Section } from "@/components/marketing/sections";
 import { ServiceIcon } from "@/components/marketing/service-icon";
 import { Testimonial } from "@/components/marketing/testimonial";
+import { Wordmark } from "@/components/marketing/wordmark";
 import { ClaimLine } from "@/components/motion/claim-line";
+import { CountUp } from "@/components/motion/count-up";
 import { LottiePlayer } from "@/components/motion/lottie-player";
-import { PathwayLine } from "@/components/motion/pathway-line";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger-group";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { faqGroups } from "@/content/company";
-import { claimJourney, hero, testimonials } from "@/content/home";
+import {
+  certificationPath,
+  cpcCourseSlug,
+  faqs,
+  hero,
+  partnership,
+  programs,
+  serviceSlugs,
+  testimonials,
+  upcomingBatches,
+  whyUs,
+} from "@/content/home";
+import { getCourse, getServices } from "@/lib/content";
 import { motionAssets } from "@/lib/motion-assets";
-import { getFeaturedCourses, getPathway, getServices } from "@/lib/content";
-import { getPosts, postCategories } from "@/lib/content/markdown";
+import { educationalOrganizationJsonLd, JsonLd } from "@/lib/seo/json-ld";
 import { pageMetadata } from "@/lib/seo/metadata";
-import { site } from "@/lib/site";
+import { whatsappHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
+
+const description =
+  "GlobalMed Transcriptions is AAPC's strategic partner in Pakistan, offering CPC and CPB medical coding and billing certification training in Lahore and online.";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "Medical Billing, Coding & Training",
-    description:
-      "Medical billing, coding and transcription for US practices, and the GlobalMed School of Billing and Coding for career-ready billers and coders.",
+    title: "AAPC Strategic Partner in Pakistan | CPC & CPB Training",
+    description,
     path: "/",
   }),
-  title: { absolute: "GlobalMed | Medical Billing, Coding & Training" },
+  title: { absolute: "AAPC Strategic Partner in Pakistan | CPC & CPB Training | GlobalMed" },
 };
 
+const whyIcons = [Users, BookOpenCheck, PlayCircle, Briefcase] as const;
+
+/** The AAPC mark is shown only once the client supplies it with permission (pm/CLIENT_INPUTS_NEEDED.md). */
+const aapcLogo = [
+  { src: "/aapc-logo.png", width: 160, height: 48 },
+  { src: "/aapc-logo.svg", width: 146, height: 51 },
+].find((logo) => existsSync(join(process.cwd(), "public", logo.src)));
+
+const cpcHref = `/school/courses/${cpcCourseSlug}`;
+
 export default function HomePage() {
-  const services = getServices().slice(0, 4);
-  const featured = getFeaturedCourses().slice(0, 3);
-  const pathway = getPathway("billing-and-coding-career");
-  const posts = getPosts().slice(0, 3);
-  const faqs = faqGroups.flatMap((g) => g.faqs).slice(0, 5);
+  const services = getServices().filter((s) =>
+    (serviceSlugs as readonly string[]).includes(s.slug),
+  );
+  const studentTestimonials = testimonials.filter((t) => t.audience === "student");
+  const practiceTestimonials = testimonials.filter((t) => t.audience === "practice");
+  const whatsapp = whatsappHref("Hello GlobalMed, I'd like advice on CPC and CPB training.");
 
   return (
     <>
-      {/* 1. Hero: both paths above the fold (W-1). MG-1 enhances; text is SSR and never hidden. */}
+      <JsonLd
+        data={educationalOrganizationJsonLd({
+          description,
+          courses: programs.map((p) => ({
+            name: `${p.credential} ${p.name} training`,
+            description: getCourse(p.slug)?.summary ?? p.audience,
+            path: `/school/courses/${p.slug}`,
+          })),
+        })}
+      />
+
+      {/* 1. Hero. MG-1 enhances; text is SSR and never hidden. */}
       <section className="bg-ledger">
         <div className="mx-auto grid max-w-300 items-center gap-12 px-4 py-14 md:px-6 lg:grid-cols-[1.1fr_1fr] lg:py-24">
           <div className="flex flex-col gap-6">
-            <p className="text-xs font-semibold tracking-[0.12em] text-teal-deep uppercase">
-              {hero.eyebrow}
-            </p>
-            <h1 className="text-3xl lg:text-4xl">{hero.headline}</h1>
+            <Badge variant="gold" className="h-auto py-1 whitespace-normal">
+              {hero.badge}
+            </Badge>
+            <h1 className="text-3xl text-primary lg:text-4xl">{hero.headline}</h1>
             <ClaimLine trigger="mount" ticks={8} delay={0.1} className="max-w-md" />
             <p className="max-w-prose text-lg text-muted-foreground">{hero.intro}</p>
             <HeroCtas />
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <Wordmark size="compact" />
+              <span aria-hidden="true" className="h-10 w-px bg-border" />
+              {aapcLogo ? (
+                <Image
+                  src={aapcLogo.src}
+                  alt="AAPC logo"
+                  width={aapcLogo.width}
+                  height={aapcLogo.height}
+                  unoptimized={aapcLogo.src.endsWith(".svg")}
+                  className="h-10 w-auto object-contain"
+                />
+              ) : (
+                <span className="flex h-10 items-center rounded-md border-2 border-dashed border-input px-3 text-xs font-semibold text-muted-foreground">
+                  AAPC partner logo
+                </span>
+              )}
+            </div>
           </div>
           {/* MG-2: coded SVG loop; a designer's Lottie replaces it once delivered (P2-15). */}
           {motionAssets.heroClaimForm ? (
@@ -70,18 +136,176 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. Trust strip (MG-4) */}
-      <StatsStrip />
+      {/* 2. Partnership strip (MG-4 count-up) */}
+      <section aria-label="GlobalMed and AAPC partnership" className="bg-primary text-white">
+        <div className="mx-auto flex max-w-300 flex-col gap-10 px-4 py-14 md:px-6">
+          <p className="max-w-4xl font-serif text-xl leading-snug font-semibold text-white lg:text-2xl">
+            {partnership.statement}
+          </p>
+          <ul className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+            {partnership.stats.map((stat) => (
+              <li key={stat.label} className="flex flex-col gap-1">
+                <p className="font-serif text-3xl font-semibold tracking-tight text-sky">
+                  <CountUp value={stat.value} suffix={stat.suffix} />
+                </p>
+                <p className="text-sm font-semibold text-white/85">{stat.label}</p>
+                {!partnership.confirmed && (
+                  <p className="text-xs text-white/75">[CLIENT TO CONFIRM]</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-      {/* 3. Services overview: a list, not a card grid */}
-      <Section className="lg:grid lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+      {/* 3. Certification programs */}
+      <Section
+        id="certification-programs"
+        title="CPC® and CPB® certification programs"
+        intro="Two AAPC credentials, two career paths. Both programs run onsite in Lahore and online."
+      >
+        <ul className="grid gap-6 md:grid-cols-2">
+          {programs.map((program) => (
+            <li
+              key={program.slug}
+              className="flex flex-col gap-6 rounded-lg border bg-card p-6 shadow-sm lg:p-8"
+            >
+              <div className="flex flex-col gap-1">
+                <p className="font-serif text-4xl font-semibold text-primary">
+                  {program.credential}
+                </p>
+                <h3 className="text-xl">{program.name}</h3>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h4 className="font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase">
+                  Who it&apos;s for
+                </h4>
+                <p className="text-muted-foreground">{program.audience}</p>
+              </div>
+              <div className="flex flex-col gap-3">
+                <h4 className="font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase">
+                  What you&apos;ll learn
+                </h4>
+                <ul className="grid gap-2 sm:grid-cols-2">
+                  {program.topics.map((topic) => (
+                    <li key={topic} className="flex items-start gap-2">
+                      <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-sky" />
+                      <span>{topic}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <dl className="grid gap-3 border-t pt-4 text-sm sm:grid-cols-[auto_1fr] sm:gap-x-6">
+                <dt className="font-semibold">Course format</dt>
+                <dd className="text-muted-foreground">{program.format}</dd>
+                <dt className="font-semibold">Duration</dt>
+                <dd className="text-muted-foreground">{program.duration}</dd>
+              </dl>
+              <Link
+                href={`/school/courses/${program.slug}`}
+                className={cn(buttonVariants({ size: "lg" }), "mt-auto self-start")}
+              >
+                {program.cta} <ArrowRight aria-hidden="true" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 4. Why train with GlobalMed */}
+      <Section tone="white" title="Why train with GlobalMed">
+        <StaggerGroup as="ul" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {whyUs.map((item, i) => {
+            const Icon = whyIcons[i] ?? Check;
+            return (
+              <StaggerItem as="li" key={item.title} className="flex flex-col gap-3">
+                <span className="flex size-11 items-center justify-center rounded-md bg-mint text-teal-deep">
+                  <Icon aria-hidden="true" className="size-5" />
+                </span>
+                <h3 className="text-xl">{item.title}</h3>
+                <p className="text-muted-foreground">{item.body}</p>
+              </StaggerItem>
+            );
+          })}
+        </StaggerGroup>
+      </Section>
+
+      {/* 5. Your path to certification (MG-3 claim line) */}
+      <Section
+        tone="mint"
+        id="certification-path"
+        title="Your path to certification"
+        intro="From your first class to your CPC® or CPB® credential, and on to your first role."
+      >
+        <ClaimJourney stages={certificationPath} />
+        <Link href={cpcHref} className={cn(buttonVariants({ size: "lg" }), "self-start")}>
+          Enroll in CPC Training
+        </Link>
+      </Section>
+
+      {/* 6. Upcoming batches */}
+      <Section
+        title="Upcoming CPC® and CPB® batches"
+        intro="Seats are limited in every batch so instructors can give each student feedback."
+      >
+        <ul className="grid gap-6 md:grid-cols-2">
+          {upcomingBatches.map((batch) => (
+            <li
+              key={batch.title}
+              className="flex flex-col gap-5 rounded-lg border bg-card p-6 shadow-sm"
+            >
+              <h3 className="text-xl">{batch.title}</h3>
+              <dl className="grid gap-3 text-sm">
+                <div className="flex items-start gap-2">
+                  <CalendarDays aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
+                  <dt className="font-semibold">Starts:</dt>
+                  <dd className="text-muted-foreground">{batch.starts}</dd>
+                </div>
+                <div className="flex items-start gap-2">
+                  <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
+                  <dt className="font-semibold">Mode:</dt>
+                  <dd className="text-muted-foreground">{batch.mode}</dd>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Users aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
+                  <dt className="font-semibold">Seats left:</dt>
+                  <dd className="text-muted-foreground">{batch.seatsLeft}</dd>
+                </div>
+              </dl>
+              <Link
+                href="/contact"
+                className={cn(buttonVariants({ size: "lg" }), "mt-auto self-start")}
+              >
+                Reserve a Seat
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 7. Student testimonials, shown only once the client supplies consent-approved quotes */}
+      {studentTestimonials.length > 0 && (
+        <Section tone="white" title="What our students say">
+          <div className="grid gap-6 md:grid-cols-2">
+            {studentTestimonials.map((t) => (
+              <Testimonial key={t.quote} {...t} />
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {/* 8. Services for US practices (the hero's services link lands here) */}
+      <Section id="services" className="lg:grid lg:grid-cols-[1fr_1.4fr] lg:gap-16">
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl lg:text-3xl">Revenue-cycle services for US practices</h2>
+          <h2 className="text-2xl lg:text-3xl">Medical billing services for US practices</h2>
           <p className="max-w-prose text-muted-foreground">
             HIPAA-aware processes, certified coders and one team accountable for every claim.
           </p>
-          <Link href="/services" className={cn(buttonVariants({ variant: "link" }), "self-start")}>
-            See all services
+          <Link
+            href="/free-billing-audit"
+            className={cn(buttonVariants({ size: "lg" }), "self-start")}
+          >
+            Book a Free Billing Audit <ArrowRight aria-hidden="true" />
           </Link>
         </div>
         <StaggerGroup as="ul" className="divide-y border-y">
@@ -108,107 +332,19 @@ export default function HomePage() {
             </StaggerItem>
           ))}
         </StaggerGroup>
-      </Section>
-
-      {/* 4. How we work (MG-3) */}
-      <Section
-        tone="mint"
-        id="how-we-work"
-        title="How we work with your practice"
-        intro="From the visit to the payment, every step runs through one accountable team."
-      >
-        <ClaimJourney stages={claimJourney} />
-        <Link
-          href="/free-billing-audit"
-          className={cn(buttonVariants({ size: "lg" }), "self-start")}
-        >
-          Start with a free billing audit
-        </Link>
-      </Section>
-
-      {/* 5. School intro + featured courses */}
-      <Section>
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div className="flex max-w-prose flex-col gap-3">
-            <Badge variant="gold">{site.schoolName}</Badge>
-            <h2 className="text-2xl lg:text-3xl">Start a career in medical billing and coding</h2>
-            <p className="text-muted-foreground">
-              Video lessons you can rewatch, practice quizzes, timed mock exams and a certificate
-              employers can verify online.
-            </p>
-          </div>
-          <Link
-            href="/school/courses"
-            className={cn(buttonVariants({ variant: "secondary" }), "self-start")}
-          >
-            All courses
-          </Link>
-        </div>
-        <StaggerGroup as="ul" className="grid gap-6 md:grid-cols-3">
-          {featured.map((course) => (
-            <StaggerItem as="li" key={course.slug}>
-              <CourseCard course={course} />
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
-      </Section>
-
-      {/* 6. Certification pathway preview (MG-9) */}
-      {pathway && (
-        <Section tone="white" title="Your route to certification" intro={pathway.summary}>
-          <PathwayLine
-            stages={pathway.steps.map((s) => ({ label: s.label, description: s.description }))}
-            current={0}
-          />
-          <Link
-            href={`/school/pathways/${pathway.slug}`}
-            className={cn(buttonVariants({ variant: "secondary" }), "self-start")}
-          >
-            See the full pathway
-          </Link>
-        </Section>
-      )}
-
-      {/* 7. Testimonials, shown only once the client supplies consent-approved quotes */}
-      {testimonials.length > 0 && (
-        <Section title="What clients and students say">
-          <div className="grid gap-6 md:grid-cols-2">
-            {testimonials.map((t) => (
+        {practiceTestimonials.length > 0 && (
+          <div className="grid gap-6 md:grid-cols-2 lg:col-span-2">
+            {practiceTestimonials.map((t) => (
               <Testimonial key={t.quote} {...t} />
             ))}
           </div>
-        </Section>
-      )}
-
-      {/* 9. Latest articles */}
-      <Section tone="white" title="Latest from the blog">
-        <ul className="grid gap-6 md:grid-cols-3">
-          {posts.map((post) => (
-            <li key={post.slug}>
-              <article className="relative flex h-full flex-col gap-3">
-                <Badge variant="neutral">{postCategories[post.category] ?? post.category}</Badge>
-                <h3 className="text-xl">
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="after:absolute after:inset-0 hover:text-teal-deep"
-                  >
-                    {post.title}
-                  </Link>
-                </h3>
-                <p className="text-muted-foreground">{post.description}</p>
-              </article>
-            </li>
-          ))}
-        </ul>
-        <Link href="/blog" className={cn(buttonVariants({ variant: "link" }), "self-start")}>
-          All articles
-        </Link>
+        )}
       </Section>
 
-      {/* 10. FAQ */}
-      <Section className="lg:grid lg:grid-cols-[1fr_2fr] lg:gap-16">
+      {/* 9. FAQ (FaqList emits the FAQPage JSON-LD) */}
+      <Section tone="white" className="lg:grid lg:grid-cols-[1fr_2fr] lg:gap-16">
         <div className="flex flex-col gap-3">
-          <h2 className="text-2xl lg:text-3xl">Questions we hear most</h2>
+          <h2 className="text-2xl lg:text-3xl">Questions about CPC® and CPB® training</h2>
           <Link href="/faq" className={cn(buttonVariants({ variant: "link" }), "self-start")}>
             All FAQs
           </Link>
@@ -216,11 +352,13 @@ export default function HomePage() {
         <FaqList faqs={faqs} />
       </Section>
 
-      {/* 11. Final CTA */}
+      {/* 10. Final CTA */}
       <CtaBand
-        title="Find out what your claims are leaving on the table"
-        body="Our free billing audit reviews a sample of your recent claims and denials. No cost, no commitment."
-        secondary={{ href: "/school", label: "Or start a course" }}
+        title="Start your medical coding career with AAPC's strategic partner in Pakistan"
+        body="CPC® and CPB® training onsite in Lahore and online, with recorded lessons and mock exams."
+        href={cpcHref}
+        label="Enroll in CPC Training"
+        secondary={{ href: whatsapp ?? "/contact", label: "Talk to an Advisor on WhatsApp" }}
       />
     </>
   );

@@ -117,7 +117,7 @@ export function QuizQuestion({
                       initial={reduced ? false : { scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={spring.snappy}
-                      className="flex items-center gap-1 text-sm font-semibold text-success"
+                      className="flex items-center gap-1 text-sm font-semibold text-success-ink"
                     >
                       <Check aria-hidden="true" className="size-5" strokeWidth={2.5} />
                       Correct answer
@@ -141,7 +141,7 @@ export function QuizQuestion({
               className={cn(
                 "rounded-md px-4 py-3",
                 feedback.correct
-                  ? "bg-success-soft text-success"
+                  ? "bg-success-soft text-success-ink"
                   : "bg-destructive-soft text-destructive",
               )}
             >

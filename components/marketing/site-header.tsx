@@ -24,7 +24,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b bg-card">
       <div className="mx-auto flex h-16 max-w-300 items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" aria-label="GlobalMed home" className="rounded-md">
-          <Wordmark />
+          <Wordmark priority />
         </Link>
 
         <MegaMenu pathname={pathname} />

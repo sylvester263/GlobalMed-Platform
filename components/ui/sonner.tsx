@@ -19,7 +19,7 @@ function Toaster(props: ToasterProps) {
       icons={{
         success: <CircleCheckIcon className="size-4 text-success" />,
         info: <InfoIcon className="size-4 text-teal" />,
-        warning: <TriangleAlertIcon className="size-4 text-warning" />,
+        warning: <TriangleAlertIcon className="size-4 text-warning-ink" />,
         error: <OctagonXIcon className="size-4 text-destructive" />,
         loading: <Loader2Icon className="size-4 animate-spin motion-reduce:animate-none" />,
       }}

@@ -213,13 +213,7 @@ export function DashboardShell({
             className={cn("flex h-10 items-center", collapsed ? "justify-center" : "px-2")}
           >
             <Link href="/" aria-label="GlobalMed home" className="rounded-md">
-              {collapsed ? (
-                <span className="flex size-8 items-center justify-center rounded-md bg-teal text-sm font-bold text-white">
-                  GM
-                </span>
-              ) : (
-                <Wordmark />
-              )}
+              {collapsed ? <Wordmark iconOnly /> : <Wordmark size="compact" />}
             </Link>
           </m.div>
           <nav aria-label={`${areaLabel} navigation`} className="flex-1 overflow-y-auto">
@@ -257,7 +251,7 @@ export function DashboardShell({
           <SheetContent side="left" className="w-72">
             <SheetHeader>
               <SheetTitle>
-                <Wordmark />
+                <Wordmark size="compact" />
               </SheetTitle>
               <SheetDescription>{areaLabel}</SheetDescription>
             </SheetHeader>

@@ -10,10 +10,10 @@ import { footerNav, legalNav, site } from "@/lib/site";
 export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-ink text-white/80">
+    <footer className="bg-primary text-white/85">
       <div className="mx-auto grid max-w-300 gap-12 px-4 py-16 md:px-6 lg:grid-cols-[1.2fr_2fr]">
         <div className="flex flex-col gap-6">
-          <Wordmark inverted className="text-white" />
+          <Wordmark size="footer" onDark />
           <p className="max-w-sm">{site.description}</p>
           <ul className="flex flex-col gap-3 text-sm">
             <li className="flex items-start gap-2">
@@ -95,6 +95,7 @@ export function SiteFooter() {
               © {year} {site.name}
             </p>
             <p>{site.credit}</p>
+            <p className="text-xs">CPC® and CPB® are registered trademarks of AAPC.</p>
           </div>
         </div>
         <ClaimLine trigger="static" ticks={24} filled={1} className="opacity-30" />

@@ -48,7 +48,7 @@ export function StatBlock({
         <p
           className={cn(
             "flex items-center gap-1 text-sm font-semibold",
-            good ? "text-success" : "text-destructive",
+            good ? "text-success-ink" : "text-destructive",
           )}
         >
           <Trend aria-hidden="true" className="size-4" />

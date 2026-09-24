@@ -22,14 +22,15 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Sentry organisation/project (or approval to use SylJo Tech's) → SENTRY_DSN, NEXT_PUBLIC_SENTRY_DSN
 
 ## Brand
-- ⬜ Logo files (SVG), brand colours/fonts if any exist
+- ✅ Logo supplied (logonew.png → public/logo.png, 2026-09-24); an SVG version is still welcome for print and certificates
 - ⬜ Education brand name confirmation: "GlobalMed School of Billing and Coding"
 - ⬜ Team and office photos
-- ⬜ AAPC written permission + partner logo usage guidelines (if/when available)
+- ⬜ AAPC written permission + partner logo usage guidelines. **Now urgent:** the home page presents GlobalMed as AAPC's strategic partner and shows the AAPC logo (public/aapc-logo.svg, supplied 2026-09-24)
+- ⬜ CPC® and CPB® program details: duration, fees/installments, batch dates, modes, seats, exam-fee inclusion, AAPC exam registration support, career-support claims, partnership proof-point numbers (home page + content/school.ts)
 
 - ⬜ Design sign-off: review /styleguide and the key screens (/styleguide/screens/home, course, student, admin) — P1-7
 - ⬜ Approval of motion storyboards (hero, claim journey, pathway, exam-passed moment) — design-system/motion-storyboards/ — P1-10
-- ⬜ Logo files (SVG) are also needed for P2-1: screens currently use a placeholder "GM" wordmark
+- ✅ Placeholder "GM" wordmark replaced with the supplied logo everywhere
 - ⬜ Real stats for animated counters (or approval to label them illustrative)
 
 ## Content

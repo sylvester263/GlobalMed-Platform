@@ -55,7 +55,7 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [x] P2-11 Verify certificate page — live once Supabase is linked (P0-4)
 - [x] P2-12 Metadata, sitemap, robots, JSON-LD, llms.txt
 - [x] P2-13 WhatsApp click-to-chat + newsletter — needs the WhatsApp number and Resend segment
-- [ ] P2-14 Content review with client — ⬜ 55 [CLIENT TO CONFIRM] markers across content/ and pages
+- [ ] P2-14 Content review with client — ⬜ [CLIENT TO CONFIRM] markers across content/ and pages (more added 2026-09-24 for the CPC®/CPB® home page)
 - [ ] P2-15 Motion graphics produced (Lottie/Rive assets per docs/15 §6) — 🟥 external (motion designer); lib/motion-assets.ts switches each on
 - [ ] P2-16 MG-1 hero sequence + MG-2 claim-form animation — 🟨 MG-1 done; MG-2 shows its poster until the asset arrives
 - [x] P2-17 MG-3 scroll-scrubbed claim journey

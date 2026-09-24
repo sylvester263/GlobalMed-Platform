@@ -104,7 +104,7 @@ export default async function PathwayPage({ params }: Props) {
             <span className="font-serif text-4xl font-semibold">
               {formatUsd(pathway.bundlePriceUsd)}
             </span>
-            <span className="ml-2 font-semibold text-success">
+            <span className="ml-2 font-semibold text-success-ink">
               Save {formatUsd(totalUsd - pathway.bundlePriceUsd)}
             </span>
           </p>

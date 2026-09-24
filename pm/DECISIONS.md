@@ -141,3 +141,9 @@
 - Decision: `/school/courses/*` keeps reading `content/courses.ts`. The LMS (`/learn`, dashboards) reads the database. The two are matched by slug. Phase 8 (CMS) moves the catalog to the database.
 - Consequences: a course has to exist in both places, with the same slug, until Phase 8. Admins are reminded of this in docs/17.
 
+## ADR-023: Logo palette replaces the teal/gold palette; home page leads with CPC® and CPB® training
+- Date: 2026-09-24 · Status: accepted (client request)
+- Context: the client supplied the official logo (`public/logo.png`) and asked for its colours site-wide, and for the home page to present GlobalMed as AAPC's strategic training partner in Pakistan, with US billing services lower down.
+- Decision: new tokens `navy`, `navy-hover`, `sky`, `mid-blue`, `ink`, `surface-soft` in `app/globals.css`. The old token names (`teal`, `mint`, `gold`, `ledger`) stay as aliases pointing at the new values, so components kept their classes. `success-ink` and `warning-ink` were added because the requested success (#1E8E5A) and warning (#D98A0B) fail 4.5:1 as text. Secondary buttons are a mid-blue outline, filled on hover. The footer is navy; the CTA band stays ink so it doesn't merge with the footer. The logo is used as supplied through `components/marketing/wordmark.tsx`, on a white plate on dark bands. The collapsed sidebar crops it to the icon with `object-position`. The favicon (`app/favicon.ico`, `app/icon.png`) is cropped from the icon.
+- Consequences: the design system is the logo palette (MASTER.md §1). AAPC partnership wording and the AAPC logo now appear on the home page. This relies on AAPC's written permission, which is still an open client input. The `/school/aapc-partnership` page stays behind its feature flag.
+

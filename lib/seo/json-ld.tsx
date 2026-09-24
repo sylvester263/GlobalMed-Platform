@@ -41,6 +41,39 @@ export function organizationJsonLd(): JsonLdObject {
   };
 }
 
+/** The school as an EducationalOrganization, with its CPC® and CPB® training (home page). */
+export function educationalOrganizationJsonLd(input: {
+  description: string;
+  courses: { name: string; description: string; path: string }[];
+}): JsonLdObject {
+  return {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "@id": `${site.url}#school`,
+    name: site.schoolName,
+    url: absoluteUrl("/"),
+    description: input.description,
+    parentOrganization: { "@id": orgId },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: site.contact.address.city,
+      addressRegion: site.contact.address.region,
+      addressCountry: site.contact.address.country,
+    },
+    hasOfferingCatalog: {
+      "@type": "OfferCatalog",
+      name: "CPC® and CPB® certification training",
+      itemListElement: input.courses.map((course) => ({
+        "@type": "Course",
+        name: course.name,
+        description: course.description,
+        url: absoluteUrl(course.path),
+        provider: { "@id": `${site.url}#school` },
+      })),
+    },
+  };
+}
+
 export function breadcrumbJsonLd(items: { name: string; path: string }[]): JsonLdObject {
   return {
     "@context": "https://schema.org",

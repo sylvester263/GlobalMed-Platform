@@ -89,7 +89,7 @@ export function ClaimLine({
             x2={x}
             y2="11"
             style={{ "--pos": x / 100 } as React.CSSProperties}
-            className={cn("claim-tick", isGold ? "stroke-gold" : "stroke-teal")}
+            className={cn("claim-tick", isGold ? "stroke-gold" : "stroke-sky")}
             strokeWidth={isGold ? 3 : 2}
             vectorEffect="non-scaling-stroke"
           />

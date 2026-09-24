@@ -442,6 +442,163 @@ const raw: Course[] = [
     ],
     featured: false,
   },
+  // [CLIENT TO CONFIRM] CPC® and CPB® programs: hours, lesson counts, mock exams, prices (USD +
+  // PKR), access period and outline are placeholders until the client confirms them.
+  {
+    slug: "cpc-certified-professional-coder",
+    title: "CPC® Training: Certified Professional Coder",
+    metaTitle: "CPC® Training in Pakistan",
+    metaDescription:
+      "CPC® medical coding training in Lahore and online: ICD-10-CM, CPT®, HCPCS Level II, modifiers and timed mock exams to prepare for the AAPC exam.",
+    summary:
+      "Full CPC® preparation: ICD-10-CM, CPT®, HCPCS Level II, modifiers, terminology and timed mock exams.",
+    description:
+      "A complete medical coding program that prepares you for the CPC® exam. You learn the code sets and guidelines from working coders, practise on de-identified scenarios after every module, and sit timed mock exams in exam format. Classes run onsite in Lahore and online, and every lesson is recorded. The CPC® credential is awarded by AAPC when you pass their exam. Duration and fees: [CLIENT TO CONFIRM].",
+    level: "beginner",
+    category: "coding",
+    hours: 80, // [CLIENT TO CONFIRM]
+    lessonCount: 90, // [CLIENT TO CONFIRM]
+    mockExams: 3, // [CLIENT TO CONFIRM]
+    priceUsd: 499, // [CLIENT TO CONFIRM]
+    pricePkr: 75000, // [CLIENT TO CONFIRM]
+    accessMonths: 12, // [CLIENT TO CONFIRM]
+    outcomes: [
+      "Apply ICD-10-CM conventions and the Official Guidelines",
+      "Code procedures and services with CPT®",
+      "Use HCPCS Level II codes for supplies, drugs and services",
+      "Apply modifiers correctly",
+      "Use medical terminology and anatomy to read documentation",
+      "Code in line with guidelines and compliance rules",
+      "Complete timed mock exams in exam format",
+    ],
+    requirements: [
+      "Comfortable reading English",
+      "Current-year code books recommended",
+      "No prior coding experience needed",
+    ],
+    audience: [
+      "Graduates starting a medical coding career",
+      "Nursing, pharmacy and life-science graduates changing careers",
+      "Billers who want to move into coding",
+    ],
+    curriculum: [
+      {
+        title: "Medical terminology and anatomy",
+        lessons: [
+          { title: "Word parts that unlock medical terms", minutes: 14, preview: true },
+          { title: "Body systems for coders", minutes: 22, preview: false },
+        ],
+      },
+      {
+        title: "ICD-10-CM, CPT® and HCPCS Level II",
+        lessons: [
+          { title: "ICD-10-CM conventions and guidelines", minutes: 20, preview: false },
+          { title: "CPT® sections and E/M", minutes: 24, preview: false },
+          { title: "HCPCS Level II and modifiers", minutes: 18, preview: false },
+        ],
+      },
+      {
+        title: "Compliance and exam preparation",
+        lessons: [
+          { title: "Coding compliance essentials", minutes: 16, preview: false },
+          { title: "Exam strategy and book tabbing", minutes: 20, preview: false },
+          { title: "Mock exam (timed)", minutes: 240, preview: false },
+        ],
+      },
+    ],
+    instructor: "lead-coding-instructor",
+    faqs: [
+      {
+        question: "Does this course include the AAPC exam fee?",
+        answer:
+          "The exam is registered for and taken with AAPC. Whether the fee is included is [CLIENT TO CONFIRM].",
+      },
+      {
+        question: "Is the course onsite or online?",
+        answer:
+          "Both. Batches run onsite in Lahore and live online, and every class is recorded so you can rewatch it.",
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: "cpb-certified-professional-biller",
+    title: "CPB® Training: Certified Professional Biller",
+    metaTitle: "CPB® Training in Pakistan",
+    metaDescription:
+      "CPB® medical billing training in Lahore and online: claims, payer rules, denials and appeals, AR follow-up and mock exams to prepare for the AAPC exam.",
+    summary:
+      "Full CPB® preparation: claims submission, payer rules, denials and appeals, AR follow-up and patient billing.",
+    description:
+      "A complete medical billing program that prepares you for the CPB® exam. You learn the US revenue cycle the way billing teams work it, practise on de-identified scenarios after every module, and sit timed mock exams in exam format. Classes run onsite in Lahore and online, and every lesson is recorded. The CPB® credential is awarded by AAPC when you pass their exam. Duration and fees: [CLIENT TO CONFIRM].",
+    level: "beginner",
+    category: "billing",
+    hours: 70, // [CLIENT TO CONFIRM]
+    lessonCount: 80, // [CLIENT TO CONFIRM]
+    mockExams: 3, // [CLIENT TO CONFIRM]
+    priceUsd: 449, // [CLIENT TO CONFIRM]
+    pricePkr: 68000, // [CLIENT TO CONFIRM]
+    accessMonths: 12, // [CLIENT TO CONFIRM]
+    outcomes: [
+      "Prepare and submit clean claims",
+      "Apply payer rules for commercial and government payers",
+      "Work denials and write appeals",
+      "Prioritise and follow up accounts receivable",
+      "Handle patient billing and statements",
+      "Follow billing compliance requirements",
+      "Complete timed mock exams in exam format",
+    ],
+    requirements: [
+      "Comfortable reading English",
+      "A computer with internet access",
+      "No prior healthcare experience needed",
+    ],
+    audience: [
+      "Career-starters looking for work in US healthcare",
+      "Front-desk and AR staff moving into billing",
+      "Graduates looking for remote work with US practices",
+    ],
+    curriculum: [
+      {
+        title: "Claims and payer rules",
+        lessons: [
+          { title: "The revenue cycle in 10 minutes", minutes: 10, preview: true },
+          { title: "Claims submission and clearinghouses", minutes: 18, preview: false },
+          { title: "Payer rules and coverage", minutes: 20, preview: false },
+        ],
+      },
+      {
+        title: "Denials, appeals and AR",
+        lessons: [
+          { title: "Working denials by reason code", minutes: 22, preview: false },
+          { title: "Writing an appeal", minutes: 20, preview: false },
+          { title: "AR follow-up by age and value", minutes: 18, preview: false },
+        ],
+      },
+      {
+        title: "Patient billing, compliance and exam preparation",
+        lessons: [
+          { title: "Patient billing and statements", minutes: 16, preview: false },
+          { title: "Billing compliance essentials", minutes: 16, preview: false },
+          { title: "Mock exam (timed)", minutes: 240, preview: false },
+        ],
+      },
+    ],
+    instructor: "lead-billing-instructor",
+    faqs: [
+      {
+        question: "Does this course include the AAPC exam fee?",
+        answer:
+          "The exam is registered for and taken with AAPC. Whether the fee is included is [CLIENT TO CONFIRM].",
+      },
+      {
+        question: "Is the course onsite or online?",
+        answer:
+          "Both. Batches run onsite in Lahore and live online, and every class is recorded so you can rewatch it.",
+      },
+    ],
+    featured: false,
+  },
 ];
 
 export const courses: Course[] = raw.map((c) => courseSchema.parse(c));

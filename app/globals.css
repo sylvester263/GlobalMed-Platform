@@ -14,6 +14,12 @@
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 
   /* Brand */
+  --color-navy: var(--navy);
+  --color-navy-hover: var(--navy-hover);
+  --color-sky: var(--sky);
+  --color-sky-soft: var(--sky-soft);
+  --color-mid-blue: var(--mid-blue);
+  --color-surface-soft: var(--surface-soft);
   --color-ink: var(--ink);
   --color-teal: var(--teal);
   --color-teal-hover: var(--teal-hover);
@@ -47,8 +53,10 @@
   --color-destructive: var(--destructive);
   --color-destructive-soft: var(--destructive-soft);
   --color-success: var(--success);
+  --color-success-ink: var(--success-ink);
   --color-success-soft: var(--success-soft);
   --color-warning: var(--warning);
+  --color-warning-ink: var(--warning-ink);
   --color-warning-soft: var(--warning-soft);
   --color-border: var(--border);
   --color-input: var(--input);
@@ -119,59 +127,76 @@
 }
 
 :root {
-  --ink: #0f2a3d;
-  --teal: #0e7c7b;
-  --teal-hover: #0a6463;
-  --teal-deep: #0a5857;
-  --teal-bright: #5fc7c0;
-  --mint: #e6f4f1;
-  --ledger: #f7f8f6;
-  --gold: #c8962e;
-  --gold-ink: #8a6414;
-  --gold-soft: #f6ebd3;
-  --alert: #b42318;
-  --alert-bright: #ffb4ab;
-  --tick: #c9d3cf;
+  /*
+   * Brand palette, taken from the official logo (ADR-023). The older token names below
+   * (teal, mint, gold, ledger) are kept as aliases so components didn't need rewriting:
+   * teal = navy, teal-bright = sky, gold = sky, ledger = surface-soft.
+   */
+  --navy: #283f93;
+  --navy-hover: #1f3278;
+  --sky: #51ace3;
+  --mid-blue: #3a73c2;
+  --ink: #1b2a5e;
+  --surface-soft: #eef6fc;
+  /* Sky on light surfaces: chips, hover states, soft badges. Text on it stays navy or ink. */
+  --sky-soft: color-mix(in srgb, var(--sky) 20%, white);
 
-  --background: var(--ledger);
+  --teal: var(--navy);
+  --teal-hover: var(--navy-hover);
+  --teal-deep: var(--navy-hover);
+  /* Sky passes 4.5:1 on ink, not on navy: on navy use it for icons and large text only. */
+  --teal-bright: var(--sky);
+  --mint: var(--sky-soft);
+  --ledger: var(--surface-soft);
+  --gold: var(--sky);
+  --gold-ink: var(--navy);
+  --gold-soft: var(--sky-soft);
+  --alert: #c0392b;
+  --alert-bright: #ffb4ab;
+  --tick: var(--border);
+
+  --background: #ffffff;
   --foreground: var(--ink);
   --card: #ffffff;
   --card-foreground: var(--ink);
   --popover: #ffffff;
   --popover-foreground: var(--ink);
-  --primary: var(--teal);
-  --primary-hover: var(--teal-hover);
+  --primary: var(--navy);
+  --primary-hover: var(--navy-hover);
   --primary-foreground: #ffffff;
-  --secondary: var(--mint);
-  --secondary-foreground: var(--teal-deep);
-  --muted: #edf0ee;
-  --muted-foreground: #4f6470;
-  --accent: var(--mint);
+  --secondary: var(--mid-blue);
+  --secondary-foreground: #ffffff;
+  --muted: #edf2f8;
+  --muted-foreground: #5b6785;
+  --accent: var(--sky-soft);
   --accent-foreground: var(--ink);
   --destructive: var(--alert);
   --destructive-soft: #fdecea;
-  --success: #1d7a43;
-  --success-soft: #e7f4ec;
-  --warning: #a15c07;
-  --warning-soft: #fdf1e2;
-  --border: #d9e0dc;
-  --input: #7a8a88;
-  --ring: var(--teal);
+  /* success and warning are the brand values for fills and icons; *-ink variants carry text at 4.5:1+. */
+  --success: #1e8e5a;
+  --success-ink: #17734a;
+  --success-soft: #e8f5ee;
+  --warning: #d98a0b;
+  --warning-ink: #8a5a06;
+  --warning-soft: #fdf3e1;
+  --border: #d9e3f0;
+  --input: #6e7b99;
+  --ring: var(--navy);
 
-  --chart-1: var(--teal);
-  --chart-2: #2f5d7c;
-  --chart-3: var(--gold);
-  --chart-4: #6fb3a8;
-  --chart-5: #8a9ba8;
+  --chart-1: var(--navy);
+  --chart-2: var(--mid-blue);
+  --chart-3: var(--sky);
+  --chart-4: var(--ink);
+  --chart-5: #8a97b3;
 
   --sidebar: #ffffff;
   --sidebar-foreground: var(--ink);
-  --sidebar-primary: var(--teal);
+  --sidebar-primary: var(--navy);
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: var(--mint);
+  --sidebar-accent: var(--sky-soft);
   --sidebar-accent-foreground: var(--ink);
   --sidebar-border: var(--border);
-  --sidebar-ring: var(--teal);
+  --sidebar-ring: var(--navy);
 
   --radius: 12px;
 }

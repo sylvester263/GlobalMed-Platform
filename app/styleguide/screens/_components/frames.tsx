@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+import { Wordmark } from "@/components/marketing/wordmark";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -37,20 +38,6 @@ export function ReviewBanner({ screen }: { screen: string }) {
         </Link>
       </p>
     </div>
-  );
-}
-
-export function Wordmark({ className }: { className?: string }) {
-  return (
-    <span className={cn("flex items-center gap-2 font-serif text-xl font-semibold", className)}>
-      <span
-        aria-hidden="true"
-        className="flex size-8 items-center justify-center rounded-md bg-teal font-sans text-sm text-white"
-      >
-        GM
-      </span>
-      GlobalMed
-    </span>
   );
 }
 
@@ -92,10 +79,10 @@ export function MarketingFrame({
         </div>
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="bg-ink text-white/80">
+      <footer className="bg-primary text-white/85">
         <div className="mx-auto grid max-w-300 gap-8 px-4 py-12 md:grid-cols-4 md:px-6">
           <div className="flex flex-col gap-3">
-            <Wordmark className="text-white" />
+            <Wordmark size="footer" onDark />
             <p className="text-sm">Medical billing, coding and transcription for US practices.</p>
           </div>
           {[
@@ -165,7 +152,7 @@ export function DashboardFrame({
       <ReviewBanner screen={screen} />
       <div className="flex flex-1">
         <aside className="hidden w-64 shrink-0 flex-col gap-6 border-r bg-card p-4 lg:flex">
-          <Wordmark />
+          <Wordmark size="compact" />
           <nav aria-label="Dashboard">
             <ul className="flex flex-col gap-1">
               {dashboardNav[role].map(({ label, icon: Icon, ...rest }) => {

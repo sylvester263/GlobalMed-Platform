@@ -133,33 +133,37 @@ test.describe("navigation and SEO", () => {
 test.describe("home motion (desktop, motion allowed)", () => {
   test.use({ viewport: { width: 1280, height: 720 }, reducedMotion: "no-preference" });
 
-  test("the certification path pins with scroll space, so the next section never covers it", async ({
-    page,
-  }) => {
+  test("How it works stays visible while scrolling down and back up", async ({ page }) => {
     await page.goto("/");
     const section = page.locator("#certification-path");
+    const steps = section.locator("[data-journey-step]");
+    // Sticky, not pinned: no GSAP spacer, and the content sits in a tall wrapper.
+    await expect(page.locator(".pin-spacer")).toHaveCount(0);
     await section.scrollIntoViewIfNeeded();
-    const spacer = page.locator(".pin-spacer").filter({ has: section });
-    await expect(spacer).toHaveCount(1);
-    const padding = await spacer.evaluate((el) => parseFloat(getComputedStyle(el).paddingBottom));
-    expect(padding).toBeGreaterThan(0);
+    // After hydration, desktop gets the tall sticky wrapper (steps × 60vh).
+    await expect
+      .poll(() => section.evaluate((el) => el.getBoundingClientRect().height), { timeout: 15000 })
+      .toBeGreaterThan(720);
+    const range = await section.evaluate((el) => ({
+      top: el.getBoundingClientRect().top + window.scrollY,
+      // Scroll distance while the content is stuck: wrapper height minus the sticky content.
+      distance:
+        el.getBoundingClientRect().height -
+        (el.querySelector(".sticky")?.getBoundingClientRect().height ?? 0),
+    }));
 
-    // Scroll into the middle of the pin: the heading and CTA stay on screen.
-    const top = await spacer.evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
-    await page.evaluate((y) => window.scrollTo(0, y), top + padding / 2);
-    await expect(
-      page.getByRole("heading", { name: "Your path to certification" }),
-    ).toBeInViewport();
-    await expect(section.getByRole("link", { name: /enroll in cpc training/i })).toBeInViewport();
-
-    // The section after it starts below the spacer, not on top of the pinned section.
-    const overlap = await spacer.evaluate((el) => {
-      const next = el.nextElementSibling;
-      return next
-        ? next.getBoundingClientRect().top < el.getBoundingClientRect().bottom - 1
-        : false;
-    });
-    expect(overlap).toBe(false);
+    // Down through the sticky range, then back up (slowly and in one jump).
+    const positions = [0.05, 0.5, 0.95, 0.6, 0.3, 0.05].map(
+      (f) => range.top - 80 + range.distance * f,
+    );
+    for (const y of positions) {
+      await page.evaluate((y) => window.scrollTo(0, y), y);
+      await expect(page.getByRole("heading", { name: "How it works" })).toBeInViewport();
+      for (const step of await steps.all()) {
+        await expect(step).toBeInViewport();
+        await expect(step).toHaveCSS("opacity", "1");
+      }
+    }
   });
 
   test("the hero slider autoplays, pauses on hover and has working controls", async ({ page }) => {

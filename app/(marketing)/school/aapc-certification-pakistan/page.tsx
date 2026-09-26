@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { AapcCourseCard, AapcRegisterBand } from "@/components/marketing/aapc-course";
 import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
-import { ClaimJourney } from "@/components/marketing/home/claim-journey";
+import { ClaimJourneySection } from "@/components/marketing/home/claim-journey";
 import { FaqList, PageHero, Section } from "@/components/marketing/sections";
 import { buttonVariants } from "@/components/ui/button";
 import { aapcFaqs, aapcHero, aapcSteps } from "@/content/aapc";
@@ -134,14 +134,12 @@ export default function AapcCertificationPage() {
         <p className="text-sm text-muted-foreground">{aapcCourseFacts.priceNote}</p>
       </Section>
 
-      <Section
-        tone="mint"
+      <ClaimJourneySection
         id="how-it-works"
         title="How it works"
         intro="From registration to your AAPC credential, in five steps."
-      >
-        <ClaimJourney stages={aapcSteps} />
-      </Section>
+        stages={aapcSteps}
+      />
 
       <Section className="lg:grid lg:grid-cols-[1fr_2fr] lg:gap-16">
         <h2 className="text-2xl lg:text-3xl">Questions about AAPC certification</h2>

@@ -363,10 +363,17 @@
     transform: scaleY(0);
   }
 }
+/* Nodes stay visible; scrolling back up only returns them to a smaller scale. */
 @keyframes node-pop {
   from {
-    opacity: 0;
     transform: scale(0.6);
+  }
+}
+
+/* Scroll-driven claim-line ticks dim, never disappear, when scrolling back up. */
+@keyframes tick-dim {
+  from {
+    opacity: 0.35;
   }
 }
 
@@ -382,7 +389,7 @@
       animation-range: cover 15% cover 45%;
     }
     .claim-line[data-trigger="inView"] .claim-tick {
-      animation: fade-on linear both;
+      animation: tick-dim linear both;
       animation-timeline: --claim;
       animation-range: cover calc(15% + var(--pos) * 30%) cover calc(17% + var(--pos) * 30%);
     }
@@ -423,8 +430,10 @@
     transform: translateY(8px);
   }
 }
+/* Fill "backwards" only: once the entry finishes, no transform stays on the wrapper, so it
+   never becomes the containing block for fixed or sticky content below it. */
 .page-enter {
-  animation: page-enter var(--duration-slow) var(--ease-enter) both;
+  animation: page-enter var(--duration-slow) var(--ease-enter) backwards;
 }
 
 /* MG-1 frame 7: the hero CTAs settle with a 4px lift once the claim line lands. */

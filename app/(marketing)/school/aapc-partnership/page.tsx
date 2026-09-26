@@ -7,8 +7,8 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "AAPC Partnership",
-  description: "GlobalMed School of Billing and Coding's partnership with AAPC.",
-  path: "/school/aapc-partnership",
+  description: "GlobalMed Education's partnership with AAPC.",
+  path: "/education/aapc-partnership",
 });
 
 /**
@@ -25,8 +25,8 @@ export default function AapcPartnershipPage() {
         title="GlobalMed and AAPC"
         intro="[CLIENT TO CONFIRM] Partnership description approved by AAPC under its partner guidelines."
         crumbs={[
-          { name: "School", path: "/school" },
-          { name: "AAPC partnership", path: "/school/aapc-partnership" },
+          { name: "Education", path: "/education" },
+          { name: "AAPC partnership", path: "/education/aapc-partnership" },
         ]}
       />
       <Section>
@@ -37,7 +37,7 @@ export default function AapcPartnershipPage() {
       </Section>
       <CtaBand
         title="Start preparing for certification"
-        href="/school/exam-prep"
+        href="/education/exam-prep"
         label="See exam preparation"
       />
     </>

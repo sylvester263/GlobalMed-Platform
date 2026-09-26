@@ -14,6 +14,6 @@ export default async function CourseEntry({ params }: Props) {
   const target =
     course.lessons.find((l) => l.id === course.continueLessonId && l.canView) ??
     course.lessons.find((l) => l.canView);
-  if (!target) redirect(`/school/courses/${courseSlug}`);
+  if (!target) redirect(`/education/courses/${courseSlug}`);
   redirect(`/learn/${courseSlug}/${target.id}`);
 }

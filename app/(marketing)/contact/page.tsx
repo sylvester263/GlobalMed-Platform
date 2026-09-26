@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import type { Metadata } from "next";
 
 import { ContactForm } from "@/components/marketing/contact-form";
@@ -10,11 +10,14 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Contact GlobalMed",
   description:
-    "Contact GlobalMed about billing and coding services or courses. Phone, email, WhatsApp and office hours in US Eastern and Pakistan time.",
+    "Contact GlobalMed about transcription, billing and coding services or courses. Phone +92 42 3594 6342, WhatsApp, email, and our Model Town, Lahore office. Open 24/7.",
   path: "/contact",
 });
 
+const linkClass = "text-primary underline underline-offset-4";
+
 export default function ContactPage() {
+  const { contact } = site;
   return (
     <>
       <PageHero
@@ -30,35 +33,40 @@ export default function ContactPage() {
               <Phone aria-hidden="true" className="mt-1 size-5 shrink-0 text-teal" />
               <div>
                 <p className="font-semibold">Phone</p>
-                <p>
-                  US:{" "}
-                  <a
-                    href={site.contact.phoneUsHref}
-                    className="text-primary underline underline-offset-4"
-                  >
-                    {site.contact.phoneUs}
-                  </a>
-                </p>
-                <p>
-                  Pakistan:{" "}
-                  <a
-                    href={site.contact.phonePkHref}
-                    className="text-primary underline underline-offset-4"
-                  >
-                    {site.contact.phonePk}
-                  </a>
-                </p>
+                <a href={contact.phoneHref} className={linkClass}>
+                  {contact.phone}
+                </a>
+                {contact.usLineConfirmed && (
+                  <p>
+                    US:{" "}
+                    <a href={contact.phoneUsHref} className={linkClass}>
+                      {contact.phoneUs}
+                    </a>
+                  </p>
+                )}
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <MessageCircle aria-hidden="true" className="mt-1 size-5 shrink-0 text-teal" />
+              <div>
+                <p className="font-semibold">WhatsApp</p>
+                <a
+                  href={`https://wa.me/${contact.whatsappNumber.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={linkClass}
+                >
+                  {contact.whatsappDisplay}
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
               </div>
             </li>
             <li className="flex gap-3">
               <Mail aria-hidden="true" className="mt-1 size-5 shrink-0 text-teal" />
               <div>
                 <p className="font-semibold">Email</p>
-                <a
-                  href={`mailto:${site.contact.email}`}
-                  className="text-primary underline underline-offset-4"
-                >
-                  {site.contact.email}
+                <a href={`mailto:${contact.email}`} className={linkClass}>
+                  {contact.email}
                 </a>
               </div>
             </li>
@@ -66,22 +74,19 @@ export default function ContactPage() {
               <Clock aria-hidden="true" className="mt-1 size-5 shrink-0 text-teal" />
               <div>
                 <p className="font-semibold">Hours</p>
-                <p>US: {site.contact.hoursUs}</p>
-                <p>Pakistan: {site.contact.hoursPk}</p>
+                <p>{contact.hours}</p>
+                {contact.usLineConfirmed && <p>US line: {contact.hoursUs}</p>}
               </div>
             </li>
             <li className="flex gap-3">
               <MapPin aria-hidden="true" className="mt-1 size-5 shrink-0 text-teal" />
               <div>
                 <p className="font-semibold">Office</p>
-                <p>
-                  {site.contact.address.street}
+                <address className="not-italic">
+                  {contact.address.street}
                   <br />
-                  {site.contact.address.city}, Pakistan
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Map added once the address is confirmed.
-                </p>
+                  {contact.address.city}, {contact.address.poBox}, Pakistan
+                </address>
               </div>
             </li>
           </ul>

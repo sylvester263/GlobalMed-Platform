@@ -16,7 +16,7 @@ GlobalMed provides billing, coding, transcription and clinical documentation ser
 
 ## This website does not handle patient information
 
-This website, the GlobalMed School of Billing and Coding and our chatbot are not part of our PHI-handling environment. They are designed not to collect patient information:
+This website, GlobalMed Education and our chatbot are not part of our PHI-handling environment. They are designed not to collect patient information:
 
 - No form asks for patient details.
 - Every form and the chatbot display the notice "Do not include patient information."

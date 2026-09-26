@@ -26,6 +26,14 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
+  // "School" was renamed "Education" (ADR-024). The pages still live under app/(marketing)/school,
+  // so both /school/... (old links) and /education/... (nav, canonical) render the same page.
+  async rewrites() {
+    return [
+      { source: "/education", destination: "/school" },
+      { source: "/education/:path*", destination: "/school/:path*" },
+    ];
+  },
 };
 
 export default withSentryConfig(nextConfig, {

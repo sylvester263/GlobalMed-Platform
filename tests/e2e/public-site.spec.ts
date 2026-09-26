@@ -54,7 +54,7 @@ test.describe("course catalog", () => {
       page.getByRole("heading", { name: "No courses match those filters" }),
     ).toBeVisible();
     await page.getByRole("link", { name: "Clear filters" }).first().click();
-    await expect(page).toHaveURL(/\/school\/courses$/);
+    await expect(page).toHaveURL(/\/education\/courses$/);
   });
 });
 
@@ -162,15 +162,103 @@ test.describe("home motion (desktop, motion allowed)", () => {
     expect(overlap).toBe(false);
   });
 
-  test("the hero claim form loops and pauses off-screen", async ({ page }) => {
+  test("the hero slider autoplays, pauses on hover and has working controls", async ({ page }) => {
     await page.goto("/");
-    const hero = page.locator(".hero-claim");
-    await expect(hero).not.toHaveAttribute("data-paused");
-    const running = await hero.evaluate(
-      (el) => el.getAnimations({ subtree: true }).filter((a) => a.playState === "running").length,
+    const slider = page.getByRole("region", { name: "Highlights" });
+    // Inactive slides are inert (out of the accessibility tree), so match on the label.
+    await expect(slider.locator('[aria-label="Slide 1 of 3"]')).toHaveAttribute(
+      "data-active",
+      "true",
     );
-    expect(running).toBeGreaterThan(10);
-    await page.locator("#certification-path").scrollIntoViewIfNeeded();
-    await expect(hero).toHaveAttribute("data-paused", "true");
+    // Autoplay: the 6s claim-line progress ends and advances to slide 2.
+    await page.mouse.move(640, 20); // over the header, not the slider (hover pauses it)
+    await expect(slider.locator('[aria-label="Slide 2 of 3"]')).toHaveAttribute(
+      "data-active",
+      "true",
+      { timeout: 9000 },
+    );
+    await slider.getByRole("button", { name: "Next slide" }).click();
+    await expect(slider.locator('[aria-label="Slide 3 of 3"]')).toHaveAttribute(
+      "data-active",
+      "true",
+    );
+    await slider.getByRole("button", { name: "Show slide 1 of 3" }).press("Enter");
+    await expect(slider.locator('[aria-label="Slide 1 of 3"]')).toHaveAttribute(
+      "data-active",
+      "true",
+    );
+    await expect(slider.getByRole("button", { name: "Pause slideshow" })).toBeVisible();
+  });
+});
+
+test.describe("hero slider (reduced motion)", () => {
+  test.use({ reducedMotion: "reduce" });
+
+  test("does not autoplay and hides the pause button", async ({ page }) => {
+    await page.goto("/");
+    const slider = page.getByRole("region", { name: "Highlights" });
+    await expect(slider.getByRole("button", { name: /slideshow/ })).toHaveCount(0);
+    await page.waitForTimeout(7000);
+    await expect(slider.locator('[aria-label="Slide 1 of 3"]')).toHaveAttribute(
+      "data-active",
+      "true",
+    );
+  });
+});
+
+test.describe("client review 2026-09-25", () => {
+  test("old /school and new /education URLs both render", async ({ request }) => {
+    for (const path of [
+      "/school",
+      "/education",
+      "/school/courses/cpc-certified-professional-coder",
+      "/education/courses/cpc-certified-professional-coder",
+      "/education/aapc-certification-pakistan",
+    ]) {
+      const res = await request.get(path);
+      expect(res.status(), path).toBe(200);
+    }
+  });
+
+  test("primary nav starts with About Us then Education", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/");
+    const items = page.getByRole("navigation", { name: "Primary" }).locator(":scope > ul > li");
+    await expect(items).toHaveText([
+      /About Us/,
+      /Education/,
+      /Services/,
+      /Resources/,
+      /Specialties/,
+      /Contact/,
+    ]);
+    await page.getByRole("button", { name: "Education" }).click();
+    const educationItem = items.filter({
+      has: page.getByRole("button", { name: "Education" }),
+    });
+    await expect(educationItem.getByRole("link").first()).toHaveText(
+      /AAPC Certification in Pakistan/,
+    );
+  });
+
+  test("certificate lightbox opens, traps focus and closes on Escape", async ({ page }) => {
+    await page.goto("/");
+    const trigger = page.getByRole("button", { name: /View certificate.*PSEB/ });
+    await trigger.click();
+    await expect(page.getByRole("dialog", { name: "PSEB" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(trigger).toBeFocused();
+  });
+
+  test("footer shows the client's contact details", async ({ page }) => {
+    await page.goto("/about");
+    const footer = page.locator("footer");
+    await expect(footer.getByRole("link", { name: "+92 42 3594 6342" }).first()).toHaveAttribute(
+      "href",
+      "tel:+924235946342",
+    );
+    await expect(footer).toContainText("CPC® and CPB® are registered trademarks of AAPC.");
+    await expect(footer).toContainText("Designed & developed by SylJo Tech");
   });
 });

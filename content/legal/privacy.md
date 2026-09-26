@@ -1,10 +1,10 @@
 ---
 title: Privacy policy
-description: How GlobalMed collects, uses and protects personal information on this website and the School of Billing and Coding.
+description: How GlobalMed collects, uses and protects personal information on this website and GlobalMed Education.
 updatedAt: "2026-09-24"
 ---
 
-This policy explains what personal information GlobalMed Transcriptions and Billing Solutions ("GlobalMed", "we") collects through this website and the GlobalMed School of Billing and Coding, and how we use it.
+This policy explains what personal information GlobalMed Transcriptions and Billing Solutions ("GlobalMed", "we") collects through this website and GlobalMed Education, and how we use it.
 
 ## This website does not collect patient information
 

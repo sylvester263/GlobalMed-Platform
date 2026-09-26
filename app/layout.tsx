@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s | GlobalMed",
   },
   description:
-    "Medical billing, coding and transcription services for US practices, and the GlobalMed School of Billing and Coding.",
+    "Medical billing, coding and transcription services for US practices, and GlobalMed Education.",
 };
 
 export default function RootLayout({

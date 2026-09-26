@@ -44,4 +44,4 @@ No. A GlobalMed certificate shows you completed our course and passed its assess
 
 ---
 
-*See the full [Billing and Coding Career Path](/school/pathways/billing-and-coding-career), or start with [Medical Coding Foundations](/school/courses/medical-coding-foundations).*
+*See the full [Billing and Coding Career Path](/education/pathways/billing-and-coding-career), or start with [Medical Coding Foundations](/education/courses/medical-coding-foundations).*

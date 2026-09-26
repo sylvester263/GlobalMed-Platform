@@ -168,7 +168,7 @@ export default function HomeScreen() {
       <section className="mx-auto flex max-w-300 flex-col gap-10 px-4 py-16 md:px-6 lg:py-24">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div className="flex max-w-prose flex-col gap-3">
-            <Badge variant="gold">GlobalMed School of Billing and Coding</Badge>
+            <Badge variant="gold">GlobalMed Education</Badge>
             <h2 className="text-2xl lg:text-3xl">Start a career in medical billing and coding</h2>
             <p className="text-muted-foreground">
               Video lessons you can rewatch, practice quizzes, timed mock exams and a certificate

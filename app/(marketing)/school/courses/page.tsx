@@ -24,7 +24,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Medical Billing and Coding Courses",
   description:
     "Browse online medical billing, coding and CPC exam preparation courses. Filter by level, topic, pathway and price.",
-  path: "/school/courses",
+  path: "/education/courses",
 });
 
 const priceLabels: Record<(typeof priceBands)[number], string> = {
@@ -61,8 +61,8 @@ export default async function CoursesPage({ searchParams }: Props) {
         title="Medical billing and coding courses"
         intro="Every course includes rewatchable video lessons, practice after each module and a verifiable certificate."
         crumbs={[
-          { name: "School", path: "/school" },
-          { name: "Courses", path: "/school/courses" },
+          { name: "Education", path: "/education" },
+          { name: "Courses", path: "/education/courses" },
         ]}
       />
       <Section className="gap-8">
@@ -137,7 +137,7 @@ export default async function CoursesPage({ searchParams }: Props) {
               <>
                 {" · "}
                 <Link
-                  href="/school/courses"
+                  href="/education/courses"
                   className="font-semibold text-primary underline underline-offset-4"
                 >
                   Clear filters
@@ -156,7 +156,7 @@ export default async function CoursesPage({ searchParams }: Props) {
               return (
                 <Link
                   key={s}
-                  href={`/school/courses?${qs.toString()}`}
+                  href={`/education/courses?${qs.toString()}`}
                   aria-current={active ? "true" : undefined}
                   className={cn(
                     "inline-flex h-9 items-center rounded-full border px-3",
@@ -184,7 +184,7 @@ export default async function CoursesPage({ searchParams }: Props) {
             title="No courses match those filters"
             description="Try a different level or topic, or clear the filters to see every course."
             action={
-              <Link href="/school/courses" className={buttonVariants({ variant: "secondary" })}>
+              <Link href="/education/courses" className={buttonVariants({ variant: "secondary" })}>
                 Clear filters
               </Link>
             }

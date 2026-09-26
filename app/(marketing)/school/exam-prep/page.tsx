@@ -12,7 +12,7 @@ export const metadata: Metadata = pageMetadata({
   title: "CPC Exam Preparation",
   description:
     "Prepare for medical coding certification with timed full-length mock exams, randomised question banks and answer-by-answer review.",
-  path: "/school/exam-prep",
+  path: "/education/exam-prep",
 });
 
 const features = [
@@ -47,12 +47,12 @@ export default function ExamPrepPage() {
         title="Walk into your certification exam already knowing how it feels"
         intro="Practise under real timing with full-length mock exams, then review every answer until you're consistently passing."
         crumbs={[
-          { name: "School", path: "/school" },
-          { name: "Exam preparation", path: "/school/exam-prep" },
+          { name: "Education", path: "/education" },
+          { name: "Exam preparation", path: "/education/exam-prep" },
         ]}
       >
         <Link
-          href="/school/courses/cpc-exam-preparation"
+          href="/education/courses/cpc-exam-preparation"
           className={buttonVariants({ size: "lg" })}
         >
           View CPC Exam Preparation
@@ -91,7 +91,7 @@ export default function ExamPrepPage() {
       </Section>
       <CtaBand
         title="Ready to find out where you stand?"
-        href="/school/courses/cpc-exam-preparation"
+        href="/education/courses/cpc-exam-preparation"
         label="Start exam preparation"
       />
     </>

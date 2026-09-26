@@ -46,7 +46,7 @@ export function CertificatePreview({
         <div className="flex flex-col items-center gap-[0.5cqw]">
           <Wordmark size="compact" className="mb-[1cqw] h-[max(28px,6cqw)]" />
           <p className="text-[max(10px,1.6cqw)] font-semibold tracking-[0.2em] text-teal-deep uppercase">
-            GlobalMed School of Billing and Coding
+            GlobalMed Education
           </p>
           <p className="font-serif text-[max(16px,4cqw)] font-semibold">
             Certificate of Completion

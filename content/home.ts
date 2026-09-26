@@ -7,6 +7,49 @@ import type { Faq } from "@/lib/content/schema";
 export const cpcCourseSlug = "cpc-certified-professional-coder";
 export const cpbCourseSlug = "cpb-certified-professional-biller";
 
+/**
+ * Home hero slider (client review 2026-09-25). Images go in public/images/slider/ at
+ * 1920 × 640 or larger; a labelled placeholder shows until each one is added.
+ */
+export const heroSlides = [
+  {
+    id: "company",
+    headline: "The Leading Transcription and Billing Company in Pakistan",
+    body: "Serving hospitals and clinics in the USA, Canada, UK, Australia and Saudi Arabia since 2007.",
+    image: "/images/slider/slide-1.jpg",
+    imageAlt: "",
+    placeholder: "Slide 1 image",
+    actions: [
+      { label: "Our Services", href: "/services" },
+      { label: "Request a Free Quote", href: "/contact" },
+    ],
+  },
+  {
+    id: "billing-coding",
+    headline: "Medical Billing and Coding",
+    body: "Accurate coding and clean claims that get providers paid faster.",
+    image: "/images/slider/slide-2.jpg",
+    imageAlt: "",
+    placeholder: "Slide 2 image",
+    actions: [
+      { label: "Explore Billing & Coding", href: "/services" },
+      { label: "Get Trained in Billing & Coding", href: "/education" },
+    ],
+  },
+  {
+    id: "aapc",
+    headline: "AAPC Certification with GlobalMed Transcriptions",
+    body: "GlobalMed Transcriptions, Strategic Partner of AAPC in Pakistan for Medical Billing and Coding.",
+    image: "/images/slider/slide-3.jpg",
+    imageAlt: "",
+    placeholder: "Slide 3 image",
+    actions: [
+      { label: "AAPC Certification in Pakistan", href: "/education/aapc-certification-pakistan" },
+      { label: "Talk to an Advisor on WhatsApp", href: "https://wa.me/923004198760" },
+    ],
+  },
+];
+
 export const hero = {
   badge: "Strategic Partner of AAPC in Pakistan",
   headline: "AAPC-Certified Medical Coding & Billing Training in Pakistan",
@@ -32,8 +75,10 @@ export const programs = [
     slug: cpcCourseSlug,
     credential: "CPC®",
     name: "Certified Professional Coder",
-    audience:
+    audience: [
+      "Healthcare professionals and billers",
       "Graduates, nursing and pharmacy professionals, and billers who want to become medical coders for US healthcare.",
+    ],
     topics: [
       "ICD-10-CM diagnosis coding",
       "CPT® procedure coding",
@@ -50,8 +95,10 @@ export const programs = [
     slug: cpbCourseSlug,
     credential: "CPB®",
     name: "Certified Professional Biller",
-    audience:
+    audience: [
+      "Healthcare professionals and billers",
       "Career-starters, front-desk and AR staff, and anyone who wants to work in US medical billing.",
+    ],
     topics: [
       "Claims submission",
       "Payer rules",

@@ -76,7 +76,9 @@ export default async function LessonPage({ params }: Props) {
           </p>
           <Link
             href={
-              course.enrollmentActive ? `/learn/${course.slug}` : `/school/courses/${course.slug}`
+              course.enrollmentActive
+                ? `/learn/${course.slug}`
+                : `/education/courses/${course.slug}`
             }
             className={buttonVariants({ size: "lg" })}
           >

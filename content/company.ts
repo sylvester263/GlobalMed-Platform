@@ -29,7 +29,7 @@ export const values = [
   },
   {
     title: "Teaching what we practise",
-    body: "Our school is taught by people who bill and code for US practices every week.",
+    body: "GlobalMed Education courses are taught by people who bill and code for US practices every week.",
   },
 ];
 
@@ -51,7 +51,7 @@ export const team = [
     bio: "Runs coding audits and accuracy reviews.",
   },
   {
-    role: "Director, School of Billing and Coding",
+    role: "Director, GlobalMed Education",
     name: "[CLIENT TO CONFIRM]",
     bio: "Designs courses and leads the instructor team.",
   },
@@ -190,3 +190,47 @@ export const guides = [
     body: "What to learn, in what order, and how to show employers you're ready.",
   },
 ];
+
+/** About Us page copy, supplied by the client on 2026-09-25. */
+export const about = {
+  title: "About GlobalMed Transcriptions",
+  intro: "The leading medical transcription company in Pakistan, since 2007.",
+  story: [
+    "GlobalMed Transcriptions Pvt. Ltd. was founded in 2007 by Mr. Riaz Naveed and is the leading medical transcription company in Pakistan. It began as a small company and, through hard work and dependable service, has grown into Pakistan's leading and fastest-growing transcription company.",
+    "We provide medical transcription and editing services to hospitals and clinics in the USA, Canada, UK, Australia and Saudi Arabia, and are actively expanding to new countries.",
+  ],
+  whatWeDo: [
+    "Our areas of expertise include Family Medicine, Cardiology, Psychiatry, Orthopedics, Pathology, Radiology and multispecialty work.",
+    "Our transcriptionists, editors and proofreaders are highly skilled and deliver accurate work regardless of dialect or dictation style, with close to 99% accuracy and a quick turnaround.",
+    "We can work directly on a facility's own system or give clients access to our subscribed EMR/EHR for dictation and document management. A free trial is available so clients can judge our quality before outsourcing.",
+  ],
+  specialties: [
+    "Family Medicine",
+    "Cardiology",
+    "Psychiatry",
+    "Orthopedics",
+    "Pathology",
+    "Radiology",
+    "Multispecialty",
+  ],
+  quality:
+    "We believe in quality rather than quantity: the quality of the work we produce and the quality of service we provide. Our team can manage any type and volume of work within the agreed timeframe without compromising on quality.",
+  mission:
+    "To provide top-quality services to our clients' satisfaction, and to serve the community by creating more jobs.",
+  leader: {
+    name: "Riaz Naveed",
+    role: "Founder & CEO",
+    bio: "A university graduate with a diploma in Medical Laboratory Technology, he founded GlobalMed in 2007.",
+    photo: "/images/team/riaz-naveed.jpg",
+  },
+  partnership:
+    "GlobalMed Transcriptions is AAPC's strategic partner in Pakistan for medical billing and coding training, preparing students for AAPC's CPC® and CPB® certifications.",
+  /** Client-confirmed figures, so no "illustrative" label. */
+  facts: [
+    { label: "Happy Clients", value: 55, suffix: "+", decimals: 0 },
+    { label: "Projects Completed", value: 470, suffix: "+", decimals: 0 },
+    { label: "Expert People", value: 100, suffix: "+", decimals: 0 },
+    { label: "Portfolios", value: 70, suffix: "+", decimals: 0 },
+    { label: "Years in Healthcare", value: 19, suffix: "+", decimals: 0 },
+  ],
+};

@@ -56,7 +56,7 @@ export function MarketingFrame({
           <Wordmark />
           <nav aria-label="Primary" className="hidden lg:block">
             <ul className="flex items-center gap-6 text-sm font-semibold">
-              {["Services", "School", "Specialties", "Resources", "About", "Contact"].map(
+              {["About Us", "Education", "Services", "Resources", "Specialties", "Contact"].map(
                 (item) => (
                   <li key={item}>
                     <span className="cursor-default hover:text-teal">{item}</span>
@@ -91,7 +91,7 @@ export function MarketingFrame({
               ["Medical billing", "Medical coding", "Transcription", "AI documentation"],
             ],
             [
-              "School",
+              "Education",
               ["All courses", "Certification pathways", "Exam preparation", "Verify a certificate"],
             ],
             ["Company", ["About", "Careers", "Contact", "Privacy policy"]],

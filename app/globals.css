@@ -738,3 +738,63 @@
     transform: scale(1);
   }
 }
+
+/* ---------- Home hero slider (client review 2026-09-25) ---------- */
+
+/* Claim-line progress: fills over 6s per slide; its animationend advances the slider.
+   Without autoplay (reduced motion) it simply shows how far through the slides you are. */
+.slide-progress {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  transform: scaleX(var(--slide-fraction, 1));
+}
+
+@keyframes slide-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .slide-progress[data-autoplay] {
+    animation: slide-fill 6s linear both;
+  }
+}
+
+/* Slides crossfade; with motion allowed the copy also rises 12px into place. */
+.hero-slide {
+  transition: opacity var(--duration-slow) var(--ease-standard);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-slide .hero-slide-copy {
+    transform: translateY(12px);
+    transition: transform var(--duration-slow) var(--ease-enter);
+  }
+  .hero-slide[data-active] .hero-slide-copy {
+    transform: none;
+  }
+}
+
+/* Reduced motion keeps a simple fade (opacity only), overriding the global 0.01ms rule. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    transition-duration: var(--duration-base) !important;
+  }
+}
+
+/* Credential tiles: lift 2px on hover (transform only, so no layout shift). */
+@media (prefers-reduced-motion: no-preference) {
+  .credential-tile {
+    transition:
+      transform var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard);
+  }
+  .credential-tile:hover,
+  .credential-tile:focus-within {
+    transform: translateY(-2px);
+  }
+}

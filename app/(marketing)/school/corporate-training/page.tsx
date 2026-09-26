@@ -9,7 +9,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Corporate Billing and Coding Training",
   description:
     "Train your billing and coding team with GlobalMed: group enrollment, progress reporting for managers and custom content for your specialties.",
-  path: "/school/corporate-training",
+  path: "/education/corporate-training",
 });
 
 const benefits = [
@@ -43,8 +43,8 @@ export default function CorporateTrainingPage() {
         title="Train your billing team on the workflows that matter"
         intro="Billing companies and practices use GlobalMed courses to onboard new hires and upskill their teams."
         crumbs={[
-          { name: "School", path: "/school" },
-          { name: "Corporate training", path: "/school/corporate-training" },
+          { name: "Education", path: "/education" },
+          { name: "Corporate training", path: "/education/corporate-training" },
         ]}
       />
       <Section title="What you get">

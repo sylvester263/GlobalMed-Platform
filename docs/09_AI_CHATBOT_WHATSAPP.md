@@ -12,7 +12,13 @@ Answer questions about services, courses, pricing, enrollment and certificates; 
 - Same engine for both channels; channel-specific formatting (WhatsApp: short, no markdown tables).
 
 ## 3. Knowledge base
-Sources: service pages, course catalog (auto-synced on publish), FAQs, policies, admin-added documents. Admin edits a document → chunk (≈800 tokens, 100 overlap) → embed → replace chunks.
+Sources: service pages, course catalog (auto-synced on publish), FAQs, policies, admin-added documents.
+
+Company facts (seed these as a pinned knowledge document; client-confirmed 2026-09-25, single source `lib/site.ts`):
+- Address: 44 Dilkusha Garden, Near S Block Ext., Model Town, Lahore, PO Box 54700, Pakistan
+- Phone: +92 42 3594 6342 · WhatsApp: +92 300 419 8760 · Email: info@globalmedtranscriptions.com · Hours: Open 24/7
+- Founded 2007 by Riaz Naveed; AAPC's strategic partner in Pakistan for CPC® and CPB® training (content/aapc.ts). CPC® and CPB® certification fee: USD 1,050 [CLIENT TO CONFIRM per certification or combined].
+- Generate this document from `lib/site.ts` and `content/aapc.ts` at build/seed time so the bot never drifts from the footer and contact page. Admin edits a document → chunk (≈800 tokens, 100 overlap) → embed → replace chunks.
 
 ## 4. Guardrails (system prompt must include)
 - You are GlobalMed's assistant. Answer only about GlobalMed services, courses and policies.

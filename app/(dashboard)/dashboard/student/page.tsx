@@ -50,7 +50,7 @@ export default async function StudentOverviewPage() {
           title="You haven't enrolled in a course yet"
           description="Watch free preview lessons, then enroll when you're ready. Your progress will appear here."
           action={
-            <Link href="/school/courses" className={buttonVariants({ size: "lg" })}>
+            <Link href="/education/courses" className={buttonVariants({ size: "lg" })}>
               Browse courses
             </Link>
           }

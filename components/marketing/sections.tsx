@@ -231,7 +231,7 @@ export function CourseCard({
         <Badge variant="secondary">{categoryLabels[course.category]}</Badge>
       </div>
       <Heading className="text-xl">
-        <Link href={`/school/courses/${course.slug}`} className="after:absolute after:inset-0">
+        <Link href={`/education/courses/${course.slug}`} className="after:absolute after:inset-0">
           {course.title}
         </Link>
       </Heading>
@@ -254,19 +254,35 @@ export function CourseCard({
   );
 }
 
-/** Trust strip (MG-4). Figures show "Illustrative" until the client confirms them. */
-export function StatsStrip() {
+type Stat = { label: string; value: number; suffix: string; decimals: number };
+
+/**
+ * Trust strip (MG-4). Defaults to the company stats, which show "Illustrative" until the
+ * client confirms them; pass `stats` (with `confirmed`) for client-supplied figures.
+ */
+export function StatsStrip({
+  stats = companyStats.items,
+  confirmed = companyStats.confirmed,
+}: {
+  stats?: Stat[];
+  confirmed?: boolean;
+}) {
   return (
     <section aria-label="GlobalMed in numbers" className="border-y bg-card">
-      <div className="mx-auto grid max-w-300 grid-cols-2 gap-8 px-4 py-10 md:px-6 lg:grid-cols-4">
-        {companyStats.items.map((stat) => (
+      <div
+        className={cn(
+          "mx-auto grid max-w-300 grid-cols-2 gap-8 px-4 py-10 md:px-6",
+          stats.length === 5 ? "md:grid-cols-3 lg:grid-cols-5" : "lg:grid-cols-4",
+        )}
+      >
+        {stats.map((stat) => (
           <StatBlock
             key={stat.label}
             label={stat.label}
             value={stat.value}
             suffix={stat.suffix}
             decimals={stat.decimals}
-            illustrative={!companyStats.confirmed}
+            illustrative={!confirmed}
           />
         ))}
       </div>

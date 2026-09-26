@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata({
     title: course.metaTitle,
     description: course.metaDescription,
-    path: `/school/courses/${course.slug}`,
+    path: `/education/courses/${course.slug}`,
   });
 }
 
@@ -52,7 +52,7 @@ export default async function CoursePage({ params }: Props) {
   if (!course) notFound();
 
   const instructor = getInstructor(course.instructor);
-  const path = `/school/courses/${course.slug}`;
+  const path = `/education/courses/${course.slug}`;
   // Enrollment and checkout arrive in Phases 3 and 5; the CTA carries the course through sign-up.
   const enrollHref = `/signup?course=${course.slug}`;
   const related = getCourses()
@@ -70,8 +70,8 @@ export default async function CoursePage({ params }: Props) {
         title={course.title}
         intro={course.summary}
         crumbs={[
-          { name: "School", path: "/school" },
-          { name: "Courses", path: "/school/courses" },
+          { name: "Education", path: "/education" },
+          { name: "Courses", path: "/education/courses" },
           { name: course.title, path },
         ]}
       >

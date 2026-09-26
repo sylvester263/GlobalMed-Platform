@@ -6,7 +6,7 @@ import { cpcCourseSlug } from "@/content/home";
 
 const ctas = [
   {
-    href: `/school/courses/${cpcCourseSlug}`,
+    href: `/education/courses/${cpcCourseSlug}`,
     label: "Enroll in CPC Training",
     variant: "default" as const,
   },

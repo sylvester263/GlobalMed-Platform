@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Upcoming Live Batches",
   description:
     "Join a live medical billing or coding batch with an instructor. See start dates, schedules in Pakistan time and seats available.",
-  path: "/school/batches",
+  path: "/education/batches",
 });
 
 const dateFormat = new Intl.DateTimeFormat("en-US", {
@@ -29,8 +29,8 @@ export default function BatchesPage() {
         title="Learn live with an instructor and a cohort"
         intro="Batches combine the course videos with live online sessions for questions, practice and exam tips. Recordings of live sessions are added to your course."
         crumbs={[
-          { name: "School", path: "/school" },
-          { name: "Upcoming batches", path: "/school/batches" },
+          { name: "Education", path: "/education" },
+          { name: "Upcoming batches", path: "/education/batches" },
         ]}
       />
       <Section>
@@ -65,7 +65,7 @@ export default function BatchesPage() {
                   </li>
                 </ul>
                 <Link
-                  href={`/school/courses/${course.slug}`}
+                  href={`/education/courses/${course.slug}`}
                   className={buttonVariants({ variant: "secondary", className: "mt-auto" })}
                 >
                   View course
@@ -78,7 +78,7 @@ export default function BatchesPage() {
       <CtaBand
         title="Can't make these dates?"
         body="Every course is also available self-paced, and new batches open regularly."
-        href="/school/courses"
+        href="/education/courses"
         label="Study at your own pace"
       />
     </>

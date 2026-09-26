@@ -1,70 +1,112 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { ChevronDown, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import Link from "next/link";
 
+import { CertificationPriceCard } from "@/components/marketing/certification-price-card";
 import { NewsletterForm } from "@/components/marketing/newsletter-form";
+import { SocialIcons } from "@/components/marketing/social-icons";
 import { Wordmark } from "@/components/marketing/wordmark";
 import { ClaimLine } from "@/components/motion/claim-line";
-import { footerNav, legalNav, site } from "@/lib/site";
+import { aapcCertificationPath, footerNav, legalNav, postalAddress, site } from "@/lib/site";
 
-/** Footer (docs/05): links, contact, newsletter, legal, SylJo Tech credit. */
+const whatsappUrl = `https://wa.me/${site.contact.whatsappNumber.replace(/\D/g, "")}`;
+
+/**
+ * A footer column: an open list from md up, a native <details> accordion on phones (no JS).
+ * The two copies never show together, and display:none keeps the hidden one out of the
+ * accessibility tree.
+ */
+function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <details className="group border-b border-white/15 md:hidden">
+        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between font-semibold text-white [&::-webkit-details-marker]:hidden">
+          {title}
+          <ChevronDown
+            aria-hidden="true"
+            className="size-4 transition-transform duration-(--duration-fast) group-open:rotate-180"
+          />
+        </summary>
+        <div className="pb-5">{children}</div>
+      </details>
+      <div className="hidden md:block">
+        <h2 className="mb-4 font-sans text-base font-semibold text-white">{title}</h2>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function LinkList({ links }: { links: { label: string; href: string }[] }) {
+  return (
+    <ul className="flex flex-col gap-2.5 text-sm">
+      {links.map((link) => (
+        <li key={link.href}>
+          <Link href={link.href} className="hover:text-white hover:underline">
+            {link.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ContactList() {
+  const { contact } = site;
+  const iconClass = "mt-0.5 size-4 shrink-0 text-sky";
+  return (
+    <ul className="flex flex-col gap-3 text-sm not-italic">
+      <li className="flex items-start gap-2">
+        <MapPin aria-hidden="true" className={iconClass} />
+        <span>
+          <span className="sr-only">Address: </span>
+          {postalAddress}
+        </span>
+      </li>
+      <li className="flex items-start gap-2">
+        <Phone aria-hidden="true" className={iconClass} />
+        <span>
+          Phone:{" "}
+          <a href={contact.phoneHref} className="hover:text-white hover:underline">
+            {contact.phone}
+          </a>
+        </span>
+      </li>
+      <li className="flex items-start gap-2">
+        <MessageCircle aria-hidden="true" className={iconClass} />
+        <span>
+          WhatsApp:{" "}
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white hover:underline"
+          >
+            {contact.whatsappDisplay}
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </span>
+      </li>
+      <li className="flex items-start gap-2">
+        <Mail aria-hidden="true" className={iconClass} />
+        <a href={`mailto:${contact.email}`} className="break-all hover:text-white hover:underline">
+          {contact.email}
+        </a>
+      </li>
+      <li className="flex items-start gap-2">
+        <Clock aria-hidden="true" className={iconClass} />
+        <span>Hours: {contact.hours}</span>
+      </li>
+    </ul>
+  );
+}
+
+/** Footer (client review 2026-09-25): newsletter strip, five columns, legal bar, SylJo Tech credit. */
 export function SiteFooter() {
-  const year = new Date().getFullYear();
   return (
     <footer className="bg-primary text-white/85">
-      <div className="mx-auto grid max-w-300 gap-12 px-4 py-16 md:px-6 lg:grid-cols-[1.2fr_2fr]">
-        <div className="flex flex-col gap-6">
-          <Wordmark size="footer" onDark />
-          <p className="max-w-sm">{site.description}</p>
-          <ul className="flex flex-col gap-3 text-sm">
-            <li className="flex items-start gap-2">
-              <Phone aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-teal-bright" />
-              <span>
-                US:{" "}
-                <a href={site.contact.phoneUsHref} className="hover:text-white">
-                  {site.contact.phoneUs}
-                </a>
-                <br />
-                Pakistan:{" "}
-                <a href={site.contact.phonePkHref} className="hover:text-white">
-                  {site.contact.phonePk}
-                </a>
-              </span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Mail aria-hidden="true" className="size-4 shrink-0 text-teal-bright" />
-              <a href={`mailto:${site.contact.email}`} className="hover:text-white">
-                {site.contact.email}
-              </a>
-            </li>
-            <li className="flex items-start gap-2">
-              <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-teal-bright" />
-              <span>
-                {site.contact.address.city}, Pakistan · serving practices across the United States
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <div className="grid gap-10 sm:grid-cols-3">
-          {footerNav.map((col) => (
-            <nav key={col.title} aria-label={`${col.title} links`}>
-              <h2 className="mb-4 font-sans text-base font-semibold text-white">{col.title}</h2>
-              <ul className="flex flex-col gap-2.5 text-sm">
-                {col.links.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="hover:text-white hover:underline">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          ))}
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-300 px-4 md:px-6">
-        <div className="grid gap-6 border-t border-white/10 py-10 md:grid-cols-[1fr_1.2fr] md:items-center">
+      {/* Newsletter, full width above the columns */}
+      <div className="border-b border-white/15">
+        <div className="mx-auto grid max-w-300 gap-6 px-4 py-10 md:grid-cols-[1fr_1.2fr] md:items-center md:px-6">
           <div>
             <h2 className="font-serif text-xl font-semibold text-white">
               Billing and coding insights, monthly
@@ -77,8 +119,38 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-300 flex-col gap-4 px-4 py-6 text-sm md:flex-row md:items-center md:justify-between md:px-6">
+      <div className="mx-auto grid max-w-300 gap-10 px-4 py-14 md:grid-cols-2 md:gap-12 md:px-6 lg:grid-cols-[1.35fr_1fr_1.15fr_1.25fr_1.35fr] lg:gap-10 lg:py-16">
+        <div className="flex flex-col gap-5">
+          <Link href="/" aria-label="GlobalMed home" className="self-start rounded-md">
+            <Wordmark size="footer" onDark />
+          </Link>
+          <p className="max-w-sm text-sm leading-relaxed">{site.tagline}</p>
+          <SocialIcons />
+        </div>
+
+        {footerNav.map((col) => (
+          <nav key={col.title} aria-label={`${col.title} links`}>
+            <FooterColumn title={col.title}>
+              <LinkList links={col.links} />
+            </FooterColumn>
+          </nav>
+        ))}
+
+        <div className="flex flex-col gap-4 md:order-last lg:order-none">
+          <h2 className="font-sans text-base font-semibold text-white">Certification Pricing</h2>
+          <CertificationPriceCard href={`${aapcCertificationPath}#reserve-seat`} onDark />
+        </div>
+
+        <address className="not-italic">
+          <FooterColumn title="Contact Info">
+            <ContactList />
+          </FooterColumn>
+        </address>
+      </div>
+
+      <div className="border-t border-white/15">
+        <div className="mx-auto flex max-w-300 flex-col gap-4 px-4 py-6 pr-20 text-sm md:px-6 md:pr-20 lg:flex-row lg:items-center lg:justify-between">
+          <p>© GlobalMed Transcriptions. All Rights Reserved.</p>
           <nav aria-label="Legal">
             <ul className="flex flex-wrap gap-x-5 gap-y-2">
               {legalNav.map((link) => (
@@ -90,12 +162,9 @@ export function SiteFooter() {
               ))}
             </ul>
           </nav>
-          <div className="flex flex-col gap-1 md:items-end">
-            <p>
-              © {year} {site.name}
-            </p>
-            <p>{site.credit}</p>
+          <div className="flex flex-col gap-1 lg:items-end">
             <p className="text-xs">CPC® and CPB® are registered trademarks of AAPC.</p>
+            <p>{site.credit}</p>
           </div>
         </div>
         <ClaimLine trigger="static" ticks={24} filled={1} className="opacity-30" />

@@ -1,10 +1,10 @@
 ---
 title: Terms of service
-description: The terms that apply when you use the GlobalMed website and enroll in the GlobalMed School of Billing and Coding.
+description: The terms that apply when you use the GlobalMed website and enroll in GlobalMed Education.
 updatedAt: "2026-09-24"
 ---
 
-These terms apply to your use of this website and the GlobalMed School of Billing and Coding. By creating an account or enrolling in a course, you agree to them.
+These terms apply to your use of this website and GlobalMed Education. By creating an account or enrolling in a course, you agree to them.
 
 ## Accounts
 

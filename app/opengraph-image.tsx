@@ -84,7 +84,7 @@ export default async function OpengraphImage() {
       <div
         style={{ fontSize: 26, color: "rgba(255,255,255,0.8)", fontFamily: "Arial, sans-serif" }}
       >
-        Medical billing · Coding · Transcription · School of Billing and Coding
+        Medical billing · Coding · Transcription · GlobalMed Education
       </div>
     </div>,
     size,

@@ -48,4 +48,4 @@ Payers deny when the note doesn't show separate work, or when a practice appends
 
 ---
 
-*Learn E/M level selection and modifiers in depth in our [E/M Coding in Practice](/school/courses/evaluation-and-management-coding) course.*
+*Learn E/M level selection and modifiers in depth in our [E/M Coding in Practice](/education/courses/evaluation-and-management-coding) course.*

@@ -1,6 +1,6 @@
 ---
 title: Refund policy
-description: When and how you can get a refund for a GlobalMed School of Billing and Coding course.
+description: When and how you can get a refund for a GlobalMed Education course.
 updatedAt: "2026-09-24"
 ---
 

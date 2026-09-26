@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Result pages carry a person's name, so they're never indexed.
   return pageMetadata({
     title: "Certificate verification",
-    description: "Verification result for a GlobalMed School of Billing and Coding certificate.",
+    description: "Verification result for a GlobalMed Education certificate.",
     path: `/verify/${encodeURIComponent(code)}`,
     noindex: true,
   });
@@ -56,7 +56,7 @@ export default async function VerifyResultPage({ params }: Props) {
               <div className="flex flex-col items-center gap-2">
                 <p className="text-sm text-muted-foreground">
                   {result.kind === "valid"
-                    ? `This certificate was issued by the ${site.schoolName} and is valid.`
+                    ? `This certificate was issued by ${site.schoolName} and is valid.`
                     : "This certificate was issued but has been revoked and is no longer valid."}
                 </p>
                 <h2 className="text-3xl">{result.name}</h2>

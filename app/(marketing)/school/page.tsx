@@ -10,6 +10,7 @@ import {
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
 import {
   CourseCard,
   CtaBand,
@@ -31,10 +32,10 @@ import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata({
-  title: "School of Billing and Coding",
+  title: "GlobalMed Education",
   description:
     "Online medical billing and coding courses with rewatchable video lessons, mock exams and verifiable certificates. Pay in USD or PKR.",
-  path: "/school",
+  path: "/education",
 });
 
 const audiences = [
@@ -75,7 +76,7 @@ const learningLoop = [
   },
 ];
 
-export default function SchoolPage() {
+export default function EducationPage() {
   const featured = getFeaturedCourses();
   const pathways = getPathways();
   const primary = pathways[0];
@@ -87,20 +88,22 @@ export default function SchoolPage() {
         eyebrow={site.schoolName}
         title="Job-ready medical billing and coding skills, taught by people who do the work"
         intro="Video lessons you can rewatch, practice after every module, timed mock exams and a certificate employers can verify online. Pay by card in USD or locally in PKR."
-        crumbs={[{ name: "School", path: "/school" }]}
+        crumbs={[{ name: "Education", path: "/education" }]}
       >
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Link href="/school/courses" className={buttonVariants({ size: "lg" })}>
+          <Link href="/education/courses" className={buttonVariants({ size: "lg" })}>
             Browse courses
           </Link>
           <Link
-            href="/school/pathways"
+            href="/education/pathways"
             className={buttonVariants({ size: "lg", variant: "secondary" })}
           >
             See certification pathways
           </Link>
         </div>
       </PageHero>
+
+      <AapcInstructorsBand />
 
       <Section title="Who it's for">
         <ul className="grid gap-6 md:grid-cols-3">
@@ -123,7 +126,7 @@ export default function SchoolPage() {
             current={0}
           />
           <Link
-            href={`/school/pathways/${primary.slug}`}
+            href={`/education/pathways/${primary.slug}`}
             className={cn(buttonVariants({ variant: "secondary" }), "self-start")}
           >
             Explore the {primary.title}
@@ -140,7 +143,7 @@ export default function SchoolPage() {
           ))}
         </StaggerGroup>
         <Link
-          href="/school/courses"
+          href="/education/courses"
           className={cn(buttonVariants({ variant: "link" }), "self-start")}
         >
           See all courses
@@ -198,7 +201,7 @@ export default function SchoolPage() {
                 </span>
               </p>
               <Link
-                href={`/school/pathways/${p.slug}`}
+                href={`/education/pathways/${p.slug}`}
                 className={cn(buttonVariants({ variant: "secondary" }), "self-start")}
               >
                 View pathway
@@ -215,9 +218,9 @@ export default function SchoolPage() {
       <CtaBand
         title="Start learning today"
         body="Watch free preview lessons before you enroll."
-        href="/school/courses"
+        href="/education/courses"
         label="Browse courses"
-        secondary={{ href: "/school/batches", label: "See upcoming live batches" }}
+        secondary={{ href: "/education/batches", label: "See upcoming live batches" }}
       />
     </>
   );

@@ -15,28 +15,69 @@ export function JsonLd({ data }: { data: JsonLdObject | JsonLdObject[] }) {
 
 const orgId = `${site.url}#organization`;
 
+function postalAddressJsonLd(): JsonLdObject {
+  const { address } = site.contact;
+  return {
+    "@type": "PostalAddress",
+    streetAddress: address.street,
+    postOfficeBoxNumber: address.poBox,
+    addressLocality: address.city,
+    addressRegion: address.region,
+    postalCode: address.postalCode,
+    addressCountry: address.country,
+  };
+}
+
+/** Organization + LocalBusiness: same NAP as the footer and contact page (lib/site.ts). */
 export function organizationJsonLd(): JsonLdObject {
+  const { contact } = site;
   return {
     "@context": "https://schema.org",
-    "@type": ["Organization", "ProfessionalService"],
+    "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
     "@id": orgId,
     name: site.name,
+    legalName: "GlobalMed Transcriptions Pvt. Ltd.",
     alternateName: site.shortName,
     url: site.url,
-    email: site.contact.email,
-    telephone: site.contact.phoneUs,
+    logo: absoluteUrl("/logo.png"),
+    image: absoluteUrl("/logo.png"),
+    email: contact.email,
+    telephone: contact.phone,
+    foundingDate: "2007",
+    founder: { "@type": "Person", name: "Riaz Naveed" },
     description: site.description,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: site.contact.address.city,
-      addressRegion: site.contact.address.region,
-      addressCountry: site.contact.address.country,
+    address: postalAddressJsonLd(),
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "00:00",
+      closes: "23:59",
     },
-    areaServed: ["US", "PK"],
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: contact.phone,
+        email: contact.email,
+        hoursAvailable: {
+          "@type": "OpeningHoursSpecification",
+          opens: "00:00",
+          closes: "23:59",
+        },
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "WhatsApp",
+        telephone: contact.whatsappDisplay,
+        url: `https://wa.me/${contact.whatsappNumber.replace(/\D/g, "")}`,
+      },
+    ],
+    areaServed: ["US", "CA", "GB", "AU", "SA", "PK"],
+    sameAs: site.social.filter((s) => s.href).map((s) => s.href),
     department: {
       "@type": "EducationalOrganization",
       name: site.schoolName,
-      url: absoluteUrl("/school"),
+      url: absoluteUrl("/education"),
     },
   };
 }
@@ -54,12 +95,7 @@ export function educationalOrganizationJsonLd(input: {
     url: absoluteUrl("/"),
     description: input.description,
     parentOrganization: { "@id": orgId },
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: site.contact.address.city,
-      addressRegion: site.contact.address.region,
-      addressCountry: site.contact.address.country,
-    },
+    address: postalAddressJsonLd(),
     hasOfferingCatalog: {
       "@type": "OfferCatalog",
       name: "CPC® and CPB® certification training",

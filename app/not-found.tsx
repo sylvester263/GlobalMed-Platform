@@ -25,7 +25,7 @@ export default function NotFound() {
               Services
             </Link>
             <Link
-              href="/school/courses"
+              href="/education/courses"
               className={buttonVariants({ size: "lg", variant: "secondary" })}
             >
               Courses

@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 // The mobile sheet loads on first hover/focus/tap of the menu button, not with every page.
 const MobileNav = dynamic(() => import("./mobile-nav").then((m) => m.MobileNav), { ssr: false });
 
-/** Primary navigation (docs/05): Services ▾ · School ▾ · Resources ▾ · Specialties · About · Contact. */
+/** Primary navigation (client review 2026-09-25): About Us · Education ▾ · Services ▾ · Resources ▾ · Specialties · Contact. */
 export function SiteHeader() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);

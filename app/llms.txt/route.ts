@@ -1,6 +1,6 @@
 import { getCourses, getServices, getSpecialties } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo/metadata";
-import { site } from "@/lib/site";
+import { aapcCertificationPath, postalAddress, site } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -31,14 +31,16 @@ export function GET() {
     "Online courses with rewatchable video lessons, quizzes, timed mock exams and verifiable certificates. Payment by card in USD, or in PKR by bank transfer, JazzCash or Easypaisa.",
     ...getCourses().map(
       (c) =>
-        `- [${c.title}](${absoluteUrl(`/school/courses/${c.slug}`)}): ${c.summary} (${c.hours} hours, ${usd.format(c.priceUsd)})`,
+        `- [${c.title}](${absoluteUrl(`/education/courses/${c.slug}`)}): ${c.summary} (${c.hours} hours, ${usd.format(c.priceUsd)})`,
     ),
+    `- [AAPC Certification in Pakistan](${absoluteUrl(aapcCertificationPath)}): CPC® and CPB® training with AAPC's strategic partner in Pakistan.`,
     `- [Verify a certificate](${absoluteUrl("/verify")})`,
     "",
     "## Contact",
     `- Email: ${site.contact.email}`,
-    `- US phone: ${site.contact.phoneUs} (${site.contact.hoursUs})`,
-    `- Pakistan phone: ${site.contact.phonePk} (${site.contact.hoursPk})`,
+    `- Phone: ${site.contact.phone} (${site.contact.hours})`,
+    `- WhatsApp: ${site.contact.whatsappDisplay}`,
+    `- Address: ${postalAddress}`,
     `- [Contact page](${absoluteUrl("/contact")})`,
     "",
   ];

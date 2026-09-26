@@ -88,7 +88,7 @@ export default async function BlogPostPage({ params }: Props) {
       ) : (
         <CtaBand
           title="Turn what you've learned into a career"
-          href="/school/courses"
+          href="/education/courses"
           label="Browse courses"
         />
       )}

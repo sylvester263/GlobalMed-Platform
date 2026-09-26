@@ -281,7 +281,7 @@ export default function StyleguidePage() {
             <Button disabled>Disabled</Button>
             <Button loading>Saving</Button>
             <ButtonStates />
-            <Link href="/school" className={buttonVariants({ variant: "secondary" })}>
+            <Link href="/education" className={buttonVariants({ variant: "secondary" })}>
               Link styled as button
             </Link>
           </div>
@@ -355,11 +355,11 @@ export default function StyleguidePage() {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/school">School</BreadcrumbLink>
+              <BreadcrumbLink href="/education">Education</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href="/school/courses">Courses</BreadcrumbLink>
+              <BreadcrumbLink href="/education/courses">Courses</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -484,7 +484,7 @@ export default function StyleguidePage() {
               "Verifiable certificate",
             ]}
             action={
-              <Link href="/school" className={buttonVariants({ size: "lg" })}>
+              <Link href="/education" className={buttonVariants({ size: "lg" })}>
                 Enroll now
               </Link>
             }

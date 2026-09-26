@@ -54,7 +54,7 @@ export function CourseDetailsForm({ course }: { course: Course }) {
       <FormField
         label="Web address"
         required
-        description="globalmedtranscriptions.com/school/courses/…"
+        description="globalmedtranscriptions.com/education/courses/…"
         error={fieldErrors.slug}
       >
         {(c) => <Input {...c} name="slug" defaultValue={course.slug} className="font-mono" />}

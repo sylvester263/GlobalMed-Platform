@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata({
     title: pathway.metaTitle,
     description: pathway.metaDescription,
-    path: `/school/pathways/${pathway.slug}`,
+    path: `/education/pathways/${pathway.slug}`,
   });
 }
 
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PathwayPage({ params }: Props) {
   const pathway = getPathway((await params).slug);
   if (!pathway) notFound();
-  const path = `/school/pathways/${pathway.slug}`;
+  const path = `/education/pathways/${pathway.slug}`;
 
   const steps = pathway.steps.map((step) => ({
     ...step,
@@ -56,8 +56,8 @@ export default async function PathwayPage({ params }: Props) {
         title={pathway.title}
         intro={pathway.summary}
         crumbs={[
-          { name: "School", path: "/school" },
-          { name: "Pathways", path: "/school/pathways" },
+          { name: "Education", path: "/education" },
+          { name: "Pathways", path: "/education/pathways" },
           { name: pathway.title, path },
         ]}
       />

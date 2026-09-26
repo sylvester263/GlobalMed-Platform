@@ -11,7 +11,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Certification Pathways",
   description:
     "Guided pathways from beginner to certification-ready in medical billing and coding, with bundle pricing in USD or PKR.",
-  path: "/school/pathways",
+  path: "/education/pathways",
 });
 
 export default function PathwaysPage() {
@@ -23,8 +23,8 @@ export default function PathwaysPage() {
         title="A clear route from beginner to certified"
         intro="Pathways put the right courses in the right order, so you always know what to learn next. Buy the bundle and save."
         crumbs={[
-          { name: "School", path: "/school" },
-          { name: "Pathways", path: "/school/pathways" },
+          { name: "Education", path: "/education" },
+          { name: "Pathways", path: "/education/pathways" },
         ]}
       />
       {pathways.map((p, i) => (
@@ -47,7 +47,7 @@ export default function PathwaysPage() {
                 or {formatPkr(p.bundlePricePkr)} for the bundle
               </span>
             </p>
-            <Link href={`/school/pathways/${p.slug}`} className={buttonVariants({ size: "lg" })}>
+            <Link href={`/education/pathways/${p.slug}`} className={buttonVariants({ size: "lg" })}>
               View this pathway
             </Link>
           </div>

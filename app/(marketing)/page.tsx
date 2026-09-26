@@ -1,6 +1,3 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-
 import {
   ArrowRight,
   BookOpenCheck,
@@ -12,27 +9,22 @@ import {
   Users,
 } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 
+import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
+import { CredentialsSection } from "@/components/marketing/credentials-section";
 import { ClaimJourney } from "@/components/marketing/home/claim-journey";
-import { HeroClaimForm } from "@/components/marketing/hero-claim-form";
-import { HeroCtas } from "@/components/marketing/home/hero-ctas";
+import { HeroSlider } from "@/components/marketing/home/hero-slider";
 import { CtaBand, FaqList, Section } from "@/components/marketing/sections";
 import { ServiceIcon } from "@/components/marketing/service-icon";
 import { Testimonial } from "@/components/marketing/testimonial";
-import { Wordmark } from "@/components/marketing/wordmark";
-import { ClaimLine } from "@/components/motion/claim-line";
 import { CountUp } from "@/components/motion/count-up";
-import { LottiePlayer } from "@/components/motion/lottie-player";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger-group";
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
   certificationPath,
   cpcCourseSlug,
   faqs,
-  hero,
   partnership,
   programs,
   serviceSlugs,
@@ -41,7 +33,6 @@ import {
   whyUs,
 } from "@/content/home";
 import { getCourse, getServices } from "@/lib/content";
-import { motionAssets } from "@/lib/motion-assets";
 import { educationalOrganizationJsonLd, JsonLd } from "@/lib/seo/json-ld";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { whatsappHref } from "@/lib/site";
@@ -61,13 +52,7 @@ export const metadata: Metadata = {
 
 const whyIcons = [Users, BookOpenCheck, PlayCircle, Briefcase] as const;
 
-/** The AAPC mark is shown only once the client supplies it with permission (pm/CLIENT_INPUTS_NEEDED.md). */
-const aapcLogo = [
-  { src: "/aapc-logo.png", width: 160, height: 48 },
-  { src: "/aapc-logo.svg", width: 146, height: 51 },
-].find((logo) => existsSync(join(process.cwd(), "public", logo.src)));
-
-const cpcHref = `/school/courses/${cpcCourseSlug}`;
+const cpcHref = `/education/courses/${cpcCourseSlug}`;
 
 export default function HomePage() {
   const services = getServices().filter((s) =>
@@ -84,57 +69,25 @@ export default function HomePage() {
           description,
           courses: programs.map((p) => ({
             name: `${p.credential} ${p.name} training`,
-            description: getCourse(p.slug)?.summary ?? p.audience,
-            path: `/school/courses/${p.slug}`,
+            description: getCourse(p.slug)?.summary ?? p.audience.join(". "),
+            path: `/education/courses/${p.slug}`,
           })),
         })}
       />
 
-      {/* 1. Hero. MG-1 enhances; text is SSR and never hidden. */}
-      <section className="bg-ledger">
-        <div className="mx-auto grid max-w-300 items-center gap-12 px-4 py-14 md:px-6 lg:grid-cols-[1.1fr_1fr] lg:py-24">
-          <div className="flex flex-col gap-6">
-            <Badge variant="gold" className="h-auto py-1 whitespace-normal">
-              {hero.badge}
-            </Badge>
-            <h1 className="text-3xl text-primary lg:text-4xl">{hero.headline}</h1>
-            <ClaimLine trigger="mount" ticks={8} delay={0.1} className="max-w-md" />
-            <p className="max-w-prose text-lg text-muted-foreground">{hero.intro}</p>
-            <HeroCtas />
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <Wordmark size="compact" />
-              <span aria-hidden="true" className="h-10 w-px bg-border" />
-              {aapcLogo ? (
-                <Image
-                  src={aapcLogo.src}
-                  alt="AAPC logo"
-                  width={aapcLogo.width}
-                  height={aapcLogo.height}
-                  unoptimized={aapcLogo.src.endsWith(".svg")}
-                  className="h-10 w-auto object-contain"
-                />
-              ) : (
-                <span className="flex h-10 items-center rounded-md border-2 border-dashed border-input px-3 text-xs font-semibold text-muted-foreground">
-                  AAPC partner logo
-                </span>
-              )}
-            </div>
-          </div>
-          {/* MG-2: coded SVG loop; a designer's Lottie replaces it once delivered (P2-15). */}
-          {motionAssets.heroClaimForm ? (
-            <LottiePlayer
-              src={motionAssets.heroClaimForm}
-              poster="/motion/posters/hero-claim-form.svg"
-              alt="A claim form fills itself in: codes appear, a denial flag turns green, and the status changes to Paid."
-              width={480}
-              height={320}
-              className="w-full"
-            />
-          ) : (
-            <HeroClaimForm className="w-full" />
-          )}
-        </div>
-      </section>
+      {/* 1. Hero slider (client review 2026-09-25). The page's h1 sits outside the rotating
+          slides so it never becomes hidden when a slide changes. */}
+      <h1 className="sr-only">
+        GlobalMed Transcriptions: medical transcription, billing and coding since 2007, and
+        AAPC&apos;s strategic partner in Pakistan for CPC® and CPB® training
+      </h1>
+      <HeroSlider />
+
+      {/* 1a. Get Trained by AAPC Instructors */}
+      <AapcInstructorsBand href="#certification-programs" />
+
+      {/* 1b. Registered, Certified & Compliant */}
+      <CredentialsSection />
 
       {/* 2. Partnership strip (MG-4 count-up) */}
       <section aria-label="GlobalMed and AAPC partnership" className="bg-primary text-white">
@@ -180,7 +133,16 @@ export default function HomePage() {
                 <h4 className="font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase">
                   Who it&apos;s for
                 </h4>
-                <p className="text-muted-foreground">{program.audience}</p>
+                <ul className="flex flex-col gap-1 text-muted-foreground">
+                  {program.audience.map((line, i) => (
+                    <li
+                      key={line}
+                      className={i === 0 ? "font-semibold text-foreground" : undefined}
+                    >
+                      {line}
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div className="flex flex-col gap-3">
                 <h4 className="font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase">
@@ -202,7 +164,7 @@ export default function HomePage() {
                 <dd className="text-muted-foreground">{program.duration}</dd>
               </dl>
               <Link
-                href={`/school/courses/${program.slug}`}
+                href={`/education/courses/${program.slug}`}
                 className={cn(buttonVariants({ size: "lg" }), "mt-auto self-start")}
               >
                 {program.cta} <ArrowRight aria-hidden="true" />

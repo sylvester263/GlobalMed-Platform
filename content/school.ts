@@ -60,6 +60,7 @@ const raw: Course[] = [
       "No prior healthcare experience needed",
     ],
     audience: [
+      "Healthcare professionals and billers",
       "Career-changers starting in healthcare",
       "Front-desk staff moving into billing",
       "Graduates looking for remote work with US practices",
@@ -137,6 +138,7 @@ const raw: Course[] = [
       "No prior coding experience needed",
     ],
     audience: [
+      "Healthcare professionals and billers",
       "Beginners aiming for a coding career",
       "Billers who want to understand coding",
       "Nursing and pharmacy graduates changing careers",
@@ -211,6 +213,7 @@ const raw: Course[] = [
       "Current-year code books",
     ],
     audience: [
+      "Healthcare professionals and billers",
       "Students close to sitting the CPC exam",
       "Working coders preparing for certification",
     ],
@@ -280,7 +283,11 @@ const raw: Course[] = [
       "Code to the specificity payers require",
     ],
     requirements: ["Basic ICD-10-CM knowledge", "Current-year ICD-10-CM book"],
-    audience: ["Working coders", "Billers who review diagnosis coding"],
+    audience: [
+      "Healthcare professionals and billers",
+      "Working coders",
+      "Billers who review diagnosis coding",
+    ],
     curriculum: [
       {
         title: "Guidelines in depth",
@@ -342,7 +349,11 @@ const raw: Course[] = [
       "Code hospital and observation visits",
     ],
     requirements: ["Basic CPT knowledge"],
-    audience: ["Working coders", "Providers and office managers who review coding"],
+    audience: [
+      "Healthcare professionals and billers",
+      "Working coders",
+      "Providers and office managers who review coding",
+    ],
     curriculum: [
       {
         title: "Office visits",
@@ -405,7 +416,11 @@ const raw: Course[] = [
       "Track denial trends and fix root causes",
     ],
     requirements: ["Medical Billing Essentials or billing experience"],
-    audience: ["Billers and AR specialists", "Billing team leads"],
+    audience: [
+      "Healthcare professionals and billers",
+      "Billers and AR specialists",
+      "Billing team leads",
+    ],
     curriculum: [
       {
         title: "Understanding denials",
@@ -477,6 +492,7 @@ const raw: Course[] = [
       "No prior coding experience needed",
     ],
     audience: [
+      "Healthcare professionals and billers",
       "Graduates starting a medical coding career",
       "Nursing, pharmacy and life-science graduates changing careers",
       "Billers who want to move into coding",
@@ -554,6 +570,7 @@ const raw: Course[] = [
       "No prior healthcare experience needed",
     ],
     audience: [
+      "Healthcare professionals and billers",
       "Career-starters looking for work in US healthcare",
       "Front-desk and AR staff moving into billing",
       "Graduates looking for remote work with US practices",

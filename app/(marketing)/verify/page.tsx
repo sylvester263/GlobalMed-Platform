@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/seo/metadata";
 export const metadata: Metadata = pageMetadata({
   title: "Verify a Certificate",
   description:
-    "Check that a GlobalMed School of Billing and Coding certificate is genuine. Enter the certificate ID or scan its QR code.",
+    "Check that a GlobalMed Education certificate is genuine. Enter the certificate ID or scan its QR code.",
   path: "/verify",
 });
 
@@ -32,7 +32,7 @@ export default async function VerifyPage({ searchParams }: Props) {
       <PageHero
         eyebrow="Verify a certificate"
         title="Check a GlobalMed certificate"
-        intro="Employers and institutions can confirm that a certificate was issued by the GlobalMed School of Billing and Coding and is still valid."
+        intro="Employers and institutions can confirm that a certificate was issued by GlobalMed Education and is still valid."
         crumbs={[{ name: "Verify a certificate", path: "/verify" }]}
       />
       <Section className="max-w-2xl">

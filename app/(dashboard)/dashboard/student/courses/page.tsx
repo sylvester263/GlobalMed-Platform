@@ -28,7 +28,7 @@ export default async function MyCoursesPage() {
           title="No courses yet"
           description="Enroll in a course and it will appear here with your progress."
           action={
-            <Link href="/school/courses" className={buttonVariants({ size: "lg" })}>
+            <Link href="/education/courses" className={buttonVariants({ size: "lg" })}>
               Browse courses
             </Link>
           }

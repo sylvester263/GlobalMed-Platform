@@ -4,7 +4,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
-import { isActivePath, mainNav, simpleNav } from "@/lib/site";
+import { isActivePath, isNavGroup, primaryNav } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const triggerClass =
@@ -54,7 +54,22 @@ export function MegaMenu({ pathname }: { pathname: string }) {
   return (
     <nav ref={navRef} aria-label="Primary" className="hidden lg:block">
       <ul className="flex items-center gap-1">
-        {mainNav.map((group) => {
+        {primaryNav.map((item) => {
+          if (!isNavGroup(item)) {
+            const link = item;
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  aria-current={isActivePath(pathname, link.href) ? "page" : undefined}
+                  className={cn(triggerClass, "aria-[current=page]:text-teal-deep")}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            );
+          }
+          const group = item;
           const panelId = `${baseId}-${group.label}`;
           const expanded = open === group.label;
           return (
@@ -120,17 +135,6 @@ export function MegaMenu({ pathname }: { pathname: string }) {
             </li>
           );
         })}
-        {simpleNav.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              aria-current={isActivePath(pathname, link.href) ? "page" : undefined}
-              className={cn(triggerClass, "aria-[current=page]:text-teal-deep")}
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
       </ul>
     </nav>
   );

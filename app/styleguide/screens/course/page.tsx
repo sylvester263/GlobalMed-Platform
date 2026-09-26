@@ -71,7 +71,7 @@ export default function CourseScreen() {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="#">School</BreadcrumbLink>
+                <BreadcrumbLink href="#">Education</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>

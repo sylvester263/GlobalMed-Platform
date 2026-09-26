@@ -37,7 +37,7 @@ export default function DashboardShellScreen() {
             id: "1",
             title: "Welcome to GlobalMed",
             body: "Browse the courses to get started.",
-            link: "/school/courses",
+            link: "/education/courses",
             read: false,
           },
         ],

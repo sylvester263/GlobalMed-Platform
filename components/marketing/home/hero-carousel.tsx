@@ -98,7 +98,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                   sizes="100vw"
                   priority={i === 0}
                   loading={i === 0 ? undefined : "lazy"}
-                  className="object-cover"
+                  className="object-cover object-center lg:object-right"
                 />
               ) : (
                 <div

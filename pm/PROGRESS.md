@@ -63,7 +63,9 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [ ] P2-19 MG-9 to MG-13 school & course animations — 🟨 MG-9, MG-11 done; MG-10 static until asset; MG-12 needs practice logos; MG-13 needs AAPC permission
 - [ ] P2-20 MG-14 to MG-18 forms, verify, page transitions, menu, chat launcher — 🟨 MG-14–17 done; MG-18 moves to P7-4 with the chat widget
 - [x] P2-22 Client review 2026-09-25: hero slider, Education rename (/education, ADR-024), AAPC Certification page, AAPC instructors band, credentials section, About rewrite, expanded footer — images/numbers pending client
-- [x] P2-23 Business-model correction (ADR-026): AAPC partner only, 3 AAPC courses, registration form, GlobalMed education hidden behind flags — chatbot knowledge + final sweep pending
+- [x] P2-23 Business-model correction (ADR-026): AAPC partner only, 3 AAPC courses, registration form, GlobalMed education hidden behind flags; chatbot knowledge (docs/09) and wording sweep done
+- [x] P2-24 AAPC course pages with confirmed packages and prices (CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® USD 1,600), comparison table, 10 FAQs, registration consent, public login links hidden
+- [x] P2-25 "How it works" scroll-up bug fixed (CSS sticky, no GSAP pin); browser check 360/768/1280 ± reduced motion (138 checks) and E2E (146 pass, 53 skipped by flag); pm/CHANGE_REPORT_2026-09-26.md
 - [ ] P2-21 Motion performance + reduced-motion QA — 🟨 reduced motion + CLS 0 verified; mobile perf 73–90 locally, re-measure on Vercel preview
 
 ## Phase 3 — Auth & dashboard shells

@@ -63,8 +63,11 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ SECP certificate image and registration number
 - ⬜ Name and details of the third credential
 - ⬜ HIPAA: the certificate supplied is a staff training-completion certificate, not a company compliance assessment. The tile says "HIPAA Compliance Training Program completed". Confirm this wording, or supply a third-party HIPAA assessment if one exists
-- ⬜ CPC®/CPB® exam details from AAPC: number of questions, duration, format, passing score
-- ⬜ Is USD 1,050 per certification or for CPC® and CPB® combined? Is exam registration included?
+- ⬜ CPC®/CPB® exam details from AAPC: number of questions, duration, format, passing score (not shown on the site since 2026-09-26; only needed if the client wants them back)
+- ✅ Course prices and packages confirmed 2026-09-26: CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® USD 1,600 (data/courses.ts)
+- ⬜ AAPC's approval to use its course descriptions on the GlobalMed site (content/courses/*.ts)
+- ⬜ Whether registration details are shared with AAPC (privacy policy paragraph; the form's consent already covers sharing)
+- ⬜ Counsel review of the new Terms ("AAPC courses and certification") and Privacy (AAPC registrations) wording
 - ⬜ Social profile links (Facebook, Instagram, LinkedIn, YouTube, X); icons stay hidden until provided
 - ⬜ Instructor photos (optional, public/images/instructors/) and founder photo (public/images/team/riaz-naveed.jpg)
 

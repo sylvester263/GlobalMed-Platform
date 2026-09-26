@@ -227,6 +227,27 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** CPB included items and session details from AAPC; dual-course price; USD 1,050 confirmation; whether registration details are shared with AAPC (privacy policy).
 
 ---
+### Session 007b — AAPC course content, scroll fix, browser check, change report
+- **Date:** 2026-09-26
+- **Done:**
+  - Fixed "How it works" disappearing on scroll up. There were two causes: the page-enter animation kept a transform on the wrapper, which broke the GSAP pin (`position: fixed`), and the pin was created mid-scroll after a reload. The section is now CSS sticky; scroll only draws the line and highlights the active step.
+  - Course pages: `data/courses.ts` has the confirmed prices and packages, and `content/courses/*.ts` has the client copy. There is a 12-section template, tabs on the dual page, and Course JSON-LD with AAPC as provider and a USD offer. The AAPC page has the comparison table per the client layout, and the 10 FAQs are everywhere.
+  - Registration form: shows the price per course and has a required consent checkbox (stored with the lead). The footer card lists all three prices. The `publicLogin` flag hides the login links; `/login` is for staff.
+  - Wording sweep (pm/WORDING_SWEEP_2026-09-26.md): nothing visible left to change.
+  - Browser check: 138 checks, all pass. E2E: 146 passed, 53 skipped by flag. Screenshots are in pm/screenshots/.
+  - Fixes the checks found:
+    - footer saving-line contrast
+    - AAPC table clipping at 360px
+    - home meta description length
+    - staff login notice
+  - Change report: pm/CHANGE_REPORT_2026-09-26.md. Chatbot knowledge: docs/09.
+- **Files touched:** see pm/CHANGE_REPORT_2026-09-26.md.
+- **Next:**
+  - Client inputs (AAPC data sharing, AAPC approval of course descriptions, counsel review of the Terms/Privacy lines, SECP certificate).
+  - Vercel project under the client team (P0-9), then deploy and re-run the browser check on the preview URL.
+- **Blockers:** no Vercel project exists for this repo (the only connected account is a personal one with no GlobalMed project), so there is no production URL yet. Supabase, Resend, Turnstile and Upstash are needed for the registration form to store leads.
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

@@ -13,7 +13,9 @@ const SKY = "#51ACE3";
 
 /** Default social card for every page without its own image. */
 export default async function OpengraphImage() {
-  const logo = await readFile(join(process.cwd(), "public/logo.png"));
+  const logo = await readFile(
+    join(process.cwd(), "public/images/brand/globalmed-logo-horizontal.png"),
+  );
   const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
   const ticks = Array.from({ length: 9 }, (_, i) => i);
   return new ImageResponse(
@@ -41,7 +43,7 @@ export default async function OpengraphImage() {
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse needs a plain img */}
-        <img src={logoSrc} width={330} height={84} alt="GlobalMed Transcriptions logo" />
+        <img src={logoSrc} width={386} height={84} alt="GlobalMed Transcriptions logo" />
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
         <div style={{ fontSize: 60, fontWeight: 700, lineHeight: 1.15, maxWidth: 950 }}>

@@ -2,8 +2,17 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-/** The client's official logo (public/logo.png, 561 × 143). Use as supplied: never recolour or redraw it. */
-const logo = { src: "/logo.png", width: 561, height: 143 } as const;
+/**
+ * The client's official logo (brand set, 2026-09-26). The horizontal lockup is the supplied
+ * stacked artwork's icon and wordmark placed side by side, pixels unchanged; the icon is the
+ * supplied icon file. Never recolour or redraw either. (public/logo.png is the older logo.)
+ */
+const logo = {
+  src: "/images/brand/globalmed-logo-horizontal.png",
+  width: 800,
+  height: 174,
+} as const;
+const icon = { src: "/images/brand/globalmed-icon.png", width: 628, height: 628 } as const;
 
 const heights = {
   /** Site header and auth pages: 36px on mobile, 44px from md. */
@@ -22,22 +31,23 @@ export function Wordmark({
   className,
 }: {
   size?: keyof typeof heights;
-  /** Crop to the circular icon with object-position (collapsed dashboard sidebar). */
+  /** Show only the circular icon (collapsed dashboard sidebar). */
   iconOnly?: boolean;
   /** The logo is navy on transparent, so on dark bands it sits on a white plate. */
   onDark?: boolean;
   priority?: boolean;
   className?: string;
 }) {
+  const source = iconOnly ? icon : logo;
   const image = (
     <Image
-      src={logo.src}
-      width={logo.width}
-      height={logo.height}
+      src={source.src}
+      width={source.width}
+      height={source.height}
       alt="GlobalMed Transcriptions logo"
       priority={priority}
       className={cn(
-        iconOnly ? "size-10 object-cover object-left" : cn("w-auto", heights[size]),
+        iconOnly ? "size-10 object-contain" : cn("w-auto", heights[size]),
         !onDark && className,
       )}
     />

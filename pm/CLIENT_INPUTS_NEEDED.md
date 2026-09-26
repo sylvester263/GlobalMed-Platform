@@ -59,6 +59,7 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ✅ Slider photos received 2026-09-26
 - ✅ PSEB certificate (Z-25-8395/23) and HIPAA training certificate (HIPAATraining.us, HIPAA-0126590) received 2026-09-26
 - ✅ Official favicon set and stacked logos received 2026-09-26 (public/images/brand/)
+- ⬜ Official horizontal logo file (PNG or SVG). Until then the site uses a horizontal lockup made from the supplied stacked artwork (public/images/brand/globalmed-logo-horizontal.png)
 - ⬜ SECP certificate image and registration number
 - ⬜ Name and details of the third credential
 - ⬜ HIPAA: the certificate supplied is a staff training-completion certificate, not a company compliance assessment. The tile says "HIPAA Compliance Training Program completed". Confirm this wording, or supply a third-party HIPAA assessment if one exists

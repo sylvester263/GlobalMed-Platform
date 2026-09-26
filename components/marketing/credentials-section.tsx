@@ -11,7 +11,8 @@ import { publicAssetExists } from "@/lib/public-asset";
 
 /**
  * "Registered, Certified & Compliant" (home and About). Data-driven from data/credentials.ts;
- * the grid holds 4 to 8 tiles (4 columns desktop, 2 tablet, 1 mobile). Tiles reveal in a
+ * tiles keep 4-column (desktop), 2-column (tablet) and 1-column (mobile) widths, and any short
+ * row is centred, so 2 to 8 tiles all look balanced. Tiles reveal in a
  * stagger on scroll and lift 2px on hover (`.credential-tile`); no carousel.
  */
 export function CredentialsSection({ id = "credentials" }: { id?: string }) {
@@ -28,11 +29,15 @@ export function CredentialsSection({ id = "credentials" }: { id?: string }) {
             healthcare providers worldwide since 2007.
           </p>
         </div>
-        <StaggerGroup as="ul" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <StaggerGroup as="ul" className="flex flex-wrap justify-center gap-6">
           {visibleCredentials.map((credential) => {
             const hasLogo = publicAssetExists(credential.image);
             return (
-              <StaggerItem as="li" key={credential.id} className="flex">
+              <StaggerItem
+                as="li"
+                key={credential.id}
+                className="flex w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4.5rem)/4)]"
+              >
                 <article className="credential-tile flex w-full flex-col overflow-hidden rounded-lg border bg-card shadow-sm hover:shadow-md">
                   {/* Navy top rule with the claim-line ticks. */}
                   <div className="bg-primary px-5 pt-3 pb-2">

@@ -10,7 +10,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Contact GlobalMed",
   description:
-    "Contact GlobalMed about transcription, billing and coding services or courses. Phone +92 42 3594 6342, WhatsApp, email, and our Model Town, Lahore office. Open 24/7.",
+    "Contact GlobalMed about transcription, billing and coding services or AAPC courses. Phone +92 42 3594 6342, WhatsApp, email, Model Town, Lahore. Open 24/7.",
   path: "/contact",
 });
 
@@ -23,7 +23,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Talk to our team"
-        intro="Questions about services for your practice, or about our courses? Send a message and we'll reply within one business day."
+        intro="Questions about services for your practice, or about AAPC's CPC® and CPB® courses? Send a message and we'll reply within one business day."
         crumbs={[{ name: "Contact", path: "/contact" }]}
       />
       <Section className="lg:grid lg:grid-cols-[1fr_1.5fr] lg:items-start lg:gap-16">

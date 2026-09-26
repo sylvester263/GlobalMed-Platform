@@ -33,7 +33,7 @@ export const heroSlides = [
     placeholder: "Slide 2 image",
     actions: [
       { label: "Explore Billing & Coding", href: "/services" },
-      { label: "Get Trained in Billing & Coding", href: "/education" },
+      { label: "Get Trained in Billing & Coding", href: "/education/aapc-certification-pakistan" },
     ],
   },
   {
@@ -57,7 +57,11 @@ export const hero = {
     "Prepare for the CPC® and CPB® credentials with GlobalMed Transcriptions, AAPC's strategic training partner, and start a global career in healthcare revenue cycle.",
 };
 
-/** MG-4 count-up proof points. Every figure is a placeholder until the client confirms it. */
+/**
+ * MG-4 count-up proof points. Every figure is a placeholder until the client confirms it.
+ * The statement and stats are not shown: the home strip now uses the approved partnership
+ * wording (content/aapc.ts). Hidden at client request — GlobalMed education plans are future scope.
+ */
 export const partnership = {
   statement:
     "GlobalMed Transcriptions × AAPC: bringing internationally recognised medical coding and billing certification training to Pakistan.",
@@ -70,6 +74,11 @@ export const partnership = {
   ],
 };
 
+/**
+ * GlobalMed's earlier CPC®/CPB® program cards (onsite + online). Replaced on the home page by
+ * the three AAPC course cards (data/courses.ts); kept for the hidden EducationalOrganization
+ * JSON-LD. Hidden at client request — GlobalMed education plans are future scope.
+ */
 export const programs = [
   {
     slug: cpcCourseSlug,
@@ -113,26 +122,30 @@ export const programs = [
   },
 ] as const;
 
+/** "Why register through GlobalMed" (client, 2026-09-26: AAPC teaches; GlobalMed registers). */
 export const whyUs = [
   {
-    title: "Learn from working coders and billers",
-    body: "Your instructors code and bill for US practices every week, so lessons use the scenarios employers actually test.",
+    title: "Taught by AAPC faculty",
+    body: "Live, instructor-led online courses led by AAPC faculty (AAPC-certified instructors).",
   },
   {
-    title: "AAPC-aligned curriculum and exam preparation",
-    body: "Modules follow the CPC® and CPB® exam content, with section-by-section review and exam strategy.",
+    title: "Official AAPC exams and practice tests",
+    body: "Your course includes AAPC's certification exam and practice tests. Your certification is awarded by AAPC.",
   },
   {
-    title: "Mock exams and recorded lessons",
-    body: "Sit timed mock exams in exam format and rewatch any recorded lesson as often as you need.",
+    title: "AAPC membership included",
+    body: "One year of AAPC membership with CPC®, or two years with CPC® + CPB®, with AAPC's networking benefits.",
   },
   {
-    title: "Career support",
-    body: "Interview preparation and pathways into GlobalMed and international healthcare BPO roles. [CLIENT TO CONFIRM]",
+    title: "Registration support in Pakistan",
+    body: "GlobalMed Transcriptions helps students in Pakistan register for AAPC's official online courses and supports them through enrollment.",
   },
 ];
 
-/** The route to certification, drawn along the claim line (MG-3). */
+/**
+ * GlobalMed's own route to certification (onsite/online classes, mock exams, career support).
+ * Not shown: the home page uses AAPC's "How it works" steps (content/aapc.ts). Hidden at client request — GlobalMed education plans are future scope.
+ */
 export const certificationPath = [
   {
     stage: "Enroll",
@@ -166,7 +179,10 @@ export const certificationPath = [
   },
 ];
 
-/** [CLIENT TO CONFIRM] Next CPC® and CPB® batches: dates, modes and seats. */
+/**
+ * [CLIENT TO CONFIRM] Next CPC® and CPB® batches: dates, modes and seats.
+ * Shown only while `features.batches` is on. Hidden at client request — GlobalMed education plans are future scope.
+ */
 export const upcomingBatches = [
   {
     credential: "CPC®",
@@ -192,6 +208,10 @@ export const serviceSlugs = [
   "ai-clinical-documentation",
 ] as const;
 
+/**
+ * GlobalMed's earlier training FAQs (onsite classes, GlobalMed certificates). Not shown: the
+ * home page uses the AAPC FAQs (content/aapc.ts). Hidden at client request — GlobalMed education plans are future scope.
+ */
 export const faqs: Faq[] = [
   {
     question: "What are CPC® and CPB®?",

@@ -81,7 +81,8 @@ describe("roles and dashboard areas", () => {
   });
 
   it("keeps students out of staff areas", () => {
-    expect(areasFor("student")).toEqual(["student"]);
+    // The student area is hidden while features.learningPlatform is off (config/features.ts).
+    expect(areasFor("student")).toEqual([]);
     expect(canAccess("student", "sales")).toBe(false);
     expect(canAccess("student", "instructor")).toBe(false);
   });

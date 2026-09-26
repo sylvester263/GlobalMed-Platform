@@ -1,7 +1,7 @@
 import { DashboardShell, type ShellNavItem } from "@/components/dashboard/shell";
 import {
   areasFor,
-  dashboardSections,
+  visibleSections,
   roleLabels,
   sectionHref,
   type DashboardArea,
@@ -54,7 +54,7 @@ export async function AreaShell({
 }) {
   const session = await requireArea(area, `/dashboard/${area}`);
   const notifications = await getRecentNotifications(session.user.id);
-  const nav: ShellNavItem[] = dashboardSections[area].map((s) => ({
+  const nav: ShellNavItem[] = visibleSections(area).map((s) => ({
     href: sectionHref(area, s.slug),
     label: s.label,
     icon: s.icon,

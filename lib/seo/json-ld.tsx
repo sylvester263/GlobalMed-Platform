@@ -1,3 +1,4 @@
+import { features } from "@/config/features";
 import { absoluteUrl } from "@/lib/seo/metadata";
 import { site } from "@/lib/site";
 
@@ -40,7 +41,7 @@ export function organizationJsonLd(): JsonLdObject {
     alternateName: site.shortName,
     url: site.url,
     logo: absoluteUrl("/images/brand/globalmed-logo-stacked-on-white.png"),
-    image: absoluteUrl("/logo.png"),
+    image: absoluteUrl("/images/brand/globalmed-logo-horizontal.png"),
     email: contact.email,
     telephone: contact.phone,
     foundingDate: "2007",
@@ -74,15 +75,23 @@ export function organizationJsonLd(): JsonLdObject {
     ],
     areaServed: ["US", "CA", "GB", "AU", "SA", "PK"],
     sameAs: site.social.filter((s) => s.href).map((s) => s.href),
-    department: {
-      "@type": "EducationalOrganization",
-      name: site.schoolName,
-      url: absoluteUrl("/education"),
-    },
+    // Hidden at client request — GlobalMed education plans are future scope.
+    ...(features.educationSchema
+      ? {
+          department: {
+            "@type": "EducationalOrganization",
+            name: site.schoolName,
+            url: absoluteUrl("/education"),
+          },
+        }
+      : {}),
   };
 }
 
-/** The school as an EducationalOrganization, with its CPC® and CPB® training (home page). */
+/**
+ * The school as an EducationalOrganization, with its CPC® and CPB® training. Not rendered
+ * while `features.educationSchema` is off: GlobalMed doesn't teach (client, 2026-09-26).
+ */
 export function educationalOrganizationJsonLd(input: {
   description: string;
   courses: { name: string; description: string; path: string }[];

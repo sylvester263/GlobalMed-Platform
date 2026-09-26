@@ -35,13 +35,13 @@ With consistent study of 10–12 hours a week, most beginners are ready for entr
 1. **Foundations (4–6 weeks):** terminology, anatomy and how the US revenue cycle works.
 2. **Coding (8–10 weeks):** ICD-10-CM and CPT with plenty of practice cases.
 3. **Specialise (optional):** E/M coding or diagnosis coding in more depth.
-4. **Exam preparation (6–8 weeks):** timed mock exams until you consistently finish on time with a passing score.
+4. **Exam preparation (6–8 weeks):** timed practice tests until you consistently finish on time with a passing score.
 5. **Apply:** entry-level coder, billing associate and AR roles are common first jobs.
 
-## Is a GlobalMed certificate the same as the CPC?
+## How do I get CPC® certified from Pakistan?
 
-No. A GlobalMed certificate shows you completed our course and passed its assessment, and employers can verify it online. The CPC credential is awarded by its certifying body after you pass their exam. Our CPC Exam Preparation course is designed to get you ready for it.
+The CPC® credential is awarded by AAPC when you pass its certification exam. AAPC's CPC® course is taught live online by AAPC faculty and includes the exam and practice tests. GlobalMed Transcriptions, Strategic Partner of AAPC in Pakistan for Medical Billing and Coding, helps students in Pakistan register for AAPC's official online courses and supports them through enrollment.
 
 ---
 
-*See the full [Billing and Coding Career Path](/education/pathways/billing-and-coding-career), or start with [Medical Coding Foundations](/education/courses/medical-coding-foundations).*
+*Compare AAPC's [CPC®, CPB® and dual-certification courses](/education/aapc-certification-pakistan), or go straight to the [CPC® course](/education/cpc).*

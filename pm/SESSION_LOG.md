@@ -211,6 +211,22 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** Stripe test keys and webhook secret to verify end-to-end. Supabase (P0-4) to apply 0004.
 
 ---
+### Session 007 — Brand logo, credentials, business-model correction (AAPC partner only)
+- **Date:** 2026-09-26
+- **Done:**
+  - Brand: horizontal logo built from the supplied stacked artwork; official favicons; PSEB and HIPAA training credentials (SECP and third credential hidden); credential tiles centred.
+  - Business model (ADR-026): feature flags in config/features.ts with redirects; GlobalMed's 8 courses, 2 pathways, batches, onsite wording, learning platform, instructor area, certificates/verify, checkout and refund policy hidden, not deleted.
+  - Three AAPC courses (data/courses.ts) with pages /education/cpc, /cpb, /cpc-cpb; AAPC page rebuilt (cards with dual in the middle, comparison table, how it works, FAQs, registration).
+  - "Register for AAPC Training" form → leads (aapc_registration) + email to info@; sales Leads pipeline page; admin overview shows registrations.
+  - Approved wording across home, About, FAQ, careers, contact, meta, JSON-LD (no EducationalOrganization), llms.txt, sitemap, blog, legal (hidden via markdown feature blocks; new legal lines marked for counsel).
+- **Verified:** tsc, eslint, 107 unit tests.
+- **Next:**
+  - Update chatbot knowledge (docs/09) for the AAPC-only model.
+  - Final sweep for onsite, batch, pathways and similar words on visible pages.
+  - Browser check at 360/768/1280 and the e2e suite.
+- **Blockers:** CPB included items and session details from AAPC; dual-course price; USD 1,050 confirmation; whether registration details are shared with AAPC (privacy policy).
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

@@ -7,16 +7,9 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { StatBlock } from "@/components/ui/stat-block";
 import { requireArea } from "@/lib/auth/session";
 import { createClient } from "@/lib/db/server";
+import { leadSourceLabels } from "@/lib/leads/labels";
 
 export const metadata: Metadata = { title: "Overview" };
-
-const sourceLabels: Record<string, string> = {
-  audit_form: "Audit form",
-  contact: "Contact form",
-  chatbot: "Chatbot",
-  whatsapp: "WhatsApp",
-  course_enquiry: "Course enquiry",
-};
 
 const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short" });
 
@@ -82,7 +75,7 @@ export default async function SalesOverviewPage() {
                     <td className="px-4 py-3">{lead.practice_name ?? "—"}</td>
                     <td className="px-4 py-3">{lead.interest ?? "—"}</td>
                     <td className="px-4 py-3 whitespace-nowrap">
-                      {sourceLabels[lead.source] ?? lead.source}
+                      {leadSourceLabels[lead.source] ?? lead.source}
                     </td>
                     <td className="px-4 py-3">
                       <Badge
@@ -102,7 +95,7 @@ export default async function SalesOverviewPage() {
         <EmptyState
           icon={Inbox}
           title="No leads yet"
-          description="Requests from the free billing audit and contact forms will appear here."
+          description="AAPC registrations and requests from the free billing audit and contact forms will appear here."
         />
       )}
     </div>

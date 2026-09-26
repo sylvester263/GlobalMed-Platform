@@ -1,3 +1,5 @@
+import { features } from "@/config/features";
+import { aapcFaqs, approvedWording } from "@/content/aapc";
 import { faqSchema, type Faq } from "@/lib/content/schema";
 
 /**
@@ -10,7 +12,10 @@ export const companyStats = {
     { label: "Years serving US practices", value: 12, suffix: "", decimals: 0 },
     { label: "Claims processed", value: 125000, suffix: "+", decimals: 0 },
     { label: "Clean-claim rate", value: 98.4, suffix: "%", decimals: 1 },
-    { label: "Students trained", value: 1500, suffix: "+", decimals: 0 },
+    // Hidden at client request — GlobalMed education plans are future scope.
+    ...(features.trainingStats
+      ? [{ label: "Students trained", value: 1500, suffix: "+", decimals: 0 }]
+      : []),
   ],
 };
 
@@ -30,15 +35,17 @@ export const values = [
   {
     title: "Teaching what we practise",
     body: "GlobalMed Education courses are taught by people who bill and code for US practices every week.",
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
   },
-];
+].filter((v) => v.visible !== false);
 
 /** [CLIENT TO CONFIRM] Names, photos and bios. Roles are shown until then. */
 export const team = [
   {
     role: "Founder & CEO",
     name: "[CLIENT TO CONFIRM]",
-    bio: "Leads GlobalMed's services and education strategy.",
+    bio: "Leads GlobalMed's services and its AAPC partnership in Pakistan.",
   },
   {
     role: "Director of Revenue Cycle",
@@ -86,10 +93,12 @@ export const openRoles = [
     location: "Remote",
     type: "Part-time",
     summary: "Teach live batches and answer student questions.",
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
   },
-];
+].filter((r) => r.visible !== false);
 
-type FaqGroup = { id: string; title: string; faqs: Faq[] };
+type FaqGroup = { id: string; title: string; faqs: Faq[]; visible?: boolean };
 
 export const faqGroups: FaqGroup[] = [
   {
@@ -124,8 +133,15 @@ export const faqGroups: FaqGroup[] = [
     ],
   },
   {
+    id: "aapc",
+    title: "AAPC courses (CPC® and CPB®)",
+    faqs: aapcFaqs,
+  },
+  {
     id: "school",
     title: "For students",
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     faqs: [
       {
         question: "Do I need a medical background to start?",
@@ -170,7 +186,9 @@ export const faqGroups: FaqGroup[] = [
       },
     ],
   },
-].map((g) => ({ ...g, faqs: g.faqs.map((f) => faqSchema.parse(f)) }));
+].flatMap((g) =>
+  g.visible === false ? [] : [{ ...g, faqs: g.faqs.map((f) => faqSchema.parse(f)) }],
+);
 
 /** [CLIENT TO CONFIRM] Downloadable guides (lead magnets). Files arrive with the content review (P2-14). */
 export const guides = [
@@ -223,8 +241,9 @@ export const about = {
     bio: "A university graduate with a diploma in Medical Laboratory Technology, he founded GlobalMed in 2007.",
     photo: "/images/team/riaz-naveed.jpg",
   },
-  partnership:
-    "GlobalMed Transcriptions is AAPC's strategic partner in Pakistan for medical billing and coding training, preparing students for AAPC's CPC® and CPB® certifications.",
+  partnership: approvedWording.partnership,
+  /** Second line of the Strategic Partnership block. */
+  partnershipDetail: `${approvedWording.role} ${approvedWording.training} ${approvedWording.certification}`,
   /** Client-confirmed figures, so no "illustrative" label. */
   facts: [
     { label: "Happy Clients", value: 55, suffix: "+", decimals: 0 },

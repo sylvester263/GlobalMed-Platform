@@ -1,11 +1,23 @@
 ---
 title: Terms of service
-description: The terms that apply when you use the GlobalMed website and enroll in GlobalMed Education.
+description: The terms that apply when you use the GlobalMed Transcriptions website.
 updatedAt: "2026-09-24"
 ---
 
+<!-- Hidden at client request — GlobalMed education plans are future scope. -->
+<!-- feature:learningPlatform -->
 These terms apply to your use of this website and GlobalMed Education. By creating an account or enrolling in a course, you agree to them.
+<!-- /feature -->
+<!-- feature:!learningPlatform -->
+These terms apply to your use of this website. By using it, you agree to them.
 
+## AAPC courses and certification
+
+GlobalMed Transcriptions is AAPC's Strategic Partner in Pakistan. The CPC® and CPB® courses are AAPC's own online courses, taught by AAPC faculty, and the certifications are awarded by AAPC. Enrollment, course access, exams and certification are provided by AAPC under AAPC's terms. GlobalMed helps you register and supports you through enrollment. [CLIENT TO CONFIRM with counsel]
+<!-- /feature -->
+
+<!-- Hidden at client request — GlobalMed education plans are future scope. -->
+<!-- feature:learningPlatform -->
 ## Accounts
 
 You must give accurate information, keep your password secure and use your account yourself. The name you enter for certificates must be your real name.
@@ -25,6 +37,7 @@ Our exam-preparation courses prepare you for external certification exams. We do
 ## Payments and refunds
 
 Prices are shown in US dollars or Pakistani rupees. Refunds follow our [refund policy](/legal/refund-policy).
+<!-- /feature -->
 
 ## Acceptable use
 
@@ -36,7 +49,13 @@ Billing, coding, transcription and documentation services are governed by a sepa
 
 ## Liability
 
+<!-- Hidden at client request — GlobalMed education plans are future scope. -->
+<!-- feature:learningPlatform -->
 Course content is for education. It is not legal, compliance or billing advice for a specific practice. To the extent permitted by law, our liability is limited to the amount you paid for the course concerned.
+<!-- /feature -->
+<!-- feature:!learningPlatform -->
+Content on this website is general information. It is not legal, compliance or billing advice for a specific practice. [CLIENT TO CONFIRM liability wording with counsel]
+<!-- /feature -->
 
 ## Changes and governing law
 

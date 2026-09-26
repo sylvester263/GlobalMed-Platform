@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { registrationCourses } from "@/data/courses";
+
 /**
  * Lead form schemas, shared by the client forms and the Server Actions.
  * Business information only: no field asks for patient data (docs/11 §1).
@@ -98,6 +100,45 @@ export const contactLeadSchema = z.object({
   turnstileToken: z.string().optional(),
 });
 export type ContactLeadInput = z.infer<typeof contactLeadSchema>;
+
+/** "Register for AAPC Training" (client, 2026-09-26). Replaces online checkout. */
+export const registrationBackgrounds = [
+  "Healthcare professional",
+  "Biller",
+  "Graduate",
+  "Other",
+] as const;
+
+export const contactTimes = [
+  "Morning (PKT)",
+  "Afternoon (PKT)",
+  "Evening (PKT)",
+  "Any time",
+] as const;
+
+export const aapcRegistrationSchema = z.object({
+  name,
+  email,
+  whatsapp: z
+    .string()
+    .trim()
+    .min(7, "Enter your WhatsApp number, e.g. +92 300 1234567.")
+    .max(30, "Keep the number under 30 characters.")
+    .regex(/^[+()\d\s.-]+$/, "Use digits, spaces and + ( ) - only."),
+  city: z.string().trim().min(2, "Enter your city.").max(80, "Keep the city under 80 characters."),
+  course: z.enum(registrationCourses, "Choose a course."),
+  background: z.enum(registrationBackgrounds, "Choose your current background."),
+  contactTime: z.enum(contactTimes, "Choose a good time to contact you."),
+  message: z
+    .string()
+    .trim()
+    .max(2000, "Keep your message under 2,000 characters.")
+    .optional()
+    .or(z.literal("")),
+  utm: utmSchema.optional(),
+  turnstileToken: z.string().optional(),
+});
+export type AapcRegistrationInput = z.infer<typeof aapcRegistrationSchema>;
 
 export const newsletterSchema = z.object({
   email,

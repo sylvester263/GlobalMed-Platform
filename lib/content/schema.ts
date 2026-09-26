@@ -99,6 +99,8 @@ export const courseSchema = z.object({
   instructor: z.string(),
   faqs: z.array(faqSchema).min(2),
   featured: z.boolean().default(false),
+  /** False hides the course everywhere; the entry stays in the file (config/features.ts). */
+  visible: z.boolean().default(true),
 });
 export type Course = z.infer<typeof courseSchema>;
 
@@ -115,6 +117,8 @@ export const pathwaySchema = z.object({
     .min(3),
   bundlePriceUsd: z.number().positive(),
   bundlePricePkr: z.number().positive(),
+  /** False hides the pathway everywhere; the entry stays in the file (config/features.ts). */
+  visible: z.boolean().default(true),
 });
 export type Pathway = z.infer<typeof pathwaySchema>;
 
@@ -142,4 +146,6 @@ export const legalFrontmatterSchema = z.object({
   title: z.string(),
   description: z.string().max(155),
   updatedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  /** Feature flag (config/features.ts) the page belongs to; hidden while it is off. */
+  feature: z.string().optional(),
 });

@@ -24,9 +24,12 @@ This website, GlobalMed Education and our chatbot are not part of our PHI-handli
 
 If you accidentally submit patient information through this website, email us straight away and we will delete it.
 
+<!-- Hidden at client request — GlobalMed education plans are future scope. -->
+<!-- feature:learningPlatform -->
 ## Education content
 
 Course materials use fictional or fully de-identified examples only.
+<!-- /feature -->
 
 ## Contact
 

@@ -1,3 +1,5 @@
+import { features, type FeatureFlag } from "@/config/features";
+import { aapcCoursePath, getAapcCourses } from "@/data/courses";
 import { publicEnv } from "@/lib/env";
 
 /**
@@ -12,7 +14,7 @@ export const site = {
   schoolName: "GlobalMed Education",
   url: publicEnv.NEXT_PUBLIC_SITE_URL,
   description:
-    "Medical billing, coding, transcription and AI clinical documentation for US practices, plus GlobalMed Education, AAPC's strategic partner in Pakistan.",
+    "Medical transcription, billing and coding services for healthcare providers since 2007, and AAPC's Strategic Partner in Pakistan for medical billing and coding.",
   /** Footer brand line (client review, 2026-09-25). */
   tagline:
     "Pakistan's leading medical transcription, billing and coding company since 2007, and AAPC's strategic partner in Pakistan.",
@@ -68,6 +70,13 @@ export const aapcCertificationPath = `${educationBase}/aapc-certification-pakist
 export type NavLink = { label: string; href: string; description?: string };
 export type NavGroup = { label: string; href: string; links: NavLink[]; feature?: NavLink };
 
+/** A link that only shows while its feature flag is on (config/features.ts). */
+type FlaggedLink = NavLink & { flag?: FeatureFlag };
+
+function shown(links: FlaggedLink[]): NavLink[] {
+  return links.filter((link) => !link.flag || features[link.flag]);
+}
+
 const servicesNav: NavGroup = {
   label: "Services",
   href: "/services",
@@ -110,58 +119,74 @@ const servicesNav: NavGroup = {
   },
 };
 
+// Education menu (client, 2026-09-26): the AAPC page and the three AAPC courses. GlobalMed's
+// own education links stay below behind their flags (config/features.ts).
 const educationNav: NavGroup = {
   label: "Education",
-  href: educationBase,
-  links: [
+  href: features.educationLanding ? educationBase : aapcCertificationPath,
+  links: shown([
     {
       label: "AAPC Certification in Pakistan",
       href: aapcCertificationPath,
-      description: "CPC® and CPB® with AAPC's strategic partner",
+      description: "GlobalMed is AAPC's Strategic Partner in Pakistan",
     },
+    ...getAapcCourses().map((course) => ({
+      label: course.navLabel,
+      href: aapcCoursePath(course.slug),
+      description: "AAPC's instructor-led online course",
+    })),
     {
       label: "CPC & CPB Training",
       href: "/#certification-programs",
       description: "AAPC certification training in Lahore and online",
+      flag: "onsiteTraining",
     },
     {
       label: "All courses",
       href: `${educationBase}/courses`,
       description: "Billing, coding and exam prep",
+      flag: "globalmedCourses",
     },
     {
       label: "Certification pathways",
       href: `${educationBase}/pathways`,
       description: "From beginner to certified",
+      flag: "pathways",
     },
     {
       label: "Exam preparation",
       href: `${educationBase}/exam-prep`,
       description: "Timed mock exams and review",
+      flag: "examPrep",
     },
     {
       label: "Upcoming batches",
       href: `${educationBase}/batches`,
       description: "Live classes with an instructor",
+      flag: "batches",
     },
     {
       label: "Corporate training",
       href: `${educationBase}/corporate-training`,
       description: "Train your billing team",
+      flag: "corporateTraining",
     },
-  ],
-  feature: {
-    label: site.schoolName,
-    href: educationBase,
-    description:
-      "Video lessons you can rewatch, mock exams and a certificate employers can verify.",
-  },
+  ]),
+  // Hidden at client request — GlobalMed education plans are future scope.
+  feature: features.educationLanding
+    ? {
+        label: site.schoolName,
+        href: educationBase,
+        description:
+          "Video lessons you can rewatch, mock exams and a certificate employers can verify.",
+      }
+    : undefined,
 };
 
 const resourcesNav: NavGroup = {
   label: "Resources",
   href: "/blog",
-  links: [
+  links: shown([
     { label: "Blog", href: "/blog", description: "Billing and coding insights" },
     {
       label: "Guides & downloads",
@@ -173,8 +198,9 @@ const resourcesNav: NavGroup = {
       label: "Verify a certificate",
       href: "/verify",
       description: "Check a GlobalMed certificate",
+      flag: "certificates",
     },
-  ],
+  ]),
 };
 
 const aboutLink: NavLink = { label: "About Us", href: "/about" };
@@ -211,26 +237,24 @@ export const footerNav: { title: string; links: NavLink[] }[] = [
   },
   {
     title: "Education",
-    links: [
+    links: shown([
       { label: "AAPC Certification in Pakistan", href: aapcCertificationPath },
-      { label: "CPC® Training", href: `${educationBase}/courses/cpc-certified-professional-coder` },
-      {
-        label: "CPB® Training",
-        href: `${educationBase}/courses/cpb-certified-professional-biller`,
-      },
-      { label: "All Courses", href: `${educationBase}/courses` },
-      { label: "Upcoming Batches", href: `${educationBase}/batches` },
-    ],
+      { label: "CPC® Training", href: aapcCoursePath("cpc") },
+      { label: "CPB® Training", href: aapcCoursePath("cpb") },
+      { label: "CPC® + CPB® Dual Certifications", href: aapcCoursePath("cpc-cpb") },
+      { label: "All Courses", href: `${educationBase}/courses`, flag: "globalmedCourses" },
+      { label: "Upcoming Batches", href: `${educationBase}/batches`, flag: "batches" },
+    ]),
   },
 ];
 
-export const legalNav: NavLink[] = [
+export const legalNav: NavLink[] = shown([
   { label: "Privacy policy", href: "/legal/privacy" },
   { label: "Terms of service", href: "/legal/terms" },
-  { label: "Refund policy", href: "/legal/refund-policy" },
+  { label: "Refund policy", href: "/legal/refund-policy", flag: "onlineCheckout" },
   { label: "HIPAA notice", href: "/legal/hipaa-notice" },
   { label: "Cookie policy", href: "/legal/cookie-policy" },
-];
+]);
 
 export function whatsappHref(message: string): string | null {
   const digits = site.contact.whatsappNumber.replace(/\D/g, "");

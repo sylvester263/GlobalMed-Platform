@@ -8,6 +8,7 @@ import { GoogleButton } from "@/components/auth/google-button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { nextFromEnrollParams, safeNext } from "@/lib/auth/redirect";
 import { getSessionUser } from "@/lib/auth/session";
+import { features } from "@/config/features";
 import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -47,15 +48,18 @@ export default async function LoginPage({ searchParams }: Props) {
     <AuthCard
       title="Log in to GlobalMed"
       footer={
-        <>
-          New here?{" "}
-          <Link
-            href={signupHref}
-            className="font-semibold text-primary underline underline-offset-4"
-          >
-            Create an account
-          </Link>
-        </>
+        // Student sign-up is part of the learning platform. Hidden at client request — GlobalMed education plans are future scope.
+        features.learningPlatform ? (
+          <>
+            New here?{" "}
+            <Link
+              href={signupHref}
+              className="font-semibold text-primary underline underline-offset-4"
+            >
+              Create an account
+            </Link>
+          </>
+        ) : undefined
       }
     >
       {notice && (

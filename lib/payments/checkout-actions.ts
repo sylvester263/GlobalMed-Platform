@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
+import { features, hiddenEducationRedirect } from "@/config/features";
 import { authorize } from "@/lib/auth/session";
 import { createAdminClient } from "@/lib/db/admin";
 import { publicEnv } from "@/lib/env";
@@ -25,6 +26,9 @@ function checkoutPath(slug: string, error?: CheckoutError) {
  * by `metadata.order_id`. Access is granted only by the webhook (P5-2), not by the redirect.
  */
 export async function startCardCheckout(form: FormData): Promise<void> {
+  // Online checkout is off; students register through the AAPC form instead.
+  // Hidden at client request — GlobalMed education plans are future scope.
+  if (!features.onlineCheckout) redirect(hiddenEducationRedirect);
   const slug = slugSchema.safeParse(form.get("course"));
   if (!slug.success) redirect("/education/courses");
 

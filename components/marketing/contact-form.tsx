@@ -15,8 +15,14 @@ import { PhiNotice } from "@/components/ui/phi-notice";
 import { Textarea } from "@/components/ui/textarea";
 import { track } from "@/lib/analytics";
 import { useUtm } from "@/lib/hooks/use-utm";
+import { features } from "@/config/features";
 import { submitContactEnquiry } from "@/lib/leads/actions";
 import { contactInterests, contactLeadSchema, type ContactLeadInput } from "@/lib/validation/leads";
+
+// "Corporate training" is offered only while that page is on. Hidden at client request — GlobalMed education plans are future scope.
+const visibleContactInterests = contactInterests.filter(
+  (i) => i !== "Corporate training" || features.corporateTraining,
+);
 
 type ContactFormProps = {
   defaultInterest?: (typeof contactInterests)[number];
@@ -122,7 +128,7 @@ export function ContactForm({ defaultInterest }: ContactFormProps) {
               <option value="" disabled>
                 Choose a topic
               </option>
-              {contactInterests.map((i) => (
+              {visibleContactInterests.map((i) => (
                 <option key={i}>{i}</option>
               ))}
             </NativeSelect>

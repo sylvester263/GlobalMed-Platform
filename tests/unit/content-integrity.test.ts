@@ -62,13 +62,7 @@ describe("content integrity", () => {
   it("parses every legal page", () => {
     const slugs = getLegalPages().map((p) => p.slug);
     expect(slugs).toEqual(
-      expect.arrayContaining([
-        "privacy",
-        "terms",
-        "refund-policy",
-        "hipaa-notice",
-        "cookie-policy",
-      ]),
+      expect.arrayContaining(["privacy", "terms", "hipaa-notice", "cookie-policy"]),
     );
   });
 });

@@ -118,6 +118,7 @@ export default function AboutPage() {
         <p className="max-w-3xl font-serif text-xl leading-snug font-semibold text-primary lg:text-2xl">
           {about.partnership}
         </p>
+        <p className="max-w-3xl text-muted-foreground">{about.partnershipDetail}</p>
         <Link
           href={aapcCertificationPath}
           className={cn(buttonVariants({ size: "lg" }), "self-start")}

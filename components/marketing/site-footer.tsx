@@ -138,7 +138,7 @@ export function SiteFooter() {
 
         <div className="flex flex-col gap-4 md:order-last lg:order-none">
           <h2 className="font-sans text-base font-semibold text-white">Certification Pricing</h2>
-          <CertificationPriceCard href={`${aapcCertificationPath}#reserve-seat`} onDark />
+          <CertificationPriceCard href={`${aapcCertificationPath}#register`} onDark />
         </div>
 
         <address className="not-italic">

@@ -1,29 +1,35 @@
 import type { MetadataRoute } from "next";
 
+import { features } from "@/config/features";
+import { aapcCoursePath, getAapcCourses } from "@/data/courses";
 import { getCourses, getPathways, getServices, getSpecialties } from "@/lib/content";
 import { getLegalPages, getPosts, postCategories } from "@/lib/content/markdown";
 import { absoluteUrl } from "@/lib/seo/metadata";
 import { site } from "@/lib/site";
 
-/** docs/12 §1: every published entity. Thank-you, verify results and the styleguide are excluded. */
+/**
+ * docs/12 §1: every published entity. Thank-you, verify results and the styleguide are excluded,
+ * and so is everything hidden by config/features.ts (those routes redirect).
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths = [
     "/",
     "/services",
     "/specialties",
     "/free-billing-audit",
-    "/education",
+    ...(features.educationLanding ? ["/education"] : []),
     "/education/aapc-certification-pakistan",
-    "/education/courses",
-    "/education/pathways",
-    "/education/exam-prep",
-    "/education/batches",
-    "/education/corporate-training",
+    ...getAapcCourses().map((c) => aapcCoursePath(c.slug)),
+    ...(features.globalmedCourses ? ["/education/courses"] : []),
+    ...(features.pathways ? ["/education/pathways"] : []),
+    ...(features.examPrep ? ["/education/exam-prep"] : []),
+    ...(features.batches ? ["/education/batches"] : []),
+    ...(features.corporateTraining ? ["/education/corporate-training"] : []),
     ...(site.features.aapcPartnership ? ["/education/aapc-partnership"] : []),
     "/blog",
     "/resources/guides",
     "/faq",
-    "/verify",
+    ...(features.certificates ? ["/verify"] : []),
     "/about",
     "/about/team",
     "/careers",

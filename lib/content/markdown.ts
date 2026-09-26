@@ -5,6 +5,9 @@ import path from "node:path";
 
 import matter from "gray-matter";
 
+import { features, type FeatureFlag } from "@/config/features";
+import { applyFeatureBlocks } from "@/lib/content/feature-blocks";
+
 import {
   legalFrontmatterSchema,
   postFrontmatterSchema,
@@ -29,7 +32,7 @@ function readDir(dir: string): { slug: string; data: unknown; body: string }[] {
     .filter((f) => f.endsWith(".md"))
     .map((file) => {
       const { data, content } = matter(fs.readFileSync(path.join(full, file), "utf8"));
-      return { slug: file.replace(/\.md$/, ""), data, body: content };
+      return { slug: file.replace(/\.md$/, ""), data, body: applyFeatureBlocks(content) };
     });
 }
 
@@ -51,12 +54,13 @@ export function getPost(slug: string): Post | undefined {
   return getPosts().find((p) => p.slug === slug);
 }
 
+/** Legal pages. A page whose `feature` flag is off (config/features.ts) is left out. */
 export function getLegalPages(): LegalPage[] {
-  return readDir("legal").map(({ slug, data, body }) => ({
-    slug,
-    body,
-    ...legalFrontmatterSchema.parse(data),
-  }));
+  return readDir("legal").flatMap(({ slug, data, body }) => {
+    const { feature, ...meta } = legalFrontmatterSchema.parse(data);
+    if (feature && !features[feature as FeatureFlag]) return [];
+    return [{ slug, body, ...meta }];
+  });
 }
 
 export function getLegalPage(slug: string): LegalPage | undefined {

@@ -6,7 +6,12 @@ import { storeLead } from "@/lib/leads/store";
 import { checkRateLimit } from "@/lib/security/rate-limit";
 import { clientIp } from "@/lib/security/request";
 import { verifyTurnstile } from "@/lib/security/turnstile";
-import { auditLeadSchema, contactLeadSchema, type FormResult } from "@/lib/validation/leads";
+import {
+  aapcRegistrationSchema,
+  auditLeadSchema,
+  contactLeadSchema,
+  type FormResult,
+} from "@/lib/validation/leads";
 
 const GENERIC_FAILURE =
   "We couldn't send your request just now. Please try again in a minute, or email us directly.";
@@ -108,6 +113,55 @@ export async function submitContactEnquiry(input: unknown): Promise<FormResult> 
       { label: "Organisation", value: data.organisation ?? "" },
       { label: "Interest", value: data.interest },
       { label: "Message", value: data.message },
+    ],
+  );
+  return stored ? { ok: true } : { ok: false, message: GENERIC_FAILURE };
+}
+
+/**
+ * "Register for AAPC Training" (client, 2026-09-26). Replaces online checkout: the team
+ * contacts the student to complete their AAPC enrollment. Stored as a lead with source
+ * "aapc_registration" and the course in `interest`, so it shows in the sales pipeline.
+ */
+export async function submitAapcRegistration(input: unknown): Promise<FormResult> {
+  const parsed = aapcRegistrationSchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      message: "Check the highlighted fields.",
+      fieldErrors: fieldErrors(parsed.error),
+    };
+  }
+  const data = parsed.data;
+  const blocked = await guard(data.turnstileToken);
+  if (blocked) return blocked;
+
+  const stored = await storeLead(
+    {
+      source: "aapc_registration",
+      name: data.name,
+      email: data.email,
+      phone: data.whatsapp,
+      interest: data.course,
+      message: data.message || null,
+      utm: data.utm ?? {},
+      details: {
+        course: data.course,
+        city: data.city,
+        background: data.background,
+        contactTime: data.contactTime,
+        whatsapp: data.whatsapp,
+      },
+    },
+    [
+      { label: "Course", value: data.course },
+      { label: "Name", value: data.name },
+      { label: "Email", value: data.email },
+      { label: "WhatsApp", value: data.whatsapp },
+      { label: "City", value: data.city },
+      { label: "Background", value: data.background },
+      { label: "Preferred contact time", value: data.contactTime },
+      { label: "Message", value: data.message ?? "" },
     ],
   );
   return stored ? { ok: true } : { ok: false, message: GENERIC_FAILURE };

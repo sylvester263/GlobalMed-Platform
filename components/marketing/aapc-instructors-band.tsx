@@ -1,4 +1,4 @@
-import { ArrowRight, Compass, Target, Video } from "lucide-react";
+import { ArrowRight, BadgeCheck, ClipboardCheck, Target, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,7 +9,7 @@ import { publicAssetExists } from "@/lib/public-asset";
 import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const pointIcons = [Video, Target, Compass] as const;
+const pointIcons = [Video, ClipboardCheck, BadgeCheck] as const;
 
 /**
  * "Get Trained by AAPC Instructors" highlight (home, AAPC Certification page, Education
@@ -17,7 +17,7 @@ const pointIcons = [Video, Target, Compass] as const;
  * its file is in public/images/instructors/.
  */
 export function AapcInstructorsBand({
-  href = `${aapcCertificationPath}#certifications`,
+  href = `${aapcCertificationPath}#courses`,
   id = "aapc-instructors",
 }: {
   href?: string;

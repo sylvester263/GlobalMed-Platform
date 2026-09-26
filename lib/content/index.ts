@@ -21,21 +21,23 @@ export function getSpecialty(slug: string) {
   return specialties.find((s) => s.slug === slug);
 }
 
+// GlobalMed's own courses and pathways are hidden (`visible: false`, config/features.ts);
+// these return visible entries only. The AAPC courses live in data/courses.ts.
 export function getCourses() {
-  return courses;
+  return courses.filter((c) => c.visible);
 }
 export function getCourse(slug: string) {
-  return courses.find((c) => c.slug === slug);
+  return getCourses().find((c) => c.slug === slug);
 }
 export function getFeaturedCourses() {
-  return courses.filter((c) => c.featured);
+  return getCourses().filter((c) => c.featured);
 }
 
 export function getPathways() {
-  return pathways;
+  return pathways.filter((p) => p.visible);
 }
 export function getPathway(slug: string) {
-  return pathways.find((p) => p.slug === slug);
+  return getPathways().find((p) => p.slug === slug);
 }
 
 export function getInstructor(id: string) {

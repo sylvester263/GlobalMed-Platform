@@ -1,3 +1,4 @@
+import { features, type FeatureFlag } from "@/config/features";
 import type { Enums } from "@/lib/db/types";
 
 export type Role = Enums<"user_role">;
@@ -59,6 +60,8 @@ export type DashboardSection = {
   /** Phase that builds the real page (pm/PROJECT_PLAN.md). */
   phase: number;
   description: string;
+  /** Only shown while this feature flag is on (config/features.ts). */
+  flag?: FeatureFlag;
 };
 
 export const dashboardSections: Record<DashboardArea, DashboardSection[]> = {
@@ -171,6 +174,7 @@ export const dashboardSections: Record<DashboardArea, DashboardSection[]> = {
       icon: "courses",
       phase: 4,
       description: "Publish, archive, assign instructors and set prices.",
+      flag: "learningPlatform",
     },
     {
       slug: "orders",
@@ -178,6 +182,7 @@ export const dashboardSections: Record<DashboardArea, DashboardSection[]> = {
       icon: "orders",
       phase: 5,
       description: "Approve manual payments and handle refunds.",
+      flag: "onlineCheckout",
     },
     {
       slug: "enrollments",
@@ -185,6 +190,7 @@ export const dashboardSections: Record<DashboardArea, DashboardSection[]> = {
       icon: "enrollments",
       phase: 5,
       description: "Grant, revoke or extend access.",
+      flag: "learningPlatform",
     },
     {
       slug: "certificates",
@@ -192,6 +198,7 @@ export const dashboardSections: Record<DashboardArea, DashboardSection[]> = {
       icon: "certificate",
       phase: 6,
       description: "Issued certificates, revoke and reissue.",
+      flag: "certificates",
     },
     {
       slug: "coupons",
@@ -199,6 +206,7 @@ export const dashboardSections: Record<DashboardArea, DashboardSection[]> = {
       icon: "coupons",
       phase: 5,
       description: "Create discount codes and track usage.",
+      flag: "onlineCheckout",
     },
     {
       slug: "content",
@@ -235,7 +243,7 @@ export const dashboardSections: Record<DashboardArea, DashboardSection[]> = {
       label: "Leads pipeline",
       icon: "leads",
       phase: 8,
-      description: "Kanban and table view from new to won.",
+      description: "Website leads and AAPC registrations, by status.",
     },
     {
       slug: "inbox",
@@ -258,7 +266,28 @@ export function sectionHref(area: DashboardArea, slug: string): string {
   return slug ? `/dashboard/${area}/${slug}` : `/dashboard/${area}`;
 }
 
-/** Areas a role can switch between (admins see every area). */
+/**
+ * Areas switched off with GlobalMed's learning platform. Hidden at client request — GlobalMed education plans are future scope.
+ * Their routes redirect (config/hidden-routes.ts); here they leave the area switcher.
+ */
+const areaFlags: Partial<Record<DashboardArea, FeatureFlag>> = {
+  student: "learningPlatform",
+  instructor: "instructorDashboard",
+};
+
+export function areaEnabled(area: DashboardArea): boolean {
+  const flag = areaFlags[area];
+  return !flag || features[flag];
+}
+
+/** Areas a role can switch between (admins see every enabled area). */
 export function areasFor(role: Role): DashboardArea[] {
-  return (Object.keys(areaAccess) as DashboardArea[]).filter((area) => canAccess(role, area));
+  return (Object.keys(areaAccess) as DashboardArea[]).filter(
+    (area) => canAccess(role, area) && areaEnabled(area),
+  );
+}
+
+/** An area's sidebar sections, without those whose feature flag is off. */
+export function visibleSections(area: DashboardArea): DashboardSection[] {
+  return dashboardSections[area].filter((s) => !s.flag || features[s.flag]);
 }

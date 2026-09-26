@@ -1,3 +1,6 @@
+import { features } from "@/config/features";
+import { approvedWording } from "@/content/aapc";
+import { aapcCourseFacts, aapcCoursePath, getAapcCourses, priceText } from "@/data/courses";
 import { getCourses, getServices, getSpecialties } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo/metadata";
 import { aapcCertificationPath, postalAddress, site } from "@/lib/site";
@@ -16,7 +19,7 @@ export function GET() {
     "",
     `> ${site.description}`,
     "",
-    "GlobalMed does not collect patient information (PHI) through its website, courses or chatbot.",
+    "GlobalMed does not collect patient information (PHI) through its website, forms or chatbot.",
     "",
     "## Services for US medical practices",
     ...getServices().map(
@@ -27,14 +30,26 @@ export function GET() {
     "## Specialties",
     ...getSpecialties().map((s) => `- [${s.name}](${absoluteUrl(`/specialties/${s.slug}`)})`),
     "",
-    `## ${site.schoolName}`,
-    "Online courses with rewatchable video lessons, quizzes, timed mock exams and verifiable certificates. Payment by card in USD, or in PKR by bank transfer, JazzCash or Easypaisa.",
-    ...getCourses().map(
+    "## AAPC certification (CPC® and CPB®)",
+    approvedWording.partnership,
+    `${approvedWording.training} ${approvedWording.certification} ${approvedWording.role}`,
+    "GlobalMed does not teach, run classes or issue certificates. All training is online.",
+    `- [AAPC Certification in Pakistan](${absoluteUrl(aapcCertificationPath)}): the three AAPC courses, compared.`,
+    ...getAapcCourses().map(
       (c) =>
-        `- [${c.title}](${absoluteUrl(`/education/courses/${c.slug}`)}): ${c.summary} (${c.hours} hours, ${usd.format(c.priceUsd)})`,
+        `- [${c.title}](${absoluteUrl(aapcCoursePath(c.slug))}): ${c.summary} ${aapcCourseFacts.format}, ${c.duration}. Price: ${priceText(c)}.`,
     ),
-    `- [AAPC Certification in Pakistan](${absoluteUrl(aapcCertificationPath)}): CPC® and CPB® training with AAPC's strategic partner in Pakistan.`,
-    `- [Verify a certificate](${absoluteUrl("/verify")})`,
+    // Hidden at client request — GlobalMed education plans are future scope.
+    ...(features.globalmedCourses
+      ? [
+          `## ${site.schoolName}`,
+          ...getCourses().map(
+            (c) =>
+              `- [${c.title}](${absoluteUrl(`/education/courses/${c.slug}`)}): ${c.summary} (${c.hours} hours, ${usd.format(c.priceUsd)})`,
+          ),
+        ]
+      : []),
+    ...(features.certificates ? [`- [Verify a certificate](${absoluteUrl("/verify")})`] : []),
     "",
     "## Contact",
     `- Email: ${site.contact.email}`,

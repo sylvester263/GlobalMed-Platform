@@ -3,6 +3,9 @@ import path from "node:path";
 import { withSentryConfig } from "@sentry/nextjs/config";
 import type { NextConfig } from "next";
 
+import { features } from "./config/features";
+import { hiddenRedirects } from "./config/hidden-routes";
+
 // CSP is added in Phase 9 (P9-3) once analytics, Bunny, Stripe and Turnstile origins are final.
 const securityHeaders = [
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
@@ -28,6 +31,11 @@ const nextConfig: NextConfig = {
   },
   // "School" was renamed "Education" (ADR-024). The pages still live under app/(marketing)/school,
   // so both /school/... (old links) and /education/... (nav, canonical) render the same page.
+  // Hidden education features (config/features.ts) redirect to the AAPC Certification page.
+  // Redirects run before the rewrites below, so /school/... and /education/... are both covered.
+  async redirects() {
+    return hiddenRedirects(features);
+  },
   async rewrites() {
     return [
       { source: "/education", destination: "/school" },

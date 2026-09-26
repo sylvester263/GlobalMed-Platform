@@ -11,6 +11,7 @@ import {
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { AapcCourseCard } from "@/components/marketing/aapc-course";
 import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
 import { CredentialsSection } from "@/components/marketing/credentials-section";
 import { ClaimJourney } from "@/components/marketing/home/claim-journey";
@@ -21,10 +22,9 @@ import { Testimonial } from "@/components/marketing/testimonial";
 import { CountUp } from "@/components/motion/count-up";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger-group";
 import { buttonVariants } from "@/components/ui/button";
+import { features } from "@/config/features";
+import { aapcFaqs, aapcSteps, approvedWording } from "@/content/aapc";
 import {
-  certificationPath,
-  cpcCourseSlug,
-  faqs,
   partnership,
   programs,
   serviceSlugs,
@@ -35,24 +35,25 @@ import {
 import { getCourse, getServices } from "@/lib/content";
 import { educationalOrganizationJsonLd, JsonLd } from "@/lib/seo/json-ld";
 import { pageMetadata } from "@/lib/seo/metadata";
-import { whatsappHref } from "@/lib/site";
+import { aapcCourseFacts, getAapcCoursesDualCentred } from "@/data/courses";
+import { aapcCertificationPath, whatsappHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const description =
-  "GlobalMed Transcriptions is AAPC's strategic partner in Pakistan, offering CPC and CPB medical coding and billing certification training in Lahore and online.";
+  "GlobalMed Transcriptions: medical transcription, billing and coding services since 2007, and AAPC's Strategic Partner in Pakistan for CPC® and CPB® online courses.";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "AAPC Strategic Partner in Pakistan | CPC & CPB Training",
+    title: "AAPC Strategic Partner in Pakistan | CPC & CPB",
     description,
     path: "/",
   }),
-  title: { absolute: "AAPC Strategic Partner in Pakistan | CPC & CPB Training | GlobalMed" },
+  title: { absolute: "AAPC Strategic Partner in Pakistan | CPC® & CPB® | GlobalMed" },
 };
 
 const whyIcons = [Users, BookOpenCheck, PlayCircle, Briefcase] as const;
 
-const cpcHref = `/education/courses/${cpcCourseSlug}`;
+const registerHref = `${aapcCertificationPath}#register`;
 
 export default function HomePage() {
   const services = getServices().filter((s) =>
@@ -64,22 +65,26 @@ export default function HomePage() {
 
   return (
     <>
-      <JsonLd
-        data={educationalOrganizationJsonLd({
-          description,
-          courses: programs.map((p) => ({
-            name: `${p.credential} ${p.name} training`,
-            description: getCourse(p.slug)?.summary ?? p.audience.join(". "),
-            path: `/education/courses/${p.slug}`,
-          })),
-        })}
-      />
+      {/* Hidden at client request — GlobalMed education plans are future scope. GlobalMed is
+          described by the Organization/ProfessionalService markup in the marketing layout. */}
+      {features.educationSchema && (
+        <JsonLd
+          data={educationalOrganizationJsonLd({
+            description,
+            courses: programs.map((p) => ({
+              name: `${p.credential} ${p.name} training`,
+              description: getCourse(p.slug)?.summary ?? p.audience.join(". "),
+              path: `/education/courses/${p.slug}`,
+            })),
+          })}
+        />
+      )}
 
       {/* 1. Hero slider (client review 2026-09-25). The page's h1 sits outside the rotating
           slides so it never becomes hidden when a slide changes. */}
       <h1 className="sr-only">
         GlobalMed Transcriptions: medical transcription, billing and coding since 2007, and
-        AAPC&apos;s strategic partner in Pakistan for CPC® and CPB® training
+        AAPC&apos;s Strategic Partner in Pakistan for Medical Billing and Coding
       </h1>
       <HeroSlider />
 
@@ -93,89 +98,49 @@ export default function HomePage() {
       <section aria-label="GlobalMed and AAPC partnership" className="bg-primary text-white">
         <div className="mx-auto flex max-w-300 flex-col gap-10 px-4 py-14 md:px-6">
           <p className="max-w-4xl font-serif text-xl leading-snug font-semibold text-white lg:text-2xl">
-            {partnership.statement}
+            {approvedWording.partnership}
           </p>
-          <ul className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-            {partnership.stats.map((stat) => (
-              <li key={stat.label} className="flex flex-col gap-1">
-                <p className="font-serif text-3xl font-semibold tracking-tight text-sky">
-                  <CountUp value={stat.value} suffix={stat.suffix} />
-                </p>
-                <p className="text-sm font-semibold text-white/85">{stat.label}</p>
-                {!partnership.confirmed && (
-                  <p className="text-xs text-white/75">[CLIENT TO CONFIRM]</p>
-                )}
-              </li>
-            ))}
-          </ul>
+          <p className="max-w-3xl text-white/85">{approvedWording.role}</p>
+          {/* Hidden at client request — GlobalMed education plans are future scope. */}
+          {features.trainingStats && (
+            <ul className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+              {partnership.stats.map((stat) => (
+                <li key={stat.label} className="flex flex-col gap-1">
+                  <p className="font-serif text-3xl font-semibold tracking-tight text-sky">
+                    <CountUp value={stat.value} suffix={stat.suffix} />
+                  </p>
+                  <p className="text-sm font-semibold text-white/85">{stat.label}</p>
+                  {!partnership.confirmed && (
+                    <p className="text-xs text-white/75">[CLIENT TO CONFIRM]</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
 
-      {/* 3. Certification programs */}
+      {/* 3. The three AAPC courses (client, 2026-09-26) */}
       <Section
         id="certification-programs"
-        title="CPC® and CPB® certification programs"
-        intro="Two AAPC credentials, two career paths. Both programs run onsite in Lahore and online."
+        title="AAPC certification courses"
+        intro={`${approvedWording.training} ${approvedWording.certification}`}
       >
-        <ul className="grid gap-6 md:grid-cols-2">
-          {programs.map((program) => (
-            <li
-              key={program.slug}
-              className="flex flex-col gap-6 rounded-lg border bg-card p-6 shadow-sm lg:p-8"
-            >
-              <div className="flex flex-col gap-1">
-                <p className="font-serif text-4xl font-semibold text-primary">
-                  {program.credential}
-                </p>
-                <h3 className="text-xl">{program.name}</h3>
-              </div>
-              <div className="flex flex-col gap-2">
-                <h4 className="font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase">
-                  Who it&apos;s for
-                </h4>
-                <ul className="flex flex-col gap-1 text-muted-foreground">
-                  {program.audience.map((line, i) => (
-                    <li
-                      key={line}
-                      className={i === 0 ? "font-semibold text-foreground" : undefined}
-                    >
-                      {line}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-col gap-3">
-                <h4 className="font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase">
-                  What you&apos;ll learn
-                </h4>
-                <ul className="grid gap-2 sm:grid-cols-2">
-                  {program.topics.map((topic) => (
-                    <li key={topic} className="flex items-start gap-2">
-                      <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-sky" />
-                      <span>{topic}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <dl className="grid gap-3 border-t pt-4 text-sm sm:grid-cols-[auto_1fr] sm:gap-x-6">
-                <dt className="font-semibold">Course format</dt>
-                <dd className="text-muted-foreground">{program.format}</dd>
-                <dt className="font-semibold">Duration</dt>
-                <dd className="text-muted-foreground">{program.duration}</dd>
-              </dl>
-              <Link
-                href={`/education/courses/${program.slug}`}
-                className={cn(buttonVariants({ size: "lg" }), "mt-auto self-start")}
-              >
-                {program.cta} <ArrowRight aria-hidden="true" />
-              </Link>
+        <ul className="grid gap-8 lg:grid-cols-3 lg:items-stretch lg:gap-6">
+          {getAapcCoursesDualCentred().map((course) => (
+            <li key={course.slug} className="flex">
+              <AapcCourseCard
+                course={course}
+                registerHref={`${aapcCertificationPath}?course=${course.slug}#register`}
+              />
             </li>
           ))}
         </ul>
+        <p className="text-sm text-muted-foreground">{aapcCourseFacts.priceNote}</p>
       </Section>
 
-      {/* 4. Why train with GlobalMed */}
-      <Section tone="white" title="Why train with GlobalMed">
+      {/* 4. Why register through GlobalMed */}
+      <Section tone="white" title="Why register through GlobalMed">
         <StaggerGroup as="ul" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {whyUs.map((item, i) => {
             const Icon = whyIcons[i] ?? Check;
@@ -192,58 +157,60 @@ export default function HomePage() {
         </StaggerGroup>
       </Section>
 
-      {/* 5. Your path to certification (MG-3 claim line) */}
+      {/* 5. How it works (MG-3 claim line) */}
       <Section
         tone="mint"
         id="certification-path"
-        title="Your path to certification"
-        intro="From your first class to your CPC® or CPB® credential, and on to your first role."
+        title="How it works"
+        intro="From registration to your AAPC credential, in five steps."
       >
-        <ClaimJourney stages={certificationPath} />
-        <Link href={cpcHref} className={cn(buttonVariants({ size: "lg" }), "self-start")}>
-          Enroll in CPC Training
+        <ClaimJourney stages={aapcSteps} />
+        <Link href={registerHref} className={cn(buttonVariants({ size: "lg" }), "self-start")}>
+          Register Now
         </Link>
       </Section>
 
-      {/* 6. Upcoming batches */}
-      <Section
-        title="Upcoming CPC® and CPB® batches"
-        intro="Seats are limited in every batch so instructors can give each student feedback."
-      >
-        <ul className="grid gap-6 md:grid-cols-2">
-          {upcomingBatches.map((batch) => (
-            <li
-              key={batch.title}
-              className="flex flex-col gap-5 rounded-lg border bg-card p-6 shadow-sm"
-            >
-              <h3 className="text-xl">{batch.title}</h3>
-              <dl className="grid gap-3 text-sm">
-                <div className="flex items-start gap-2">
-                  <CalendarDays aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
-                  <dt className="font-semibold">Starts:</dt>
-                  <dd className="text-muted-foreground">{batch.starts}</dd>
-                </div>
-                <div className="flex items-start gap-2">
-                  <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
-                  <dt className="font-semibold">Mode:</dt>
-                  <dd className="text-muted-foreground">{batch.mode}</dd>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Users aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
-                  <dt className="font-semibold">Seats left:</dt>
-                  <dd className="text-muted-foreground">{batch.seatsLeft}</dd>
-                </div>
-              </dl>
-              <Link
-                href="/contact"
-                className={cn(buttonVariants({ size: "lg" }), "mt-auto self-start")}
+      {/* 6. Upcoming batches. Hidden at client request — GlobalMed education plans are future scope. */}
+      {features.batches && (
+        <Section
+          title="Upcoming CPC® and CPB® batches"
+          intro="Seats are limited in every batch so instructors can give each student feedback."
+        >
+          <ul className="grid gap-6 md:grid-cols-2">
+            {upcomingBatches.map((batch) => (
+              <li
+                key={batch.title}
+                className="flex flex-col gap-5 rounded-lg border bg-card p-6 shadow-sm"
               >
-                Reserve a Seat
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </Section>
+                <h3 className="text-xl">{batch.title}</h3>
+                <dl className="grid gap-3 text-sm">
+                  <div className="flex items-start gap-2">
+                    <CalendarDays aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
+                    <dt className="font-semibold">Starts:</dt>
+                    <dd className="text-muted-foreground">{batch.starts}</dd>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <MapPin aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
+                    <dt className="font-semibold">Mode:</dt>
+                    <dd className="text-muted-foreground">{batch.mode}</dd>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Users aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
+                    <dt className="font-semibold">Seats left:</dt>
+                    <dd className="text-muted-foreground">{batch.seatsLeft}</dd>
+                  </div>
+                </dl>
+                <Link
+                  href="/contact"
+                  className={cn(buttonVariants({ size: "lg" }), "mt-auto self-start")}
+                >
+                  Reserve a Seat
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
 
       {/* 7. Student testimonials, shown only once the client supplies consent-approved quotes */}
       {studentTestimonials.length > 0 && (
@@ -306,20 +273,20 @@ export default function HomePage() {
       {/* 9. FAQ (FaqList emits the FAQPage JSON-LD) */}
       <Section tone="white" className="lg:grid lg:grid-cols-[1fr_2fr] lg:gap-16">
         <div className="flex flex-col gap-3">
-          <h2 className="text-2xl lg:text-3xl">Questions about CPC® and CPB® training</h2>
+          <h2 className="text-2xl lg:text-3xl">Questions about CPC® and CPB®</h2>
           <Link href="/faq" className={cn(buttonVariants({ variant: "link" }), "self-start")}>
             All FAQs
           </Link>
         </div>
-        <FaqList faqs={faqs} />
+        <FaqList faqs={aapcFaqs} />
       </Section>
 
       {/* 10. Final CTA */}
       <CtaBand
-        title="Start your medical coding career with AAPC's strategic partner in Pakistan"
-        body="CPC® and CPB® training onsite in Lahore and online, with recorded lessons and mock exams."
-        href={cpcHref}
-        label="Enroll in CPC Training"
+        title="Start your medical coding career with AAPC's online courses"
+        body={`${approvedWording.training} ${approvedWording.certification}`}
+        href={registerHref}
+        label="Register Now"
         secondary={{ href: whatsapp ?? "/contact", label: "Talk to an Advisor on WhatsApp" }}
       />
     </>

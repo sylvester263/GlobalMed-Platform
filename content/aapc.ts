@@ -1,9 +1,20 @@
+import { aapcCourses, getAapcCourses, priceText } from "@/data/courses";
 import type { Faq } from "@/lib/content/schema";
 
-// [CLIENT TO CONFIRM] "AAPC Certification in Pakistan" page (/education/aapc-certification-pakistan),
-// the "Get Trained by AAPC Instructors" band and the footer pricing card. Original copy:
-// structure follows how certifications are usually presented (overview → who it's for →
-// what you'll learn → exam → how to start); nothing is taken from AAPC's site.
+// "AAPC Certification in Pakistan" page (/education/aapc-certification-pakistan), the
+// "Get Trained by AAPC Instructors" band and the footer pricing card. Business model
+// (client, 2026-09-26): GlobalMed is AAPC's Strategic Partner in Pakistan; AAPC faculty teach
+// AAPC's online courses and AAPC awards the certification. Original copy, nothing from AAPC's site.
+
+/** Approved wording (client, 2026-09-26). Use these lines verbatim across the site. */
+export const approvedWording = {
+  partnership:
+    "GlobalMed Transcriptions, Strategic Partner of AAPC in Pakistan for Medical Billing and Coding.",
+  training:
+    "Get trained by AAPC instructors: live, instructor-led online courses led by AAPC faculty.",
+  certification: "Your certification is awarded by AAPC.",
+  role: "GlobalMed Transcriptions helps students in Pakistan register for AAPC's official online courses and supports them through enrollment.",
+} as const;
 
 /** Shown on the AAPC page and in the footer. */
 export const certificationPrice = {
@@ -14,14 +25,17 @@ export const certificationPrice = {
 
 export const aapcHero = {
   title: "AAPC Certification in Pakistan",
-  intro:
-    "GlobalMed Transcriptions is AAPC's strategic partner in Pakistan for medical billing and coding. Your certification is awarded by AAPC; we train and prepare you.",
+  intro: `${approvedWording.partnership} ${approvedWording.training} ${approvedWording.certification}`,
 };
 
 export const instructorsBand = {
   title: "Get Trained by AAPC Instructors",
-  body: "Learn medical coding and billing from AAPC instructors through GlobalMed Transcriptions, AAPC's strategic partner in Pakistan.",
-  points: ["Live & recorded classes", "Exam-focused preparation", "Career guidance"],
+  body: approvedWording.training,
+  points: [
+    "Live online classes with AAPC faculty",
+    "Official AAPC exams and practice tests",
+    "AAPC membership included",
+  ],
   cta: "View CPC® & CPB® Training",
   /** [CLIENT TO CONFIRM] Optional instructor photos, in public/images/instructors/. */
   photos: [
@@ -33,6 +47,10 @@ export const instructorsBand = {
 
 const examPending = "[CLIENT TO CONFIRM from AAPC]";
 
+/**
+ * The earlier CPC®/CPB® panels, superseded by the three AAPC course cards (data/courses.ts)
+ * on 2026-09-26. Not shown; kept so nothing is deleted.
+ */
 export const certifications = [
   {
     id: "cpc",
@@ -80,7 +98,10 @@ export const certifications = [
   },
 ] as const;
 
-/** Exam facts are AAPC's to state; never fill these in without the client's confirmation. */
+/**
+ * Exam facts are AAPC's to state; never fill these in without the client's confirmation.
+ * Not shown since the 2026-09-26 page restructure; show them again once AAPC confirms.
+ */
 export const examDetails = [
   { label: "Number of questions", value: examPending },
   { label: "Duration", value: examPending },
@@ -88,64 +109,85 @@ export const examDetails = [
   { label: "Passing score", value: examPending },
 ];
 
-/** Drawn along the claim line. */
+/** "How it works", drawn along the claim line (AAPC page and home). */
 export const aapcSteps = [
   {
-    stage: "Enroll",
-    caption: "Choose CPC® or CPB® training and reserve your seat in the next batch.",
-    stat: "Onsite in Lahore or online",
+    stage: "Register with GlobalMed",
+    caption:
+      "Send the registration form or message us on WhatsApp. We help you choose CPC®, CPB® or both.",
+    stat: "Registration support",
   },
   {
-    stage: "Train with AAPC Instructors",
-    caption: "Live classes with AAPC instructors, plus recordings you can rewatch.",
-    stat: "Live + recorded",
+    stage: "Get enrolled in AAPC's online course",
+    caption: "We support you through enrollment in AAPC's official, instructor-led online course.",
+    stat: "AAPC official course",
   },
   {
-    stage: "Practice & Mock Exams",
-    caption: "Practice sets after every module and timed mock exams in exam format.",
-    stat: "Exam-focused",
+    stage: "Learn live online with AAPC faculty",
+    caption: "Live online sessions led by AAPC faculty (AAPC-certified instructors).",
+    stat: "Instructor-led online",
   },
   {
-    stage: "Take the AAPC Exam",
-    caption: "You sit the certification exam with AAPC when you're ready.",
-    stat: "Exam logistics [CLIENT TO CONFIRM]",
+    stage: "Take the AAPC certification exam",
+    caption: "Your course includes AAPC's certification exam and practice tests.",
+    stat: "Official AAPC exam",
   },
   {
-    stage: "Earn Your AAPC Certification",
+    stage: "Earn your AAPC credential",
     caption: "Pass the exam and AAPC awards your CPC® or CPB® credential.",
     stat: "Awarded by AAPC",
   },
 ];
 
+function costAnswer(): string {
+  const lines = getAapcCourses().map((course) => `${course.credential}: ${priceText(course)}`);
+  return `Course fees: ${lines.join("; ")}. Fees are paid for AAPC's official course; our team confirms the current fee when you register.`;
+}
+
+const dual = aapcCourses.find((c) => c.slug === "cpc-cpb");
+
+/**
+ * Training FAQs (client, 2026-09-26): used on the home page and the AAPC Certification page.
+ * Costs come from data/courses.ts.
+ */
 export const aapcFaqs: Faq[] = [
   {
-    question: "Who awards the CPC® and CPB® certifications?",
+    question: "What are CPC® and CPB®?",
     answer:
-      "AAPC awards both credentials when you pass its exam. GlobalMed Transcriptions, as AAPC's strategic partner in Pakistan, trains and prepares you for that exam.",
+      "CPC® (Certified Professional Coder) and CPB® (Certified Professional Biller) are professional credentials awarded by AAPC. CPC® covers physician and outpatient medical coding; CPB® covers medical billing.",
   },
   {
-    question: "Do I need a medical background?",
+    question: "Who teaches the courses?",
     answer:
-      "No. Healthcare professionals and billers progress fastest, but both programs start from the fundamentals, and beginners are welcome.",
+      "AAPC faculty (AAPC-certified instructors) teach every course, live and online. GlobalMed Transcriptions does not run the classes.",
   },
   {
-    question: "Is training onsite or online?",
+    question: "Is the training online or in person?",
     answer:
-      "Both. Classes run onsite in Lahore and live online, and recordings let you rewatch any class. Batch dates are [CLIENT TO CONFIRM].",
+      "Online only. The courses are AAPC's live, instructor-led online courses, so you can join from anywhere in Pakistan.",
   },
   {
-    question: "What does the USD 1,050 cover?",
-    answer:
-      "The CPC® and CPB® certification fee is USD 1,050. Whether that is per certification or combined, and what it includes, is [CLIENT TO CONFIRM].",
+    question: "Who awards the certification?",
+    answer: `AAPC. ${approvedWording.certification} You earn the CPC® or CPB® credential by passing AAPC's certification exam.`,
   },
   {
-    question: "How long is the exam and what score do I need?",
-    answer:
-      "Exam length, format and passing score are set by AAPC and are [CLIENT TO CONFIRM from AAPC]. Your instructors cover them in the exam-preparation module.",
+    question: "What does GlobalMed do?",
+    answer: `${approvedWording.partnership} ${approvedWording.role}`,
   },
   {
-    question: "How do I reserve a seat?",
+    question: "Which course should I choose: CPC®, CPB® or both?",
+    answer: `Choose CPC® if you want to assign diagnosis and procedure codes from medical records. Choose CPB® if you prefer claims, payers, denials and payments. Choose CPC® + CPB®${dual ? ` (${dual.duration})` : ""} for the widest foundation and two certifications.`,
+  },
+  {
+    question: "How much does it cost?",
+    answer: costAnswer(),
+  },
+  {
+    question: "How do I register?",
     answer:
-      "Send the form on this page or message us on WhatsApp at +92 300 419 8760, and an advisor will confirm the next batch and fees.",
+      "Send the Register Now form, or message us on WhatsApp at +92 300 419 8760. Our team will contact you to complete your AAPC enrollment.",
   },
 ];
+
+/** The FAQs shown on each AAPC course page: who teaches, format, who certifies, how to register. */
+export const courseFaqs: Faq[] = [1, 2, 3, 7].flatMap((i) => aapcFaqs[i] ?? []);

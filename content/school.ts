@@ -29,6 +29,8 @@ export const instructors: Instructor[] = [
 
 const raw: Course[] = [
   {
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     slug: "medical-billing-essentials",
     title: "Medical Billing Essentials",
     metaTitle: "Medical Billing Course Online",
@@ -108,6 +110,8 @@ const raw: Course[] = [
     featured: true,
   },
   {
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     slug: "medical-coding-foundations",
     title: "Medical Coding Foundations",
     metaTitle: "Medical Coding Course: ICD-10-CM and CPT",
@@ -186,6 +190,8 @@ const raw: Course[] = [
     featured: true,
   },
   {
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     slug: "cpc-exam-preparation",
     title: "CPC Exam Preparation",
     metaTitle: "CPC Exam Preparation Course",
@@ -259,6 +265,8 @@ const raw: Course[] = [
     featured: true,
   },
   {
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     slug: "icd-10-cm-mastery",
     title: "ICD-10-CM Mastery",
     metaTitle: "ICD-10-CM Training Course",
@@ -326,6 +334,8 @@ const raw: Course[] = [
     featured: false,
   },
   {
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     slug: "evaluation-and-management-coding",
     title: "E/M Coding in Practice",
     metaTitle: "E/M Coding Course for Coders",
@@ -393,6 +403,8 @@ const raw: Course[] = [
     featured: false,
   },
   {
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     slug: "denials-and-appeals",
     title: "Denials and Appeals",
     metaTitle: "Denial Management and Appeals Course",
@@ -460,6 +472,8 @@ const raw: Course[] = [
   // [CLIENT TO CONFIRM] CPC® and CPB® programs: hours, lesson counts, mock exams, prices (USD +
   // PKR), access period and outline are placeholders until the client confirms them.
   {
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     slug: "cpc-certified-professional-coder",
     title: "CPC® Training: Certified Professional Coder",
     metaTitle: "CPC® Training in Pakistan",
@@ -538,6 +552,8 @@ const raw: Course[] = [
     featured: false,
   },
   {
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     slug: "cpb-certified-professional-biller",
     title: "CPB® Training: Certified Professional Biller",
     metaTitle: "CPB® Training in Pakistan",
@@ -622,6 +638,8 @@ export const courses: Course[] = raw.map((c) => courseSchema.parse(c));
 
 const rawPathways: Pathway[] = [
   {
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     slug: "billing-and-coding-career",
     title: "Billing and Coding Career Path",
     metaTitle: "Medical Billing and Coding Career Path",
@@ -657,6 +675,8 @@ const rawPathways: Pathway[] = [
     bundlePricePkr: 120000,
   },
   {
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
     slug: "coding-specialist",
     title: "Coding Specialist Path",
     metaTitle: "Medical Coding Specialist Path",
@@ -699,6 +719,8 @@ export const batches = [
     schedule: "Mon & Thu, 7:00–9:00 pm PKT",
     seats: 30,
     mode: "Live online",
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
   },
   {
     course: "medical-billing-essentials",
@@ -706,6 +728,8 @@ export const batches = [
     schedule: "Tue & Fri, 7:00–9:00 pm PKT",
     seats: 30,
     mode: "Live online",
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
   },
   {
     course: "cpc-exam-preparation",
@@ -713,5 +737,7 @@ export const batches = [
     schedule: "Sat, 10:00 am–1:00 pm PKT",
     seats: 20,
     mode: "Live online",
+    // Hidden at client request — GlobalMed education plans are future scope.
+    visible: false,
   },
 ] as const;

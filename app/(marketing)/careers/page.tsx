@@ -11,7 +11,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Careers at GlobalMed",
   description:
-    "Work with GlobalMed as a medical coder, AR specialist or instructor. See open roles in Lahore and remote.",
+    "Work with GlobalMed as a medical coder, transcriptionist or AR specialist. See open roles in Lahore and remote.",
   path: "/careers",
 });
 
@@ -21,7 +21,7 @@ export default function CareersPage() {
       <PageHero
         eyebrow="Careers"
         title="Build a healthcare career serving US practices"
-        intro="We hire coders, billers and instructors, and our own graduates are part of the team. [CLIENT TO CONFIRM open roles]"
+        intro="We hire coders, billers, transcriptionists and editors. [CLIENT TO CONFIRM open roles]"
         crumbs={[{ name: "Careers", path: "/careers" }]}
       />
       <Section title="Open roles">

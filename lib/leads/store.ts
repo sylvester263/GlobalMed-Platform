@@ -7,6 +7,7 @@ import { LeadNotification } from "@/lib/email/templates/lead-notification";
 import { isSupabaseConfigured } from "@/lib/env";
 import { absoluteUrl } from "@/lib/seo/metadata";
 import { formsDryRun, serverEnv } from "@/lib/server-env";
+import { site } from "@/lib/site";
 
 export type NewLead = Omit<
   TablesInsert<"leads">,
@@ -29,11 +30,16 @@ export async function storeLead(
   const { error } = await createAdminClient().from("leads").insert(lead);
   if (error) return false;
 
-  if (serverEnv.ADMIN_NOTIFY_EMAIL) {
+  // Notifications go to ADMIN_NOTIFY_EMAIL, or the company inbox (info@) when it isn't set.
+  const notifyTo = serverEnv.ADMIN_NOTIFY_EMAIL ?? site.contact.email;
+  if (notifyTo) {
     // A failed notification must not lose the lead: it is already stored.
     await sendEmail({
-      to: serverEnv.ADMIN_NOTIFY_EMAIL,
-      subject: `New lead: ${lead.source}`,
+      to: notifyTo,
+      subject:
+        lead.source === "aapc_registration"
+          ? `New AAPC registration: ${lead.interest ?? "course not given"}`
+          : `New lead: ${lead.source}`,
       replyTo: lead.email ?? undefined,
       react: LeadNotification({
         source: lead.source,

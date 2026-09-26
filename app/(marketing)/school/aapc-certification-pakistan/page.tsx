@@ -1,155 +1,144 @@
-import { ArrowRight, Check, MessageCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { AapcCourseCard, AapcRegisterBand } from "@/components/marketing/aapc-course";
 import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
-import { CertificationPriceCard } from "@/components/marketing/certification-price-card";
-import { ContactForm } from "@/components/marketing/contact-form";
 import { ClaimJourney } from "@/components/marketing/home/claim-journey";
 import { FaqList, PageHero, Section } from "@/components/marketing/sections";
 import { buttonVariants } from "@/components/ui/button";
+import { aapcFaqs, aapcHero, aapcSteps } from "@/content/aapc";
 import {
-  aapcFaqs,
-  aapcHero,
-  aapcSteps,
-  certificationPrice,
-  certifications,
-  examDetails,
-} from "@/content/aapc";
+  aapcCourseFacts,
+  getAapcCoursesDualCentred,
+  priceText,
+  type AapcCourse,
+} from "@/data/courses";
 import { pageMetadata } from "@/lib/seo/metadata";
-import { aapcCertificationPath, educationBase, site } from "@/lib/site";
+import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata({
-  title: "AAPC Certification in Pakistan: CPC® and CPB® Training",
+  title: "AAPC Certification in Pakistan: CPC® and CPB®",
   description:
-    "Prepare for AAPC's CPC® and CPB® certifications with GlobalMed Transcriptions, AAPC's strategic partner in Pakistan. Training in Lahore and online with AAPC instructors.",
+    "AAPC's CPC®, CPB® and dual courses, taught live online by AAPC faculty. Register in Pakistan with GlobalMed Transcriptions, AAPC's Strategic Partner.",
   path: aapcCertificationPath,
 });
 
-const whatsappUrl = `https://wa.me/${site.contact.whatsappNumber.replace(/\D/g, "")}`;
-
-const eyebrowClass = "font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase";
+const comparisonRows: { label: string; value: (course: AapcCourse) => string }[] = [
+  { label: "Duration", value: (c) => c.compare.duration },
+  { label: "Format", value: () => aapcCourseFacts.format },
+  { label: "Membership", value: (c) => c.compare.membership },
+  { label: "Exams included", value: (c) => c.compare.exams },
+  { label: "Practice tests", value: (c) => c.compare.practiceTests },
+  { label: "Internship", value: (c) => c.compare.internship },
+  { label: "Codify", value: (c) => c.compare.codify },
+  { label: "Price", value: (c) => priceText(c) },
+];
 
 /**
- * AAPC Certification in Pakistan (client review 2026-09-25). Reached at
- * /education/aapc-certification-pakistan via the /education rewrite (ADR-024).
- * Overview → who it's for → what you'll learn → exam → how to start; original copy only.
+ * AAPC Certification in Pakistan (client, 2026-09-26): the three AAPC courses (dual in the
+ * middle), a comparison table, how it works, FAQs and the registration form. GlobalMed is
+ * AAPC's Strategic Partner; AAPC faculty teach online and AAPC awards the certification.
+ * Reached at /education/aapc-certification-pakistan via the /education rewrite (ADR-024).
  */
 export default function AapcCertificationPage() {
+  const courses = getAapcCoursesDualCentred();
+
   return (
     <>
       <PageHero
-        eyebrow="AAPC strategic partner in Pakistan"
+        eyebrow="AAPC's Strategic Partner in Pakistan"
         title={aapcHero.title}
         intro={aapcHero.intro}
-        crumbs={[
-          { name: "Education", path: educationBase },
-          { name: "AAPC Certification in Pakistan", path: aapcCertificationPath },
-        ]}
+        crumbs={[{ name: "Education", path: aapcCertificationPath }]}
       >
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Link href="#reserve-seat" className={buttonVariants({ size: "lg" })}>
-            Reserve Your Seat <ArrowRight aria-hidden="true" />
+          <Link href="#register" className={buttonVariants({ size: "lg" })}>
+            Register Now <ArrowRight aria-hidden="true" />
           </Link>
-          <Link
-            href="#certifications"
-            className={buttonVariants({ size: "lg", variant: "secondary" })}
-          >
-            Compare CPC® and CPB®
+          <Link href="#compare" className={buttonVariants({ size: "lg", variant: "secondary" })}>
+            Compare the courses
           </Link>
         </div>
       </PageHero>
 
-      <AapcInstructorsBand href="#certifications" id="aapc-instructors" />
+      <AapcInstructorsBand href="#courses" id="aapc-instructors" />
 
       <Section
-        id="certifications"
-        title="CPC® and CPB® certifications"
-        intro="Two AAPC credentials for two careers in US healthcare: coding and billing. AAPC awards the certification; GlobalMed trains and prepares you for the exam."
+        id="courses"
+        title="AAPC courses available in Pakistan"
+        intro="Three AAPC official courses, taught live online by AAPC faculty. Choose one credential, or both."
       >
-        <ul className="grid gap-6 lg:grid-cols-2">
-          {certifications.map((cert) => (
-            <li
-              key={cert.id}
-              className="flex flex-col gap-6 rounded-lg border bg-card p-6 shadow-sm lg:p-8"
-            >
-              <div className="flex flex-col gap-1">
-                <p className="font-serif text-4xl font-semibold text-primary">{cert.credential}</p>
-                <h3 className="text-xl">{cert.name}</h3>
-                <p className="mt-2 text-muted-foreground">{cert.overview}</p>
-              </div>
-              <div className="flex flex-col gap-2">
-                <h4 className={eyebrowClass}>Who it&apos;s for</h4>
-                <ul className="flex flex-col gap-1.5">
-                  {cert.audience.map((line, i) => (
-                    <li key={line} className="flex items-start gap-2">
-                      <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-sky" />
-                      <span className={i === 0 ? "font-semibold" : undefined}>{line}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-col gap-2">
-                <h4 className={eyebrowClass}>What you&apos;ll learn</h4>
-                <ul className="flex flex-col gap-1.5">
-                  {cert.topics.map((topic) => (
-                    <li key={topic} className="flex items-start gap-2">
-                      <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-sky" />
-                      <span>{topic}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-col gap-2">
-                <h4 className={eyebrowClass}>The {cert.credential} exam</h4>
-                <dl className="grid gap-x-6 gap-y-2 border-t pt-4 text-sm sm:grid-cols-[auto_1fr]">
-                  {examDetails.map((detail) => (
-                    <div key={detail.label} className="contents">
-                      <dt className="font-semibold">{detail.label}</dt>
-                      <dd className="text-muted-foreground">{detail.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-              <Link
-                href={`${educationBase}/courses/${cert.courseSlug}`}
-                className={cn(buttonVariants({ variant: "secondary" }), "mt-auto self-start")}
-              >
-                View the {cert.credential} course <ArrowRight aria-hidden="true" />
-              </Link>
+        <ul className="grid gap-8 lg:grid-cols-3 lg:items-stretch lg:gap-6">
+          {courses.map((course) => (
+            <li key={course.slug} className="flex">
+              <AapcCourseCard course={course} registerHref={`?course=${course.slug}#register`} />
             </li>
           ))}
         </ul>
       </Section>
 
-      <Section
-        tone="white"
-        id="pricing"
-        title="Certification pricing"
-        className="lg:grid lg:grid-cols-[1.4fr_1fr] lg:items-center lg:gap-16"
-      >
-        <div className="flex flex-col gap-4 lg:col-start-1">
-          <p className="max-w-prose text-muted-foreground">
-            One clear fee for {certificationPrice.label}. Ask an advisor about batch dates and what
-            the fee includes.
-          </p>
-          <p className="max-w-prose text-sm text-muted-foreground">
-            CPC® and CPB® are awarded by AAPC. Exam registration support is [CLIENT TO CONFIRM].
-          </p>
+      <Section tone="white" id="compare" title="Compare the courses">
+        <div className="overflow-x-auto rounded-lg border bg-card">
+          <table className="w-full min-w-[640px] text-left text-sm">
+            <caption className="sr-only">
+              Comparison of the CPC®, CPC® + CPB® and CPB® AAPC courses
+            </caption>
+            <thead className="bg-ledger">
+              <tr>
+                <th scope="col" className="px-4 py-3 font-semibold">
+                  <span className="sr-only">Detail</span>
+                </th>
+                {courses.map((course) => (
+                  <th
+                    key={course.slug}
+                    scope="col"
+                    className={cn(
+                      "px-4 py-3 font-serif text-lg font-semibold text-primary",
+                      course.bestValue && "bg-mint",
+                    )}
+                  >
+                    {course.credential}
+                    {course.bestValue && (
+                      <span className="block font-sans text-xs font-semibold text-teal-deep">
+                        Best value: two certifications
+                      </span>
+                    )}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {comparisonRows.map((row) => (
+                <tr key={row.label} className="border-t">
+                  <th scope="row" className="px-4 py-3 font-semibold whitespace-nowrap">
+                    {row.label}
+                  </th>
+                  {courses.map((course) => (
+                    <td
+                      key={course.slug}
+                      className={cn(
+                        "px-4 py-3 text-muted-foreground",
+                        course.bestValue && "bg-mint/50",
+                      )}
+                    >
+                      {row.value(course)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <CertificationPriceCard
-          href="#reserve-seat"
-          cta="Reserve Your Seat"
-          className="lg:col-start-2 lg:row-span-2 lg:row-start-1"
-        />
+        <p className="text-sm text-muted-foreground">{aapcCourseFacts.priceNote}</p>
       </Section>
 
       <Section
         tone="mint"
         id="how-it-works"
         title="How it works"
-        intro="From enrolment to your AAPC credential, in five steps."
+        intro="From registration to your AAPC credential, in five steps."
       >
         <ClaimJourney stages={aapcSteps} />
       </Section>
@@ -159,35 +148,7 @@ export default function AapcCertificationPage() {
         <FaqList faqs={aapcFaqs} />
       </Section>
 
-      <section id="reserve-seat" aria-labelledby="reserve-seat-title" className="bg-ink text-white">
-        <div className="mx-auto grid max-w-300 gap-10 px-4 py-16 md:px-6 lg:grid-cols-[1fr_1.3fr] lg:items-start lg:gap-16">
-          <div className="flex flex-col gap-5">
-            <h2 id="reserve-seat-title" className="text-2xl text-white lg:text-3xl">
-              Reserve Your Seat
-            </h2>
-            <p className="max-w-prose text-white/80">
-              Tell us which certification you&apos;re interested in and an advisor will confirm the
-              next CPC® or CPB® batch, fees and schedule. Please don&apos;t include any patient
-              information.
-            </p>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                buttonVariants({ size: "lg" }),
-                "self-start bg-sky text-ink hover:bg-white",
-              )}
-            >
-              <MessageCircle aria-hidden="true" /> WhatsApp {site.contact.whatsappDisplay}
-              <span className="sr-only">(opens in a new tab)</span>
-            </a>
-          </div>
-          <div className="rounded-lg bg-card p-6 text-foreground">
-            <ContactForm defaultInterest="Courses and certification" />
-          </div>
-        </div>
-      </section>
+      <AapcRegisterBand />
     </>
   );
 }

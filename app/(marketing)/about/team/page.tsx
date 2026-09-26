@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo/metadata";
 export const metadata: Metadata = pageMetadata({
   title: "Our Team",
   description:
-    "Meet the GlobalMed leadership team running revenue-cycle services and GlobalMed Education.",
+    "Meet the GlobalMed leadership team running revenue-cycle services and the AAPC partnership in Pakistan.",
   path: "/about/team",
 });
 

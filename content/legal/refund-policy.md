@@ -2,6 +2,8 @@
 title: Refund policy
 description: When and how you can get a refund for a GlobalMed Education course.
 updatedAt: "2026-09-24"
+# Hidden at client request — GlobalMed education plans are future scope.
+feature: onlineCheckout
 ---
 
 We want you to be sure a course is right for you. Every course has free preview lessons you can watch before you buy.

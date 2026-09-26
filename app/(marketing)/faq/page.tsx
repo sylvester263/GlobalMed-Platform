@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo/metadata";
 export const metadata: Metadata = pageMetadata({
   title: "Frequently Asked Questions",
   description:
-    "Answers about GlobalMed's billing services, free audits, HIPAA, courses, payments from Pakistan and certificate verification.",
+    "Answers about GlobalMed's billing services, free audits, HIPAA, and AAPC's CPC® and CPB® online courses offered through GlobalMed.",
   path: "/faq",
 });
 

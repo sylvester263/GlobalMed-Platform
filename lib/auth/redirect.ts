@@ -17,13 +17,15 @@ export function safeNext(next: unknown, fallback = "/dashboard"): string {
   }
 }
 
-/** Where the course/pathway "Enroll" CTAs send people after they sign up or sign in. */
+/** Where the course/pathway "Enroll" CTAs send people after they sign up or sign in: a course goes
+ * straight to checkout (P5-1); a pathway to its page to pick a course. */
 export function nextFromEnrollParams(params: {
   course?: string;
   pathway?: string;
 }): string | undefined {
   const slug = /^[a-z0-9-]{1,80}$/;
-  if (params.course && slug.test(params.course)) return `/school/courses/${params.course}`;
-  if (params.pathway && slug.test(params.pathway)) return `/school/pathways/${params.pathway}`;
+  if (params.course && slug.test(params.course))
+    return `/dashboard/student/checkout/${params.course}`;
+  if (params.pathway && slug.test(params.pathway)) return `/education/pathways/${params.pathway}`;
   return undefined;
 }

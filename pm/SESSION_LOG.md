@@ -161,6 +161,56 @@ Newest entry at the bottom. One entry per Claude Code session.
 
 
 ---
+### Session 005d — Client review changes (Education rename, slider, AAPC page, credentials, About, footer)
+- **Date:** 2026-09-25 (built; not logged at the time) · verified 2026-09-26
+- **Done:**
+  - Home: a 3-slide hero slider with the claim-line progress. It autoplays every 6s and pauses on hover or focus, with a pause button, arrows, dots and swipe. Reduced motion: no autoplay and a fade only. Fixed height, so no layout shift. Photos show labelled placeholder slots.
+  - "School" renamed to "Education" (ADR-024). `/education/*` rewrites to the existing pages; `/school/*` still works. Nav order is About Us · Education · the rest. "AAPC Certification in Pakistan" is first in the Education menu.
+  - New page /education/aapc-certification-pakistan: hero, instructors band, CPC®/CPB® panels, exam details marked [CLIENT TO CONFIRM from AAPC], USD 1,050 pricing card, 5-step claim-line pathway, FAQ, and "Reserve Your Seat" with the form and WhatsApp.
+  - "Get Trained by AAPC Instructors" band on Home, the AAPC page and the Education landing.
+  - "Registered, Certified & Compliant" section, driven by data/credentials.ts, with an accessible certificate lightbox. On Home and About.
+  - "Healthcare professionals and billers" is the first audience line on every course and panel. It was added, since no course had it before.
+  - About Us rewritten with the client's content: story, what we do, quality, mission, founder card, count-up facts, strategic partnership, credentials, CTA.
+  - Footer: newsletter strip, 5 columns (accordions on mobile), pricing card, social icons (hidden until links arrive), new bottom bar. Contact details are single-sourced in lib/site.ts and used by the footer, the Contact page, llms.txt and the JSON-LD. Chatbot seeding is noted in docs/09.
+- **Verified (2026-09-26):** tsc, eslint, 107 unit tests. e2e against `next dev`: all 8 client-review tests pass. No horizontal scroll at 360/768/1280 on Home, About, Education, AAPC and Contact. 3 other e2e tests hit the 60s timeout on dev compiles and must be re-run against a production build.
+- **Files touched:** see the commit.
+- **Blockers:** slider/credential/instructor images, credential numbers, AAPC exam facts, price basis, social links (pm/CLIENT_INPUTS_NEEDED.md). AAPC written permission.
+
+---
+### Session 006 — Phase 5 start: orders, Stripe Checkout, webhook
+- **Date:** 2026-09-26
+- **Done:**
+  - Migration 0004_commerce:
+    - `stripe_events` (RLS, admin read).
+    - Order indexes, and a unique (provider, provider_ref).
+    - `fulfil_order()` (ADR-025): checks the amount and currency, marks the order paid, increments the coupon, and grants or extends access to each course (bundles expanded).
+    - Not executable by browser roles.
+  - P5-1: /dashboard/student/checkout/[slug] with an order summary and the server action `startCardCheckout`:
+    - The price comes from the DB.
+    - The order is created before the Stripe session.
+    - Stripe idempotency key per order.
+    - Rate-limited.
+    - Fails closed without Stripe keys.
+    - Courses not in the LMS show a "contact admissions" notice.
+  - P5-2: /api/stripe/webhook:
+    - Verifies the signature on the raw body.
+    - Idempotent by event id.
+    - Only paid sessions fulfil; delayed methods wait, expired sessions cancel.
+    - DB errors return 500 so Stripe retries.
+  - Order status page (polls while confirming) and a basic orders list (/dashboard/student/orders). Receipts are still to come in P5-6.
+  - The Enroll flow ends at checkout: after sign-up or login, `?course=` goes to checkout, and signed-in users visiting /login or /signup are sent straight on.
+  - stripe SDK 22 added. STRIPE_* in the server env schema.
+- **Tests:**
+  - 15 new unit tests: money, session outcomes, the event handler, signature checks.
+  - 16 SQL scenarios for `fulfil_order` and RLS, run on a throwaway local Postgres 16 with a Supabase shim. This is also the first real run of 0001–0003, and all apply cleanly. The harness wasn't committed.
+- **Files touched:** supabase/migrations/0004_commerce.sql, lib/payments/*, app/api/stripe/webhook, app/(dashboard)/dashboard/student/{checkout,orders}, components/payments/*, app/(auth)/{login,signup}, lib/auth/redirect.ts, lib/server-env.ts, lib/security/rate-limit.ts, lib/db/types.ts, scripts/gen-provisional-types.mjs, tests, pm/*
+- **Next:**
+  - P5-3 manual payment: proof upload to a private bucket, then admin approval via `fulfil_order(p_verified_by)`.
+  - P5-4 USD/PKR geo pricing.
+  - Run `npm run build` + the full e2e suite against a production build.
+- **Blockers:** Stripe test keys and webhook secret to verify end-to-end. Supabase (P0-4) to apply 0004.
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

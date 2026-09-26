@@ -115,6 +115,16 @@ out += `    };
       has_role: { Args: { r: Database["public"]["Enums"]["user_role"] }; Returns: boolean };
       is_admin: { Args: Record<PropertyKey, never>; Returns: boolean };
       is_enrolled: { Args: { c: string }; Returns: boolean };
+      fulfil_order: {
+        Args: {
+          p_order: string;
+          p_provider_ref?: string;
+          p_amount_minor?: number;
+          p_currency?: string;
+          p_verified_by?: string;
+        };
+        Returns: string;
+      };
       is_course_staff: { Args: { c: string }; Returns: boolean };
       is_batch_member: { Args: { b: string }; Returns: boolean };
       lesson_course: { Args: { l: string }; Returns: string };

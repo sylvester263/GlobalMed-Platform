@@ -53,3 +53,17 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Completion rule default (pass % for final exam)
 - ⬜ Allow AI crawlers in robots.txt? (yes/no)
 - ⬜ Post-launch support/maintenance terms
+
+## Client review 2026-09-25 (placeholders on the site until supplied)
+- ⬜ Hero slider photos: public/images/slider/slide-1.jpg, slide-2.jpg, slide-3.jpg (1920 × 640, no text baked in)
+- ⬜ AAPC partner logo as PNG (public/aapc-logo.png); the existing SVG is used until then. Written AAPC permission is still required (see Legal)
+- ⬜ Credential images in public/images/credentials/ (logo + full certificate each) and registration/certificate numbers for PSEB, SECP and HIPAA
+- ⬜ Name and details of the third credential
+- ⬜ HIPAA assessing/issuing body, as printed on the certificate
+- ⬜ CPC®/CPB® exam details from AAPC: number of questions, duration, format, passing score
+- ⬜ Is USD 1,050 per certification or for CPC® and CPB® combined? Is exam registration included?
+- ⬜ Social profile links (Facebook, Instagram, LinkedIn, YouTube, X); icons stay hidden until provided
+- ⬜ Instructor photos (optional, public/images/instructors/) and founder photo (public/images/team/riaz-naveed.jpg)
+
+## Payments setup (Phase 5)
+- ⬜ Stripe test + live keys (STRIPE_SECRET_KEY, NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) and a webhook endpoint at /api/stripe/webhook subscribed to checkout.session.completed, .expired, .async_payment_succeeded, .async_payment_failed (STRIPE_WEBHOOK_SECRET)

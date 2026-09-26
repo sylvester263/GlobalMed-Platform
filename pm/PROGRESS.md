@@ -1,6 +1,6 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-09-24 · Current phase: **4 — LMS core** (built; live verification needs Supabase + Bunny) · Overall: **40%**
+Last updated: 2026-09-26 · Current phase: **5 — Payments & enrollment** (card checkout + webhook built; needs Stripe keys to verify) · Overall: **43%**
 
 | Phase | Status | % |
 |---|---|---|
@@ -9,7 +9,7 @@ Last updated: 2026-09-24 · Current phase: **4 — LMS core** (built; live verif
 | 2 Public website | 🟨 Pages built; awaiting content review, motion assets, perf check on Vercel | 80 |
 | 3 Auth & dashboard shells | 🟨 Built and tested without Supabase; end-to-end auth verification pending P0-4 | 90 |
 | 4 LMS core | 🟨 Built and tested without Supabase/Bunny; signing formats + webhook verification pending (docs/17 §4) | 90 |
-| 5 Payments & enrollment | ⬜ | 0 |
+| 5 Payments & enrollment | 🟨 Card checkout + webhook built; manual payments next | 30 |
 | 6 Quizzes, exams, certificates | ⬜ | 0 |
 | 7 AI chatbot + WhatsApp | ⬜ | 0 |
 | 8 CRM, analytics, marketing | ⬜ | 0 |
@@ -62,6 +62,7 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [ ] P2-18 MG-4 to MG-8 service & trust animations — 🟨 MG-4, MG-6, MG-7, MG-8 done; MG-5 icon animations need the Lottie icon set
 - [ ] P2-19 MG-9 to MG-13 school & course animations — 🟨 MG-9, MG-11 done; MG-10 static until asset; MG-12 needs practice logos; MG-13 needs AAPC permission
 - [ ] P2-20 MG-14 to MG-18 forms, verify, page transitions, menu, chat launcher — 🟨 MG-14–17 done; MG-18 moves to P7-4 with the chat widget
+- [x] P2-22 Client review 2026-09-25: hero slider, Education rename (/education, ADR-024), AAPC Certification page, AAPC instructors band, credentials section, About rewrite, expanded footer — images/numbers pending client
 - [ ] P2-21 Motion performance + reduced-motion QA — 🟨 reduced motion + CLS 0 verified; mobile perf 73–90 locally, re-measure on Vercel preview
 
 ## Phase 3 — Auth & dashboard shells
@@ -85,12 +86,12 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [x] P4-9 DM-2 progress animation + DM-3 lesson-complete animation
 
 ## Phase 5 — Payments & enrollment
-- [ ] P5-1 Orders + Stripe Checkout
-- [ ] P5-2 Stripe webhook → enrollment
+- [x] P5-1 Orders + Stripe Checkout — /dashboard/student/checkout/[slug]; verify in Stripe test mode
+- [x] P5-2 Stripe webhook → enrollment — fulfil_order() (ADR-025); verify with `stripe listen`
 - [ ] P5-3 Manual payment + proof upload + admin approval
 - [ ] P5-4 Geo pricing USD/PKR
 - [ ] P5-5 Coupons + bundles
-- [ ] P5-6 Receipts + orders page
+- [ ] P5-6 Receipts + orders page — 🟨 orders list + order status page done; receipts/PDF + email pending
 - [ ] P5-7 Refunds / revoke
 
 ## Phase 6 — Quizzes, exams, certificates

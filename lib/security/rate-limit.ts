@@ -16,6 +16,7 @@ export const limits = {
   authSignup: { requests: 5, windowSeconds: 3600 },
   authReset: { requests: 5, windowSeconds: 3600 },
   authMfa: { requests: 10, windowSeconds: 300 },
+  checkout: { requests: 10, windowSeconds: 600 },
 } satisfies Record<string, Limit>;
 
 const redis =

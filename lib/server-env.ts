@@ -15,6 +15,8 @@ const serverEnvSchema = z.object({
   UPSTASH_REDIS_REST_URL: optional,
   UPSTASH_REDIS_REST_TOKEN: optional,
   NEWSLETTER_SECRET: optional,
+  STRIPE_SECRET_KEY: optional,
+  STRIPE_WEBHOOK_SECRET: optional,
   FORMS_DRY_RUN: z.enum(["true", "false"]).optional(),
 });
 

@@ -41,11 +41,11 @@ test.describe("auth pages", () => {
     await expect(password).toHaveAttribute("type", "password");
   });
 
-  test("sign-up from a course keeps the course as the return target", async ({ page }) => {
+  test("sign-up from a course returns to that course's checkout", async ({ page }) => {
     await page.goto("/signup?course=cpc-exam-preparation");
     await expect(page.getByText(/come back to CPC Exam Preparation/)).toBeVisible();
     await expect(page.locator('input[name="next"]').first()).toHaveValue(
-      "/school/courses/cpc-exam-preparation",
+      "/dashboard/student/checkout/cpc-exam-preparation",
     );
   });
 

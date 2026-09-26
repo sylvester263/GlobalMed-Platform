@@ -51,12 +51,12 @@ describe("safeNext (open-redirect protection)", () => {
 });
 
 describe("nextFromEnrollParams", () => {
-  it("maps course and pathway slugs to their pages", () => {
+  it("sends a course to checkout and a pathway to its page", () => {
     expect(nextFromEnrollParams({ course: "cpc-exam-preparation" })).toBe(
-      "/school/courses/cpc-exam-preparation",
+      "/dashboard/student/checkout/cpc-exam-preparation",
     );
     expect(nextFromEnrollParams({ pathway: "coding-specialist" })).toBe(
-      "/school/pathways/coding-specialist",
+      "/education/pathways/coding-specialist",
     );
   });
 

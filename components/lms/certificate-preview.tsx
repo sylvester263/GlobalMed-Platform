@@ -44,7 +44,7 @@ export function CertificatePreview({
       <div className="pointer-events-none absolute inset-[2.5%] rounded-md border-2 border-primary" />
       <div className="relative flex h-full flex-col items-center justify-between gap-6 py-4 text-center sm:gap-0 sm:py-0">
         <div className="flex flex-col items-center gap-[0.5cqw]">
-          <Wordmark size="compact" className="mb-[1cqw] h-[max(28px,6cqw)]" />
+          <Wordmark size="compact" className="mb-[1cqw] h-[max(56px,12cqw)]" />
           <p className="text-[max(10px,1.6cqw)] font-semibold tracking-[0.2em] text-teal-deep uppercase">
             GlobalMed Education
           </p>

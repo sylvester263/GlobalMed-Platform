@@ -142,11 +142,11 @@ export function CompactFooter() {
             )}
           >
             <Image
-              src="/images/brand/globalmed-logo-horizontal.png"
+              src="/images/brand/globalmed-logo-stacked.png"
               alt="GlobalMed Transcriptions logo"
-              width={800}
-              height={174}
-              className="h-[52px] w-auto"
+              width={653}
+              height={786}
+              className="h-[88px] w-auto"
             />
           </Link>
 

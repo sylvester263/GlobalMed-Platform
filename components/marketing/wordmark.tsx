@@ -3,24 +3,25 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * The client's official logo (brand set, 2026-09-26). The horizontal lockup is the supplied
- * stacked artwork's icon and wordmark placed side by side, pixels unchanged; the icon is the
- * supplied icon file. Never recolour or redraw either. (public/logo.png is the older logo.)
+ * The client's official logo: the supplied stacked artwork, used everywhere at the client's
+ * request (2026-09-27). The icon is the supplied icon file. Never recolour or redraw either.
+ * (The horizontal lockup, public/images/brand/globalmed-logo-horizontal.png, and the older
+ * public/logo.png are kept but no longer used.)
  */
 const logo = {
-  src: "/images/brand/globalmed-logo-horizontal.png",
-  width: 800,
-  height: 174,
+  src: "/images/brand/globalmed-logo-stacked.png",
+  width: 653,
+  height: 786,
 } as const;
 const icon = { src: "/images/brand/globalmed-icon.png", width: 628, height: 628 } as const;
 
 const heights = {
-  /** Site header and auth pages: 36px on mobile, 44px from md. */
-  header: "h-9 md:h-11",
-  /** Footer: 48px. */
-  footer: "h-12",
-  /** Dashboard sidebar, sheets and the course player bar: 36px. */
-  compact: "h-9",
+  /** Site header and auth pages: 56px (the header bar is 64px). */
+  header: "h-14",
+  /** Extended footer: 96px. */
+  footer: "h-24",
+  /** Dashboard sidebar, sheets, the course player bar and the hero lockup: 48px. */
+  compact: "h-12",
 } as const;
 
 export function Wordmark({

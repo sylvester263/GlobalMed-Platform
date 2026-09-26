@@ -41,7 +41,7 @@ export function organizationJsonLd(): JsonLdObject {
     alternateName: site.shortName,
     url: site.url,
     logo: absoluteUrl("/images/brand/globalmed-logo-stacked-on-white.png"),
-    image: absoluteUrl("/images/brand/globalmed-logo-horizontal.png"),
+    image: absoluteUrl("/images/brand/globalmed-logo-stacked.png"),
     email: contact.email,
     telephone: contact.phone,
     foundingDate: "2007",

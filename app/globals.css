@@ -16,6 +16,10 @@
   /* Brand */
   --color-navy: var(--navy);
   --color-navy-hover: var(--navy-hover);
+  --color-navy-deep: var(--navy-deep);
+  --color-footer-link: var(--footer-link);
+  --color-footer-muted: var(--footer-muted);
+  --color-footer-fine: var(--footer-fine);
   --color-sky: var(--sky);
   --color-sky-soft: var(--sky-soft);
   --color-mid-blue: var(--mid-blue);
@@ -134,6 +138,12 @@
    */
   --navy: #283f93;
   --navy-hover: #1f3278;
+  /* AAPC-style compact footer (client, 2026-09-27). Text contrast on navy-deep: link 9.8:1,
+     muted 6.6:1, fine print 4.9:1. */
+  --navy-deep: #17265c;
+  --footer-link: #c9d6ee;
+  --footer-muted: #9fb0d3;
+  --footer-fine: #8797bf;
   --sky: #51ace3;
   --mid-blue: #3a73c2;
   --ink: #1b2a5e;

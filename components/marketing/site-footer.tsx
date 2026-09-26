@@ -2,10 +2,12 @@ import { ChevronDown, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-r
 import Link from "next/link";
 
 import { CertificationPriceCard } from "@/components/marketing/certification-price-card";
+import { CompactFooter } from "@/components/marketing/footer-compact";
 import { NewsletterForm } from "@/components/marketing/newsletter-form";
 import { SocialIcons } from "@/components/marketing/social-icons";
 import { Wordmark } from "@/components/marketing/wordmark";
 import { ClaimLine } from "@/components/motion/claim-line";
+import { features } from "@/config/features";
 import { aapcCertificationPath, footerNav, legalNav, postalAddress, site } from "@/lib/site";
 
 const whatsappUrl = `https://wa.me/${site.contact.whatsappNumber.replace(/\D/g, "")}`;
@@ -100,8 +102,16 @@ function ContactList() {
   );
 }
 
-/** Footer (client review 2026-09-25): newsletter strip, five columns, legal bar, SylJo Tech credit. */
+/**
+ * The site footer. The AAPC-style compact footer is shown (client, 2026-09-27); the extended
+ * footer below is hidden, not deleted: set `features.footerExtended` to true to restore it.
+ */
 export function SiteFooter() {
+  return features.footerExtended ? <ExtendedFooter /> : <CompactFooter />;
+}
+
+/** Footer (client review 2026-09-25): newsletter strip, five columns, legal bar, SylJo Tech credit. */
+function ExtendedFooter() {
   return (
     <footer className="bg-primary text-white/85">
       {/* Newsletter, full width above the columns */}

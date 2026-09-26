@@ -43,6 +43,13 @@ export const features = {
    * Admin and Sales staff.
    */
   publicLogin: false,
+  /** Hidden at client request — AAPC-style compact footer. Set true to restore. Newsletter strip + 5-column footer. */
+  footerExtended: false,
+  /**
+   * Hidden at client request — the floating help button (components/marketing/help-button.tsx)
+   * replaces the floating WhatsApp button. Set true to restore.
+   */
+  floatingWhatsApp: false,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

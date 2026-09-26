@@ -1,7 +1,7 @@
 import { site, type SocialNetwork } from "@/lib/site";
 
 /** Simple brand glyphs (lucide-react ships no brand icons). 24 × 24, currentColor. */
-const glyphs: Record<SocialNetwork, React.ReactNode> = {
+export const glyphs: Record<SocialNetwork, React.ReactNode> = {
   facebook: (
     <path d="M9.1 23.7v-8H6.6V12h2.5v-1.6c0-4.1 1.8-6 5.9-6 .8 0 2.1.2 2.6.3v3.3l-1.4-.1c-2 0-2.7.8-2.7 2.6V12h3.9l-.7 3.7h-3.2v8.2A12 12 0 1 0 9.1 23.7Z" />
   ),

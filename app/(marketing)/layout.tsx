@@ -1,6 +1,8 @@
+import { HelpButton } from "@/components/marketing/help-button";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { WhatsAppButton } from "@/components/marketing/whatsapp-button";
+import { features } from "@/config/features";
 import { JsonLd, organizationJsonLd } from "@/lib/seo/json-ld";
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -17,7 +19,12 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         {children}
       </main>
       <SiteFooter />
-      <WhatsAppButton placement="floating" variant="floating" />
+      {/* The floating WhatsApp button is replaced by the help button (client, 2026-09-27). */}
+      {features.floatingWhatsApp ? (
+        <WhatsAppButton placement="floating" variant="floating" />
+      ) : (
+        <HelpButton />
+      )}
       <JsonLd data={organizationJsonLd()} />
     </div>
   );

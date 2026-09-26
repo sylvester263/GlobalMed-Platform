@@ -30,6 +30,8 @@ export type Credential = {
   validity?: string;
   /** Label for the placeholder slot while the image is missing. */
   placeholder: string;
+  /** Kept in the data but not shown on the site (e.g. waiting for the certificate). */
+  hidden?: boolean;
 };
 
 const pending = "[CLIENT TO CONFIRM]";
@@ -59,6 +61,7 @@ export const credentials: Credential[] = [
     certificateAlt:
       "GlobalMed Transcriptions Pvt. Ltd. certificate of incorporation from the Securities and Exchange Commission of Pakistan",
     placeholder: "SECP certificate",
+    hidden: true, // Hidden until the certificate and number arrive (client, 2026-09-26).
   },
   {
     id: "third-credential",
@@ -69,6 +72,7 @@ export const credentials: Credential[] = [
     certificate: "/images/credentials/credential-3-certificate.jpg",
     certificateAlt: "GlobalMed Transcriptions certificate (credential to be confirmed)",
     placeholder: "Third credential certificate",
+    hidden: true, // Hidden until the credential is confirmed (client, 2026-09-26).
   },
   {
     id: "hipaa",

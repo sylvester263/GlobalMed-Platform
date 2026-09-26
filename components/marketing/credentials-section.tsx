@@ -5,6 +5,8 @@ import { CredentialLightbox } from "@/components/marketing/credential-lightbox";
 import { ClaimLine } from "@/components/motion/claim-line";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger-group";
 import { credentials } from "@/data/credentials";
+
+const visibleCredentials = credentials.filter((credential) => !credential.hidden);
 import { publicAssetExists } from "@/lib/public-asset";
 
 /**
@@ -27,7 +29,7 @@ export function CredentialsSection({ id = "credentials" }: { id?: string }) {
           </p>
         </div>
         <StaggerGroup as="ul" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {credentials.map((credential) => {
+          {visibleCredentials.map((credential) => {
             const hasLogo = publicAssetExists(credential.image);
             return (
               <StaggerItem as="li" key={credential.id} className="flex">

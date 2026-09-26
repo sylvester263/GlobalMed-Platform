@@ -226,14 +226,14 @@ export function isNavGroup(item: NavItem): item is NavGroup {
 export const footerNav: { title: string; links: NavLink[] }[] = [
   {
     title: "Company",
-    links: [
+    links: shown([
       { label: "About Us", href: "/about" },
       { label: "Services", href: "/services" },
       { label: "Blog", href: "/blog" },
       { label: "Careers / Transcriptionists", href: "/careers" },
       { label: "Contact Us", href: "/contact" },
-      { label: "Member Login", href: "/login" },
-    ],
+      { label: "Member Login", href: "/login", flag: "publicLogin" },
+    ]),
   },
   {
     title: "Education",

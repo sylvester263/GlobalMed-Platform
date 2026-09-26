@@ -2,24 +2,33 @@ import { ArrowRight, BadgeCheck } from "lucide-react";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
-import { certificationPrice } from "@/content/aapc";
+import { formatUsdPrice, getAapcCourses } from "@/data/courses";
 import { cn } from "@/lib/utils";
 
-/** "CPC® and CPB® Certification: USD 1,050" (footer and AAPC Certification page). */
+const shortNames: Record<string, string> = {
+  cpc: "CPC®",
+  cpb: "CPB®",
+  "cpc-cpb": "CPC® + CPB® Dual",
+};
+
+/**
+ * AAPC course prices (footer). Confirmed by the client on 2026-09-26:
+ * CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® Dual USD 1,600 (save USD 500).
+ */
 export function CertificationPriceCard({
   href,
-  cta = "Enroll Now",
+  cta = "Register Now",
   onDark = false,
-  headingLevel = "h3",
   className,
 }: {
   href: string;
   cta?: string;
   onDark?: boolean;
-  headingLevel?: "h2" | "h3";
   className?: string;
 }) {
-  const Heading = headingLevel;
+  const courses = getAapcCourses();
+  const cpc = courses.find((c) => c.slug === "cpc");
+  const cpb = courses.find((c) => c.slug === "cpb");
   return (
     <div
       className={cn(
@@ -29,25 +38,34 @@ export function CertificationPriceCard({
       )}
     >
       <BadgeCheck aria-hidden="true" className="size-7 text-sky" />
-      <Heading
-        className={cn(
-          "font-sans text-base leading-snug font-semibold",
-          onDark ? "text-white" : "text-foreground",
-        )}
-      >
-        {certificationPrice.label}
-      </Heading>
-      <p
-        className={cn(
-          "font-serif text-2xl font-semibold tracking-tight whitespace-nowrap",
-          onDark ? "text-white" : "text-primary",
-        )}
-      >
-        {certificationPrice.amount}
-      </p>
-      <p className={cn("text-xs", onDark ? "text-white/75" : "text-muted-foreground")}>
-        {certificationPrice.note}
-      </p>
+      <ul className="flex flex-col gap-3">
+        {courses.map((course) => {
+          const saving =
+            course.bestValue && cpc && cpb ? cpc.priceUsd + cpb.priceUsd - course.priceUsd : 0;
+          return (
+            <li key={course.slug} className="flex flex-col">
+              <span
+                className={cn("text-sm font-semibold", onDark ? "text-white" : "text-foreground")}
+              >
+                {shortNames[course.slug] ?? course.credential}
+              </span>
+              <span
+                className={cn(
+                  "font-serif text-xl font-semibold tracking-tight whitespace-nowrap",
+                  onDark ? "text-white" : "text-primary",
+                )}
+              >
+                {formatUsdPrice(course.priceUsd)}
+              </span>
+              {saving > 0 && (
+                <span className={cn("text-xs", onDark ? "text-sky" : "text-success-ink")}>
+                  Save {formatUsdPrice(saving)}
+                </span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
       <Link
         href={href}
         className={cn(

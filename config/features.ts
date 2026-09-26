@@ -37,6 +37,12 @@ export const features = {
   examPassedCelebration: false,
   /** Hidden at client request — GlobalMed education plans are future scope. EducationalOrganization and Course-provider JSON-LD. */
   educationSchema: false,
+  /**
+   * Hidden at client request — GlobalMed education plans are future scope. Public "Log in" /
+   * "Member Login" links (header, mobile menu, footer). /login itself stays reachable for
+   * Admin and Sales staff.
+   */
+  publicLogin: false,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

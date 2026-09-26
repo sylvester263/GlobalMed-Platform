@@ -3,6 +3,8 @@
 import { Menu } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+
+import { features } from "@/config/features";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -30,15 +32,18 @@ export function SiteHeader() {
         <MegaMenu pathname={pathname} />
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/login"
-            className={cn(
-              buttonVariants({ variant: "ghost", size: "sm" }),
-              "hidden sm:inline-flex",
-            )}
-          >
-            Log in
-          </Link>
+          {/* Hidden at client request — GlobalMed education plans are future scope. Staff still reach /login directly. */}
+          {features.publicLogin && (
+            <Link
+              href="/login"
+              className={cn(
+                buttonVariants({ variant: "ghost", size: "sm" }),
+                "hidden sm:inline-flex",
+              )}
+            >
+              Log in
+            </Link>
+          )}
           <Link
             href="/free-billing-audit"
             className={cn(buttonVariants({ size: "sm" }), "hidden sm:inline-flex")}

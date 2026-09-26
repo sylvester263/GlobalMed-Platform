@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 
+import { features } from "@/config/features";
+
 import { Wordmark } from "@/components/marketing/wordmark";
 import {
   Accordion,
@@ -107,13 +109,16 @@ export function MobileNav({ open, onOpenChange, pathname }: MobileNavProps) {
             >
               Book your free billing audit
             </Link>
-            <Link
-              href="/login"
-              onClick={close}
-              className={buttonVariants({ size: "lg", variant: "secondary" })}
-            >
-              Log in
-            </Link>
+            {/* Hidden at client request — GlobalMed education plans are future scope. Staff still reach /login directly. */}
+            {features.publicLogin && (
+              <Link
+                href="/login"
+                onClick={close}
+                className={buttonVariants({ size: "lg", variant: "secondary" })}
+              >
+                Log in
+              </Link>
+            )}
           </div>
         </nav>
       </SheetContent>

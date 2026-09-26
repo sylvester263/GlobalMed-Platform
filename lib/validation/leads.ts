@@ -116,6 +116,10 @@ export const contactTimes = [
   "Any time",
 ] as const;
 
+/** Consent shown next to the required checkbox (client, 2026-09-26). Stored with the lead. */
+export const registrationConsentText =
+  "I agree that GlobalMed Transcriptions may contact me and share my details with AAPC to complete my course enrollment.";
+
 export const aapcRegistrationSchema = z.object({
   name,
   email,
@@ -129,6 +133,10 @@ export const aapcRegistrationSchema = z.object({
   course: z.enum(registrationCourses, "Choose a course."),
   background: z.enum(registrationBackgrounds, "Choose your current background."),
   contactTime: z.enum(contactTimes, "Choose a good time to contact you."),
+  consent: z.literal(
+    true,
+    "Please tick the box so we can contact you and complete your enrollment.",
+  ),
   message: z
     .string()
     .trim()

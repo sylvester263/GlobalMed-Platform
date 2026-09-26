@@ -1,4 +1,4 @@
-import { aapcCourses, getAapcCourses, priceText } from "@/data/courses";
+import { aapcCourses, formatUsdPrice, priceText } from "@/data/courses";
 import type { Faq } from "@/lib/content/schema";
 
 // "AAPC Certification in Pakistan" page (/education/aapc-certification-pakistan), the
@@ -16,11 +16,14 @@ export const approvedWording = {
   role: "GlobalMed Transcriptions helps students in Pakistan register for AAPC's official online courses and supports them through enrollment.",
 } as const;
 
-/** Shown on the AAPC page and in the footer. */
+/**
+ * The earlier single price line. Superseded on 2026-09-26 by per-course prices in
+ * data/courses.ts (the footer card lists all three); kept so nothing is deleted.
+ */
 export const certificationPrice = {
   label: "CPC® and CPB® Certification",
   amount: "USD 1,050",
-  note: "[CLIENT TO CONFIRM whether per certification or combined]",
+  note: "Confirmed per course on 2026-09-26: see data/courses.ts.",
 };
 
 export const aapcHero = {
@@ -140,26 +143,21 @@ export const aapcSteps = [
 ];
 
 function costAnswer(): string {
-  const lines = getAapcCourses().map((course) => `${course.credential}: ${priceText(course)}`);
-  return `Course fees: ${lines.join("; ")}. Fees are paid for AAPC's official course; our team confirms the current fee when you register.`;
+  const cpc = aapcCourses.find((c) => c.slug === "cpc");
+  const cpb = aapcCourses.find((c) => c.slug === "cpb");
+  const dual = aapcCourses.find((c) => c.slug === "cpc-cpb");
+  const saving = cpc && cpb && dual ? cpc.priceUsd + cpb.priceUsd - dual.priceUsd : 0;
+  return `CPC® and CPB® are ${cpc ? priceText(cpc) : ""} each. The CPC® + CPB® dual certifications course is ${dual ? priceText(dual) : ""}, saving ${formatUsdPrice(saving)}.`;
 }
 
-const dual = aapcCourses.find((c) => c.slug === "cpc-cpb");
-
 /**
- * Training FAQs (client, 2026-09-26): used on the home page and the AAPC Certification page.
- * Costs come from data/courses.ts.
+ * Training FAQs (client, 2026-09-26): home page, the AAPC Certification page and every AAPC
+ * course page. FaqList emits the FAQPage JSON-LD from this same list, so they stay in sync.
  */
 export const aapcFaqs: Faq[] = [
   {
-    question: "What are CPC® and CPB®?",
-    answer:
-      "CPC® (Certified Professional Coder) and CPB® (Certified Professional Biller) are professional credentials awarded by AAPC. CPC® covers physician and outpatient medical coding; CPB® covers medical billing.",
-  },
-  {
     question: "Who teaches the courses?",
-    answer:
-      "AAPC faculty (AAPC-certified instructors) teach every course, live and online. GlobalMed Transcriptions does not run the classes.",
+    answer: "AAPC faculty, through live instructor-led online classes.",
   },
   {
     question: "Is the training online or in person?",
@@ -168,26 +166,42 @@ export const aapcFaqs: Faq[] = [
   },
   {
     question: "Who awards the certification?",
-    answer: `AAPC. ${approvedWording.certification} You earn the CPC® or CPB® credential by passing AAPC's certification exam.`,
+    answer: "AAPC awards the CPC® and CPB® certifications when you pass its certification exam.",
   },
   {
-    question: "What does GlobalMed do?",
-    answer: `${approvedWording.partnership} ${approvedWording.role}`,
+    question: "What does GlobalMed Transcriptions do?",
+    answer:
+      "As AAPC's Strategic Partner in Pakistan, we help students register for AAPC's official online courses and support them through enrollment.",
   },
   {
-    question: "Which course should I choose: CPC®, CPB® or both?",
-    answer: `Choose CPC® if you want to assign diagnosis and procedure codes from medical records. Choose CPB® if you prefer claims, payers, denials and payments. Choose CPC® + CPB®${dual ? ` (${dual.duration})` : ""} for the widest foundation and two certifications.`,
+    question: "Which course should I choose?",
+    answer:
+      "CPC® for medical coding, CPB® for medical billing, or CPC® + CPB® for both at a lower combined price.",
   },
   {
     question: "How much does it cost?",
     answer: costAnswer(),
   },
   {
+    question: "Do I need a medical background?",
+    answer:
+      "Training requires knowledge of medical terminology, anatomy and pathophysiology. If you don't have it, AAPC's prerequisite courses are available at 1/2 off with your course.",
+  },
+  {
+    question: "How do I register for the CPC exam?",
+    answer:
+      "To register for the CPC exam, you need an exam voucher (included in this course). You then log into your AAPC account to schedule your exam when you're ready, at least three weeks before the exam date.",
+  },
+  {
+    question: "How do I maintain my certification?",
+    answer: "Maintain your AAPC annual membership and earn 36 CEUs every two years.",
+  },
+  {
     question: "How do I register?",
     answer:
-      "Send the Register Now form, or message us on WhatsApp at +92 300 419 8760. Our team will contact you to complete your AAPC enrollment.",
+      "Use the Register Now form, or message us on WhatsApp at +92 300 419 8760. Our team will contact you to complete your AAPC enrollment.",
   },
 ];
 
-/** The FAQs shown on each AAPC course page: who teaches, format, who certifies, how to register. */
-export const courseFaqs: Faq[] = [1, 2, 3, 7].flatMap((i) => aapcFaqs[i] ?? []);
+/** The FAQs shown on each AAPC course page (the full list, client 2026-09-26). */
+export const courseFaqs: Faq[] = aapcFaqs;

@@ -10,6 +10,7 @@ import {
   aapcRegistrationSchema,
   auditLeadSchema,
   contactLeadSchema,
+  registrationConsentText,
   type FormResult,
 } from "@/lib/validation/leads";
 
@@ -151,6 +152,9 @@ export async function submitAapcRegistration(input: unknown): Promise<FormResult
         background: data.background,
         contactTime: data.contactTime,
         whatsapp: data.whatsapp,
+        consent: true,
+        consentText: registrationConsentText,
+        consentAt: new Date().toISOString(),
       },
     },
     [
@@ -161,6 +165,7 @@ export async function submitAapcRegistration(input: unknown): Promise<FormResult
       { label: "City", value: data.city },
       { label: "Background", value: data.background },
       { label: "Preferred contact time", value: data.contactTime },
+      { label: "Consent", value: "Agreed to be contacted and to details being shared with AAPC" },
       { label: "Message", value: data.message ?? "" },
     ],
   );

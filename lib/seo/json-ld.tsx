@@ -188,6 +188,39 @@ export function courseJsonLd(input: {
   };
 }
 
+/**
+ * An AAPC course offered through GlobalMed (client, 2026-09-26): AAPC is the provider (it
+ * teaches and certifies); GlobalMed is the seller that registers students in Pakistan.
+ */
+export function aapcCourseJsonLd(input: {
+  name: string;
+  description: string;
+  path: string;
+  priceUsd: number;
+}): JsonLdObject {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: input.name,
+    description: input.description,
+    url: absoluteUrl(input.path),
+    provider: { "@type": "Organization", name: "AAPC", sameAs: "https://www.aapc.com" },
+    offers: {
+      "@type": "Offer",
+      category: "Paid",
+      price: input.priceUsd,
+      priceCurrency: "USD",
+      url: absoluteUrl(input.path),
+      seller: { "@id": orgId },
+    },
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: "online",
+      instructor: { "@type": "Organization", name: "AAPC" },
+    },
+  };
+}
+
 export function articleJsonLd(input: {
   title: string;
   description: string;

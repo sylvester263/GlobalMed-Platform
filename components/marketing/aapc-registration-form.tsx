@@ -17,6 +17,8 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   aapcCourseFacts,
   aapcCourses,
+  courseForRegistration,
+  formatUsdPrice,
   registrationCourses,
   type AapcCourseSlug,
   type RegistrationCourse,
@@ -29,6 +31,7 @@ import {
   aapcRegistrationSchema,
   contactTimes,
   registrationBackgrounds,
+  registrationConsentText,
   type AapcRegistrationInput,
 } from "@/lib/validation/leads";
 
@@ -42,7 +45,14 @@ function courseForSlug(slug: string | null): RegistrationCourse | undefined {
  * lead (source "aapc_registration"); the team contacts the student to complete their AAPC
  * enrollment. The course is preselected from the page, or from ?course=cpc|cpb|cpc-cpb.
  */
-export function AapcRegistrationForm({ defaultCourse }: { defaultCourse?: AapcCourseSlug }) {
+export function AapcRegistrationForm({
+  defaultCourse,
+  title = "Register for AAPC Training",
+}: {
+  defaultCourse?: AapcCourseSlug;
+  /** Form heading; the course pages' band already says "Register for AAPC Training". */
+  title?: string;
+}) {
   const utm = useUtm();
   const [sent, setSent] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -57,12 +67,15 @@ export function AapcRegistrationForm({ defaultCourse }: { defaultCourse?: AapcCo
     setError,
     setFocus,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<AapcRegistrationInput>({
     resolver: zodResolver(aapcRegistrationSchema),
     mode: "onTouched",
     defaultValues: { message: "", course: courseForSlug(defaultCourse ?? null) },
   });
+
+  const selected = courseForRegistration(watch("course") ?? "");
 
   // "Register Now" on the course cards links to ?course=<slug>#register.
   useEffect(() => {
@@ -128,7 +141,7 @@ export function AapcRegistrationForm({ defaultCourse }: { defaultCourse?: AapcCo
     >
       <div className="flex flex-col gap-1">
         <h3 id="register-form-title" className="text-2xl">
-          Register for AAPC Training
+          {title}
         </h3>
         <p className="text-sm text-muted-foreground">
           Our team will contact you to complete your AAPC enrollment.
@@ -160,13 +173,27 @@ export function AapcRegistrationForm({ defaultCourse }: { defaultCourse?: AapcCo
         <FormField label="City" required error={errors.city?.message}>
           {(c) => <Input {...c} autoComplete="address-level2" {...register("city")} />}
         </FormField>
-        <FormField label="Course" required error={errors.course?.message}>
+        <FormField
+          label="Course"
+          required
+          description={
+            selected
+              ? `Price: ${formatUsdPrice(selected.priceUsd)}${selected.priceSaving ? ` (${selected.priceSaving})` : ""}`
+              : undefined
+          }
+          error={errors.course?.message}
+        >
           {(c) => (
             <NativeSelect {...c} {...register("course")}>
               <option value="">Choose a course</option>
-              {registrationCourses.map((course) => (
-                <option key={course}>{course}</option>
-              ))}
+              {registrationCourses.map((course) => {
+                const info = courseForRegistration(course);
+                return (
+                  <option key={course} value={course}>
+                    {info ? `${course} — ${formatUsdPrice(info.priceUsd)}` : course}
+                  </option>
+                );
+              })}
             </NativeSelect>
           )}
         </FormField>
@@ -207,6 +234,25 @@ export function AapcRegistrationForm({ defaultCourse }: { defaultCourse?: AapcCo
         >
           {(c) => <Textarea {...c} rows={4} {...register("message")} />}
         </FormField>
+      </div>
+      <div className="flex flex-col gap-1">
+        <label className="flex items-start gap-3 text-sm">
+          <input
+            type="checkbox"
+            className="mt-0.5 size-5 shrink-0 accent-primary"
+            aria-invalid={errors.consent ? true : undefined}
+            aria-describedby={errors.consent ? "consent-error" : undefined}
+            {...register("consent")}
+          />
+          <span>
+            {registrationConsentText} <span className="text-destructive">*</span>
+          </span>
+        </label>
+        {errors.consent && (
+          <p id="consent-error" className="text-sm text-destructive">
+            {errors.consent.message}
+          </p>
+        )}
       </div>
       <Turnstile onToken={onToken} />
       <PhiNotice />

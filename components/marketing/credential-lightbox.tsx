@@ -1,6 +1,6 @@
 "use client";
 
-import { Expand } from "lucide-react";
+import { Expand, FileDown } from "lucide-react";
 import Image from "next/image";
 
 import {
@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 type CredentialLightboxProps = {
   name: string;
@@ -17,6 +18,9 @@ type CredentialLightboxProps = {
   certificate: string;
   certificateAlt: string;
   placeholder: string;
+  orientation?: "portrait" | "landscape";
+  /** Optional PDF of the certificate, offered below the image. */
+  pdf?: string;
   /** False until the certificate file is in public/images/credentials/. */
   hasCertificate: boolean;
 };
@@ -32,6 +36,8 @@ export function CredentialLightbox({
   certificateAlt,
   placeholder,
   hasCertificate,
+  pdf,
+  orientation = "portrait",
 }: CredentialLightboxProps) {
   return (
     <Dialog>
@@ -42,7 +48,14 @@ export function CredentialLightbox({
       <DialogContent className="max-h-[92dvh] gap-3 overflow-y-auto p-4 sm:max-w-3xl md:p-6">
         <DialogTitle className="pr-10 font-serif text-xl font-semibold">{name}</DialogTitle>
         <DialogDescription>{meaning}</DialogDescription>
-        <div className="relative mx-auto aspect-[1/1.414] max-h-[75dvh] w-full max-w-[53dvh] overflow-hidden rounded-md border bg-ledger">
+        <div
+          className={cn(
+            "relative mx-auto w-full overflow-hidden rounded-md border bg-ledger",
+            orientation === "landscape"
+              ? "aspect-[1.414/1] max-h-[75dvh] max-w-[106dvh]"
+              : "aspect-[1/1.414] max-h-[75dvh] max-w-[53dvh]",
+          )}
+        >
           {hasCertificate ? (
             <Image
               src={certificate}
@@ -57,6 +70,17 @@ export function CredentialLightbox({
             </span>
           )}
         </div>
+        {pdf && (
+          <a
+            href={pdf}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center gap-2 self-start text-sm font-semibold text-primary underline underline-offset-4 hover:text-primary-hover"
+          >
+            <FileDown aria-hidden="true" className="size-4" />
+            Open the PDF certificate<span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        )}
       </DialogContent>
     </Dialog>
   );

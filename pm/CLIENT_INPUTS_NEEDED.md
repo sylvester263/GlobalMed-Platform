@@ -55,11 +55,13 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Post-launch support/maintenance terms
 
 ## Client review 2026-09-25 (placeholders on the site until supplied)
-- ⬜ Hero slider photos: public/images/slider/slide-1.jpg, slide-2.jpg, slide-3.jpg (1920 × 640, no text baked in)
 - ⬜ AAPC partner logo as PNG (public/aapc-logo.png); the existing SVG is used until then. Written AAPC permission is still required (see Legal)
-- ⬜ Credential images in public/images/credentials/ (logo + full certificate each) and registration/certificate numbers for PSEB, SECP and HIPAA
+- ✅ Slider photos received 2026-09-26
+- ✅ PSEB certificate (Z-25-8395/23) and HIPAA training certificate (HIPAATraining.us, HIPAA-0126590) received 2026-09-26
+- ✅ Official favicon set and stacked logos received 2026-09-26 (public/images/brand/)
+- ⬜ SECP certificate image and registration number
 - ⬜ Name and details of the third credential
-- ⬜ HIPAA assessing/issuing body, as printed on the certificate
+- ⬜ HIPAA: the certificate supplied is a staff training-completion certificate, not a company compliance assessment. The tile says "HIPAA Compliance Training Program completed". Confirm this wording, or supply a third-party HIPAA assessment if one exists
 - ⬜ CPC®/CPB® exam details from AAPC: number of questions, duration, format, passing score
 - ⬜ Is USD 1,050 per certification or for CPC® and CPB® combined? Is exam registration included?
 - ⬜ Social profile links (Facebook, Instagram, LinkedIn, YouTube, X); icons stay hidden until provided

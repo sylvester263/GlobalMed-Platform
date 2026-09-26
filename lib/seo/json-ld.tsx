@@ -39,7 +39,7 @@ export function organizationJsonLd(): JsonLdObject {
     legalName: "GlobalMed Transcriptions Pvt. Ltd.",
     alternateName: site.shortName,
     url: site.url,
-    logo: absoluteUrl("/logo.png"),
+    logo: absoluteUrl("/images/brand/globalmed-logo-stacked-on-white.png"),
     image: absoluteUrl("/logo.png"),
     email: contact.email,
     telephone: contact.phone,

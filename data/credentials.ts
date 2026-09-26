@@ -3,8 +3,8 @@
  * entry here and dropping its image into public/images/credentials/. Until an image exists,
  * the tile shows a labelled placeholder slot of the same size, so nothing shifts when it lands.
  *
- * [CLIENT TO CONFIRM] Certificate images, registration numbers, the third credential and the
- * HIPAA assessing body (pm/CLIENT_INPUTS_NEEDED.md).
+ * PSEB and HIPAA training certificates supplied 2026-09-26. [CLIENT TO CONFIRM] SECP certificate
+ * and number, and the third credential (pm/CLIENT_INPUTS_NEEDED.md).
  */
 export type Credential = {
   id: string;
@@ -22,6 +22,12 @@ export type Credential = {
   certificate: string;
   /** Alt text for the full certificate image. */
   certificateAlt: string;
+  /** Page orientation of the full certificate (lightbox frame). Defaults to portrait. */
+  orientation?: "portrait" | "landscape";
+  /** Optional PDF of the certificate, under public/. */
+  pdf?: string;
+  /** Validity period, when the certificate states one. */
+  validity?: string;
   /** Label for the placeholder slot while the image is missing. */
   placeholder: string;
 };
@@ -33,11 +39,14 @@ export const credentials: Credential[] = [
     id: "pseb",
     name: "PSEB",
     meaning: "Registered with Pakistan Software Export Board",
-    number: pending,
-    image: "/images/credentials/pseb-logo.png",
+    number: "Z-25-8395/23",
+    validity: "Valid Feb 2026 – Jan 2027",
+    image: "/images/credentials/pseb-certificate-thumb.jpg",
     certificate: "/images/credentials/pseb-certificate.jpg",
+    orientation: "landscape",
+    pdf: "/images/credentials/pseb-certificate.pdf",
     certificateAlt:
-      "GlobalMed Transcriptions Pvt. Ltd. registration certificate from the Pakistan Software Export Board",
+      "Pakistan Software Export Board certificate of registration for GlobalMed Transcriptions (SMC-Pvt.) Limited, registration number Z-25-8395/23, valid February 2026 to January 2027",
     placeholder: "PSEB certificate",
   },
   {
@@ -64,12 +73,18 @@ export const credentials: Credential[] = [
   {
     id: "hipaa",
     name: "HIPAA",
-    meaning: "HIPAA Compliant",
-    number: pending,
-    issuer: `Assessed by ${pending}`,
-    image: "/images/credentials/hipaa-logo.png",
-    certificate: "/images/credentials/hipaa-certificate.jpg",
-    certificateAlt: "GlobalMed Transcriptions HIPAA compliance certificate",
+    // The certificate supplied is a training-completion certificate (HIPAATraining.us), not a
+    // third-party compliance assessment, so the tile says exactly that.
+    meaning: "HIPAA Compliance Training Program completed",
+    number: "HIPAA-0126590",
+    issuer: "Issued by HIPAATraining.us",
+    validity: "Valid Sep 2026 – Sep 2027",
+    image: "/images/credentials/hipaa-training-certificate-thumb.jpg",
+    certificate: "/images/credentials/hipaa-training-certificate.jpg",
+    orientation: "landscape",
+    pdf: "/images/credentials/hipaa-training-certificate.pdf",
+    certificateAlt:
+      "HIPAATraining.us certificate of completion of the HIPAA Compliance Training Program for Riaz Naveed, GlobalMed Transcriptions, certificate ID HIPAA-0126590, issued September 11, 2026, expiring September 11, 2027",
     placeholder: "HIPAA certificate",
   },
 ];

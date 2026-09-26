@@ -64,6 +64,12 @@ export function CredentialsSection({ id = "credentials" }: { id?: string }) {
                     <dl className="mt-auto grid gap-1 border-t pt-4 text-sm">
                       <dt className="font-semibold">Registration / certificate no.</dt>
                       <dd className="text-muted-foreground">{credential.number}</dd>
+                      {credential.validity && (
+                        <>
+                          <dt className="sr-only">Validity</dt>
+                          <dd className="text-muted-foreground">{credential.validity}</dd>
+                        </>
+                      )}
                       {credential.issuer && (
                         <>
                           <dt className="sr-only">Issued by</dt>
@@ -76,6 +82,12 @@ export function CredentialsSection({ id = "credentials" }: { id?: string }) {
                       meaning={credential.meaning}
                       certificate={credential.certificate}
                       certificateAlt={credential.certificateAlt}
+                      orientation={credential.orientation}
+                      pdf={
+                        credential.pdf && publicAssetExists(credential.pdf)
+                          ? credential.pdf
+                          : undefined
+                      }
                       placeholder={credential.placeholder}
                       hasCertificate={publicAssetExists(credential.certificate)}
                     />

@@ -40,7 +40,7 @@ import { aapcCertificationPath, whatsappHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const description =
-  "GlobalMed Transcriptions: medical transcription, billing and coding services since 2007, and AAPC's Strategic Partner in Pakistan for CPC® and CPB® online courses.";
+  "Medical transcription, billing and coding services since 2007, and AAPC's Strategic Partner in Pakistan for CPC® and CPB® online courses.";
 
 export const metadata: Metadata = {
   ...pageMetadata({

@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { features } from "@/config/features";
+
 test.describe("free billing audit form", () => {
   test("validates step 1 before continuing and moves focus to the first error", async ({
     page,
@@ -39,6 +41,7 @@ test.describe("free billing audit form", () => {
 });
 
 test.describe("course catalog", () => {
+  test.skip(!features.globalmedCourses, "GlobalMed course catalog is hidden (ADR-026)");
   test("filters with URL params and reports the count", async ({ page }) => {
     await page.goto("/school/courses");
     await page.getByLabel("Level").selectOption("advanced");
@@ -59,6 +62,7 @@ test.describe("course catalog", () => {
 });
 
 test.describe("certificate verification", () => {
+  test.skip(!features.certificates, "Certificate verification is hidden (ADR-026)");
   test("rejects a malformed ID with a helpful message", async ({ page }) => {
     await page.goto("/verify");
     await page.getByLabel("Certificate ID").fill("abc");
@@ -103,7 +107,7 @@ test.describe("navigation and SEO", () => {
     for (const path of [
       "/",
       "/services/medical-billing",
-      "/school/courses/cpc-exam-preparation",
+      "/education/cpc",
       "/blog/modifier-25-explained",
     ]) {
       await page.goto(path);

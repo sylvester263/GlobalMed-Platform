@@ -118,7 +118,8 @@ export default function AapcCertificationPage() {
       </Section>
 
       <Section tone="white" id="compare" title="Compare the courses">
-        <div className="overflow-x-auto rounded-lg border bg-card">
+        {/* relative: the sr-only cell labels are absolutely positioned and must stay clipped. */}
+        <div className="relative overflow-x-auto rounded-lg border bg-card">
           <table className="w-full min-w-[640px] text-left text-sm">
             <caption className="sr-only">
               Comparison of the CPC®, CPB® and CPC® + CPB® AAPC courses

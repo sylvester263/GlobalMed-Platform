@@ -1,0 +1,138 @@
+PASS 360px home: status 200, overflow 0px, h1 1
+PASS 360px about: status 200, overflow 0px, h1 1
+PASS 360px education: status 200, overflow 0px, h1 1
+PASS 360px /education redirects to the AAPC page
+PASS 360px aapc-certification: status 200, overflow 0px, h1 1
+PASS 360px course-cpc: status 200, overflow 0px, h1 1
+PASS 360px course-cpb: status 200, overflow 0px, h1 1
+PASS 360px course-dual: status 200, overflow 0px, h1 1
+PASS 360px contact: status 200, overflow 0px, h1 1
+PASS 360px staff-login: status 200, overflow 0px, h1 1
+PASS 360px no public login links (found 0)
+PASS 360px footer pricing card shows CPC/CPB USD 1,050, dual USD 1,600 (save USD 500) and Register Now
+PASS 360px / How it works visible while scrolling down/up 
+PASS 360px / How it works visible after reload below it 
+PASS 360px /education/aapc-certification-pakistan How it works visible while scrolling down/up 
+PASS 360px /education/aapc-certification-pakistan How it works visible after reload below it 
+PASS 360px / How it works visible after navigating away and back 
+PASS 360px Register Now preselects the course from the card link
+PASS 360px form shows the selected course price (USD 1,600)
+PASS 360px price updates when the course changes (USD 1,050)
+PASS 360px form validates required fields and the unchecked consent box
+PASS 360px consent checkbox starts unchecked
+PASS 360px no page errors 
+PASS 768px home: status 200, overflow 0px, h1 1
+PASS 768px about: status 200, overflow 0px, h1 1
+PASS 768px education: status 200, overflow 0px, h1 1
+PASS 768px /education redirects to the AAPC page
+PASS 768px aapc-certification: status 200, overflow 0px, h1 1
+PASS 768px course-cpc: status 200, overflow 0px, h1 1
+PASS 768px course-cpb: status 200, overflow 0px, h1 1
+PASS 768px course-dual: status 200, overflow 0px, h1 1
+PASS 768px contact: status 200, overflow 0px, h1 1
+PASS 768px staff-login: status 200, overflow 0px, h1 1
+PASS 768px no public login links (found 0)
+PASS 768px footer pricing card shows CPC/CPB USD 1,050, dual USD 1,600 (save USD 500) and Register Now
+PASS 768px / How it works visible while scrolling down/up 
+PASS 768px / How it works visible after reload below it 
+PASS 768px /education/aapc-certification-pakistan How it works visible while scrolling down/up 
+PASS 768px /education/aapc-certification-pakistan How it works visible after reload below it 
+PASS 768px / How it works visible after navigating away and back 
+PASS 768px Register Now preselects the course from the card link
+PASS 768px form shows the selected course price (USD 1,600)
+PASS 768px price updates when the course changes (USD 1,050)
+PASS 768px form validates required fields and the unchecked consent box
+PASS 768px consent checkbox starts unchecked
+PASS 768px no page errors 
+PASS 1280px home: status 200, overflow 0px, h1 1
+PASS 1280px about: status 200, overflow 0px, h1 1
+PASS 1280px education: status 200, overflow 0px, h1 1
+PASS 1280px /education redirects to the AAPC page
+PASS 1280px aapc-certification: status 200, overflow 0px, h1 1
+PASS 1280px course-cpc: status 200, overflow 0px, h1 1
+PASS 1280px course-cpb: status 200, overflow 0px, h1 1
+PASS 1280px course-dual: status 200, overflow 0px, h1 1
+PASS 1280px contact: status 200, overflow 0px, h1 1
+PASS 1280px staff-login: status 200, overflow 0px, h1 1
+PASS 1280px no public login links (found 0)
+PASS 1280px footer pricing card shows CPC/CPB USD 1,050, dual USD 1,600 (save USD 500) and Register Now
+PASS 1280px / How it works visible while scrolling down/up 
+PASS 1280px / How it works visible after reload below it 
+PASS 1280px /education/aapc-certification-pakistan How it works visible while scrolling down/up 
+PASS 1280px /education/aapc-certification-pakistan How it works visible after reload below it 
+PASS 1280px / How it works visible after navigating away and back 
+PASS 1280px Register Now preselects the course from the card link
+PASS 1280px form shows the selected course price (USD 1,600)
+PASS 1280px price updates when the course changes (USD 1,050)
+PASS 1280px form validates required fields and the unchecked consent box
+PASS 1280px consent checkbox starts unchecked
+PASS 1280px no page errors 
+PASS 360px reduced-motion home: status 200, overflow 0px, h1 1
+PASS 360px reduced-motion about: status 200, overflow 0px, h1 1
+PASS 360px reduced-motion education: status 200, overflow 0px, h1 1
+PASS 360px reduced-motion /education redirects to the AAPC page
+PASS 360px reduced-motion aapc-certification: status 200, overflow 0px, h1 1
+PASS 360px reduced-motion course-cpc: status 200, overflow 0px, h1 1
+PASS 360px reduced-motion course-cpb: status 200, overflow 0px, h1 1
+PASS 360px reduced-motion course-dual: status 200, overflow 0px, h1 1
+PASS 360px reduced-motion contact: status 200, overflow 0px, h1 1
+PASS 360px reduced-motion staff-login: status 200, overflow 0px, h1 1
+PASS 360px reduced-motion no public login links (found 0)
+PASS 360px reduced-motion footer pricing card shows CPC/CPB USD 1,050, dual USD 1,600 (save USD 500) and Register Now
+PASS 360px reduced-motion / How it works visible while scrolling down/up 
+PASS 360px reduced-motion / How it works visible after reload below it 
+PASS 360px reduced-motion /education/aapc-certification-pakistan How it works visible while scrolling down/up 
+PASS 360px reduced-motion /education/aapc-certification-pakistan How it works visible after reload below it 
+PASS 360px reduced-motion / How it works visible after navigating away and back 
+PASS 360px reduced-motion Register Now preselects the course from the card link
+PASS 360px reduced-motion form shows the selected course price (USD 1,600)
+PASS 360px reduced-motion price updates when the course changes (USD 1,050)
+PASS 360px reduced-motion form validates required fields and the unchecked consent box
+PASS 360px reduced-motion consent checkbox starts unchecked
+PASS 360px reduced-motion no page errors 
+PASS 768px reduced-motion home: status 200, overflow 0px, h1 1
+PASS 768px reduced-motion about: status 200, overflow 0px, h1 1
+PASS 768px reduced-motion education: status 200, overflow 0px, h1 1
+PASS 768px reduced-motion /education redirects to the AAPC page
+PASS 768px reduced-motion aapc-certification: status 200, overflow 0px, h1 1
+PASS 768px reduced-motion course-cpc: status 200, overflow 0px, h1 1
+PASS 768px reduced-motion course-cpb: status 200, overflow 0px, h1 1
+PASS 768px reduced-motion course-dual: status 200, overflow 0px, h1 1
+PASS 768px reduced-motion contact: status 200, overflow 0px, h1 1
+PASS 768px reduced-motion staff-login: status 200, overflow 0px, h1 1
+PASS 768px reduced-motion no public login links (found 0)
+PASS 768px reduced-motion footer pricing card shows CPC/CPB USD 1,050, dual USD 1,600 (save USD 500) and Register Now
+PASS 768px reduced-motion / How it works visible while scrolling down/up 
+PASS 768px reduced-motion / How it works visible after reload below it 
+PASS 768px reduced-motion /education/aapc-certification-pakistan How it works visible while scrolling down/up 
+PASS 768px reduced-motion /education/aapc-certification-pakistan How it works visible after reload below it 
+PASS 768px reduced-motion / How it works visible after navigating away and back 
+PASS 768px reduced-motion Register Now preselects the course from the card link
+PASS 768px reduced-motion form shows the selected course price (USD 1,600)
+PASS 768px reduced-motion price updates when the course changes (USD 1,050)
+PASS 768px reduced-motion form validates required fields and the unchecked consent box
+PASS 768px reduced-motion consent checkbox starts unchecked
+PASS 768px reduced-motion no page errors 
+PASS 1280px reduced-motion home: status 200, overflow 0px, h1 1
+PASS 1280px reduced-motion about: status 200, overflow 0px, h1 1
+PASS 1280px reduced-motion education: status 200, overflow 0px, h1 1
+PASS 1280px reduced-motion /education redirects to the AAPC page
+PASS 1280px reduced-motion aapc-certification: status 200, overflow 0px, h1 1
+PASS 1280px reduced-motion course-cpc: status 200, overflow 0px, h1 1
+PASS 1280px reduced-motion course-cpb: status 200, overflow 0px, h1 1
+PASS 1280px reduced-motion course-dual: status 200, overflow 0px, h1 1
+PASS 1280px reduced-motion contact: status 200, overflow 0px, h1 1
+PASS 1280px reduced-motion staff-login: status 200, overflow 0px, h1 1
+PASS 1280px reduced-motion no public login links (found 0)
+PASS 1280px reduced-motion footer pricing card shows CPC/CPB USD 1,050, dual USD 1,600 (save USD 500) and Register Now
+PASS 1280px reduced-motion / How it works visible while scrolling down/up 
+PASS 1280px reduced-motion / How it works visible after reload below it 
+PASS 1280px reduced-motion /education/aapc-certification-pakistan How it works visible while scrolling down/up 
+PASS 1280px reduced-motion /education/aapc-certification-pakistan How it works visible after reload below it 
+PASS 1280px reduced-motion / How it works visible after navigating away and back 
+PASS 1280px reduced-motion Register Now preselects the course from the card link
+PASS 1280px reduced-motion form shows the selected course price (USD 1,600)
+PASS 1280px reduced-motion price updates when the course changes (USD 1,050)
+PASS 1280px reduced-motion form validates required fields and the unchecked consent box
+PASS 1280px reduced-motion consent checkbox starts unchecked
+PASS 1280px reduced-motion no page errors 

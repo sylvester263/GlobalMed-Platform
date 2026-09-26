@@ -1,13 +1,16 @@
 import { expect, test } from "@playwright/test";
 
+import { features } from "@/config/features";
+
 /**
  * Phase 3 auth checks that don't need a live Supabase project. Full sign-up → verify →
  * login → role-routing flows run once staging Supabase exists (docs/13 §1 E2E).
  */
 test.describe("protected routes fail closed", () => {
+  // The student area redirects to the AAPC page while the learning platform is hidden.
   for (const path of [
     "/dashboard",
-    "/dashboard/student",
+    ...(features.learningPlatform ? ["/dashboard/student"] : []),
     "/dashboard/admin/users",
     "/dashboard/account",
   ]) {
@@ -24,7 +27,11 @@ test.describe("auth pages", () => {
     page,
   }) => {
     await page.goto("/login");
-    await expect(page.getByText("Student accounts open soon")).toBeVisible();
+    await expect(
+      page.getByText(
+        features.learningPlatform ? "Student accounts open soon" : "Sign-in is for GlobalMed staff",
+      ),
+    ).toBeVisible();
     await page.getByLabel(/^Email/).fill("person@example.com");
     await page.getByLabel(/^Password/).fill("not-a-real-password");
     await page.getByRole("button", { name: "Log in" }).click();
@@ -42,6 +49,7 @@ test.describe("auth pages", () => {
   });
 
   test("sign-up from a course returns to that course's checkout", async ({ page }) => {
+    test.skip(!features.learningPlatform, "Student sign-up is hidden (ADR-026)");
     await page.goto("/signup?course=cpc-exam-preparation");
     await expect(page.getByText(/come back to CPC Exam Preparation/)).toBeVisible();
     await expect(page.locator('input[name="next"]').first()).toHaveValue(

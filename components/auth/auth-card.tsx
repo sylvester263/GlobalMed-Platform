@@ -2,6 +2,7 @@ import { Info } from "lucide-react";
 import Link from "next/link";
 
 import { Wordmark } from "@/components/marketing/wordmark";
+import { features } from "@/config/features";
 import { ClaimLine } from "@/components/motion/claim-line";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { isSupabaseConfigured } from "@/lib/env";
@@ -36,8 +37,9 @@ export function AuthCard({
           <Alert variant="info">
             <Info aria-hidden="true" />
             <AlertDescription>
-              Student accounts open soon. Until then you can browse the courses or contact us to
-              reserve a place.
+              {features.learningPlatform
+                ? "Student accounts open soon. Until then you can browse the courses or contact us to reserve a place."
+                : "Sign-in is for GlobalMed staff and isn't switched on yet. To register for an AAPC course, use the Register Now form or WhatsApp."}
             </AlertDescription>
           </Alert>
         )}

@@ -1,12 +1,15 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+import { features, type FeatureFlag } from "@/config/features";
+
 /**
  * Every public page type at the CLAUDE.md breakpoints (no horizontal scroll) plus an axe
  * scan (docs/13 §1). Key templates are also screenshotted into design-system/screens/.
  * Run: `npm run test:e2e -- visual-audit`.
  */
-const pages = [
+/** Pages behind a feature flag are skipped (not deleted) while the flag is off (ADR-026). */
+const pages: { path: string; name: string; flag?: FeatureFlag }[] = [
   { path: "/", name: "home" },
   { path: "/services", name: "services" },
   { path: "/services/medical-coding", name: "service-coding" },
@@ -15,15 +18,23 @@ const pages = [
   { path: "/specialties/cardiology", name: "specialty-cardiology" },
   { path: "/free-billing-audit", name: "audit" },
   { path: "/free-billing-audit/thank-you", name: "audit-thanks" },
-  { path: "/school", name: "school" },
-  { path: "/school/courses", name: "catalog" },
-  { path: "/school/courses?level=intermediate&category=coding", name: "catalog-filtered" },
-  { path: "/school/courses/medical-coding-foundations", name: "course" },
-  { path: "/school/pathways", name: "pathways" },
-  { path: "/school/pathways/billing-and-coding-career", name: "pathway" },
-  { path: "/school/exam-prep", name: "exam-prep" },
-  { path: "/school/batches", name: "batches" },
-  { path: "/school/corporate-training", name: "corporate" },
+  { path: "/education/aapc-certification-pakistan", name: "aapc" },
+  { path: "/education/cpc", name: "course-cpc" },
+  { path: "/education/cpb", name: "course-cpb" },
+  { path: "/education/cpc-cpb", name: "course-dual" },
+  { path: "/school", name: "school", flag: "educationLanding" },
+  { path: "/school/courses", name: "catalog", flag: "globalmedCourses" },
+  {
+    path: "/school/courses?level=intermediate&category=coding",
+    name: "catalog-filtered",
+    flag: "globalmedCourses",
+  },
+  { path: "/school/courses/medical-coding-foundations", name: "course", flag: "globalmedCourses" },
+  { path: "/school/pathways", name: "pathways", flag: "pathways" },
+  { path: "/school/pathways/billing-and-coding-career", name: "pathway", flag: "pathways" },
+  { path: "/school/exam-prep", name: "exam-prep", flag: "examPrep" },
+  { path: "/school/batches", name: "batches", flag: "batches" },
+  { path: "/school/corporate-training", name: "corporate", flag: "corporateTraining" },
   { path: "/blog", name: "blog" },
   { path: "/blog/category/coding", name: "blog-category" },
   { path: "/blog/why-claims-get-denied", name: "post" },
@@ -34,11 +45,11 @@ const pages = [
   { path: "/faq", name: "faq" },
   { path: "/resources/guides", name: "guides" },
   { path: "/legal/privacy", name: "legal" },
-  { path: "/verify", name: "verify" },
-  { path: "/verify/7F3A9C21B04D", name: "verify-result" },
+  { path: "/verify", name: "verify", flag: "certificates" },
+  { path: "/verify/7F3A9C21B04D", name: "verify-result", flag: "certificates" },
   { path: "/newsletter/confirm", name: "newsletter-confirm" },
   { path: "/login", name: "login" },
-  { path: "/signup?course=cpc-exam-preparation", name: "signup" },
+  { path: "/signup?course=cpc-exam-preparation", name: "signup", flag: "learningPlatform" },
   { path: "/reset-password", name: "reset-password" },
   { path: "/verify-email?email=person%40example.com", name: "verify-email" },
   { path: "/styleguide/screens/dashboard-shell", name: "dashboard-shell" },
@@ -53,9 +64,8 @@ const screenshotted = new Set([
   "home",
   "service-coding",
   "audit",
-  "school",
-  "catalog",
-  "course",
+  "aapc",
+  "course-dual",
   "post",
   "contact",
   "verify-result",
@@ -64,8 +74,9 @@ const screenshotted = new Set([
 ]);
 const widths = [360, 768, 1280];
 
-for (const { path, name } of pages) {
+for (const { path, name, flag } of pages) {
   test.describe(name, () => {
+    test.skip(Boolean(flag) && !features[flag as FeatureFlag], `${name} is hidden (${flag} off)`);
     for (const width of widths) {
       test(`renders at ${width}px without horizontal scroll`, async ({ page }) => {
         // Reduced motion renders every animation in its final state, so screens are deterministic.

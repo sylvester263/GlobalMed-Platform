@@ -58,7 +58,12 @@ export function CertificationPriceCard({
                 {formatUsdPrice(course.priceUsd)}
               </span>
               {saving > 0 && (
-                <span className={cn("text-xs", onDark ? "text-sky" : "text-success-ink")}>
+                <span
+                  className={cn(
+                    "text-xs font-semibold",
+                    onDark ? "text-white" : "text-success-ink",
+                  )}
+                >
                   Save {formatUsdPrice(saving)}
                 </span>
               )}

@@ -38,14 +38,6 @@ const instagramFilled = (
   />
 );
 
-const googlePlayIcon = (
-  <path d="M22 13.3 18.1 15.5l-3.5-3.5 3.5-3.5L22 10.7a1.5 1.5 0 0 1 0 2.6ZM1.3.9a1.5 1.5 0 0 0-.1.6v21a1.5 1.5 0 0 0 .1.6L12.5 12 1.3.9Zm12.2 10.1 3.3-3.2L3.5.2A1.5 1.5 0 0 0 2.5 0l11 11Zm0 2L2.5 24a1.5 1.5 0 0 0 1-.2l13.3-7.5-3.3-3.3Z" />
-);
-
-const appleIcon = (
-  <path d="M12.15 6.9c-.95 0-2.42-1.08-3.96-1.04-2.04.03-3.91 1.18-4.96 3.01-2.12 3.68-.55 9.1 1.52 12.09 1.01 1.45 2.21 3.09 3.79 3.04 1.52-.07 2.09-.99 3.94-.99 1.83 0 2.35.99 3.96.95 1.64-.03 2.68-1.48 3.68-2.95 1.16-1.69 1.64-3.33 1.66-3.42-.04-.01-3.18-1.22-3.22-4.86-.03-3.04 2.48-4.49 2.6-4.56-1.43-2.09-3.62-2.32-4.39-2.38-2-.16-3.68 1.09-4.61 1.09Zm3.38-3.07c.84-1.01 1.4-2.43 1.25-3.83-1.21.05-2.66.8-3.53 1.82-.78.9-1.46 2.34-1.27 3.71 1.34.1 2.71-.69 3.55-1.7Z" />
-);
-
 /**
  * Inline list with thin vertical separators. From 768px up the separators are the items'
  * left borders; the list is shifted left by one separator inside a clipping box, so the
@@ -79,36 +71,82 @@ function SeparatedList({
   );
 }
 
-function AppBadge({
-  href,
-  icon,
-  small,
-  big,
-}: {
-  href: string;
-  icon: React.ReactNode;
-  small: string;
-  big: string;
-}) {
+/** Official badge artwork (Apple, Google): black, unaltered, 50px tall and at most 160px wide. */
+export const appBadges = [
+  {
+    key: "appStore",
+    src: "/images/badges/app-store-badge.svg",
+    width: 120,
+    height: 40,
+    alt: "Download on the App Store",
+    label: "Download the GlobalMed app on the App Store",
+  },
+  {
+    key: "googlePlay",
+    src: "/images/badges/google-play-badge.png",
+    width: 564,
+    height: 168,
+    alt: "Get it on Google Play",
+    label: "Download the GlobalMed app on Google Play",
+  },
+] as const;
+
+/**
+ * An app store badge (client, 2026-09-28). With a link it opens the store in a new tab.
+ * Without one it still shows, but as a non-link with aria-disabled and a "Coming soon"
+ * tooltip (on hover and keyboard focus) — never an empty or "#" link.
+ */
+export function AppBadge({ badge, href }: { badge: (typeof appBadges)[number]; href: string }) {
+  const art = (
+    // Unoptimised: the artwork is tiny, and Apple's vector badge must stay exact.
+    <Image
+      src={badge.src}
+      alt=""
+      width={badge.width}
+      height={badge.height}
+      unoptimized
+      className="h-full w-auto max-w-full object-contain"
+    />
+  );
+  const box = cn(
+    // 50px tall and at most 160px wide; on very narrow phones both shrink to stay side by side.
+    "relative flex h-[50px] max-w-[160px] shrink-0 items-center max-md:min-w-0 max-md:shrink",
+    focusRing,
+  );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={badge.label}
+        className={cn(box, "transition-opacity hover:opacity-85")}
+      >
+        {art}
+      </a>
+    );
+  }
+
+  const tipId = `app-badge-${badge.key}-soon`;
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn(
-        "flex h-[50px] w-[160px] items-center gap-2.5 rounded-lg bg-black px-3 text-white ring-1 ring-white/30 hover:ring-white",
-        focusRing,
-      )}
+    <span
+      role="link"
+      aria-disabled="true"
+      aria-label={badge.alt}
+      aria-describedby={tipId}
+      tabIndex={0}
+      className={cn(box, "group cursor-default")}
     >
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="size-7 shrink-0">
-        {icon}
-      </svg>
-      <span className="flex flex-col leading-tight">
-        <span className="text-[10px]">{small}</span>
-        <span className="text-base font-semibold">{big}</span>
+      {art}
+      <span
+        id={tipId}
+        role="tooltip"
+        className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-md bg-white px-2.5 py-1 text-xs font-semibold whitespace-nowrap text-ink opacity-0 shadow-md transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+      >
+        Coming soon
       </span>
-      <span className="sr-only">(opens in a new tab)</span>
-    </a>
+    </span>
   );
 }
 
@@ -124,8 +162,6 @@ export function CompactFooter() {
   const { contact } = site;
   const whatsappUrl = `https://wa.me/${contact.whatsappNumber.replace(/\D/g, "")}`;
   const socials = socialOrder.filter((s) => siteLinks.social[s.key]);
-  const { googlePlay, appStore } = siteLinks.appLinks;
-  const hasBadges = Boolean(googlePlay || appStore);
   const linkClass = cn("hover:text-white hover:underline", focusRing);
 
   return (
@@ -198,58 +234,41 @@ export function CompactFooter() {
           </p>
         </div>
 
-        {/* Right block: shown only when there is at least one icon or badge */}
-        {(socials.length > 0 || hasBadges) && (
-          <div className="contents md:flex md:flex-wrap md:items-center md:gap-8">
-            {socials.length > 0 && (
-              <ul
-                className="order-2 flex items-center gap-[26px] md:order-none"
-                aria-label="GlobalMed on social media"
-              >
-                {socials.map(({ key, label }) => (
-                  <li key={key}>
-                    <a
-                      href={siteLinks.social[key]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`GlobalMed on ${label} (opens in a new tab)`}
-                      className={cn("flex text-white transition-colors hover:text-sky", focusRing)}
+        {/* Right block: social icons (once linked), then the app badges (always shown). */}
+        <div className="contents md:flex md:flex-wrap md:items-center md:gap-8">
+          {socials.length > 0 && (
+            <ul
+              className="order-2 flex items-center gap-[26px] md:order-none"
+              aria-label="GlobalMed on social media"
+            >
+              {socials.map(({ key, label }) => (
+                <li key={key}>
+                  <a
+                    href={siteLinks.social[key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`GlobalMed on ${label} (opens in a new tab)`}
+                    className={cn("flex text-white transition-colors hover:text-sky", focusRing)}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      className="size-[34px]"
                     >
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        aria-hidden="true"
-                        className="size-[34px]"
-                      >
-                        {key === "instagram" ? instagramFilled : glyphs[key]}
-                      </svg>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {hasBadges && (
-              <div className="order-3 flex flex-wrap justify-center gap-5 md:order-none">
-                {googlePlay && (
-                  <AppBadge
-                    href={googlePlay}
-                    icon={googlePlayIcon}
-                    small="Available on the"
-                    big="Google Play"
-                  />
-                )}
-                {appStore && (
-                  <AppBadge
-                    href={appStore}
-                    icon={appleIcon}
-                    small="Download on the"
-                    big="App Store"
-                  />
-                )}
-              </div>
-            )}
+                      {key === "instagram" ? instagramFilled : glyphs[key]}
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="order-3 flex w-full justify-center gap-5 md:order-none md:w-auto">
+            {appBadges.map((badge) => (
+              <AppBadge key={badge.key} badge={badge} href={siteLinks.appLinks[badge.key]} />
+            ))}
           </div>
-        )}
+        </div>
       </div>
     </footer>
   );

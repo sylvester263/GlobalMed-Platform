@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { features } from "@/config/features";
 import { registrationCourses } from "@/data/courses";
 
 /**
@@ -120,6 +121,20 @@ export const contactTimes = [
 export const registrationConsentText =
   "I agree that GlobalMed Transcriptions may contact me and share my details with AAPC to complete my course enrollment.";
 
+const registrationCity = z
+  .string()
+  .trim()
+  .min(2, "Enter your city.")
+  .max(80, "Keep the city under 80 characters.");
+
+/** Address replaces City on the registration form (client, 2026-09-28). */
+export const ADDRESS_MAX = 250;
+const registrationAddress = z
+  .string()
+  .trim()
+  .min(10, "Enter your full address: house or street, area and city (at least 10 characters).")
+  .max(ADDRESS_MAX, `Shorten your address to ${ADDRESS_MAX} characters or fewer.`);
+
 export const aapcRegistrationSchema = z.object({
   name,
   email,
@@ -129,7 +144,12 @@ export const aapcRegistrationSchema = z.object({
     .min(7, "Enter your WhatsApp number, e.g. +92 300 1234567.")
     .max(30, "Keep the number under 30 characters.")
     .regex(/^[+()\d\s.-]+$/, "Use digits, spaces and + ( ) - only."),
-  city: z.string().trim().min(2, "Enter your city.").max(80, "Keep the city under 80 characters."),
+  // City is hidden while features.registrationCityField is off (client, 2026-09-28); the
+  // rule stays so the field can return.
+  city: features.registrationCityField
+    ? registrationCity
+    : registrationCity.optional().or(z.literal("")),
+  address: registrationAddress,
   course: z.enum(registrationCourses, "Choose a course."),
   background: z.enum(registrationBackgrounds, "Choose your current background."),
   contactTime: z.enum(contactTimes, "Choose a good time to contact you."),

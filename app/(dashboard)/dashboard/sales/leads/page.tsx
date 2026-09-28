@@ -1,14 +1,15 @@
-import { Inbox } from "lucide-react";
+import { Download, Inbox } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
 import { DashboardPageHeader } from "@/components/dashboard/page-header";
 import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { requireArea } from "@/lib/auth/session";
-import type { Enums, Json } from "@/lib/db/types";
+import type { Enums } from "@/lib/db/types";
 import { createClient } from "@/lib/db/server";
-import { leadSourceLabels, leadStatuses } from "@/lib/leads/labels";
+import { leadDetail as detail, leadSourceLabels, leadStatuses } from "@/lib/leads/labels";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Leads pipeline" };
@@ -16,13 +17,6 @@ export const metadata: Metadata = { title: "Leads pipeline" };
 type Props = { searchParams: Promise<{ source?: string; status?: string }> };
 
 const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short" });
-
-/** Registration answers stored in `leads.details` (city, background, contact time). */
-function detail(details: Json, key: string): string | null {
-  if (!details || typeof details !== "object" || Array.isArray(details)) return null;
-  const value = (details as Record<string, Json>)[key];
-  return typeof value === "string" && value ? value : null;
-}
 
 function filterHref(params: { source?: string; status?: string }) {
   const query = new URLSearchParams(
@@ -33,12 +27,13 @@ function filterHref(params: { source?: string; status?: string }) {
 
 /**
  * Leads pipeline (sales and admin): every website lead with its status, filterable by source
- * and status. AAPC registrations (source "aapc_registration") show the course, city, background
- * and preferred contact time. Readable under the "staff leads" RLS policy. Kanban and
+ * and status. AAPC registrations (source "aapc_registration") show the course, address,
+ * background and preferred contact time; each name opens the lead's detail page. Readable under the "staff leads" RLS policy. Kanban and
  * drag-to-move arrive with P8-1.
  */
 export default async function LeadsPipelinePage({ searchParams }: Props) {
-  await requireArea("sales", "/dashboard/sales/leads");
+  const session = await requireArea("sales", "/dashboard/sales/leads");
+  const isAdmin = session.profile.role === "admin";
   const { source, status } = await searchParams;
   const activeStatus = leadStatuses.find((s) => s === status);
   const activeSource = source && leadSourceLabels[source] ? source : undefined;
@@ -46,7 +41,7 @@ export default async function LeadsPipelinePage({ searchParams }: Props) {
   const supabase = await createClient();
   let query = supabase
     .from("leads")
-    .select("id, source, name, email, phone, interest, details, status, created_at")
+    .select("id, source, name, email, phone, interest, address, details, status, created_at")
     .order("created_at", { ascending: false })
     .limit(200);
   if (activeSource) query = query.eq("source", activeSource);
@@ -72,6 +67,16 @@ export default async function LeadsPipelinePage({ searchParams }: Props) {
       <DashboardPageHeader
         title="Leads pipeline"
         description="Website leads and AAPC registrations, newest first."
+        actions={
+          isAdmin && (
+            <a
+              href={`/api/admin/leads/export${activeSource ? `?source=${activeSource}` : ""}`}
+              className={cn(buttonVariants({ variant: "secondary" }))}
+            >
+              <Download aria-hidden="true" /> Export CSV
+            </a>
+          )
+        }
       />
 
       <nav aria-label="Filter by source" className="flex flex-wrap gap-2">
@@ -121,19 +126,26 @@ export default async function LeadsPipelinePage({ searchParams }: Props) {
             <caption className="sr-only">Leads, newest first</caption>
             <thead className="bg-ledger">
               <tr>
-                {["Received", "Name", "Course / interest", "Details", "Source", "Status"].map(
-                  (h) => (
-                    <th key={h} scope="col" className="px-4 py-3 font-semibold whitespace-nowrap">
-                      {h}
-                    </th>
-                  ),
-                )}
+                {[
+                  "Received",
+                  "Name",
+                  "Course / interest",
+                  "Address",
+                  "Details",
+                  "Source",
+                  "Status",
+                ].map((h) => (
+                  <th key={h} scope="col" className="px-4 py-3 font-semibold whitespace-nowrap">
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
               {leads.map((lead) => {
+                // Registrations before 2026-09-28 have a city in `details` instead of an address.
+                const address = lead.address ?? detail(lead.details, "city");
                 const extras = [
-                  detail(lead.details, "city"),
                   detail(lead.details, "background"),
                   detail(lead.details, "contactTime"),
                 ].filter(Boolean);
@@ -143,7 +155,12 @@ export default async function LeadsPipelinePage({ searchParams }: Props) {
                       {lead.created_at ? dateFormat.format(new Date(lead.created_at)) : "—"}
                     </td>
                     <td className="px-4 py-3">
-                      <span className="font-semibold">{lead.name ?? "—"}</span>
+                      <Link
+                        href={`/dashboard/sales/leads/${lead.id}`}
+                        className="font-semibold text-primary underline-offset-4 hover:underline"
+                      >
+                        {lead.name ?? "View lead"}
+                      </Link>
                       {lead.email && (
                         <a
                           href={`mailto:${lead.email}`}
@@ -157,6 +174,9 @@ export default async function LeadsPipelinePage({ searchParams }: Props) {
                       )}
                     </td>
                     <td className="px-4 py-3">{lead.interest ?? "—"}</td>
+                    <td className="max-w-64 px-4 py-3 break-words text-muted-foreground">
+                      {address ?? "—"}
+                    </td>
                     <td className="px-4 py-3 text-muted-foreground">
                       {extras.length ? extras.join(" · ") : "—"}
                     </td>

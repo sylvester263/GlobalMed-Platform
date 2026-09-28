@@ -19,7 +19,7 @@ Our website and chatbot are not designed to receive protected health information
 ## Information we collect
 
 - **Enquiries:** your name, work email, phone number, practice or organisation name, specialty and the details you enter in our audit or contact forms.
-- **AAPC course registrations:** your name, email, WhatsApp number, city, the course you choose, your current background, your preferred contact time and any message, so our team can contact you and support your AAPC enrollment. [CLIENT TO CONFIRM with counsel whether these details are shared with AAPC]
+- **AAPC course registrations:** your name, email, WhatsApp number, postal address, the course you choose, your current background, your preferred contact time and any message, so our team can contact you and support your AAPC enrollment. [CLIENT TO CONFIRM with counsel whether these details are shared with AAPC]
 - **Payments for AAPC course enrollment:** GlobalMed coordinates payment processing for AAPC course enrollments. [CLIENT TO CONFIRM: who processes these payments (GlobalMed, a bank or payment provider, or AAPC directly); which payment details we keep (for example amount, date, payment method, transaction reference or proof of payment) and for how long; and whether any payment details are shared with AAPC.]
 <!-- Hidden at client request — GlobalMed education plans are future scope. -->
 <!-- feature:learningPlatform -->

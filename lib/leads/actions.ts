@@ -2,6 +2,8 @@
 
 import type { z } from "zod";
 
+import { features } from "@/config/features";
+
 import { storeLead } from "@/lib/leads/store";
 import { checkRateLimit } from "@/lib/security/rate-limit";
 import { clientIp } from "@/lib/security/request";
@@ -145,10 +147,11 @@ export async function submitAapcRegistration(input: unknown): Promise<FormResult
       phone: data.whatsapp,
       interest: data.course,
       message: data.message || null,
+      address: data.address,
       utm: data.utm ?? {},
       details: {
         course: data.course,
-        city: data.city,
+        ...(features.registrationCityField && data.city ? { city: data.city } : {}),
         background: data.background,
         contactTime: data.contactTime,
         whatsapp: data.whatsapp,
@@ -162,7 +165,8 @@ export async function submitAapcRegistration(input: unknown): Promise<FormResult
       { label: "Name", value: data.name },
       { label: "Email", value: data.email },
       { label: "WhatsApp", value: data.whatsapp },
-      { label: "City", value: data.city },
+      { label: "Address", value: data.address },
+      ...(features.registrationCityField ? [{ label: "City", value: data.city ?? "" }] : []),
       { label: "Background", value: data.background },
       { label: "Preferred contact time", value: data.contactTime },
       { label: "Consent", value: "Agreed to be contacted and to details being shared with AAPC" },

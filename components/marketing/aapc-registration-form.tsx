@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useForm, type FieldPath } from "react-hook-form";
 
 import { Turnstile } from "@/components/marketing/turnstile";
+import { features } from "@/config/features";
 import { CheckStamp } from "@/components/motion/check-stamp";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -28,6 +29,7 @@ import { useUtm } from "@/lib/hooks/use-utm";
 import { submitAapcRegistration } from "@/lib/leads/actions";
 import { cn } from "@/lib/utils";
 import {
+  ADDRESS_MAX,
   aapcRegistrationSchema,
   contactTimes,
   registrationBackgrounds,
@@ -72,10 +74,11 @@ export function AapcRegistrationForm({
   } = useForm<AapcRegistrationInput>({
     resolver: zodResolver(aapcRegistrationSchema),
     mode: "onTouched",
-    defaultValues: { message: "", course: courseForSlug(defaultCourse ?? null) },
+    defaultValues: { message: "", address: "", course: courseForSlug(defaultCourse ?? null) },
   });
 
   const selected = courseForRegistration(watch("course") ?? "");
+  const addressLength = (watch("address") ?? "").length;
 
   // "Register Now" on the course cards links to ?course=<slug>#register.
   useEffect(() => {
@@ -170,8 +173,28 @@ export function AapcRegistrationForm({
             />
           )}
         </FormField>
-        <FormField label="City" required error={errors.city?.message}>
-          {(c) => <Input {...c} autoComplete="address-level2" {...register("city")} />}
+        {/* Hidden at client request — Address replaces City (2026-09-28). */}
+        {features.registrationCityField && (
+          <FormField label="City" required error={errors.city?.message}>
+            {(c) => <Input {...c} autoComplete="address-level2" {...register("city")} />}
+          </FormField>
+        )}
+        <FormField
+          label="Address"
+          required
+          description={`${addressLength}/${ADDRESS_MAX} characters`}
+          error={errors.address?.message}
+        >
+          {(c) => (
+            <Textarea
+              {...c}
+              rows={2}
+              maxLength={ADDRESS_MAX}
+              autoComplete="street-address"
+              placeholder="House / street, area, city"
+              {...register("address")}
+            />
+          )}
         </FormField>
         <FormField
           label="Course"

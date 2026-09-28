@@ -56,6 +56,12 @@ export const features = {
    * services for US practices" list lower on the home page. Set true to restore.
    */
   homeServicesOverviewOld: false,
+  /**
+   * Hidden at client request — "Address" replaces "City" on the "Register for AAPC Training"
+   * form (2026-09-28). The City field and its schema rule stay in the code. Set true to
+   * show City again (it is then required, as before).
+   */
+  registrationCityField: false,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

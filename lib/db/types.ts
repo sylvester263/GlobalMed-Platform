@@ -580,6 +580,7 @@ export type Database = {
           assigned_to: string | null;
           created_at: string;
           details: Json;
+          address: string | null;
         };
         Insert: {
           id?: string;
@@ -596,6 +597,7 @@ export type Database = {
           assigned_to?: string | null;
           created_at?: string;
           details?: Json;
+          address?: string | null;
         };
         Update: {
           id?: string;
@@ -612,6 +614,7 @@ export type Database = {
           assigned_to?: string | null;
           created_at?: string;
           details?: Json;
+          address?: string | null;
         };
         Relationships: [];
       };

@@ -67,7 +67,7 @@ All three:
 Intent detection (service enquiry / AAPC course registration / human request).
 - **Service enquiries:** the bot asks for name, email or phone, practice name and specialty. It creates a `leads` row with source `chatbot` or `whatsapp` and emails sales.
 - **Course enquiries:** the bot sends the student to the Register Now form, or collects the same fields as the form.
-  - The form fields are name, email, WhatsApp number, city, course (CPC® / CPB® / CPC® + CPB®), background, preferred contact time and message.
+  - The form fields are name, email, WhatsApp number, address (house / street, area, city), course (CPC® / CPB® / CPC® + CPB®), background, preferred contact time and message.
   - The student must also agree to be contacted and to have their details shared with AAPC.
   - The bot saves a lead with source `aapc_registration` (or `chatbot`/`whatsapp` plus the course in `interest`), so it appears in the Sales leads pipeline.
 

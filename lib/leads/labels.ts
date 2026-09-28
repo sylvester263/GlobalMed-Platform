@@ -1,4 +1,4 @@
-import type { Enums } from "@/lib/db/types";
+import type { Enums, Json } from "@/lib/db/types";
 
 /** How each lead source reads in the sales and admin dashboards. */
 export const leadSourceLabels: Record<string, string> = {
@@ -18,3 +18,10 @@ export const leadStatuses: Enums<"lead_status">[] = [
   "won",
   "lost",
 ];
+
+/** A string answer stored in `leads.details` (background, contact time, older cities). */
+export function leadDetail(details: Json, key: string): string | null {
+  if (!details || typeof details !== "object" || Array.isArray(details)) return null;
+  const value = (details as Record<string, Json>)[key];
+  return typeof value === "string" && value ? value : null;
+}

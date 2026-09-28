@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+import { aapcFaqs, approvedWording } from "@/content/aapc";
+import { serviceCards, servicesIntro } from "@/content/home-services";
 import { services } from "@/content/services";
 import { courses, instructors, pathways } from "@/content/school";
 import { specialties } from "@/content/specialties";
@@ -64,5 +66,22 @@ describe("content integrity", () => {
     expect(slugs).toEqual(
       expect.arrayContaining(["privacy", "terms", "hipaa-notice", "cookie-policy"]),
     );
+  });
+
+  it('allows "batch" in the AAPC wording only as "batch schedules" (sweep, 2026-09-28)', () => {
+    const texts = [
+      ...Object.values(approvedWording),
+      ...aapcFaqs.flatMap((f) => [f.question, f.answer]),
+      servicesIntro.lead,
+      servicesIntro.note.text,
+      ...serviceCards.flatMap((c) => [c.title, ...c.paragraphs, c.strong ?? ""]),
+    ];
+    for (const text of texts) {
+      for (const match of text.matchAll(/batch\w*(\s+\w+)?/gi))
+        expect(match[0].toLowerCase(), text).toBe("batch schedules");
+    }
+    expect(
+      aapcFaqs.find((f) => f.question === "What does GlobalMed Transcriptions do?")?.answer,
+    ).toBe(approvedWording.role);
   });
 });

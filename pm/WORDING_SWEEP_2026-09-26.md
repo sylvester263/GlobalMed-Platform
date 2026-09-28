@@ -44,3 +44,13 @@ Each page was fetched from the running app. Scripts and styles were stripped; vi
 ## 3. For decision
 
 - `/styleguide` (design review for client sign-off P1-7) still shows the earlier education mockups ("Verify a certificate", pathways). It is not linked anywhere and is disallowed in robots.txt, but it is reachable by URL. Option: return 404 for it in production.
+
+## 4. Amendment — 2026-09-28: "batch schedules"
+
+The client's approved text says GlobalMed coordinates AAPC students' enrollment, **batch schedules**, payment processing, and access to required books and online learning resources. So the sweep rule for "batch" now allows the phrase **"batch schedules" in that approved context only**:
+
+- `content/aapc.ts` `approvedWording.role`, used by the FAQ "What does GlobalMed Transcriptions do?", the AAPC Certification page, the About page partnership block, the course pages and the home "Why register" point
+- `content/home-services.ts`: the home "Our Services" note and the AAPC card
+- `docs/09` chatbot knowledge
+
+Any other visible "batch" is still out of scope. The hidden batch pages (Upcoming Batches page, onsite batch cards) stay hidden (`features.batches: false`). `tests/unit/content-integrity.test.ts` checks the approved texts.

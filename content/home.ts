@@ -1,4 +1,5 @@
 import type { Faq } from "@/lib/content/schema";
+import { approvedWording } from "@/content/aapc";
 
 // [CLIENT TO CONFIRM] Home page copy. The home page leads with CPC® and CPB® training as
 // AAPC's strategic partner in Pakistan; US billing services follow further down.
@@ -138,7 +139,7 @@ export const whyUs = [
   },
   {
     title: "Registration support in Pakistan",
-    body: "GlobalMed Transcriptions helps students in Pakistan register for AAPC's official online courses and supports them through enrollment.",
+    body: approvedWording.role,
   },
 ];
 

@@ -3,7 +3,7 @@
 ## 1. Purpose
 Answer questions about GlobalMed's services (medical transcription, billing and coding) and about the three AAPC courses GlobalMed registers students for, capture leads and course registrations, and hand off to a human when needed. It is complimentary in the contract and runs on the **client's own LLM API key**.
 
-**Business model (client, 2026-09-26; ADR-026).** GlobalMed Transcriptions is a services company and **AAPC's Strategic Partner in Pakistan** for medical billing and coding. GlobalMed does **not** teach, run classes (online or onsite) or issue certificates. AAPC faculty teach AAPC's live, instructor-led online courses, and AAPC awards the certification. GlobalMed helps students in Pakistan register for AAPC's official online courses and supports them through enrollment.
+**Business model (client, 2026-09-26; ADR-026).** GlobalMed Transcriptions is a services company and **AAPC's Strategic Partner in Pakistan** for medical billing and coding. GlobalMed does **not** teach, run classes (online or onsite) or issue certificates. AAPC faculty teach AAPC's live, instructor-led online courses, and AAPC awards the certification. Approved role line (client, 2026-09-28), use verbatim: "As AAPC's Strategic Partner in Pakistan, we support students throughout the enrollment process by coordinating batch schedules, payment processing, and access to required books and online learning resources. AAPC provides the training and credentials."
 
 ## 2. Architecture
 - `lib/ai/provider.ts` — adapter interface `generate(messages, opts)` and `embed(text)`; implementations for OpenAI / Anthropic / Gemini selected by `LLM_PROVIDER`.
@@ -55,7 +55,7 @@ All three:
 ## 4. Guardrails (system prompt must include)
 - You are GlobalMed's assistant. Answer only about GlobalMed's services, the three AAPC courses above, and GlobalMed's policies.
 - GlobalMed does not teach and does not issue certificates. AAPC faculty teach AAPC's courses live online, and AAPC awards the certification. Say so whenever it's relevant.
-- Only CPC®, CPB® and CPC® + CPB® are offered. **Never mention** GlobalMed's own (hidden) courses, pathways, batches, exam prep, corporate training, onsite, in-person or classroom training, Lahore classes, GlobalMed certificates or certificate verification. If asked about in-person classes, answer: training is online only, taught live by AAPC faculty.
+- Only CPC®, CPB® and CPC® + CPB® are offered. **Never mention** GlobalMed's own (hidden) courses, pathways, batches (the only allowed use of "batch" is "batch schedules" in the approved role line: GlobalMed coordinates AAPC batch schedules), exam prep, corporate training, onsite, in-person or classroom training, Lahore classes, GlobalMed certificates or certificate verification. If asked about in-person classes, answer: training is online only, taught live by AAPC faculty.
 - Course prices and packages only from §3.2. For anything not listed there, offer the registration form, WhatsApp or a human.
 - For course questions, end with the registration form or WhatsApp (§3.3).
 - Never request or accept patient information (names, DOB, MRN, diagnoses). If a user shares it, tell them not to and do not repeat it.
@@ -77,7 +77,7 @@ Triggers: user asks for a person, 2 low-confidence answers in a row, complaint k
 ## 7. WhatsApp specifics
 - Meta Business verification + WhatsApp Business Account + dedicated number *(client input)*.
 - 24-hour customer service window: free-form replies within 24h of the user's last message; outside it only approved templates (e.g. "course reminder", "follow-up").
-- Templates to prepare: welcome, lead follow-up, AAPC registration follow-up ("our team will help you complete your AAPC enrollment"). No batch reminders or payment receipts (GlobalMed doesn't run classes or take course payments online).
+- Templates to prepare: welcome, lead follow-up, AAPC registration follow-up ("our team will help you complete your AAPC enrollment"). No batch reminders or payment receipts yet: GlobalMed coordinates AAPC batch schedules and payment processing, but who processes payments and what is kept is [CLIENT TO CONFIRM] (pm/CLIENT_INPUTS_NEEDED.md).
 - Click-to-chat button on site: `https://wa.me/<number>?text=...`.
 
 ## 8. Widget UX

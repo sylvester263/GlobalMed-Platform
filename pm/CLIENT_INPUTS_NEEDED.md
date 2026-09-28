@@ -67,6 +67,7 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ✅ Course prices and packages confirmed 2026-09-26: CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® USD 1,600 (data/courses.ts)
 - ⬜ AAPC's approval to use its course descriptions on the GlobalMed site (content/courses/*.ts)
 - ⬜ Whether registration details are shared with AAPC (privacy policy paragraph; the form's consent already covers sharing)
+- ⬜ Payment processing for AAPC course enrollments (added 2026-09-28; privacy policy paragraph marked [CLIENT TO CONFIRM]): who processes the payments (GlobalMed, a bank/payment provider, or AAPC directly), which payment details are kept and for how long, and whether they are shared with AAPC
 - ⬜ Counsel review of the new Terms ("AAPC courses and certification") and Privacy (AAPC registrations) wording
 - ⬜ Social profile links (Facebook, Instagram, LinkedIn, YouTube, X); icons stay hidden until provided
 - ⬜ Instructor photos (optional, public/images/instructors/) and founder photo (public/images/team/riaz-naveed.jpg)

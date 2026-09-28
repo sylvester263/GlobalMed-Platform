@@ -6,14 +6,17 @@ import type { Faq } from "@/lib/content/schema";
 // (client, 2026-09-26): GlobalMed is AAPC's Strategic Partner in Pakistan; AAPC faculty teach
 // AAPC's online courses and AAPC awards the certification. Original copy, nothing from AAPC's site.
 
-/** Approved wording (client, 2026-09-26). Use these lines verbatim across the site. */
+/**
+ * Approved wording (client, 2026-09-26). Use these lines verbatim across the site. `role`
+ * updated to the client's approved text on 2026-09-28 ("batch schedules" is allowed here only).
+ */
 export const approvedWording = {
   partnership:
     "GlobalMed Transcriptions, Strategic Partner of AAPC in Pakistan for Medical Billing and Coding.",
   training:
     "Get trained by AAPC instructors: live, instructor-led online courses led by AAPC faculty.",
   certification: "Your certification is awarded by AAPC.",
-  role: "GlobalMed Transcriptions helps students in Pakistan register for AAPC's official online courses and supports them through enrollment.",
+  role: "As AAPC's Strategic Partner in Pakistan, we support students throughout the enrollment process by coordinating batch schedules, payment processing, and access to required books and online learning resources. AAPC provides the training and credentials.",
 } as const;
 
 /**
@@ -170,8 +173,8 @@ export const aapcFaqs: Faq[] = [
   },
   {
     question: "What does GlobalMed Transcriptions do?",
-    answer:
-      "As AAPC's Strategic Partner in Pakistan, we help students register for AAPC's official online courses and support them through enrollment.",
+    // Client-approved answer (2026-09-28); same text as approvedWording.role.
+    answer: approvedWording.role,
   },
   {
     question: "Which course should I choose?",

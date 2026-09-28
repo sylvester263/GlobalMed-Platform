@@ -40,7 +40,7 @@ With consistent study of 10–12 hours a week, most beginners are ready for entr
 
 ## How do I get CPC® certified from Pakistan?
 
-The CPC® credential is awarded by AAPC when you pass its certification exam. AAPC's CPC® course is taught live online by AAPC faculty and includes the exam and practice tests. GlobalMed Transcriptions, Strategic Partner of AAPC in Pakistan for Medical Billing and Coding, helps students in Pakistan register for AAPC's official online courses and supports them through enrollment.
+The CPC® credential is awarded by AAPC when you pass its certification exam. AAPC's CPC® course is taught live online by AAPC faculty and includes the exam and practice tests. As AAPC's Strategic Partner in Pakistan, we support students throughout the enrollment process by coordinating batch schedules, payment processing, and access to required books and online learning resources. AAPC provides the training and credentials.
 
 ---
 

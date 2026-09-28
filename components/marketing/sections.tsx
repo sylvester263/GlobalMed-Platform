@@ -52,7 +52,7 @@ export function PageHero({
 }) {
   return (
     <section className={cn("border-b bg-ledger", className)}>
-      <div className="mx-auto flex max-w-300 flex-col gap-6 px-4 py-12 md:px-6 lg:py-16">
+      <div className="container-fluid flex flex-col gap-6 py-12 lg:py-16">
         {crumbs && crumbs.length > 0 && (
           <>
             <Breadcrumb>
@@ -122,12 +122,7 @@ export function Section({
         tone === "ink" && "bg-ink text-white",
       )}
     >
-      <div
-        className={cn(
-          "mx-auto flex max-w-300 flex-col gap-10 px-4 py-16 md:px-6 lg:py-20",
-          className,
-        )}
-      >
+      <div className={cn("container-fluid flex flex-col gap-10 py-16 lg:py-20", className)}>
         {title && (
           <div className="flex max-w-3xl flex-col gap-3">
             <h2
@@ -187,7 +182,7 @@ export function CtaBand({
 }) {
   return (
     <section className="bg-ink text-white">
-      <div className="mx-auto flex max-w-300 flex-col items-start gap-6 px-4 py-16 md:px-6">
+      <div className="container-fluid flex flex-col items-start gap-6 py-16">
         <h2 className="max-w-3xl text-2xl text-white lg:text-3xl">{title}</h2>
         {body && <p className="max-w-prose text-white/80">{body}</p>}
         <ClaimLine trigger="inView" ticks={8} goldEnd className="max-w-md" />
@@ -271,7 +266,7 @@ export function StatsStrip({
     <section aria-label="GlobalMed in numbers" className="border-y bg-card">
       <div
         className={cn(
-          "mx-auto grid max-w-300 grid-cols-2 gap-8 px-4 py-10 md:px-6",
+          "container-fluid grid grid-cols-2 gap-8 py-10",
           stats.length === 5 ? "md:grid-cols-3 lg:grid-cols-5" : "lg:grid-cols-4",
         )}
       >

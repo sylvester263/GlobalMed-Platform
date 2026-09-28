@@ -20,9 +20,9 @@ function CardImage({ card, dark }: { card: ServiceCard; dark: boolean }) {
         alt={card.image.alt}
         width={800}
         height={600}
-        sizes="(min-width: 1280px) 500px, (min-width: 768px) 45vw, 100vw"
+        sizes="(min-width: 1024px) 50vw, (min-width: 768px) 45vw, 100vw"
         loading="lazy"
-        className="aspect-[4/3] w-full rounded-2xl object-cover md:h-full"
+        className="aspect-[4/3] w-full rounded-2xl object-cover md:h-full lg:absolute lg:inset-0 lg:aspect-auto lg:rounded-none"
       />
     );
   }
@@ -32,7 +32,7 @@ function CardImage({ card, dark }: { card: ServiceCard; dark: boolean }) {
       role="img"
       aria-label={`Placeholder: ${card.image.alt}`}
       className={cn(
-        "flex aspect-[4/3] w-full items-center justify-center rounded-2xl border-2 border-dashed p-6 text-center text-sm font-semibold md:h-full",
+        "flex aspect-[4/3] w-full items-center justify-center rounded-2xl border-2 border-dashed p-6 text-center text-sm font-semibold md:h-full lg:absolute lg:inset-0 lg:aspect-auto lg:rounded-none",
         dark
           ? "border-white/40 bg-white/10 text-white"
           : "border-border bg-ledger text-muted-foreground",
@@ -51,8 +51,13 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
   const muted = dark ? "text-white/90" : "text-muted-foreground";
 
   return (
-    <div className="grid gap-6 md:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] md:gap-10">
-      <div className="flex flex-col gap-3">
+    // ≥1024px (client, 2026-09-28): text 50% / image 50%, the image flush to the card's right
+    // edge (the card clips it to its outer corners). 768–1023px keeps the 55/45 layout.
+    <div className="grid gap-6 md:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] md:gap-10 lg:flex-1 lg:grid-cols-2 lg:gap-0">
+      <div
+        data-stack-text
+        className="flex flex-col gap-3 lg:self-start lg:p-[clamp(32px,4vw,72px)] lg:[&_p]:max-w-[65ch]"
+      >
         {/* Decorative ordinal in the client's sky blue; the heading carries the meaning. Sky on
             white is under 3:1, so it stays aria-hidden decoration (WCAG 1.4.3 exemption). */}
         <p
@@ -124,7 +129,7 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
           ))}
         </div>
       </div>
-      <div className="order-first md:order-none">
+      <div className="order-first md:order-none lg:relative">
         <CardImage card={card} dark={dark} />
       </div>
     </div>
@@ -144,23 +149,26 @@ export function ServicesOverview() {
 
   return (
     <section id="services" aria-labelledby="services-title" className="bg-card">
-      <div className="mx-auto flex max-w-300 flex-col gap-10 px-4 py-16 md:px-6 lg:py-20">
-        <div className="flex max-w-3xl flex-col gap-4">
-          <h2 id="services-title" className="text-2xl lg:text-3xl">
+      <div className="container-fluid flex flex-col gap-10 py-16 lg:py-20">
+        {/* Full container width; from 1280px the AAPC note sits beside the lead (60/40). */}
+        <div className="flex flex-col gap-4">
+          <h2 id="services-title" className="max-w-[28ch] text-2xl lg:text-3xl">
             {servicesIntro.title}
           </h2>
           <ClaimLine trigger="inView" ticks={8} className="max-w-sm" />
-          <p className="text-lg text-muted-foreground">{servicesIntro.lead}</p>
-          <Link
-            href={servicesIntro.note.href}
-            className="group rounded-lg border border-sky/40 bg-sky-soft p-5 text-ink transition-colors hover:border-sky focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
-          >
-            {servicesIntro.note.text}
-            <ArrowRight
-              aria-hidden="true"
-              className="ml-1 inline size-4 transition-transform group-hover:translate-x-1"
-            />
-          </Link>
+          <div className="grid gap-4 xl:grid-cols-[3fr_2fr] xl:items-start xl:gap-12">
+            <p className="max-w-[75ch] text-lg text-muted-foreground">{servicesIntro.lead}</p>
+            <Link
+              href={servicesIntro.note.href}
+              className="group rounded-lg border border-sky/40 bg-sky-soft p-5 text-ink transition-colors hover:border-sky focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
+            >
+              {servicesIntro.note.text}
+              <ArrowRight
+                aria-hidden="true"
+                className="ml-1 inline size-4 transition-transform group-hover:translate-x-1"
+              />
+            </Link>
+          </div>
         </div>
         <ServicesStack cards={cards} />
       </div>

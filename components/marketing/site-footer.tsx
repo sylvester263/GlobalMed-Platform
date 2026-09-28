@@ -116,7 +116,7 @@ function ExtendedFooter() {
     <footer className="bg-primary text-white/85">
       {/* Newsletter, full width above the columns */}
       <div className="border-b border-white/15">
-        <div className="mx-auto grid max-w-300 gap-6 px-4 py-10 md:grid-cols-[1fr_1.2fr] md:items-center md:px-6">
+        <div className="container-fluid grid gap-6 py-10 md:grid-cols-[1fr_1.2fr] md:items-center">
           <div>
             <h2 className="font-serif text-xl font-semibold text-white">
               Billing and coding insights, monthly
@@ -129,7 +129,7 @@ function ExtendedFooter() {
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-300 gap-10 px-4 py-14 md:grid-cols-2 md:gap-12 md:px-6 lg:grid-cols-[1.35fr_1fr_1.15fr_1.25fr_1.35fr] lg:gap-10 lg:py-16">
+      <div className="container-fluid grid gap-10 py-14 md:grid-cols-2 md:gap-12 lg:grid-cols-[1.35fr_1fr_1.15fr_1.25fr_1.35fr] lg:gap-10 lg:py-16">
         <div className="flex flex-col gap-5">
           <Link href="/" aria-label="GlobalMed home" className="self-start rounded-md">
             <Wordmark size="footer" onDark />
@@ -159,7 +159,7 @@ function ExtendedFooter() {
       </div>
 
       <div className="border-t border-white/15">
-        <div className="mx-auto flex max-w-300 flex-col gap-4 px-4 py-6 pr-20 text-sm md:px-6 md:pr-20 lg:flex-row lg:items-center lg:justify-between">
+        <div className="container-fluid flex flex-col gap-4 py-6 pr-20 text-sm md:pr-20 lg:flex-row lg:items-center lg:justify-between">
           <p>© GlobalMed Transcriptions. All Rights Reserved.</p>
           <nav aria-label="Legal">
             <ul className="flex flex-wrap gap-x-5 gap-y-2">

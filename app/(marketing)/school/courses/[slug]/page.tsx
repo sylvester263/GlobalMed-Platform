@@ -95,7 +95,7 @@ export default async function CoursePage({ params }: Props) {
         </ul>
       </PageHero>
 
-      <div className="mx-auto grid max-w-300 gap-12 px-4 py-12 md:px-6 lg:grid-cols-[1fr_360px] lg:py-16">
+      <div className="container-fluid grid gap-12 py-12 lg:grid-cols-[1fr_360px] lg:py-16">
         <div className="flex min-w-0 flex-col gap-14">
           <section aria-labelledby="about" className="flex flex-col gap-4">
             <h2 id="about" className="text-2xl">

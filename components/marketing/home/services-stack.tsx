@@ -23,6 +23,9 @@ const SCALE_STEP = 0.04;
 const MIN_SCALE = 0.88;
 const MAX_OVERLAY = 0.1;
 const MIN_HEIGHT = 520;
+/** From 1024px the cards are full width with a 560px minimum (client, 2026-09-28). */
+const MIN_HEIGHT_DESKTOP = 560;
+const DESKTOP_WIDE_QUERY = "(min-width: 1024px)";
 
 const DESKTOP_QUERY = "(min-width: 768px)";
 
@@ -103,11 +106,16 @@ function StickyStack({ cards }: { cards: StackCard[] }) {
 
     const measure = () => {
       const vh = window.innerHeight;
-      // Natural height = the content grid plus the article's padding and border (the content
-      // is not stretched by the min-height set below, so this stays stable).
+      // Natural height = the content plus the article's padding and border. Below 1024px the
+      // content is the grid; from 1024px the grid stretches to fill the card, so the text
+      // column (top-aligned, never stretched) is measured instead. Either way the min-height
+      // set below doesn't feed back into the measurement.
+      const wide = window.matchMedia(DESKTOP_WIDE_QUERY).matches;
       const natural = cardRefs.current.map((el) => {
         const article = el?.firstElementChild as HTMLElement | null;
-        const content = article?.firstElementChild as HTMLElement | null;
+        const content = (
+          wide ? article?.querySelector("[data-stack-text]") : article?.firstElementChild
+        ) as HTMLElement | null;
         if (!article || !content) return 0;
         const st = getComputedStyle(article);
         const chrome =
@@ -117,7 +125,7 @@ function StickyStack({ cards }: { cards: StackCard[] }) {
           parseFloat(st.borderBottomWidth);
         return Math.ceil(content.offsetHeight + chrome);
       });
-      const height = Math.max(MIN_HEIGHT, ...natural);
+      const height = Math.max(wide ? MIN_HEIGHT_DESKTOP : MIN_HEIGHT, ...natural);
       // A card taller than the screen allows sticks higher so the whole card can be read.
       const nextTops = cards.map((_, i) => Math.min(STACK_TOP + i * PEEK, vh - height - 24));
       geometry.current = cards.map((_, i) => {
@@ -231,7 +239,10 @@ function PlainStack({ cards }: { cards: StackCard[] }) {
 
 function cardShell(tone: StackCard["tone"]) {
   return cn(
-    "relative mx-auto w-full max-w-[1200px] rounded-[24px] border border-border p-6 shadow-[0_20px_50px_rgba(23,38,92,0.12)] md:min-h-[520px] md:p-8 xl:p-10",
+    // Full container width (client, 2026-09-28). From 1024px: no padding (the text column
+    // pads itself), min-height 560px, and overflow clips the flush image to the card's corners.
+    // The article is inside the sticky element, not above it, so clipping here is safe.
+    "relative w-full rounded-[24px] border border-border p-6 shadow-[0_20px_50px_rgba(23,38,92,0.12)] md:min-h-[520px] md:p-8 lg:flex lg:min-h-[560px] lg:flex-col lg:overflow-hidden lg:p-0",
     toneClass[tone],
     tone === "navy" && "border-navy",
   );

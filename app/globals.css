@@ -91,6 +91,8 @@
 }
 
 @theme {
+  /* 1440px: grids go to 4 columns in the fluid layout (client, 2026-09-28). */
+  --breakpoint-wide: 90rem;
   /* Type scale, ratio 1.25 (MASTER.md §2) */
   --text-xs: 0.75rem;
   --text-xs--line-height: 1rem;
@@ -214,6 +216,34 @@
   --radius: 12px;
 }
 
+/*
+ * Page container (client, 2026-09-28): fluid on desktop. Content spans the viewport up to
+ * 1920px, centred beyond that; section backgrounds stay full-bleed. Gutter: 20px on phones,
+ * 32px on tablets, clamp(32px, 5vw, 96px) from 1024px. Use `container-fluid` for every
+ * section, the header and the footer; no per-section max-widths.
+ */
+:root {
+  --container-max: 1920px;
+  --gutter: 20px;
+}
+@media (min-width: 768px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --gutter: clamp(32px, 5vw, 96px);
+  }
+}
+
+@utility container-fluid {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -224,6 +254,14 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Readability in the fluid layout: paragraphs never run past 75ch (zero specificity, so
+     any max-w-* class still wins). Centred blocks keep their paragraphs centred. */
+  :where(main) :where(p) {
+    max-width: 75ch;
+  }
+  :where(main .text-center) :where(p) {
+    margin-inline: auto;
   }
   h1,
   h2,

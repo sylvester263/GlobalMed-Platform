@@ -118,7 +118,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                 aria-hidden="true"
                 className="absolute inset-0 bg-navy/75 md:bg-transparent md:bg-linear-to-r md:from-navy/75 md:from-55% md:to-transparent"
               />
-              <div className="relative mx-auto flex h-full max-w-300 flex-col justify-center gap-5 px-4 pt-10 pb-24 md:px-6 lg:pb-20">
+              <div className="relative container-fluid flex h-full flex-col justify-center gap-5 pt-10 pb-24 lg:pb-20">
                 <div className="hero-slide-copy flex max-w-2xl flex-col gap-5">
                   {slide.lockup}
                   <h2 className="text-3xl text-white lg:text-4xl">{slide.headline}</h2>
@@ -155,7 +155,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
       {/* Controls: claim-line progress (retired 2026-09-28, ADR-028), dots, previous/next
           and pause. */}
       <div className="absolute inset-x-0 bottom-0 z-20">
-        <div className="mx-auto flex max-w-300 flex-wrap items-center gap-x-4 gap-y-2 px-4 pb-5 md:px-6 lg:pb-8">
+        <div className="container-fluid flex flex-wrap items-center gap-x-4 gap-y-2 pb-5 lg:pb-8">
           {features.claimLine ? (
             <div className="order-last w-full sm:order-none sm:w-56" aria-hidden="true">
               <svg

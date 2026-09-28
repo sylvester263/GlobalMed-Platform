@@ -26,7 +26,7 @@ export function AapcInstructorsBand({
   const headingId = `${id}-title`;
   return (
     <section id={id} aria-labelledby={headingId} className="border-b bg-mint">
-      <div className="mx-auto grid max-w-300 items-center gap-10 px-4 py-14 md:px-6 lg:grid-cols-[1.3fr_1fr] lg:py-16">
+      <div className="container-fluid grid items-center gap-10 py-14 lg:grid-cols-[1.3fr_1fr] lg:py-16">
         <div className="flex flex-col gap-5">
           <h2 id={headingId} className="text-2xl lg:text-3xl">
             {instructorsBand.title}

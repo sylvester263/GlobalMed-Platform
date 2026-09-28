@@ -153,7 +153,8 @@ export function AppBadge({ badge, href }: { badge: (typeof appBadges)[number]; h
 /**
  * AAPC-style compact footer (client, 2026-09-27): one deep-navy band with the logo, links,
  * contact line and fine print on the left, social icons and app badges on the right.
- * ≥1280px one row; 768–1279px two rows, left-aligned; phones stacked and centred in the
+ * Uses the shared fluid container (client, 2026-09-28), so it lines up with the header and
+ * page content. ≥1280px one row; 768–1279px two rows, left-aligned; phones stacked and centred in the
  * order logo → social → badges → links → contact → fine print (CSS `order` with
  * `display: contents` on the two blocks). Below 1280px the bottom padding reserves the
  * 72px floating help button's height, so it never covers links, icons or badges.
@@ -166,7 +167,7 @@ export function CompactFooter() {
 
   return (
     <footer className="bg-navy-deep text-footer-link">
-      <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-5 px-5 pt-9 pb-[108px] text-center md:items-start md:gap-6 md:px-12 md:text-left xl:flex-row xl:items-center xl:justify-between xl:px-[150px] xl:pb-9">
+      <div className="container-fluid flex flex-col items-center gap-5 pt-9 pb-[108px] text-center md:items-start md:gap-6 md:text-left xl:flex-row xl:items-center xl:justify-between xl:pb-9">
         {/* Left block */}
         <div className="contents md:flex md:flex-col md:items-start md:gap-3.5">
           <Link

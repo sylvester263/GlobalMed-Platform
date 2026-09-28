@@ -173,7 +173,7 @@ function ClaimLineJourneySection({ id, title, intro, stages, children }: Journey
         >
           <div
             className={cn(
-              "mx-auto flex max-w-300 flex-col gap-10 px-4 py-16 md:px-6 lg:py-20",
+              "container-fluid flex flex-col gap-10 py-16 lg:py-20",
               enhanced && "lg:py-12",
             )}
           >
@@ -211,7 +211,7 @@ function NumberedStepsSection({ id, title, intro, stages, children }: JourneySec
   const headingId = `${id}-title`;
   return (
     <section id={id} aria-labelledby={headingId} className="bg-mint">
-      <div className="mx-auto flex max-w-300 flex-col gap-10 px-4 py-16 md:px-6 lg:py-20">
+      <div className="container-fluid flex flex-col gap-10 py-16 lg:py-20">
         <div className="flex max-w-3xl flex-col gap-3">
           <h2 id={headingId} className="text-2xl lg:text-3xl">
             {title}

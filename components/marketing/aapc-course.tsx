@@ -191,7 +191,7 @@ export function AapcCourseCard({
 export function AapcRegisterBand({ defaultCourse }: { defaultCourse?: AapcCourseSlug }) {
   return (
     <section id="register" aria-labelledby="register-title" className="bg-ink text-white">
-      <div className="mx-auto grid max-w-300 gap-10 px-4 py-16 md:px-6 lg:grid-cols-[1fr_1.3fr] lg:items-start lg:gap-16">
+      <div className="container-fluid grid gap-10 py-16 lg:grid-cols-[1fr_1.3fr] lg:items-start lg:gap-16">
         <div className="flex flex-col gap-5">
           <h2 id="register-title" className="text-2xl text-white lg:text-3xl">
             Register for AAPC Training

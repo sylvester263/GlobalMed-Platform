@@ -88,7 +88,10 @@ export default async function ServicePage({ params }: Props) {
       </Section>
 
       <Section tone="white" title={`What's included in ${service.name.toLowerCase()}`}>
-        <StaggerGroup as="ul" className="grid gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
+        <StaggerGroup
+          as="ul"
+          className="grid gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-3 wide:grid-cols-4"
+        >
           {service.included.map((item) => (
             <StaggerItem as="li" key={item.title} className="flex gap-3">
               <Check aria-hidden="true" className="mt-1 size-5 shrink-0 text-teal" />

@@ -101,11 +101,11 @@ export default function HomePage() {
 
       {/* 2. Partnership strip (MG-4 count-up) */}
       <section aria-label="GlobalMed and AAPC partnership" className="bg-primary text-white">
-        <div className="mx-auto flex max-w-300 flex-col gap-10 px-4 py-14 md:px-6">
+        <div className="container-fluid flex flex-col gap-10 py-14">
           <p className="max-w-4xl font-serif text-xl leading-snug font-semibold text-white lg:text-2xl">
             {approvedWording.partnership}
           </p>
-          <p className="max-w-3xl text-white/85">{approvedWording.role}</p>
+          <p className="max-w-[75ch] text-white/85">{approvedWording.role}</p>
           {/* Hidden at client request — GlobalMed education plans are future scope. */}
           {features.trainingStats && (
             <ul className="grid grid-cols-2 gap-8 lg:grid-cols-4">

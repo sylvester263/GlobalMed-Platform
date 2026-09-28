@@ -126,7 +126,7 @@ export default function AapcCertificationPage() {
             </caption>
             <thead className="bg-ledger">
               <tr>
-                <th scope="col" className="px-4 py-3 font-semibold">
+                <th scope="col" className="px-4 py-3 font-semibold lg:px-6 lg:py-4">
                   <span className="sr-only">Detail</span>
                 </th>
                 {columns.map((course) => (
@@ -134,7 +134,7 @@ export default function AapcCertificationPage() {
                     key={course.slug}
                     scope="col"
                     className={cn(
-                      "px-4 py-3 font-serif text-lg font-semibold text-primary",
+                      "px-4 py-3 font-serif text-lg font-semibold text-primary lg:px-6 lg:py-4",
                       course.bestValue && "bg-mint",
                     )}
                   >
@@ -151,14 +151,17 @@ export default function AapcCertificationPage() {
             <tbody>
               {comparisonRows.map((row) => (
                 <tr key={row.label} className="border-t">
-                  <th scope="row" className="px-4 py-3 font-semibold whitespace-nowrap">
+                  <th
+                    scope="row"
+                    className="px-4 py-3 font-semibold whitespace-nowrap lg:px-6 lg:py-4"
+                  >
                     {row.label}
                   </th>
                   {columns.map((course) => (
                     <td
                       key={course.slug}
                       className={cn(
-                        "px-4 py-3 text-muted-foreground",
+                        "px-4 py-3 text-muted-foreground lg:px-6 lg:py-4",
                         course.bestValue && "bg-mint/50",
                       )}
                     >

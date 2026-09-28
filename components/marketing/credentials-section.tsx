@@ -19,7 +19,7 @@ export function CredentialsSection({ id = "credentials" }: { id?: string }) {
   const headingId = `${id}-title`;
   return (
     <section id={id} aria-labelledby={headingId} className="border-b bg-card">
-      <div className="mx-auto flex max-w-300 flex-col gap-10 px-4 py-16 md:px-6 lg:py-20">
+      <div className="container-fluid flex flex-col gap-10 py-16 lg:py-20">
         <div className="flex max-w-3xl flex-col gap-3">
           <h2 id={headingId} className="text-2xl lg:text-3xl">
             Registered, Certified &amp; Compliant
@@ -36,7 +36,7 @@ export function CredentialsSection({ id = "credentials" }: { id?: string }) {
               <StaggerItem
                 as="li"
                 key={credential.id}
-                className="flex w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4.5rem)/4)]"
+                className="flex w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)] wide:w-[calc((100%-4.5rem)/4)]"
               >
                 <article className="credential-tile flex w-full flex-col overflow-hidden rounded-lg border bg-card shadow-sm hover:shadow-md">
                   {/* Navy top rule with the claim-line ticks. */}

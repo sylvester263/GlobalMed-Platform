@@ -29,7 +29,7 @@ import { cn } from "@/lib/utils";
 export function ReviewBanner({ screen }: { screen: string }) {
   return (
     <div className="bg-ink text-white">
-      <p className="mx-auto flex max-w-300 flex-wrap items-center justify-between gap-2 px-4 py-2 text-sm md:px-6">
+      <p className="container-fluid flex flex-wrap items-center justify-between gap-2 py-2 text-sm">
         <span>
           Design review · <strong>{screen}</strong> · sample content, not live data
         </span>
@@ -52,7 +52,7 @@ export function MarketingFrame({
     <div className="flex min-h-dvh flex-col">
       <ReviewBanner screen={screen} />
       <header className="border-b bg-card">
-        <div className="mx-auto flex h-16 max-w-300 items-center justify-between gap-6 px-4 md:px-6">
+        <div className="container-fluid flex h-16 items-center justify-between gap-6">
           <Wordmark />
           <nav aria-label="Primary" className="hidden lg:block">
             <ul className="flex items-center gap-6 text-sm font-semibold">
@@ -80,7 +80,7 @@ export function MarketingFrame({
       </header>
       <main className="flex-1">{children}</main>
       <footer className="bg-primary text-white/85">
-        <div className="mx-auto grid max-w-300 gap-8 px-4 py-12 md:grid-cols-4 md:px-6">
+        <div className="container-fluid grid gap-8 py-12 md:grid-cols-4">
           <div className="flex flex-col gap-3">
             <Wordmark size="footer" onDark />
             <p className="text-sm">Medical billing, coding and transcription for US practices.</p>

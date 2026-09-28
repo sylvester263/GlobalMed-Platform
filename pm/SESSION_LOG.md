@@ -286,6 +286,18 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next / notes:** the active navy dot is hard to see on the slider's navy photo overlay (its white outline carries it). Ask the client whether to keep navy or use white for the active dot on the hero.
 
 ---
+### Session 008c — Full-width desktop layout
+- **Date:** 2026-09-28
+- **Done:**
+  - `container-fluid` + `--container-max`/`--gutter` tokens (ADR-029). 34 containers in 15 files were converted by script, plus the compact footer (it was 1440px with 150px padding). Header, main and footer share one left edge at every width.
+  - 75ch paragraph cap (base rule). The two role-line paragraphs that used max-w-3xl now use 75ch.
+  - Grids: `wide` breakpoint (1440px) for 4 columns on services, specialties, service features and credential tiles. The AAPC comparison table cells get more padding from 1024px.
+  - "Our Services": intro 60/40 with the AAPC note from 1280px. Cards are full width from 1024px, min 560px, text 50% / image 50% flush right, 65ch paragraphs. The measurement reads the text column.
+- **Verified:** layout script on 12 visible pages at 360/768/1280/1440/1920/2560: no horizontal scroll, header/content/footer edges equal (20/32/64/72/96px, centred at 2560), no paragraph over 75ch, no container over 1920px. Grid columns 1/2/3/4/4 at 360/768/1280/1440/1920. Stacking cards at 768, 1280, 1440, 1920 and 2560: every card reaches the top, nothing fades out scrolling up, no clipping or transformed ancestor, image flush to the card edge. 119 unit tests; full e2e 200 passed, 53 skipped by flag, 0 failed (axe included).
+- **Files touched:** app/globals.css, app/(marketing)/{page,about/page,services/page,services/[slug]/page,specialties/page,school/aapc-certification-pakistan/page,school/courses/[slug]/page}.tsx, components/marketing/{sections,site-header,site-footer,footer-compact,credentials-section,aapc-course,aapc-instructors-band}.tsx, components/marketing/home/{hero-carousel,claim-journey,services-overview,services-stack}.tsx, app/styleguide/*, pm/*
+- **Screenshots:** pm/screenshots/fullwidth-{1440,1920}-*.png
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

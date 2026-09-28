@@ -67,7 +67,7 @@ export default function CourseScreen() {
   return (
     <MarketingFrame screen="Course detail (P1-6)">
       <div className="border-b bg-ledger">
-        <div className="mx-auto flex max-w-300 flex-col gap-6 px-4 py-10 md:px-6 lg:py-14">
+        <div className="container-fluid flex flex-col gap-6 py-10 lg:py-14">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -111,7 +111,7 @@ export default function CourseScreen() {
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-300 gap-12 px-4 py-12 md:px-6 lg:grid-cols-[1fr_360px]">
+      <div className="container-fluid grid gap-12 py-12 lg:grid-cols-[1fr_360px]">
         <div className="flex min-w-0 flex-col gap-14">
           <section className="flex flex-col gap-5">
             <h2 className="text-2xl">What you’ll learn</h2>
@@ -226,7 +226,7 @@ export default function CourseScreen() {
       </div>
 
       <section className="border-t bg-card">
-        <div className="mx-auto flex max-w-300 flex-col gap-4 px-4 py-12 md:px-6">
+        <div className="container-fluid flex flex-col gap-4 py-12">
           <h2 className="text-2xl">Related courses</h2>
           <ClaimLine trigger="static" ticks={10} filled={1} className="max-w-xs" />
           <p className="text-muted-foreground">CPC Exam Preparation · Medical Billing Essentials</p>

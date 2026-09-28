@@ -180,3 +180,12 @@
   - Audit form: "Step x of y" plus a 4px rounded bar.
   - Dividers under headings and on the service cards: removed, no replacement. The "01–04" card numbers stay.
 - Consequences: the design system has no signature motif until the client picks another. MASTER.md §4, docs/06 and docs/15 §3 are marked retired but kept. Hidden features (course progress, certificate, pathways, exam-passed) are covered by the same flag. Setting the flag to true restores the line everywhere, including the MG-3 scroll-linked "How it works".
+
+## ADR-029: Fluid full-width container on desktop
+- Date: 2026-09-28 · Status: accepted (client request)
+- Context: the client wants the site to use the full desktop width instead of a fixed ~1200px column, while text stays readable.
+- Decision: one shared `container-fluid` utility (app/globals.css) with tokens `--container-max: 1920px` and `--gutter` (20px on phones, 32px at 768–1023px, clamp(32px, 5vw, 96px) from 1024px). It replaces every `mx-auto max-w-300 px-4 md:px-6` container, plus the header, both footers and the hero slider; no per-section max-widths remain. Section backgrounds stay full-bleed; content centres at 1920px on wider screens.
+  - Readability: a zero-specificity base rule caps `main p` at 75ch (any `max-w-*` class still wins).
+  - Grids: services, specialties, service features and credential tiles go 1 / 2 / 3 / 4 columns at <768 / 768 / 1024 / 1440px, via a new `wide` breakpoint (90rem). An arbitrary `min-[1440px]:` variant sorted before `lg:` and lost.
+  - "Our Services": the intro uses the full container, with the AAPC note beside the lead from 1280px (60/40). From 1024px the stacking cards span the container, min-height 560px, text 50% (padding clamp(32px, 4vw, 72px), paragraphs 65ch) and image 50% flush to the card edge. The article clips the image with `overflow: hidden`; the article is inside the sticky element, not an ancestor of it. The height measurement reads the text column, so the stretched grid doesn't feed back.
+- Consequences: new sections must use `container-fluid`. The AAPC course cards stay at 3 columns (there are only three). The 768–1023px layouts are unchanged apart from the 32px gutter.

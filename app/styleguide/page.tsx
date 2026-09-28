@@ -173,7 +173,7 @@ function Section({
 
 export default function StyleguidePage() {
   return (
-    <div className="mx-auto flex max-w-300 flex-col gap-20 px-4 py-12 md:px-6 md:py-16">
+    <div className="container-fluid flex flex-col gap-20 py-12 md:py-16">
       <header className="flex flex-col gap-4">
         <p className="text-xs font-semibold tracking-[0.12em] text-teal-deep uppercase">
           Design system · v1.0 · pending client sign-off

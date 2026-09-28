@@ -86,11 +86,11 @@ test.describe("home services (desktop, motion allowed)", () => {
 
     // Fully stacked: earlier cards are scaled down, never below 0.88.
     await page.evaluate((y) => window.scrollTo(0, y), bottom - 900);
-    const scales = await cards.evaluateAll((as) =>
-      as.map((a) => new DOMMatrix(getComputedStyle(a).transform).a),
-    );
-    expect(scales[0]).toBeLessThan(1);
-    for (const s of scales) expect(s).toBeGreaterThanOrEqual(0.88);
+    const scales = () =>
+      cards.evaluateAll((as) => as.map((a) => new DOMMatrix(getComputedStyle(a).transform).a));
+    // Motion applies the new scale on the next frame.
+    await expect.poll(async () => (await scales())[0]).toBeLessThan(1);
+    for (const s of await scales()) expect(s).toBeGreaterThanOrEqual(0.88);
 
     // No clipping or transformed ancestor above the sticky cards.
     const offenders = await cards.first().evaluate((a) => {
@@ -118,6 +118,8 @@ test.describe("home services (phone and reduced motion)", () => {
         await page.goto("/");
         const cards = page.locator("#services article");
         await expect(cards).toHaveCount(4);
+        // After hydration the plain stack (one-time fade wrappers) replaces the server markup.
+        await expect(page.locator("#services .transition-opacity > article")).toHaveCount(4);
         const { top, bottom } = await servicesRange(page);
         for (let y = top; y <= bottom; y += 400) {
           await page.evaluate((y) => window.scrollTo(0, y), y);

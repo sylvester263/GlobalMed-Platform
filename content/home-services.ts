@@ -33,7 +33,7 @@ export const serviceCards: ServiceCard[] = [
     title: "Medical Transcription",
     image: {
       src: "/images/services/medical-transcription.jpg",
-      alt: "Medical transcriptionist reviewing a clinical report",
+      alt: "Medical transcriptionist with a headset typing a clinical report at her workstation",
     },
     paragraphs: [
       "With more than 25 years of combined industry experience, GlobalMed's transcriptionists, editors, and proofreaders deliver accurate clinical documentation across medical specialties and at scale. Our team works with a wide range of EMR and EHR systems and is experienced in editing voice recognition and AI-generated drafts.",
@@ -47,7 +47,7 @@ export const serviceCards: ServiceCard[] = [
     title: "AI-Powered Clinical Documentation",
     image: {
       src: "/images/services/ai-clinical-documentation.jpg",
-      alt: "Clinical dictation turned into a structured draft report",
+      alt: "Laptop screen showing a voice waveform turning into a structured draft report",
     },
     paragraphs: [
       "Dictation2Report (D2R) by MediTechLabs transforms clinical dictations into structured draft reports in minutes. Combined with expert review, it offers an end-to-end solution for faster, accurate clinical documentation.",
@@ -61,7 +61,7 @@ export const serviceCards: ServiceCard[] = [
     title: "Revenue Cycle Management (RCM)",
     image: {
       src: "/images/services/revenue-cycle-management.jpg",
-      alt: "Medical billing specialist reviewing claims",
+      alt: "Medical biller reviewing a CMS-1500 claim form beside a revenue dashboard",
     },
     paragraphs: [
       "GlobalMed supports your revenue cycle from patient registration through final payment. Our team includes certified medical billing and coding professionals who help practices submit accurate claims, address denials, and improve collections.",
@@ -88,7 +88,7 @@ export const serviceCards: ServiceCard[] = [
     title: "AAPC Certifications: CPC® and CPB®",
     image: {
       src: "/images/services/aapc-certification.jpg",
-      alt: "Students preparing for AAPC CPC and CPB certification",
+      alt: "Student taking notes during a live online medical coding class",
     },
     paragraphs: [
       "Through its strategic partnership with the American Academy of Professional Coders (AAPC), GlobalMed helps students in Pakistan access training for two internationally recognized credentials: Certified Professional Coder (CPC®) and Certified Professional Biller (CPB®).",

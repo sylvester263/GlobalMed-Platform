@@ -1,3 +1,4 @@
+import { features } from "@/config/features";
 import { cn } from "@/lib/utils";
 
 type ClaimLineProps = {
@@ -32,6 +33,8 @@ export function ClaimLine({
   delay = 0,
   className,
 }: ClaimLineProps) {
+  // Retired at client request (2026-09-28, ADR-028): renders nothing and reserves no space.
+  if (!features.claimLine) return null;
   const count = Math.max(2, ticks);
   const reached = Math.min(count, Math.max(0, filled ?? count));
   const positions = Array.from({ length: count }, (_, i) => (i / (count - 1)) * 100);

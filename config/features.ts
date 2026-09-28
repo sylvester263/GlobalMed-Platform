@@ -62,6 +62,13 @@ export const features = {
    * show City again (it is then required, as before).
    */
   registrationCityField: false,
+  /**
+   * Hidden at client request (2026-09-28) — ticked progress line removed site-wide. Set true
+   * to restore. Off: ClaimLine, ClaimProgress's line and PathwayLine render nothing; the hero
+   * slider keeps its dots, "How it works" shows numbered steps, forms show "Step x of y" with
+   * a plain bar (ADR-028).
+   */
+  claimLine: false,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

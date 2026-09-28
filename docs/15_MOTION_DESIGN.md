@@ -45,6 +45,8 @@ export const stagger = (s = 0.06) => ({ show: { transition: { staggerChildren: s
 ```
 
 ## 3. Signature motion: the "claim line"
+> **Retired 2026-09-28 at client request** (ADR-028). The ticked claim line is switched off site-wide with `features.claimLine: false`. Replacements: dots on the hero slider, numbered steps (48px navy circles with white numbers) for "How it works", and "Step x of y" with a plain 4px bar on multi-step forms. Headings and cards have no divider. This section is kept for reference; don't use the motif in new work.
+
 The brand motif from docs/06 (a ledger rule with tick marks) is the main motion thread across the site:
 - **Hero:** the line draws left-to-right, ticks light up one by one as the headline settles, ending at the two CTAs.
 - **Claim journey section:** the same line becomes a scroll-scrubbed path (GSAP ScrollTrigger) through stages: Patient visit → Coding → Claim submitted → Scrubbed → Paid. Each tick reveals a short caption and a stat.

@@ -267,6 +267,25 @@ Newest entry at the bottom. One entry per Claude Code session.
   - On an 800px-tall screen the cards are 681px, so earlier edges peek only a few px. Full peek from about 900px tall.
 
 ---
+### Session 008b — Claim line removed site-wide
+- **Date:** 2026-09-28
+- **Done:**
+  - `features.claimLine: false` (ADR-028). `ClaimLine` and `PathwayLine` render nothing; `ClaimProgress` keeps its role and text.
+  - Places found and what replaced each:
+    - Home hero slider progress → dots only (active navy, others #C9D6EE) + pause; an invisible 6s timer keeps autoplay.
+    - "How it works" on Home and the AAPC page → numbered 48px navy circles, a row on desktop and a list on mobile, with a one-time fade.
+    - Heading dividers (removed, no replacement): services intro, the four service card titles, the AAPC instructors band, page heroes and CTA bands (`sections.tsx`), auth card, 404, empty state.
+    - Credential tiles → navy top band kept, ticks removed.
+    - Service pages' "How it works" → the "01–04" numbers stay, line removed.
+    - Free billing audit → "Step 1 of 2" + 4px bar.
+    - Hidden or unused, covered by the flag: extended footer, certificate, verify page, course progress, pathways, student dashboard pathway, styleguide. The MG-2 hero claim form and hero CTAs aren't rendered anywhere.
+  - `FadeInOnce` moved to components/motion/fade-in-once.tsx and shared. New `dot-muted` token.
+  - MASTER.md §4, docs/06 and docs/15 §3 marked "Retired 2026-09-28 at client request".
+- **Verified:** tsc, eslint, 119 unit tests (3 new for the flag). E2E: claim-line-removed scans 13 visible pages at 360/768/1280 (no line, no horizontal scroll) and checks the slider dots, the audit bar and reduced motion. "How it works" scroll down/up, slider autoplay and the stacking cards all pass. Screenshots: pm/screenshots/no-claim-line-*.
+- **Files touched:** config/features.ts, app/globals.css, components/motion/{claim-line,pathway-line,fade-in-once}.tsx, components/marketing/home/{claim-journey,hero-carousel,services-stack}.tsx, components/marketing/audit-form.tsx, tests/e2e/{public-site,claim-line-removed}.spec.ts, tests/unit/claim-line-retired.test.ts, design-system/MASTER.md, docs/06, docs/15, pm/*
+- **Next / notes:** the active navy dot is hard to see on the slider's navy photo overlay (its white outline carries it). Ask the client whether to keep navy or use white for the active dot on the hero.
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

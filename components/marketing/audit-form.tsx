@@ -8,6 +8,7 @@ import { useForm, type FieldPath } from "react-hook-form";
 
 import { Turnstile } from "@/components/marketing/turnstile";
 import { ClaimLine } from "@/components/motion/claim-line";
+import { features } from "@/config/features";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
@@ -116,8 +117,19 @@ export function AuditForm() {
         <p className="text-sm font-semibold text-muted-foreground" aria-live="polite">
           Step {step + 1} of {steps.length}
         </p>
-        {/* MG-14: progress on the claim line; the gold tick is the finished request. */}
-        <ClaimLine ticks={3} filled={step + 1} goldEnd trigger="static" />
+        {features.claimLine ? (
+          // MG-14: progress on the claim line; the gold tick is the finished request.
+          <ClaimLine ticks={3} filled={step + 1} goldEnd trigger="static" />
+        ) : (
+          // Claim line retired (ADR-028): a plain 4px bar under "Step x of y" (decorative;
+          // the text above is the announced progress).
+          <div aria-hidden="true" className="h-1 w-full overflow-hidden rounded-full bg-border">
+            <div
+              className="h-full rounded-full bg-primary transition-[width] duration-(--duration-base)"
+              style={{ width: `${((step + 1) / steps.length) * 100}%` }}
+            />
+          </div>
+        )}
         <h2 ref={headingRef} tabIndex={-1} className="text-2xl focus:outline-none">
           {current.title}
         </h2>

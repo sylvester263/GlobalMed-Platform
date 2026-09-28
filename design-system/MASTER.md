@@ -107,6 +107,8 @@ Rules: headings use `font-serif`, weight 600, `tracking-tight`, `text-balance`. 
 
 ## 4. The signature: claim line
 
+> **Retired 2026-09-28 at client request** (ADR-028). The ticked claim line is switched off site-wide with `features.claimLine: false`. Replacements: dots on the hero slider, numbered steps (48px navy circles with white numbers) for "How it works", and "Step x of y" with a plain 4px bar on multi-step forms. Headings and cards have no divider. This section is kept for reference; don't use the motif in new work.
+
 A thin horizontal rule with evenly spaced tick marks, borrowed from billing ledgers. **Spend boldness here only.**
 
 - Anatomy: 1px (`--border`) or 2px (`teal`, when active) rule; ticks 6px tall, 1px wide, every 24px or at step positions; the fill rule is navy (`teal`), filled ticks are sky; the final tick is a heavier sky mark (`gold` alias) for achievement.

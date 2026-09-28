@@ -137,36 +137,48 @@ test.describe("navigation and SEO", () => {
 test.describe("home motion (desktop, motion allowed)", () => {
   test.use({ viewport: { width: 1280, height: 720 }, reducedMotion: "no-preference" });
 
-  test("How it works stays visible while scrolling down and back up", async ({ page }) => {
+  test("How it works: numbered steps that stay visible scrolling down and back up", async ({
+    page,
+  }) => {
     await page.goto("/");
     const section = page.locator("#certification-path");
     const steps = section.locator("[data-journey-step]");
-    // Sticky, not pinned: no GSAP spacer, and the content sits in a tall wrapper.
+    await expect(steps).toHaveCount(5);
+    // Claim line retired (ADR-028): no connector, no sticky wrapper, no GSAP spacer.
     await expect(page.locator(".pin-spacer")).toHaveCount(0);
-    await section.scrollIntoViewIfNeeded();
-    // After hydration, desktop gets the tall sticky wrapper (steps × 60vh).
-    await expect
-      .poll(() => section.evaluate((el) => el.getBoundingClientRect().height), { timeout: 15000 })
-      .toBeGreaterThan(720);
-    const range = await section.evaluate((el) => ({
-      top: el.getBoundingClientRect().top + window.scrollY,
-      // Scroll distance while the content is stuck: wrapper height minus the sticky content.
-      distance:
-        el.getBoundingClientRect().height -
-        (el.querySelector(".sticky")?.getBoundingClientRect().height ?? 0),
-    }));
+    await expect(section.locator("[data-journey-line], .claim-line, .sticky")).toHaveCount(0);
 
-    // Down through the sticky range, then back up (slowly and in one jump).
-    const positions = [0.05, 0.5, 0.95, 0.6, 0.3, 0.05].map(
-      (f) => range.top - 80 + range.distance * f,
-    );
-    for (const y of positions) {
+    // Each step: a 48px navy circle with its white number.
+    for (const [i, step] of (await steps.all()).entries()) {
+      const circle = step.locator("span[aria-hidden=true]").first();
+      await expect(circle).toHaveText(String(i + 1));
+      await expect(circle).toHaveCSS("width", "48px");
+      await expect(circle).toHaveCSS("background-color", "rgb(40, 63, 147)");
+      await expect(circle).toHaveCSS("color", "rgb(255, 255, 255)");
+    }
+
+    // A row on desktop: every step starts at the same height.
+    const tops = await steps.evaluateAll((els) => els.map((e) => e.getBoundingClientRect().top));
+    expect(new Set(tops.map(Math.round)).size).toBe(1);
+
+    // Down past the section, then back up slowly and in one jump: nothing fades out.
+    const top = await section.evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+    for (const y of [top - 700, top - 200, top + 100, top + 900, top + 100, top - 700, top - 80]) {
       await page.evaluate((y) => window.scrollTo(0, y), y);
-      await expect(page.getByRole("heading", { name: "How it works" })).toBeInViewport();
+      await page.waitForTimeout(100);
+      // Any step on screen is fully visible (its one-time fade has played or is playing).
       for (const step of await steps.all()) {
-        await expect(step).toBeInViewport();
-        await expect(step).toHaveCSS("opacity", "1");
+        const onScreen = await step.evaluate((el) => {
+          const r = el.getBoundingClientRect();
+          return r.top < window.innerHeight * 0.85 && r.bottom > 0;
+        });
+        if (onScreen) await expect(step.locator("> div")).toHaveCSS("opacity", "1");
       }
+    }
+    await expect(page.getByRole("heading", { name: "How it works" })).toBeInViewport();
+    for (const step of await steps.all()) {
+      await expect(step).toBeInViewport();
+      await expect(step.locator("> div")).toHaveCSS("opacity", "1");
     }
   });
 
@@ -178,7 +190,7 @@ test.describe("home motion (desktop, motion allowed)", () => {
       "data-active",
       "true",
     );
-    // Autoplay: the 6s claim-line progress ends and advances to slide 2.
+    // Autoplay: the 6s timer ends and advances to slide 2.
     await page.mouse.move(640, 20); // over the header, not the slider (hover pauses it)
     await expect(slider.locator('[aria-label="Slide 2 of 3"]')).toHaveAttribute(
       "data-active",

@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 
 import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
 import { buttonVariants } from "@/components/ui/button";
+import { features } from "@/config/features";
 import { cn } from "@/lib/utils";
 
 export type HeroSlide = {
@@ -29,7 +30,9 @@ const TICKS = 8;
 /**
  * Home hero slider (WAI-ARIA APG carousel). Autoplays every 6s: the claim line under the
  * slides fills over those 6s (`.slide-progress` in globals.css) and its animationend
- * advances the slide, so the indicator and the timer can never drift apart. Hover, focus
+ * advances the slide, so the indicator and the timer can never drift apart. With the claim
+ * line retired (ADR-028) an invisible `.slide-timer` runs the same 6s clock and only the
+ * dots show. Hover, focus
  * inside, and the pause button all pause it (CSS animation-play-state). Reduced motion: no
  * autoplay (the fill animation is never applied, so it never ends) and a plain crossfade.
  * Slides are stacked at a fixed height, so changing slides causes no layout shift.
@@ -149,56 +152,70 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
         })}
       </div>
 
-      {/* Controls: claim-line progress, dots, previous/next and pause. */}
+      {/* Controls: claim-line progress (retired 2026-09-28, ADR-028), dots, previous/next
+          and pause. */}
       <div className="absolute inset-x-0 bottom-0 z-20">
         <div className="mx-auto flex max-w-300 flex-wrap items-center gap-x-4 gap-y-2 px-4 pb-5 md:px-6 lg:pb-8">
-          <div className="order-last w-full sm:order-none sm:w-56" aria-hidden="true">
-            <svg
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              className="block h-3 w-full overflow-visible"
-            >
-              <line
-                x1="0"
-                y1="6"
-                x2="100"
-                y2="6"
-                className="stroke-white/40"
-                strokeWidth="1"
-                vectorEffect="non-scaling-stroke"
-              />
-              {Array.from({ length: TICKS }, (_, t) => (t / (TICKS - 1)) * 100).map((x) => (
+          {features.claimLine ? (
+            <div className="order-last w-full sm:order-none sm:w-56" aria-hidden="true">
+              <svg
+                viewBox="0 0 100 12"
+                preserveAspectRatio="none"
+                className="block h-3 w-full overflow-visible"
+              >
                 <line
-                  key={x}
-                  x1={x}
-                  y1="2"
-                  x2={x}
-                  y2="10"
+                  x1="0"
+                  y1="6"
+                  x2="100"
+                  y2="6"
                   className="stroke-white/40"
                   strokeWidth="1"
                   vectorEffect="non-scaling-stroke"
                 />
-              ))}
-              <line
-                key={`${active}-${autoplay}`}
-                x1="0"
-                y1="6"
-                x2="100"
-                y2="6"
-                strokeWidth="2"
-                vectorEffect="non-scaling-stroke"
-                data-autoplay={autoplay || undefined}
-                style={
-                  {
-                    "--slide-fraction": (active + 1) / count,
-                    animationPlayState: running ? "running" : "paused",
-                  } as React.CSSProperties
-                }
-                onAnimationEnd={() => goTo(active + 1)}
-                className="slide-progress stroke-sky"
-              />
-            </svg>
-          </div>
+                {Array.from({ length: TICKS }, (_, t) => (t / (TICKS - 1)) * 100).map((x) => (
+                  <line
+                    key={x}
+                    x1={x}
+                    y1="2"
+                    x2={x}
+                    y2="10"
+                    className="stroke-white/40"
+                    strokeWidth="1"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                ))}
+                <line
+                  key={`${active}-${autoplay}`}
+                  x1="0"
+                  y1="6"
+                  x2="100"
+                  y2="6"
+                  strokeWidth="2"
+                  vectorEffect="non-scaling-stroke"
+                  data-autoplay={autoplay || undefined}
+                  style={
+                    {
+                      "--slide-fraction": (active + 1) / count,
+                      animationPlayState: running ? "running" : "paused",
+                    } as React.CSSProperties
+                  }
+                  onAnimationEnd={() => goTo(active + 1)}
+                  className="slide-progress stroke-sky"
+                />
+              </svg>
+            </div>
+          ) : (
+            // Claim line retired: an invisible, zero-size 6s timer keeps autoplay (and its
+            // pause/resume) exactly as before; its animationend advances the slide.
+            <span
+              key={`${active}-${autoplay}`}
+              aria-hidden="true"
+              data-autoplay={autoplay || undefined}
+              style={{ animationPlayState: running ? "running" : "paused" }}
+              onAnimationEnd={() => goTo(active + 1)}
+              className="slide-timer absolute size-0"
+            />
+          )}
 
           <div className="flex items-center gap-1">
             {slides.map((slide, i) => (
@@ -214,7 +231,14 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                   aria-hidden="true"
                   className={cn(
                     "block h-2.5 rounded-full border border-white transition-[width,background-color] duration-(--duration-fast)",
-                    i === active ? "w-7 bg-white" : "w-2.5 bg-transparent group-hover:bg-white/60",
+                    features.claimLine
+                      ? i === active
+                        ? "w-7 bg-white"
+                        : "w-2.5 bg-transparent group-hover:bg-white/60"
+                      : // Client, 2026-09-28: active navy #283F93, others #C9D6EE.
+                        i === active
+                        ? "w-7 bg-navy"
+                        : "w-2.5 bg-dot-muted group-hover:bg-white",
                   )}
                 />
               </button>

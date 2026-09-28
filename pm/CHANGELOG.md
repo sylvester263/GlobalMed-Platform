@@ -26,6 +26,8 @@ Format: Keep a Changelog · Semantic Versioning
 - Registration form: Address replaces City (City hidden by flag; migration 0005 adds `leads.address`) (2026-09-28)
 - Older "Medical billing services for US practices" home list hidden (2026-09-28)
 
+- Claim-line motif removed site-wide at client request (ADR-028): slider shows dots only, "How it works" uses numbered steps, the audit form shows "Step x of y" with a plain bar (2026-09-28)
+
 ### Fixed
 - "How it works" no longer disappears when scrolling up (CSS sticky instead of GSAP pin; page transition leaves no transform) (2026-09-26)
 - Footer price contrast, AAPC comparison table clipping at 360px, home meta description length (2026-09-26)

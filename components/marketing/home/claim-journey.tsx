@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { FadeInOnce } from "@/components/motion/fade-in-once";
 import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
+import { features } from "@/config/features";
 import { cn } from "@/lib/utils";
 
 type Stage = { stage: string; caption: string; stat: string };
@@ -104,20 +106,7 @@ export function ClaimJourney({ stages }: { stages: Stage[] }) {
  * transform) and nothing is measured before layout settles: progress is read on every
  * scroll frame from the wrapper's live position.
  */
-export function ClaimJourneySection({
-  id,
-  title,
-  intro,
-  stages,
-  children,
-}: {
-  id: string;
-  title: string;
-  intro?: string;
-  stages: Stage[];
-  /** Content under the steps (e.g. the Register Now button). */
-  children?: React.ReactNode;
-}) {
+function ClaimLineJourneySection({ id, title, intro, stages, children }: JourneySectionProps) {
   const reduced = usePrefersReducedMotion();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -200,5 +189,74 @@ export function ClaimJourneySection({
         </div>
       </div>
     </section>
+  );
+}
+
+type JourneySectionProps = {
+  id: string;
+  title: string;
+  intro?: string;
+  stages: Stage[];
+  /** Content under the steps (e.g. the Register Now button). */
+  children?: React.ReactNode;
+};
+
+/**
+ * Numbered steps with no connecting line (claim line retired at client request, ADR-028):
+ * a 48px navy circle with a white number, then the title and text. A row from 1024px, a
+ * vertical list below. Visible in the server HTML; each step fades in once and nothing
+ * hides when scrolling back up. No sticky wrapper or scroll listeners.
+ */
+function NumberedStepsSection({ id, title, intro, stages, children }: JourneySectionProps) {
+  const headingId = `${id}-title`;
+  return (
+    <section id={id} aria-labelledby={headingId} className="bg-mint">
+      <div className="mx-auto flex max-w-300 flex-col gap-10 px-4 py-16 md:px-6 lg:py-20">
+        <div className="flex max-w-3xl flex-col gap-3">
+          <h2 id={headingId} className="text-2xl lg:text-3xl">
+            {title}
+          </h2>
+          {intro && <p className="max-w-prose text-muted-foreground">{intro}</p>}
+        </div>
+        <ol
+          style={
+            { "--steps-cols": `repeat(${stages.length}, minmax(0, 1fr))` } as React.CSSProperties
+          }
+          className="grid gap-8 lg:grid-cols-(--steps-cols) lg:gap-6"
+        >
+          {stages.map((s, i) => (
+            <li key={s.stage} data-journey-step>
+              <FadeInOnce className="flex flex-col gap-3">
+                <span
+                  aria-hidden="true"
+                  className="flex size-12 shrink-0 items-center justify-center rounded-full bg-navy font-serif text-xl font-semibold text-white"
+                >
+                  {i + 1}
+                </span>
+                <h3 className="text-xl">
+                  <span className="sr-only">Step {i + 1}: </span>
+                  {s.stage}
+                </h3>
+                <p className="text-foreground">{s.caption}</p>
+                <p className="text-sm font-semibold text-muted-foreground">{s.stat}</p>
+              </FadeInOnce>
+            </li>
+          ))}
+        </ol>
+        {children}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * "How it works" (Home and the AAPC Certification page). With the claim line on it is the
+ * MG-3 scroll-linked line; while `features.claimLine` is off it is plain numbered steps.
+ */
+export function ClaimJourneySection(props: JourneySectionProps) {
+  return features.claimLine ? (
+    <ClaimLineJourneySection {...props} />
+  ) : (
+    <NumberedStepsSection {...props} />
   );
 }

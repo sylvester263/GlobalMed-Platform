@@ -20,6 +20,8 @@ Two audiences, one brand: the precision a practice owner trusts with revenue, an
 | `gold` | #C8962E | Certificates, achievement moments only |
 | `alert` | #B42318 | Errors, denied states |
 
+> **Retired 2026-09-28 at client request** (ADR-028). The ticked claim line is switched off site-wide with `features.claimLine: false`. Replacements: dots on the hero slider, numbered steps (48px navy circles with white numbers) for "How it works", and "Step x of y" with a plain 4px bar on multi-step forms. Headings and cards have no divider. This section is kept for reference; don't use the motif in new work.
+
 Signature idea (spend boldness here only): a **"claim line" motif** — a thin horizontal rule with small tick marks, borrowed from billing ledgers and progress bars, reused as section dividers, course progress bars and the certification pathway line.
 
 ## 4. Type

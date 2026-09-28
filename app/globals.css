@@ -18,6 +18,7 @@
   --color-navy-hover: var(--navy-hover);
   --color-navy-deep: var(--navy-deep);
   --color-footer-link: var(--footer-link);
+  --color-dot-muted: var(--dot-muted);
   --color-footer-muted: var(--footer-muted);
   --color-footer-fine: var(--footer-fine);
   --color-sky: var(--sky);
@@ -142,6 +143,8 @@
      muted 6.6:1, fine print 4.9:1. */
   --navy-deep: #17265c;
   --footer-link: #c9d6ee;
+  /* Inactive hero-slider dots (client, 2026-09-28). */
+  --dot-muted: #c9d6ee;
   --footer-muted: #9fb0d3;
   --footer-fine: #8797bf;
   --sky: #51ace3;
@@ -768,6 +771,15 @@
   transform: scaleX(var(--slide-fraction, 1));
 }
 
+@keyframes slide-timer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes slide-fill {
   from {
     transform: scaleX(0);
@@ -780,6 +792,10 @@
 @media (prefers-reduced-motion: no-preference) {
   .slide-progress[data-autoplay] {
     animation: slide-fill 6s linear both;
+  }
+  /* Claim line retired (ADR-028): the same 6s clock on an invisible element. */
+  .slide-timer[data-autoplay] {
+    animation: slide-timer 6s linear both;
   }
 }
 

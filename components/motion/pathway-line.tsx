@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 
+import { features } from "@/config/features";
 import { cn } from "@/lib/utils";
 
 export type PathwayStage = { label: string; description?: string };
@@ -20,6 +21,8 @@ type PathwayLineProps = {
  * and aria-current, never by the animation.
  */
 export function PathwayLine({ stages, current = 0, className }: PathwayLineProps) {
+  // Built on the claim line, retired at client request (2026-09-28, ADR-028).
+  if (!features.claimLine) return null;
   const last = stages.length - 1;
   const progress = last <= 0 ? 0 : Math.min(current, last) / last;
 

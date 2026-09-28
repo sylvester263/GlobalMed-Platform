@@ -16,9 +16,15 @@ Format: Keep a Changelog · Semantic Versioning
 - AAPC course pages /education/cpc, /cpb, /cpc-cpb with confirmed packages and prices; comparison table; "Register for AAPC Training" form with consent → leads; sales Leads pipeline; admin AAPC registrations (2026-09-26)
 - Official brand icons, horizontal logo lockup, PSEB and HIPAA training credentials (2026-09-26)
 
+- Home "Our Services" sticky stacking cards with the client's text and photos; lead detail page and admin CSV export of leads; official App Store / Google Play footer badges ("Coming soon" until links are set) (2026-09-28)
+
 ### Changed
 - GlobalMed presented as AAPC's Strategic Partner in Pakistan only: AAPC faculty teach online, AAPC certifies; approved wording site-wide, chatbot knowledge updated (ADR-026) (2026-09-26)
 - GlobalMed's own courses, pathways, batches, corporate training, exam prep, learning platform, instructor area, certificates/verify, checkout, refund policy and public login links hidden behind feature flags with redirects; nothing deleted (2026-09-26)
+
+- AAPC role wording is the client's approved line (enrollment, batch schedules, payment processing, books and online resources); privacy policy payment paragraph pending client confirmation (2026-09-28)
+- Registration form: Address replaces City (City hidden by flag; migration 0005 adds `leads.address`) (2026-09-28)
+- Older "Medical billing services for US practices" home list hidden (2026-09-28)
 
 ### Fixed
 - "How it works" no longer disappears when scrolling up (CSS sticky instead of GSAP pin; page transition leaves no transform) (2026-09-26)

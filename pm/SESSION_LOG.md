@@ -248,6 +248,25 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** no Vercel project exists for this repo (the only connected account is a personal one with no GlobalMed project), so there is no production URL yet. Supabase, Resend, Turnstile and Upstash are needed for the registration form to store leads.
 
 ---
+### Session 008 — Home services stack, approved wording, registration Address, footer app badges
+- **Date:** 2026-09-28
+- **Done:**
+  - Home "Our Services" directly after the hero: client text used exactly (content/home-services.ts), sky note linking to the AAPC page, four cards with the client's photos (converted from .jfif to 1600×1200 JPG).
+    - ≥768px with motion: sticky stacking cards (top 88 + 28px × index), the cards underneath scale 4% per card above (min 0.88) with a 0→10% navy overlay, driven by Motion `useScroll` + `useTransform`. All cards get the tallest card's height; a card taller than the screen sticks higher so it can be read (ADR-027).
+    - Phones and reduced motion: plain cards with a one-time fade; `md:motion-safe:` keeps the server HTML right before hydration.
+    - Old services list hidden (`homeServicesOverviewOld`). The page transition drops its class after the animation.
+  - Wording: `approvedWording.role` is the client's line (batch schedules, payment processing, books and online resources; AAPC provides training and credentials). Used by the FAQ, AAPC, About and course pages, home and the blog. docs/09 updated. Sweep amended: "batch" only as "batch schedules". Privacy has a [CLIENT TO CONFIRM] payment paragraph.
+  - Registration: Address (required, 2 rows, 10–250 chars, live count) replaces City (`registrationCityField: false`). Migration 0005_leads_address (nullable `address`, ≤250 check; tested on a throwaway Postgres 16). Saved with the lead and in the info@ email. Sales table Address column, new lead detail page, admin CSV export `/api/admin/leads/export` (admin + MFA, RLS client, formula-injection safe).
+  - Footer: official black App Store (Apple SVG) and Google Play badges, always shown; "Coming soon" disabled badges until `appLinks` are set (ADR-027).
+- **Verified:** tsc, eslint, 116 unit tests. Full e2e against `next start`: 157 passed and 53 skipped by flag. One failure, the home axe contrast on the sky card numbers, was fixed by marking them decorative (below). New specs pass: home-services (desktop stack down/up, 360, reduced motion), registration-form, footer-badges (360/768/1280). Manual scroll test (slow/fast, down/up, after reload, after back-navigation) at 1280, 768, 360 and with reduced motion. Screenshots are in pm/screenshots/ (services-stack-*, registration-address-*, footer-badges-*).
+- **Files touched:** content/home-services.ts, components/marketing/home/services-{overview,stack}.tsx, components/motion/page-transition.tsx, config/features.ts, app/(marketing)/{page,contact/page,free-billing-audit/page}.tsx, content/{aapc,home}.ts, content/blog/start-medical-coding-career-pakistan.md, content/legal/privacy.md, docs/09, supabase/migrations/0005_leads_address.sql, lib/db/types.ts, lib/validation/leads.ts, lib/leads/{actions,labels,csv}.ts, components/marketing/aapc-registration-form.tsx, app/(dashboard)/dashboard/sales/leads/{page,[id]/page}.tsx, app/api/admin/leads/export/route.ts, data/site.ts, components/marketing/footer-compact.tsx, public/images/{services,badges}/*, tests/*, pm/*
+- **Next:** apply 0005 on Supabase with the rest (P0-4); app store URLs into data/site.ts when the listings are live; client answers on the payment-processing paragraph.
+- **Blockers:** Supabase (P0-4) to apply 0005 and to test the lead detail and export pages with real data; the store links; the payment-processing details.
+- **Notes:**
+  - The sky card numbers (#51ACE3) are under 3:1 on white. They are aria-hidden decoration and excluded from the axe run (`data-decorative-ordinal`). If the client wants them to count as text, use a darker blue on the light cards.
+  - On an 800px-tall screen the cards are 681px, so earlier edges peek only a few px. Full peek from about 900px tall.
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

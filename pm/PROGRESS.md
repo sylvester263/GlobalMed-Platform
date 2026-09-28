@@ -1,12 +1,12 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-09-26 · Current phase: **5 — Payments & enrollment** (card checkout built but hidden: AAPC registration form replaces it, ADR-026) · Overall: **43%**
+Last updated: 2026-09-28 · Current phase: **5 — Payments & enrollment** (card checkout built but hidden: AAPC registration form replaces it, ADR-026) · Overall: **43%**
 
 | Phase | Status | % |
 |---|---|---|
 | 0 Foundation | 🟥 Blocked on client accounts (P0-4, P0-9) | 75 |
 | 1 Design system | 🟨 Built; awaiting client sign-off (P1-7, P1-10) | 85 |
-| 2 Public website | 🟨 Pages built; awaiting content review, motion assets, perf check on Vercel | 80 |
+| 2 Public website | 🟨 Pages built; awaiting content review, motion assets, perf check on Vercel | 83 |
 | 3 Auth & dashboard shells | 🟨 Built and tested without Supabase; end-to-end auth verification pending P0-4 | 90 |
 | 4 LMS core | 🟨 Built and tested without Supabase/Bunny; signing formats + webhook verification pending (docs/17 §4) | 90 |
 | 5 Payments & enrollment | 🟨 Card checkout + webhook built; manual payments next | 30 |
@@ -66,6 +66,7 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [x] P2-23 Business-model correction (ADR-026): AAPC partner only, 3 AAPC courses, registration form, GlobalMed education hidden behind flags; chatbot knowledge (docs/09) and wording sweep done
 - [x] P2-24 AAPC course pages with confirmed packages and prices (CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® USD 1,600), comparison table, 10 FAQs, registration consent, public login links hidden
 - [x] P2-25 "How it works" scroll-up bug fixed (CSS sticky, no GSAP pin); browser check 360/768/1280 ± reduced motion (138 checks) and E2E (146 pass, 53 skipped by flag); pm/CHANGE_REPORT_2026-09-26.md
+- [x] P2-26 Home "Our Services" sticky stacking cards with client text and photos (old services list hidden); approved role wording site-wide + privacy payment paragraph; registration Address replaces City (migration 0005, lead detail page, admin CSV export); official App Store / Google Play footer badges ("Coming soon" until links)
 - [ ] P2-21 Motion performance + reduced-motion QA — 🟨 reduced motion + CLS 0 verified; mobile perf 73–90 locally, re-measure on Vercel preview
 
 ## Phase 3 — Auth & dashboard shells

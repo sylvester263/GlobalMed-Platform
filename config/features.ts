@@ -50,6 +50,12 @@ export const features = {
    * replaces the floating WhatsApp button. Set true to restore.
    */
   floatingWhatsApp: false,
+  /**
+   * Hidden at client request — replaced by the "Our Services" sticky cards directly after the
+   * hero (2026-09-28), so services don't appear twice. The older, shorter "Medical billing
+   * services for US practices" list lower on the home page. Set true to restore.
+   */
+  homeServicesOverviewOld: false,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

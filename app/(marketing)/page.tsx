@@ -16,6 +16,7 @@ import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-ban
 import { CredentialsSection } from "@/components/marketing/credentials-section";
 import { ClaimJourneySection } from "@/components/marketing/home/claim-journey";
 import { HeroSlider } from "@/components/marketing/home/hero-slider";
+import { ServicesOverview } from "@/components/marketing/home/services-overview";
 import { CtaBand, FaqList, Section } from "@/components/marketing/sections";
 import { ServiceIcon } from "@/components/marketing/service-icon";
 import { Testimonial } from "@/components/marketing/testimonial";
@@ -87,6 +88,10 @@ export default function HomePage() {
         AAPC&apos;s Strategic Partner in Pakistan for Medical Billing and Coding
       </h1>
       <HeroSlider />
+
+      {/* 1-services. Our Services: sticky stacking cards (client, 2026-09-28). Also the target
+          of the hero's services link (#services). */}
+      <ServicesOverview />
 
       {/* 1a. Get Trained by AAPC Instructors */}
       <AapcInstructorsBand href="#certification-programs" />
@@ -222,52 +227,55 @@ export default function HomePage() {
         </Section>
       )}
 
-      {/* 8. Services for US practices (the hero's services link lands here) */}
-      <Section id="services" className="lg:grid lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-        <div className="flex flex-col gap-4">
-          <h2 className="text-2xl lg:text-3xl">Medical billing services for US practices</h2>
-          <p className="max-w-prose text-muted-foreground">
-            HIPAA-aware processes, certified coders and one team accountable for every claim.
-          </p>
-          <Link
-            href="/free-billing-audit"
-            className={cn(buttonVariants({ size: "lg" }), "self-start")}
-          >
-            Book a Free Billing Audit <ArrowRight aria-hidden="true" />
-          </Link>
-        </div>
-        <StaggerGroup as="ul" className="divide-y border-y">
-          {services.map((service) => (
-            <StaggerItem as="li" key={service.slug}>
-              <Link
-                href={`/services/${service.slug}`}
-                className="group flex gap-4 py-6 transition-colors hover:bg-card"
-              >
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-md bg-mint text-teal-deep">
-                  <ServiceIcon slug={service.slug} className="size-5" />
-                </span>
-                <span className="flex flex-col gap-1">
-                  <span className="flex items-center gap-2 font-serif text-xl font-semibold group-hover:text-teal-deep">
-                    {service.name}
-                    <ArrowRight
-                      aria-hidden="true"
-                      className="size-4 transition-transform group-hover:translate-x-1"
-                    />
-                  </span>
-                  <span className="text-muted-foreground">{service.summary}</span>
-                </span>
-              </Link>
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
-        {practiceTestimonials.length > 0 && (
-          <div className="grid gap-6 md:grid-cols-2 lg:col-span-2">
-            {practiceTestimonials.map((t) => (
-              <Testimonial key={t.quote} {...t} />
-            ))}
+      {/* 8. Services for US practices. Hidden at client request — replaced by "Our Services"
+          after the hero (2026-09-28). */}
+      {features.homeServicesOverviewOld && (
+        <Section className="lg:grid lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl lg:text-3xl">Medical billing services for US practices</h2>
+            <p className="max-w-prose text-muted-foreground">
+              HIPAA-aware processes, certified coders and one team accountable for every claim.
+            </p>
+            <Link
+              href="/free-billing-audit"
+              className={cn(buttonVariants({ size: "lg" }), "self-start")}
+            >
+              Book a Free Billing Audit <ArrowRight aria-hidden="true" />
+            </Link>
           </div>
-        )}
-      </Section>
+          <StaggerGroup as="ul" className="divide-y border-y">
+            {services.map((service) => (
+              <StaggerItem as="li" key={service.slug}>
+                <Link
+                  href={`/services/${service.slug}`}
+                  className="group flex gap-4 py-6 transition-colors hover:bg-card"
+                >
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-md bg-mint text-teal-deep">
+                    <ServiceIcon slug={service.slug} className="size-5" />
+                  </span>
+                  <span className="flex flex-col gap-1">
+                    <span className="flex items-center gap-2 font-serif text-xl font-semibold group-hover:text-teal-deep">
+                      {service.name}
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="size-4 transition-transform group-hover:translate-x-1"
+                      />
+                    </span>
+                    <span className="text-muted-foreground">{service.summary}</span>
+                  </span>
+                </Link>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+          {practiceTestimonials.length > 0 && (
+            <div className="grid gap-6 md:grid-cols-2 lg:col-span-2">
+              {practiceTestimonials.map((t) => (
+                <Testimonial key={t.quote} {...t} />
+              ))}
+            </div>
+          )}
+        </Section>
+      )}
 
       {/* 9. FAQ (FaqList emits the FAQPage JSON-LD) */}
       <Section tone="white" className="lg:grid lg:grid-cols-[1fr_2fr] lg:gap-16">

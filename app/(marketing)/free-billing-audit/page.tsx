@@ -46,7 +46,10 @@ export default function FreeBillingAuditPage() {
         intro="Tell us about your practice. We'll review a sample of your claims, denials and AR, then show you what we'd fix — at no cost and with no obligation."
         crumbs={[{ name: "Free billing audit", path: "/free-billing-audit" }]}
       />
-      <Section className="lg:grid lg:grid-cols-[1fr_1.4fr] lg:items-start lg:gap-16">
+      <Section
+        id="audit-form"
+        className="lg:grid lg:grid-cols-[1fr_1.4fr] lg:items-start lg:gap-16"
+      >
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             <h2 className="text-2xl">What we review</h2>

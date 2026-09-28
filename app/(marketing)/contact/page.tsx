@@ -26,7 +26,10 @@ export default function ContactPage() {
         intro="Questions about services for your practice, or about AAPC's CPC® and CPB® courses? Send a message and we'll reply within one business day."
         crumbs={[{ name: "Contact", path: "/contact" }]}
       />
-      <Section className="lg:grid lg:grid-cols-[1fr_1.5fr] lg:items-start lg:gap-16">
+      <Section
+        id="contact-form"
+        className="lg:grid lg:grid-cols-[1fr_1.5fr] lg:items-start lg:gap-16"
+      >
         <div className="flex flex-col gap-8">
           <ul className="flex flex-col gap-5">
             <li className="flex gap-3">

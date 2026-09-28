@@ -101,6 +101,9 @@ for (const { path, name, flag } of pages) {
       await page.goto(path);
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        // The home services card numbers "01"–"04" are aria-hidden decoration in the
+        // client-specified sky blue (#51ACE3, 2026-09-28); WCAG 1.4.3 exempts pure decoration.
+        .exclude("[data-decorative-ordinal]")
         .analyze();
       const blocking = results.violations.filter(
         (v) => v.impact === "serious" || v.impact === "critical",

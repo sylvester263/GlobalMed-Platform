@@ -13,7 +13,7 @@ const shortNames: Record<string, string> = {
 
 /**
  * AAPC course prices (footer). Confirmed by the client on 2026-09-26:
- * CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® Dual USD 1,600 (save USD 500).
+ * CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® Dual USD 1,800 (save USD 300).
  */
 export function CertificationPriceCard({
   href,

@@ -8,13 +8,7 @@ import { ClaimJourneySection } from "@/components/marketing/home/claim-journey";
 import { FaqList, PageHero, Section } from "@/components/marketing/sections";
 import { buttonVariants } from "@/components/ui/button";
 import { aapcFaqs, aapcHero, aapcSteps } from "@/content/aapc";
-import {
-  aapcCourseFacts,
-  formatUsdPrice,
-  getAapcCourses,
-  getAapcCoursesDualCentred,
-  type AapcCourse,
-} from "@/data/courses";
+import { aapcCourseFacts, formatUsdPrice, getAapcCourses, type AapcCourse } from "@/data/courses";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -31,7 +25,7 @@ type Cell = string | boolean;
 /** Comparison table rows (client, 2026-09-26). Booleans render as ✓ / – with screen-reader text. */
 const comparisonRows: { label: string; value: (course: AapcCourse) => Cell }[] = [
   { label: "Duration", value: (c) => c.compare.duration },
-  { label: "Format", value: () => `Instructor-led online, ${aapcCourseFacts.taughtBy}` },
+  { label: "Format", value: () => aapcCourseFacts.format },
   { label: "AAPC membership", value: (c) => c.compare.membership },
   { label: "Certification exam(s)", value: (c) => c.compare.exams },
   { label: "Practice tests", value: (c) => c.compare.practiceTests },
@@ -73,15 +67,14 @@ function CellValue({ value }: { value: Cell }) {
 }
 
 /**
- * AAPC Certification in Pakistan (client, 2026-09-26): the three AAPC courses (dual in the
- * middle), a comparison table, how it works, FAQs and the registration form. GlobalMed is
+ * AAPC Certification in Pakistan (client, 2026-09-26): the three AAPC courses (CPC®, CPB®,
+ * then the dual course, 2026-09-29), a comparison table, how it works, FAQs and the registration form. GlobalMed is
  * AAPC's Strategic Partner; AAPC faculty teach online and AAPC awards the certification.
  * Reached at /education/aapc-certification-pakistan via the /education rewrite (ADR-024).
  */
 export default function AapcCertificationPage() {
-  // Cards: dual course in the middle. Table columns: CPC®, CPB®, CPC® + CPB®.
-  const courses = getAapcCoursesDualCentred();
-  const columns = getAapcCourses();
+  // Cards and table columns: CPC®, CPB®, then CPC® + CPB® (client, 2026-09-29).
+  const courses = getAapcCourses();
 
   return (
     <>
@@ -129,7 +122,7 @@ export default function AapcCertificationPage() {
                 <th scope="col" className="px-4 py-3 font-semibold lg:px-6 lg:py-4">
                   <span className="sr-only">Detail</span>
                 </th>
-                {columns.map((course) => (
+                {courses.map((course) => (
                   <th
                     key={course.slug}
                     scope="col"
@@ -157,7 +150,7 @@ export default function AapcCertificationPage() {
                   >
                     {row.label}
                   </th>
-                  {columns.map((course) => (
+                  {courses.map((course) => (
                     <td
                       key={course.slug}
                       className={cn(

@@ -251,9 +251,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
             {course.bestValue && <BestValue className="self-start" />}
             <dl className="grid gap-x-6 gap-y-2 text-sm sm:grid-cols-[auto_1fr]">
               <dt className="font-semibold">Format</dt>
-              <dd className="text-muted-foreground">
-                {aapcCourseFacts.format}, taught by {aapcCourseFacts.taughtBy}
-              </dd>
+              <dd className="text-muted-foreground">{aapcCourseFacts.format}</dd>
               <dt className="font-semibold">Duration</dt>
               <dd className="text-muted-foreground">{course.duration}</dd>
               <dt className="font-semibold">Certification awarded by</dt>

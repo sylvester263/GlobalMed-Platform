@@ -64,7 +64,7 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Name and details of the third credential
 - ⬜ HIPAA: the certificate supplied is a staff training-completion certificate, not a company compliance assessment. The tile says "HIPAA Compliance Training Program completed". Confirm this wording, or supply a third-party HIPAA assessment if one exists
 - ⬜ CPC®/CPB® exam details from AAPC: number of questions, duration, format, passing score (not shown on the site since 2026-09-26; only needed if the client wants them back)
-- ✅ Course prices and packages confirmed 2026-09-26: CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® USD 1,600 (data/courses.ts)
+- ✅ Course prices and packages confirmed 2026-09-26: CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® USD 1,800 over 16 weeks (updated by the client 2026-09-29; was USD 1,600 over 32 weeks) (data/courses.ts)
 - ⬜ AAPC's approval to use its course descriptions on the GlobalMed site (content/courses/*.ts)
 - ⬜ Whether registration details are shared with AAPC (privacy policy paragraph; the form's consent already covers sharing)
 - ⬜ Payment processing for AAPC course enrollments (added 2026-09-28; privacy policy paragraph marked [CLIENT TO CONFIRM]): who processes the payments (GlobalMed, a bank/payment provider, or AAPC directly), which payment details are kept and for how long, and whether they are shared with AAPC

@@ -18,7 +18,7 @@ export const cpcCpbContent: CoursePageContent = {
   intro: {
     heading: "What is the CPC® + CPB® dual certifications course?",
     paragraphs: [
-      "Earn two AAPC credentials in one instructor-led online program. The CPC® + CPB® dual certifications course enrolls you in both AAPC preparation courses, 16 weeks for CPC® and 16 weeks for CPB®, giving you the widest foundation for a career in medical billing and coding.",
+      "Earn two AAPC credentials in one instructor-led online program. The CPC® + CPB® dual certifications course enrolls you in both AAPC preparation courses in a program that runs over 16 weeks, giving you the widest foundation for a career in medical billing and coding.",
     ],
     columns: [
       { heading: cpcContent.intro.heading, body: cpcContent.intro.paragraphs[0] ?? "" },

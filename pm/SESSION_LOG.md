@@ -321,6 +321,20 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** none new.
 
 ---
+### Session 009b — Certification content: order, dual price, duration, sessions line
+- **Date:** 2026-09-29
+- **Done:**
+  - Order CPC®, CPB®, CPC® + CPB® everywhere: `aapcCourses` reordered in data/courses.ts, and the home and AAPC-page cards now use `getAapcCourses()` (`getAapcCoursesDualCentred` removed). The comparison table, Education menu, registration dropdown, footer pricing card, FAQ, sitemap, llms.txt and JSON-LD already followed this order and still do. The dual card keeps "Best value" in third place.
+  - Dual course: USD 1,800; saving line "Save USD 300 compared to taking CPC® and CPB® separately (USD 2,100)."; meta description USD 1,800. The FAQ price answer is computed and now reads exactly as the client asked. The Course JSON-LD Offer price is 1800.
+  - Duration: dual course 16 weeks (card, hero, comparison table); package line "Instructor-led 16-week online courses led by world-class AAPC faculty"; intro now "…enrolls you in both AAPC preparation courses in a program that runs over 16 weeks, giving you…".
+  - Sessions: `aapcCourseFacts.format` = "Online sessions conducted by AAPC certified trainers", shown on the cards, the three course heroes (replacing "Instructor-led online course, taught by AAPC faculty") and the table Format row. The cards keep their separate "Taught by: AAPC faculty" row. llms.txt uses the same line.
+  - docs/09: dual row (USD 1,800, save USD 300, 16 weeks, 16-week package line) and the Format line.
+- **Search check:** "1,600", "1600", "USD 500", "Save USD 500", "32 week", "32-week", "32 weeks": none left in app, components, content, data, lib or docs. They remain only in past records (pm history, the 2026-09-26 browser-check results, an old .playwright-mcp snapshot, and tsconfig.tsbuildinfo, a build cache). The footer pricing card is data-driven but only renders in the extended footer, which is hidden (`footerExtended: false`).
+- **Verified:** tsc, eslint, 119 unit tests, `next build`. New tests/e2e/certification-content.spec.ts: no old price or duration in the visible text or JSON-LD on home, the AAPC page, the three course pages and the FAQ; card, table-column, dropdown, menu and sitemap order; dual price, saving, FAQ answer, 16 weeks and the Format row; the three heroes; the dual Offer; llms.txt; 360px with no horizontal scroll (screenshot pm/screenshots/certification-order-360.png).
+- **Files touched:** data/courses.ts, content/courses/cpc-cpb.ts, app/(marketing)/page.tsx, app/(marketing)/school/aapc-certification-pakistan/page.tsx, components/marketing/{aapc-course,certification-price-card}.tsx, docs/09_AI_CHATBOT_WHATSAPP.md, tests/e2e/certification-content.spec.ts, pm/*
+- **Next / notes:** the client may want the "Taught by: AAPC faculty" row on the cards dropped now that the format line names AAPC certified trainers.
+
+---
 
 ### Session NNN — <title>
 - **Date:**

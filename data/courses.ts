@@ -2,7 +2,8 @@
  * The AAPC courses offered through GlobalMed (client, 2026-09-26). GlobalMed is AAPC's
  * Strategic Partner in Pakistan: AAPC faculty teach these courses online and AAPC awards the
  * certification. GlobalMed helps students register and supports them through enrollment.
- * Prices and packages confirmed by the client on 2026-09-26.
+ * Prices and packages confirmed by the client on 2026-09-26; dual course USD 1,800 over
+ * 16 weeks and the sessions line from 2026-09-29.
  *
  * Each course has its own page (/education/<slug>) whose long-form copy lives in
  * content/courses/<slug>.ts. `visible: false` hides a course everywhere without deleting it.
@@ -49,7 +50,7 @@ export type AapcCourse = {
 /** Facts that apply to every AAPC course (shown on each card and course page). */
 export const aapcCourseFacts = {
   badge: "AAPC Official Course",
-  format: "Instructor-led online course",
+  format: "Online sessions conducted by AAPC certified trainers",
   taughtBy: "AAPC faculty",
   awardedBy: "AAPC",
   priceNote:
@@ -93,43 +94,6 @@ export const aapcCourses: AapcCourse[] = [
     },
   },
   {
-    slug: "cpc-cpb",
-    visible: true,
-    title:
-      "Certified Professional Coder (CPC)® + Certified Professional Biller (CPB)® dual certifications",
-    credential: "CPC® + CPB®",
-    navLabel: "CPC® + CPB® Dual Certifications",
-    registrationLabel: "CPC® + CPB®",
-    metaTitle: "CPC® + CPB® Dual Certification | AAPC",
-    metaDescription:
-      "Enroll in both AAPC preparation courses, CPC® and CPB®, taught live online by AAPC faculty, for USD 1,600. Register in Pakistan with GlobalMed.",
-    summary:
-      "Enroll in both AAPC preparation courses (CPC® and CPB®) for the widest foundation for a career in medical billing and coding.",
-    duration: "32 weeks (16 weeks CPC + 16 weeks CPB)",
-    included: [
-      "Instructor-led 32-week online courses led by world-class AAPC faculty",
-      "Two-year AAPC membership and networking benefits",
-      "Virtual internship through Practicode",
-      "CPB Denials Management and Appeals Reference Guide",
-      "Codify by AAPC code look-up assistance app subscription",
-      "CPC & CPB certification exams, along with 6 practice tests",
-      "1/2 off Prerequisite course",
-    ],
-    priceUsd: 1600,
-    priceSaving: "Save USD 500 compared to taking CPC® and CPB® separately (USD 2,100).",
-    bestValue: true,
-    compare: {
-      duration: "32 weeks",
-      membership: "2 years",
-      exams: "CPC + CPB",
-      practiceTests: "6",
-      internship: true,
-      codify: true,
-      denialsGuide: true,
-      prerequisiteHalfOff: true,
-    },
-  },
-  {
     slug: "cpb",
     visible: true,
     title: "Certified Professional Biller (CPB)®",
@@ -162,17 +126,49 @@ export const aapcCourses: AapcCourse[] = [
       prerequisiteHalfOff: true,
     },
   },
+  {
+    slug: "cpc-cpb",
+    visible: true,
+    title:
+      "Certified Professional Coder (CPC)® + Certified Professional Biller (CPB)® dual certifications",
+    credential: "CPC® + CPB®",
+    navLabel: "CPC® + CPB® Dual Certifications",
+    registrationLabel: "CPC® + CPB®",
+    metaTitle: "CPC® + CPB® Dual Certification | AAPC",
+    metaDescription:
+      "Enroll in both AAPC preparation courses, CPC® and CPB®, taught live online by AAPC faculty, for USD 1,800. Register in Pakistan with GlobalMed.",
+    summary:
+      "Enroll in both AAPC preparation courses (CPC® and CPB®) for the widest foundation for a career in medical billing and coding.",
+    duration: "16 weeks",
+    included: [
+      "Instructor-led 16-week online courses led by world-class AAPC faculty",
+      "Two-year AAPC membership and networking benefits",
+      "Virtual internship through Practicode",
+      "CPB Denials Management and Appeals Reference Guide",
+      "Codify by AAPC code look-up assistance app subscription",
+      "CPC & CPB certification exams, along with 6 practice tests",
+      "1/2 off Prerequisite course",
+    ],
+    priceUsd: 1800,
+    priceSaving: "Save USD 300 compared to taking CPC® and CPB® separately (USD 2,100).",
+    bestValue: true,
+    compare: {
+      duration: "16 weeks",
+      membership: "2 years",
+      exams: "CPC + CPB",
+      practiceTests: "6",
+      internship: true,
+      codify: true,
+      denialsGuide: true,
+      prerequisiteHalfOff: true,
+    },
+  },
 ];
 
 /** Visible courses in menu order: CPC®, CPB®, then the dual course. */
 export function getAapcCourses(): AapcCourse[] {
   const order: AapcCourseSlug[] = ["cpc", "cpb", "cpc-cpb"];
   return order.flatMap((slug) => aapcCourses.filter((c) => c.slug === slug && c.visible));
-}
-
-/** Card order on the AAPC Certification page and home: the dual course in the middle. */
-export function getAapcCoursesDualCentred(): AapcCourse[] {
-  return aapcCourses.filter((c) => c.visible);
 }
 
 export function getAapcCourse(slug: string): AapcCourse | undefined {

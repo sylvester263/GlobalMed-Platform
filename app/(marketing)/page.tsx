@@ -36,7 +36,7 @@ import {
 import { getCourse, getServices } from "@/lib/content";
 import { educationalOrganizationJsonLd, JsonLd } from "@/lib/seo/json-ld";
 import { pageMetadata } from "@/lib/seo/metadata";
-import { aapcCourseFacts, getAapcCoursesDualCentred } from "@/data/courses";
+import { aapcCourseFacts, getAapcCourses } from "@/data/courses";
 import { aapcCertificationPath, whatsappHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -132,7 +132,7 @@ export default function HomePage() {
         intro={`${approvedWording.training} ${approvedWording.certification}`}
       >
         <ul className="grid gap-8 lg:grid-cols-3 lg:items-stretch lg:gap-6">
-          {getAapcCoursesDualCentred().map((course) => (
+          {getAapcCourses().map((course) => (
             <li key={course.slug} className="flex">
               <AapcCourseCard
                 course={course}

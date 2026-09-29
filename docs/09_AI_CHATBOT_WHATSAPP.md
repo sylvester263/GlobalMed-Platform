@@ -38,10 +38,10 @@ When an admin edits a document: chunk (≈800 tokens, 100 overlap) → embed →
   - Services: clinical documentation, AI-assisted clinical documentation editing, medical coding, medical billing, revenue cycle management. Coding and billing by AAPC certified coders and billers: insurance verification and eligibility, prior authorizations, provider credentialing, medical coding, charge entry, claims preparation and submission, denial management, payment posting, accounts receivable follow-up, billing audits and reporting.
   - Training: through a strategic partnership with AAPC, GlobalMed supports training in Pakistan for CPC® and CPB®, coordinating enrollment, training schedules, payments and required learning resources with AAPC. (AAPC teaches and certifies; see §4.)
 
-### 3.2 The only courses offered (confirmed 2026-09-26)
+### 3.2 The only courses offered (confirmed 2026-09-26; dual price, duration and sessions line updated 2026-09-29)
 All three:
 - **Badge:** AAPC Official Course.
-- **Format:** instructor-led online course, taught by AAPC faculty, online only.
+- **Format:** online sessions conducted by AAPC certified trainers (instructor-led, online only; site wording 2026-09-29).
 - **Certification:** awarded by AAPC.
 - **How to register:** the Register Now form on the site, or WhatsApp +92 300 419 8760.
 - **Delivery note:** "Training is delivered online by AAPC. GlobalMed Transcriptions is AAPC's Strategic Partner in Pakistan."
@@ -50,7 +50,7 @@ All three:
 |---|---|---|---|---|
 | Certified Professional Coder (CPC)® | /education/cpc | USD 1,050 | 16 weeks, live online sessions of 1.5 hours per week, plus optional one-on-one virtual time with the instructor | 16-week online training led by world-class AAPC faculty · One-year AAPC membership and networking benefits · Virtual internship through Practicode · Codify by AAPC code look-up assistance app subscription · CPC Certification Exam, along with 3 practice tests · 1/2 off Prerequisite course |
 | Certified Professional Biller (CPB)® | /education/cpb | USD 1,050 | 16 weeks | 16-week online course led by AAPC faculty · One-year AAPC membership and benefits · Denials Management & Appeals Reference Guide · Three practice tests · Certification Exam · 1/2 off Prerequisite course |
-| CPC® + CPB® dual certifications | /education/cpc-cpb | USD 1,600 (saves USD 500 vs USD 2,100 separately) | 32 weeks (16 CPC + 16 CPB) | Instructor-led 32-week online courses led by world-class AAPC faculty · Two-year AAPC membership and networking benefits · Virtual internship through Practicode · CPB Denials Management and Appeals Reference Guide · Codify by AAPC code look-up assistance app subscription · CPC & CPB certification exams, along with 6 practice tests · 1/2 off Prerequisite course |
+| CPC® + CPB® dual certifications | /education/cpc-cpb | USD 1,800 (saves USD 300 vs USD 2,100 separately) | 16 weeks | Instructor-led 16-week online courses led by world-class AAPC faculty · Two-year AAPC membership and networking benefits · Virtual internship through Practicode · CPB Denials Management and Appeals Reference Guide · Codify by AAPC code look-up assistance app subscription · CPC & CPB certification exams, along with 6 practice tests · 1/2 off Prerequisite course |
 
 - **Prerequisites:** knowledge of medical terminology, anatomy and pathophysiology. AAPC's prerequisite courses are 1/2 off with any of these courses.
 - **CPC exam:** the exam voucher is included. Students schedule the exam in their AAPC account when ready, at least three weeks before the exam date.

@@ -64,7 +64,7 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [ ] P2-20 MG-14 to MG-18 forms, verify, page transitions, menu, chat launcher — 🟨 MG-14–17 done; MG-18 moves to P7-4 with the chat widget
 - [x] P2-22 Client review 2026-09-25: hero slider, Education rename (/education, ADR-024), AAPC Certification page, AAPC instructors band, credentials section, About rewrite, expanded footer — images/numbers pending client
 - [x] P2-23 Business-model correction (ADR-026): AAPC partner only, 3 AAPC courses, registration form, GlobalMed education hidden behind flags; chatbot knowledge (docs/09) and wording sweep done
-- [x] P2-24 AAPC course pages with confirmed packages and prices (CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® USD 1,600), comparison table, 10 FAQs, registration consent, public login links hidden
+- [x] P2-24 AAPC course pages with confirmed packages and prices (CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® USD 1,800 over 16 weeks since 2026-09-29), comparison table, 10 FAQs, registration consent, public login links hidden
 - [x] P2-25 "How it works" scroll-up bug fixed (CSS sticky, no GSAP pin); browser check 360/768/1280 ± reduced motion (138 checks) and E2E (146 pass, 53 skipped by flag); pm/CHANGE_REPORT_2026-09-26.md
 - [x] P2-26 Home "Our Services" sticky stacking cards with client text and photos (old services list hidden); approved role wording site-wide + privacy payment paragraph; registration Address replaces City (migration 0005, lead detail page, admin CSV export); official App Store / Google Play footer badges ("Coming soon" until links)
 - [x] P2-27 Claim-line motif removed site-wide (features.claimLine, ADR-028): slider dots, numbered "How it works" steps, audit form step text + plain bar; design docs marked retired

@@ -17,6 +17,7 @@ Format: Keep a Changelog · Semantic Versioning
 - Official brand icons, horizontal logo lockup, PSEB and HIPAA training credentials (2026-09-26)
 
 - Home "Our Services" sticky stacking cards with the client's text and photos; lead detail page and admin CSV export of leads; official App Store / Google Play footer badges ("Coming soon" until links are set) (2026-09-28)
+- About page "Our Story": four parts (story + founder photo slot, documentation with country/specialty chips, coding/billing/RCM checklist, navy AAPC workforce band with partner lockup and "View CPC® & CPB® Courses") and a closing statement, client text used exactly, one-time fade on scroll (2026-09-29)
 
 ### Changed
 - GlobalMed presented as AAPC's Strategic Partner in Pakistan only: AAPC faculty teach online, AAPC certifies; approved wording site-wide, chatbot knowledge updated (ADR-026) (2026-09-26)
@@ -25,6 +26,8 @@ Format: Keep a Changelog · Semantic Versioning
 - AAPC role wording is the client's approved line (enrollment, batch schedules, payment processing, books and online resources); privacy policy payment paragraph pending client confirmation (2026-09-28)
 - Registration form: Address replaces City (City hidden by flag; migration 0005 adds `leads.address`) (2026-09-28)
 - Older "Medical billing services for US practices" home list hidden (2026-09-28)
+
+- About: previous "Our Story"/"What We Do" (`aboutStoryOld`) and "Strategic Partnership" (`aboutPartnershipBlockOld`) hidden by flag; Leadership card kept on its own; new meta description; Our Story facts in the docs/09 chatbot knowledge (2026-09-29)
 
 - Claim-line motif removed site-wide at client request (ADR-028): slider shows dots only, "How it works" uses numbered steps, the audit form shows "Step x of y" with a plain bar (2026-09-28)
 

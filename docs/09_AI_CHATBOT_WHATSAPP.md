@@ -29,6 +29,14 @@ When an admin edits a document: chunk (≈800 tokens, 100 overlap) → embed →
 - Phone: +92 42 3594 6342 · WhatsApp: +92 300 419 8760 · Email: info@globalmedtranscriptions.com · Hours: Open 24/7
 - Founded 2007 by Riaz Naveed. Medical transcription, billing and coding services for hospitals and clinics in the USA, Canada, UK, Australia and Saudi Arabia.
 - "GlobalMed Transcriptions, Strategic Partner of AAPC in Pakistan for Medical Billing and Coding."
+- **Our Story (client, 2026-09-29; source `content/about-story.ts`, About page):**
+  - Legal name: GlobalMed Transcriptions (SMC) Pvt. Ltd. Founded in Pakistan in 2007. Founder & CEO: Riaz Naveed (experience in clinical laboratory work, medical transcription, quality assurance, and CPC and CPB training).
+  - Purpose: to help healthcare professionals spend less time on documentation and more time caring for patients. Began as a medical transcription business.
+  - Countries served: United States, Canada, United Kingdom, Australia, Saudi Arabia.
+  - Specialties: Family Medicine, Cardiology, Psychiatry, Orthopedics, Pathology, Radiology. Team: transcriptionists, editors and quality assurance professionals, experienced with different accents, dictation styles, templates and turnaround time (TAT) requirements.
+  - Documentation: works directly within a client's EMR or EHR system, or provides access to a subscription-based dictation and documentation platform. Reviews and edits voice recognition and AI-generated drafts.
+  - Services: clinical documentation, AI-assisted clinical documentation editing, medical coding, medical billing, revenue cycle management. Coding and billing by AAPC certified coders and billers: insurance verification and eligibility, prior authorizations, provider credentialing, medical coding, charge entry, claims preparation and submission, denial management, payment posting, accounts receivable follow-up, billing audits and reporting.
+  - Training: through a strategic partnership with AAPC, GlobalMed supports training in Pakistan for CPC® and CPB®, coordinating enrollment, training schedules, payments and required learning resources with AAPC. (AAPC teaches and certifies; see §4.)
 
 ### 3.2 The only courses offered (confirmed 2026-09-26)
 All three:

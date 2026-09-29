@@ -298,6 +298,30 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Screenshots:** pm/screenshots/fullwidth-{1440,1920}-*.png
 
 ---
+### Session 009 — About page "Our Story"
+- **Date:** 2026-09-29
+- **Done:**
+  - New "Our Story" section right after the About hero (components/marketing/about-story.tsx, text in content/about-story.ts, used exactly; no "®️" on the page).
+    - Our Story: text 60% / founder photo slot 40% (/images/about/riaz-naveed.jpg, 4:5, labelled placeholder until supplied), caption "Riaz Naveed, Founder & CEO", badge "Est. 2007 · Lahore, Pakistan".
+    - Clinical Documentation: #EEF6FC band, country and specialty chips beside the full paragraphs.
+    - Coding, Billing and RCM: white, 55/45 with a 2-column checklist of the 10 services.
+    - Investing in Pakistan's Healthcare Workforce: navy band, white text, GlobalMed + AAPC lockup, sky button "View CPC® & CPB® Courses" → /education/aapc-certification-pakistan.
+    - Closing statement: centred serif pull-quote (30px desktop, 24px tablet, 20px phone), max 60ch, thin sky rule, no ticks.
+  - Flags: `aboutStoryOld: false` (old Our Story + What We Do), `aboutPartnershipBlockOld: false` (old Strategic Partnership). The Leadership card is now a `LeaderCard` rendered on its own when the old story is hidden.
+  - Motion: `FadeInView` (components/motion/fade-in-view.tsx), Motion `whileInView` with `viewport.once`. Visible in server HTML; only blocks below the fold are hidden after mount; reduced motion (checked directly as well as through the hook, which reads false during hydration) = no animation.
+  - `PartnerLockup` moved from the hero slider to components/marketing/partner-lockup.tsx and shared; new `missingLogo="hide"` for About.
+  - SEO: About meta description trimmed to 157 characters. Organization JSON-LD already had foundingDate 2007 and founder Riaz Naveed (checked in e2e). docs/09 §3.1 has the Our Story facts.
+- **Deviations from the brief (for review):**
+  - Button text is ink #1B2A5E, not navy: navy on #51ACE3 is 3.8:1, below AA for 16px text; ink is 5.4:1.
+  - AAPC logo: the brief said show it only if public/aapc-logo.png exists. Only the client-supplied public/aapc-logo.svg exists, and it is already used on the home hero (CLIENT_INPUTS_NEEDED: "the existing SVG is used until then"), so the About lockup uses the same PNG-then-SVG lookup. With neither file, the AAPC half is hidden. Nothing is drawn.
+  - Small labels "Countries" and "Specialties" above the chips, so the two lists are identifiable.
+- **Verified:** tsc, eslint, 119 unit tests, `next build`. New tests/e2e/about-story.spec.ts (7 tests): exact text, placement after the hero, old blocks hidden, kept blocks visible, button link, meta ≤160, JSON-LD; at 360/768/1280/1920 no horizontal scroll, paragraphs ≤75ch (closing ≤60ch), one vs two columns, everything visible after scrolling down and back up; reduced motion with nothing faded. Full e2e: 207 passed, 53 skipped by flag, 0 failed (axe included). Screenshots: pm/screenshots/about-story-{360,1920}.png.
+- **Files touched:** content/about-story.ts, components/marketing/{about-story,partner-lockup}.tsx, components/marketing/home/hero-slider.tsx, components/motion/fade-in-view.tsx, app/(marketing)/about/page.tsx, config/features.ts, docs/09_AI_CHATBOT_WHATSAPP.md, tests/e2e/about-story.spec.ts, pm/*
+- **Next:** founder photo at public/images/about/riaz-naveed.jpg; AAPC logo PNG and written permission; the client may want to drop the second founder photo on the Leadership card now that Our Story shows one.
+- **Blockers:** none new.
+
+---
+
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

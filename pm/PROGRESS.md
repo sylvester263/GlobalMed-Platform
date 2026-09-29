@@ -1,6 +1,6 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-09-28 · Current phase: **5 — Payments & enrollment** (card checkout built but hidden: AAPC registration form replaces it, ADR-026) · Overall: **43%**
+Last updated: 2026-09-29 · Current phase: **5 — Payments & enrollment** (card checkout built but hidden: AAPC registration form replaces it, ADR-026) · Overall: **43%**
 
 | Phase | Status | % |
 |---|---|---|

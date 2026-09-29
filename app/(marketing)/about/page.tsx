@@ -3,9 +3,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { AboutStory } from "@/components/marketing/about-story";
 import { CredentialsSection } from "@/components/marketing/credentials-section";
 import { CtaBand, PageHero, Section, StatsStrip } from "@/components/marketing/sections";
 import { buttonVariants } from "@/components/ui/button";
+import { features } from "@/config/features";
 import { about, values } from "@/content/company";
 import { publicAssetExists } from "@/lib/public-asset";
 import { pageMetadata } from "@/lib/seo/metadata";
@@ -14,15 +16,48 @@ import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata({
   title: "About GlobalMed Transcriptions",
+  // Client's description (2026-09-29), trimmed to 160 characters with the same meaning.
   description:
-    "GlobalMed Transcriptions Pvt. Ltd., founded in 2007 by Riaz Naveed, is the leading medical transcription company in Pakistan, serving hospitals and clinics in the USA, Canada, UK, Australia and Saudi Arabia.",
+    "Founded in Pakistan in 2007, GlobalMed offers clinical documentation, AI-assisted editing, coding, billing and RCM, and supports AAPC CPC® and CPB® training.",
   path: "/about",
 });
 
-export default function AboutPage() {
+/** The Leadership card (Riaz Naveed), unchanged; shown whichever "Our Story" is on. */
+function LeaderCard({ className }: { className?: string }) {
   const { leader } = about;
   const hasPhoto = publicAssetExists(leader.photo);
+  return (
+    <article
+      className={cn(
+        "flex flex-col gap-5 self-start rounded-lg border bg-card p-6 shadow-sm",
+        className,
+      )}
+    >
+      <div className="relative aspect-[4/5] w-full max-w-60 overflow-hidden rounded-md bg-ledger">
+        {hasPhoto ? (
+          <Image
+            src={leader.photo}
+            alt={`${leader.name}, ${leader.role}`}
+            fill
+            sizes="240px"
+            className="object-cover"
+          />
+        ) : (
+          <span className="absolute inset-2 flex items-center justify-center rounded-md border-2 border-dashed border-input p-3 text-center text-xs font-semibold text-muted-foreground">
+            Photo: {leader.name}
+          </span>
+        )}
+      </div>
+      <div className="flex flex-col gap-1">
+        <h3 className="text-xl">{leader.name}</h3>
+        <p className="text-sm font-semibold text-teal-deep">{leader.role}</p>
+        <p className="text-muted-foreground">{leader.bio}</p>
+      </div>
+    </article>
+  );
+}
 
+export default function AboutPage() {
   return (
     <>
       <PageHero
@@ -32,62 +67,52 @@ export default function AboutPage() {
         crumbs={[{ name: "About Us", path: "/about" }]}
       />
 
-      <Section className="lg:grid lg:grid-cols-[1.3fr_1fr] lg:gap-16">
-        <div className="flex flex-col gap-4">
-          <h2 className="text-2xl lg:text-3xl">Our Story</h2>
-          {about.story.map((paragraph) => (
-            <p key={paragraph.slice(0, 40)} className="max-w-prose">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-        <article className="flex flex-col gap-5 self-start rounded-lg border bg-card p-6 shadow-sm">
-          <div className="relative aspect-[4/5] w-full max-w-60 overflow-hidden rounded-md bg-ledger">
-            {hasPhoto ? (
-              <Image
-                src={leader.photo}
-                alt={`${leader.name}, ${leader.role}`}
-                fill
-                sizes="240px"
-                className="object-cover"
-              />
-            ) : (
-              <span className="absolute inset-2 flex items-center justify-center rounded-md border-2 border-dashed border-input p-3 text-center text-xs font-semibold text-muted-foreground">
-                Photo: {leader.name}
-              </span>
-            )}
-          </div>
-          <div className="flex flex-col gap-1">
-            <h3 className="text-xl">{leader.name}</h3>
-            <p className="text-sm font-semibold text-teal-deep">{leader.role}</p>
-            <p className="text-muted-foreground">{leader.bio}</p>
-          </div>
-        </article>
-      </Section>
+      <AboutStory />
 
-      <Section tone="white" className="lg:grid lg:grid-cols-[1.3fr_1fr] lg:gap-16">
-        <div className="flex flex-col gap-4">
-          <h2 className="text-2xl lg:text-3xl">What We Do</h2>
-          {about.whatWeDo.map((paragraph) => (
-            <p key={paragraph.slice(0, 40)} className="max-w-prose">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-        <div className="flex flex-col gap-3">
-          <h3 className="font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase">
-            Areas of expertise
-          </h3>
-          <ul className="grid gap-2 sm:grid-cols-2">
-            {about.specialties.map((specialty) => (
-              <li key={specialty} className="flex items-center gap-2">
-                <Check aria-hidden="true" className="size-4 shrink-0 text-sky" />
-                {specialty}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Section>
+      {/* Hidden at client request (2026-09-29): replaced by the new "Our Story" above. */}
+      {features.aboutStoryOld ? (
+        <>
+          <Section className="lg:grid lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+            <div className="flex flex-col gap-4">
+              <h2 className="text-2xl lg:text-3xl">Our Story</h2>
+              {about.story.map((paragraph) => (
+                <p key={paragraph.slice(0, 40)} className="max-w-prose">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+            <LeaderCard />
+          </Section>
+
+          <Section tone="white" className="lg:grid lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+            <div className="flex flex-col gap-4">
+              <h2 className="text-2xl lg:text-3xl">What We Do</h2>
+              {about.whatWeDo.map((paragraph) => (
+                <p key={paragraph.slice(0, 40)} className="max-w-prose">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase">
+                Areas of expertise
+              </h3>
+              <ul className="grid gap-2 sm:grid-cols-2">
+                {about.specialties.map((specialty) => (
+                  <li key={specialty} className="flex items-center gap-2">
+                    <Check aria-hidden="true" className="size-4 shrink-0 text-sky" />
+                    {specialty}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Section>
+        </>
+      ) : (
+        <Section>
+          <LeaderCard className="sm:grid sm:max-w-3xl sm:grid-cols-[12rem_1fr] sm:items-start sm:gap-8" />
+        </Section>
+      )}
 
       <Section className="lg:grid lg:grid-cols-2 lg:gap-16">
         <div className="flex flex-col gap-8">
@@ -114,18 +139,21 @@ export default function AboutPage() {
 
       <StatsStrip stats={about.facts} confirmed />
 
-      <Section tone="mint" title="Strategic Partnership">
-        <p className="max-w-3xl font-serif text-xl leading-snug font-semibold text-primary lg:text-2xl">
-          {about.partnership}
-        </p>
-        <p className="max-w-[75ch] text-muted-foreground">{about.partnershipDetail}</p>
-        <Link
-          href={aapcCertificationPath}
-          className={cn(buttonVariants({ size: "lg" }), "self-start")}
-        >
-          AAPC Certification in Pakistan <ArrowRight aria-hidden="true" />
-        </Link>
-      </Section>
+      {/* Hidden at client request (2026-09-29): replaced by "Investing in Pakistan's Healthcare Workforce". */}
+      {features.aboutPartnershipBlockOld && (
+        <Section tone="mint" title="Strategic Partnership">
+          <p className="max-w-3xl font-serif text-xl leading-snug font-semibold text-primary lg:text-2xl">
+            {about.partnership}
+          </p>
+          <p className="max-w-[75ch] text-muted-foreground">{about.partnershipDetail}</p>
+          <Link
+            href={aapcCertificationPath}
+            className={cn(buttonVariants({ size: "lg" }), "self-start")}
+          >
+            AAPC Certification in Pakistan <ArrowRight aria-hidden="true" />
+          </Link>
+        </Section>
+      )}
 
       <CredentialsSection id="about-credentials" />
 

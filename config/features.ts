@@ -69,6 +69,18 @@ export const features = {
    * a plain bar (ADR-028).
    */
   claimLine: false,
+  /**
+   * Hidden at client request (2026-09-29) — replaced by the new four-part "Our Story" section
+   * (content/about-story.ts). The previous About "Our Story" and "What We Do" paragraphs. The
+   * Leadership card stays visible either way. Set true to restore.
+   */
+  aboutStoryOld: false,
+  /**
+   * Hidden at client request (2026-09-29) — replaced by "Investing in Pakistan's Healthcare
+   * Workforce" in the new "Our Story". The previous "Strategic Partnership" block on the About
+   * page. Set true to restore.
+   */
+  aboutPartnershipBlockOld: false,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

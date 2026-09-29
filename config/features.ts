@@ -82,6 +82,12 @@ export const features = {
    */
   aboutLeaderCard: false,
   /**
+   * Hidden at client request (2026-09-29) — the three "Instructor photo" slots in the "Get
+   * Trained by AAPC Instructors" band (home, AAPC Certification page). The band's text, points
+   * and button stay and span the full width. Set true to restore.
+   */
+  instructorPhotos: false,
+  /**
    * Hidden at client request (2026-09-29) — replaced by "Investing in Pakistan's Healthcare
    * Workforce" in the new "Our Story". The previous "Strategic Partnership" block on the About
    * page. Set true to restore.

@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { ClaimLine } from "@/components/motion/claim-line";
 import { buttonVariants } from "@/components/ui/button";
+import { features } from "@/config/features";
 import { instructorsBand } from "@/content/aapc";
 import { publicAssetExists } from "@/lib/public-asset";
 import { aapcCertificationPath } from "@/lib/site";
@@ -26,7 +27,12 @@ export function AapcInstructorsBand({
   const headingId = `${id}-title`;
   return (
     <section id={id} aria-labelledby={headingId} className="border-b bg-mint">
-      <div className="container-fluid grid items-center gap-10 py-14 lg:grid-cols-[1.3fr_1fr] lg:py-16">
+      <div
+        className={cn(
+          "container-fluid grid items-center gap-10 py-14 lg:py-16",
+          features.instructorPhotos && "lg:grid-cols-[1.3fr_1fr]",
+        )}
+      >
         <div className="flex flex-col gap-5">
           <h2 id={headingId} className="text-2xl lg:text-3xl">
             {instructorsBand.title}
@@ -50,28 +56,31 @@ export function AapcInstructorsBand({
             {instructorsBand.cta} <ArrowRight aria-hidden="true" />
           </Link>
         </div>
-        <ul className="grid grid-cols-3 gap-4" aria-label="AAPC instructors">
-          {instructorsBand.photos.map((photo) => (
-            <li
-              key={photo.src}
-              className="relative aspect-[4/5] overflow-hidden rounded-lg border bg-card"
-            >
-              {publicAssetExists(photo.src) ? (
-                <Image
-                  src={photo.src}
-                  alt="AAPC instructor"
-                  fill
-                  sizes="(min-width: 1024px) 160px, 30vw"
-                  className="object-cover"
-                />
-              ) : (
-                <span className="absolute inset-2 flex items-center justify-center rounded-md border-2 border-dashed border-input p-2 text-center text-xs font-semibold text-muted-foreground">
-                  {photo.placeholder}
-                </span>
-              )}
-            </li>
-          ))}
-        </ul>
+        {/* Hidden at client request (2026-09-29): see features.instructorPhotos. */}
+        {features.instructorPhotos && (
+          <ul className="grid grid-cols-3 gap-4" aria-label="AAPC instructors">
+            {instructorsBand.photos.map((photo) => (
+              <li
+                key={photo.src}
+                className="relative aspect-[4/5] overflow-hidden rounded-lg border bg-card"
+              >
+                {publicAssetExists(photo.src) ? (
+                  <Image
+                    src={photo.src}
+                    alt="AAPC instructor"
+                    fill
+                    sizes="(min-width: 1024px) 160px, 30vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <span className="absolute inset-2 flex items-center justify-center rounded-md border-2 border-dashed border-input p-2 text-center text-xs font-semibold text-muted-foreground">
+                    {photo.placeholder}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );

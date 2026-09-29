@@ -137,6 +137,21 @@ test.describe("certification content", () => {
   });
 });
 
+test.describe("instructors band without photos", () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  for (const path of ["/", "/education/aapc-certification-pakistan"]) {
+    test(`no instructor photo slots on ${path}`, async ({ page }) => {
+      await page.goto(path);
+      const band = page.locator("#aapc-instructors");
+      await expect(band.getByRole("heading", { level: 2 })).toBeVisible();
+      await expect(band.getByRole("link")).toBeVisible();
+      await expect(band.getByRole("list", { name: "AAPC instructors" })).toHaveCount(0);
+      await expect(page.locator("body")).not.toContainText("Instructor photo");
+    });
+  }
+});
+
 test.describe("certification content at 360px", () => {
   test.use({ viewport: { width: 360, height: 800 } });
 

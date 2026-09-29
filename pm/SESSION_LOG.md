@@ -342,6 +342,13 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Files touched:** config/features.ts, app/(marketing)/about/page.tsx, tests/e2e/about-story.spec.ts, pm/*
 
 ---
+### Session 009d — Instructor photo slots hidden
+- **Date:** 2026-09-29
+- **Done:** the "Instructor photo 1/2/3" slots in the "Get Trained by AAPC Instructors" band are hidden with `instructorPhotos: false` (home and AAPC Certification page; the Education landing that also uses the band is already hidden). The band's heading, text, three points and button stay, in one full-width column. The photo list and content/aapc.ts `photos` stay in the code.
+- **Verified:** tsc, eslint, prettier, `next build`; new e2e checks in tests/e2e/certification-content.spec.ts (band present, no photo list, no "Instructor photo" text on either page); full e2e suite.
+- **Files touched:** config/features.ts, components/marketing/aapc-instructors-band.tsx, tests/e2e/certification-content.spec.ts, pm/*
+
+---
 
 ### Session NNN — <title>
 - **Date:**

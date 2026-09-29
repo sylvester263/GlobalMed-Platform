@@ -56,9 +56,14 @@ test.describe("about: Our Story", () => {
     await expect(page.getByRole("heading", { name: "What We Do" })).toHaveCount(0);
     await expect(page.getByRole("heading", { name: "Our Story" })).toHaveCount(1);
     await expect(page.getByRole("heading", { name: "Strategic Partnership" })).toHaveCount(0);
-    for (const kept of ["Quality First", "Our Mission", "Riaz Naveed"]) {
+    for (const kept of ["Quality First", "Our Mission"]) {
       await expect(page.getByRole("heading", { name: kept }).first()).toBeVisible();
     }
+    // The standalone Leadership card is hidden (aboutLeaderCard); the founder shows only in
+    // Our Story.
+    await expect(page.getByRole("heading", { name: "Riaz Naveed" })).toHaveCount(0);
+    await expect(page.locator("body")).not.toContainText("diploma in Medical Laboratory");
+    await expect(page.getByText("Photo: Riaz Naveed")).toHaveCount(1);
 
     await expect(story.getByRole("link", { name: "View CPC® & CPB® Courses" })).toHaveAttribute(
       "href",

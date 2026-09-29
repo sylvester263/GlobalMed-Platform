@@ -109,9 +109,12 @@ export default function AboutPage() {
           </Section>
         </>
       ) : (
-        <Section>
-          <LeaderCard className="sm:grid sm:max-w-3xl sm:grid-cols-[12rem_1fr] sm:items-start sm:gap-8" />
-        </Section>
+        // Hidden at client request (2026-09-29): the founder is already shown in "Our Story".
+        features.aboutLeaderCard && (
+          <Section>
+            <LeaderCard className="sm:grid sm:max-w-3xl sm:grid-cols-[12rem_1fr] sm:items-start sm:gap-8" />
+          </Section>
+        )
       )}
 
       <Section className="lg:grid lg:grid-cols-2 lg:gap-16">

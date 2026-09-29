@@ -71,10 +71,16 @@ export const features = {
   claimLine: false,
   /**
    * Hidden at client request (2026-09-29) — replaced by the new four-part "Our Story" section
-   * (content/about-story.ts). The previous About "Our Story" and "What We Do" paragraphs. The
-   * Leadership card stays visible either way. Set true to restore.
+   * (content/about-story.ts). The previous About "Our Story" and "What We Do" paragraphs.
+   * Set true to restore.
    */
   aboutStoryOld: false,
+  /**
+   * Hidden at client request (2026-09-29) — the founder already appears in the new "Our Story"
+   * (photo, name and role). The standalone About Leadership card (Riaz Naveed photo, role and
+   * bio) shown below "Our Story". Set true to restore.
+   */
+  aboutLeaderCard: false,
   /**
    * Hidden at client request (2026-09-29) — replaced by "Investing in Pakistan's Healthcare
    * Workforce" in the new "Our Story". The previous "Strategic Partnership" block on the About

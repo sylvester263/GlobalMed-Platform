@@ -335,6 +335,13 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next / notes:** the client may want the "Taught by: AAPC faculty" row on the cards dropped now that the format line names AAPC certified trainers.
 
 ---
+### Session 009c — About: Leadership card hidden
+- **Date:** 2026-09-29
+- **Done:** the standalone Leadership card (Riaz Naveed photo slot, "Founder & CEO", the Medical Laboratory Technology bio) is hidden with `aboutLeaderCard: false`, because the founder already appears in "Our Story". `LeaderCard` stays in the code (the old story still uses it if `aboutStoryOld` is turned back on).
+- **Verified:** tsc, eslint, 119 unit tests, `next build`; about-story e2e (the card's heading and bio are gone, one founder photo slot remains) and the About visual audit incl. axe at 360/768/1280. Screenshots pm/screenshots/about-story-{360,1920}.png regenerated.
+- **Files touched:** config/features.ts, app/(marketing)/about/page.tsx, tests/e2e/about-story.spec.ts, pm/*
+
+---
 
 ### Session NNN — <title>
 - **Date:**

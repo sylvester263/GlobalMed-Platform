@@ -29,6 +29,7 @@ Format: Keep a Changelog · Semantic Versioning
 
 - About: previous "Our Story"/"What We Do" (`aboutStoryOld`) and "Strategic Partnership" (`aboutPartnershipBlockOld`) hidden by flag; Leadership card kept on its own; new meta description; Our Story facts in the docs/09 chatbot knowledge (2026-09-29)
 - AAPC courses: order is CPC®, CPB®, then CPC® + CPB® everywhere (dual keeps "Best value" in third place); dual course USD 1,800 (save USD 300 vs USD 2,100) over 16 weeks; format line "Online sessions conducted by AAPC certified trainers" on cards, course heroes and the comparison table; docs/09 updated (2026-09-29)
+- About: standalone Leadership card hidden (`aboutLeaderCard: false`); the founder is shown in "Our Story" (2026-09-29)
 
 - Claim-line motif removed site-wide at client request (ADR-028): slider shows dots only, "How it works" uses numbered steps, the audit form shows "Step x of y" with a plain bar (2026-09-28)
 

@@ -298,3 +298,78 @@ Getting mobile to 90 needs a dedicated performance task:
 - defer below-the-fold interactive sections;
 - review Next's link prefetching;
 - measure on the live hosting.
+
+---
+
+# Part 3: decisions of 2026-09-30 and the performance task (2026-10-01)
+
+Commits: `f5600d8` (hosting, Our Story, exam wording) · `da24169` (performance, first round) · `90ffcd6` (performance, second round) · docs update.
+
+## 12. Hosting (decision 1)
+
+- The site runs on the client's own hosting (Hostinger), which builds from GitHub `main` (ADR-032). CLAUDE.md and docs/02, 03, 10, 14 and 17 no longer describe Vercel as the host.
+- `NEXT_PUBLIC_SITE_URL=https://papayawhip-narwhal-751592.hostingersite.com` is in `.env.production`. Checked live: canonical URLs, og:image (all 200, image/jpeg), sitemap and robots use the live domain.
+- `/api/health` reports the commit baked in at build time, so the live version can be checked on any host (live now: `90ffcd6`).
+- **The old Vercel project is still live** (global-med-platform.vercel.app and global-med-platform-tljk.vercel.app, both on the latest commit): a duplicate of the site. The client deletes it, or adds noindex + a redirect.
+- **Hostinger's temporary domain serves its own robots.txt** ("User-agent: Googlebot / Disallow: /"), not the site's. Google can't index the site until the client's own domain is connected.
+
+## 13. Our Story and exam wording (decisions 3 and 4)
+
+- Photo max 400px from 1280px (380px at 1024–1279px). The photo and the heading + text block are vertically centred against each other. Alignment audit on About: 0 problems.
+- Shown again with the client's text: band point "Official AAPC certification exam with two attempts"; "How it works" caption "Take the AAPC certification exam online, with two attempts included".
+
+## 14. Performance task (decision 6)
+
+### What changed (ADR-033)
+
+| Brief item | Done |
+|---|---|
+| Client components audited | Every client component on these pages was reviewed; the ones that aren't interactive no longer load JS up front. The public env is parsed without zod (it came in through the header), the course card is separated from the registration form, and the tooltip and toast providers moved to the dashboard and styleguide layouts |
+| Below-the-fold interactive sections lazy | Deferred hydration: full server HTML, hydration when within 400px of the screen (stacking cards, How it works, FAQ accordions, registration form), or on the first hover / focus / touch. A button click that lands before hydration is replayed once |
+| Motion/GSAP only where used | No animation library on Home, About, AAPC Certification or CPC®: CSS fade on About; small scroll handlers for the stacking cards and the band background (same effect). Motion remains only in the service-page graphics and the form's success tick (loaded after submit). GSAP removed (unused) |
+| Slider | Slide 1 is static server HTML with its photo priority-loaded; the controls and autoplay hydrate after the page's load event |
+| Prefetch | `prefetch={false}` on the footer and long link lists (blog, services, specialties, course cards); the main nav keeps prefetching, as asked |
+| Fonts | Already as asked: next/font, display swap, latin subset, the two text fonts preloaded (variable fonts, one file each), the mono font not preloaded |
+| Bundle analyzer | `@next/bundle-analyzer` added (`ANALYZE=true npm run build` → .next/analyze/client.json). Unused `gsap` and `@gsap/react` removed; `sharp` (used by the share images and image scripts) declared |
+| Extra | Help menu and certificate dialog load on first click. `content-visibility: auto` on below-the-fold sections of Home and About, the footer and shared bands. The founder photo (About's mobile LCP) is priority-loaded |
+
+**First-load JS:**
+
+| Page | Before | After |
+|---|---|---|
+| Home | 278 kB | 138 kB |
+| About | 213 kB | 134 kB |
+| AAPC Certification | 250 kB | 146 kB |
+| CPC® | 244 kB | 146 kB |
+
+106 kB of the remainder is the Next.js/React runtime shared by every page.
+
+### Live measurements (mobile, median of 3, Lighthouse 13, from this machine)
+
+| Page | Before | Round 1 (`da24169`) | Round 2 (`90ffcd6`) | Desktop (round 2) |
+|---|---|---|---|---|
+| Home | 63 | 72 | 67 | 95 |
+| About | 56 | 82 | 72 | 97 |
+| AAPC Certification | 58 | **93** | 69 / 72 | 97 |
+| CPC® | 59 | **94** | 69 / 67 | 97 |
+
+Accessibility, Best Practices and SEO are 100 in every run; CLS is 0.000 everywhere.
+
+**Why the rounds differ:**
+- Lighthouse's mobile simulation scales with the CPU of the machine running it.
+- Round 2 was measured while this computer was slower: the previous build (`da24169`) measured at the same time scores the same or worse (locally, CPC® 66 vs 67, About 52 vs 61). So the second round didn't regress the site.
+- Google's PageSpeed Insights API would give stable numbers, but its free quota was used up today. Check pagespeed.web.dev for Google-hosted results.
+
+**Best achieved:** AAPC 93 and CPC® 94 (round 1), About 82, Home 72.
+
+**What still blocks Home and About (mobile):**
+- The Next.js/React runtime (~106 kB, every page) evaluates and hydrates before the page is idle.
+- Long HTML documents: first style/layout of Home is ~1.2s at 4× CPU. `content-visibility` now skips the sections below the fold.
+- The main nav's prefetch of the Contact page (its JS loads in the background on Home). Kept, as asked.
+- Server response on the hosting: 550–630ms time to first byte in the LCP breakdown.
+
+**Next steps, if needed:**
+- Turn off prefetch on the "Contact" nav item only.
+- Make the header's mega menu load on first hover.
+- Enable caching / a CDN on the hosting for lower time to first byte.
+- Measure with PageSpeed Insights.

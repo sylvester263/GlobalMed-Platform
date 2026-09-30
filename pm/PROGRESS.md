@@ -1,6 +1,6 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-09-30 · Current phase: **5 — Payments & enrollment** (card checkout built but hidden: AAPC registration form replaces it, ADR-026) · Overall: **43%**
+Last updated: 2026-10-01 · Current phase: **5 — Payments & enrollment** (card checkout built but hidden: AAPC registration form replaces it, ADR-026) · Overall: **43%**
 
 | Phase | Status | % |
 |---|---|---|
@@ -71,7 +71,7 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [x] P2-30 Fixes brief 2026-09-30: image placement audit, Our Story photo alignment, Package Includes for the three courses, new Why register section, site-wide split grid / buttons / card radius
 - [x] P2-29 Client photos placed site-wide (pm/IMAGE_PLAN.md), OG images per section, UI/UX + spacing pass on all pages (pm/UI_UX_REPORT_2026-09-30.md)
 - [x] P2-28 Fluid full-width desktop layout (container-fluid, ADR-029): 1920px max, clamp gutters, 75ch text, 4-column grids from 1440px, full-width "Our Services" cards with flush images
-- [ ] P2-21 Motion performance + reduced-motion QA — 🟨 reduced motion + CLS 0 verified; desktop 94–100; mobile Performance 44–65 locally (2026-09-30, hydration JS), needs work
+- [ ] P2-21 Motion performance + reduced-motion QA — 🟨 reduced motion + CLS 0 verified; first-load JS −40–50% (ADR-033); live mobile best AAPC 93, CPC® 94, About 82, Home 72; desktop 95–99
 
 ## Phase 3 — Auth & dashboard shells
 - [x] P3-1 Sign up / login / reset / verify email — server actions + /auth/confirm; live once Supabase is set up per docs/16

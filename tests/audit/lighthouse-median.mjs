@@ -19,6 +19,7 @@ const median = (xs) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)];
 for (const path of paths) {
   for (const mode of modesArg.split(",")) {
     const rows = [];
+    let retries = 0;
     for (let i = 0; i < runs; i++) {
       const out = join(dir, `r.json`);
       const args = [
@@ -41,6 +42,12 @@ for (const path of paths) {
       }
       const r = JSON.parse(readFileSync(out, "utf8"));
       const a = r.audits;
+      // A run that errored (e.g. no paint) has no score: retry it instead of counting it.
+      if (r.categories.performance.score == null || !a["largest-contentful-paint"]?.numericValue) {
+        if (++retries > 3) throw new Error(`Lighthouse keeps failing on ${base + path}`);
+        i--;
+        continue;
+      }
       rows.push({
         perf: Math.round(r.categories.performance.score * 100),
         a11y: Math.round(r.categories.accessibility.score * 100),

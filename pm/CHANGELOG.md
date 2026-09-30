@@ -22,8 +22,10 @@ Format: Keep a Changelog · Semantic Versioning
 - pm/IMAGE_PLAN.md: full-site image audit with prompts for AI images and the list of real photos needed (2026-09-30)
 - Photos placed site-wide: page hero photos (AAPC, courses, services, audit, careers), blog covers and cards, guide cards, new slide 3, RCM card, home AAPC band scroll background; WebP/AVIF delivery; Open Graph images per section (2026-09-30)
 - Course "Package Includes" for CPC®, CPB® and CPC® + CPB® on cards and course heroes; new home "Why register through GlobalMed Transcriptions?" (2026-09-30)
+- Hosting documented as own hosting (Hostinger); live site URL in `.env.production`; `/api/health` shows the build commit (2026-10-01)
 
 ### Changed
+- Performance: first-load JS cut 40–50% on Home, About, AAPC and course pages (deferred hydration, no animation library on these pages, lazy menus/dialogs, lean providers, prefetch off for footer/lists, content-visibility); GSAP removed (2026-10-01)
 - UI/UX pass: spacing tokens (56/72/96 section padding, 24/32 grid gaps), 44px touch targets, 16px text on phones, anchor offsets, slider/band contrast, sticky comparison-table column; CSS no longer inlined (ADR-031) (2026-09-30)
 - Fixed: pages with their own Open Graph data had no og:image (2026-09-30)
 - Layout: one split grid for text + image, form and FAQ sections; 48px buttons; 16px card radius; founder photo aligned with the Our Story heading; 60px help button on phones; old course package lists, comparison rows and the previous Why register cards hidden by flags (2026-09-30)

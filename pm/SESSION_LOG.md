@@ -406,6 +406,20 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** push waits on mobile Performance or the client's go-ahead.
 
 ---
+
+### Session 013 — Hosting, Our Story, exam wording, performance
+- **Date:** 2026-09-30 / 2026-10-01
+- **Done:** (details in pm/UI_UX_REPORT_2026-09-30.md, part 3)
+  - Hosting (ADR-032): own hosting (Hostinger) documented; `.env.production` sets the live site URL (canonical, og:image, sitemap verified live); `/api/health` shows the build commit on any host. Old Vercel project still live — client to delete or redirect it. Hostinger's temporary domain serves a robots.txt that blocks Googlebot.
+  - Our Story photo max 400px, photo and text centred; client's exam wording shown on the band and in "How it works".
+  - Performance (ADR-033): first-load JS home 278 → 138 kB, About 213 → 134, AAPC 250 → 146, CPC® 244 → 146 (deferred hydration, no Motion on these pages, lazy help menu / certificate dialog / success tick, providers moved to dashboards, no zod in the browser for env, footer/list prefetch off, content-visibility below the fold, GSAP removed, bundle analyzer added).
+- **Live mobile (median of 3):** before 56–63; best achieved AAPC 93, CPC® 94, About 82, Home 72. A second round read lower (67–72) because this machine was slower at the time — the previous build measured alongside scores the same. PageSpeed Insights quota was exhausted, so no Google-hosted numbers yet. Desktop 95–99; A/BP/SEO 100; CLS 0.
+- **Verified:** tsc, eslint, 121 unit, 252 E2E (53 skipped by flag) incl. new deferred-islands spec.
+- **Files touched:** CLAUDE.md, docs/{02,03,10,14,17}, .env.production, .env.example, next.config.ts, app/api/health, app/layout.tsx, app/(dashboard)/layout.tsx, app/styleguide/layout.tsx, app/(marketing)/**, components/defer/*, components/marketing/{aapc-course,aapc-course-card,deferred-registration-form,faq-accordion,help-button,help-menu,credential-lightbox,credential-dialog,sections,footer-compact,post-list,about-story,…}, components/motion/{fade-in-view,scroll-background}.tsx, components/marketing/home/*, lib/env.ts, package.json, tests/{audit,e2e}/*, pm/*
+- **Next:** Home and About mobile to 90 (Contact nav prefetch, mega menu on hover, hosting cache/CDN), then re-measure with PageSpeed Insights; client's regenerated images ("images replaced: <IDs>").
+- **Blockers:** Vercel project deletion and domain connection are client actions.
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

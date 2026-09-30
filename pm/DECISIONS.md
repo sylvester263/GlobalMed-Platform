@@ -207,3 +207,16 @@
 - Context: CLAUDE.md §3 named Vercel as the host. The client runs the site on its own hosting (Hostinger Node.js) at https://papayawhip-narwhal-751592.hostingersite.com, which builds from GitHub `main`. `NEXT_PUBLIC_SITE_URL` was set nowhere, so canonical URLs, og:image, the sitemap and robots.txt all said `http://localhost:3000`.
 - Decision: hosting is Hostinger; CLAUDE.md, docs/02, 03, 10, 14 and 17 updated where they described Vercel as the current host. `NEXT_PUBLIC_SITE_URL=https://papayawhip-narwhal-751592.hostingersite.com` is committed in `.env.production` (a public, non-secret value; Next.js reads it at build time, and a value set in the hosting panel still takes precedence). `/api/health` reports the commit baked in at build time (git), so any host can be checked. Vercel Analytics is dropped from the stack (it only works on Vercel).
 - Consequences: crons, geo-IP pricing and preview deployments need hosting-side equivalents when those features are switched on. The old Vercel project (global-med-platform.vercel.app, global-med-platform-tljk.vercel.app) is still live and is a duplicate of the site: the client deletes it or adds noindex + a redirect. When the client's own domain goes live, change `.env.production` and redeploy.
+
+## ADR-033: Deferred hydration and lean first loads on the public pages
+- Date: 2026-10-01 · Status: accepted
+- Context: live mobile Lighthouse was 56–63 on Home, About, AAPC Certification and CPC® (target 90). First-load JS was 213–278 kB; Motion, Base UI menus/dialogs/tooltips, sonner, zod and react-hook-form loaded on pages that didn't need them up front.
+- Decision:
+  - Keep client code only where it's interactive, and load it late: `components/defer/defer-hydration.tsx` renders full server HTML and hydrates later ("load": after the load event when idle, for the slider; "visible": within 400px of the screen, for the stacking cards, How it works, FAQ accordions). Hover, focus or touch starts loading at once; a button click that lands before hydration is caught on `window` and replayed once afterwards. The registration form hydrates on visibility the same way (React.lazy + Suspense).
+  - The help menu and the certificate dialog load on first click; the form's success tick loads after submit.
+  - No animation library on these pages: CSS fade (FadeInView), and small rAF scroll handlers for the stacking cards and the band background. Motion stays only in the service-page graphics and the success tick.
+  - Tooltip/toast providers only in the dashboard and styleguide layouts. Public env parsed without zod. The course card lives apart from the registration form.
+  - `prefetch={false}` on the footer and long link lists; the main nav keeps prefetching (client decision).
+  - `content-visibility: auto` (`cv-auto`) on below-the-fold sections of Home and About, the footer and shared bands.
+  - GSAP removed (unused since ADR-028); `sharp` declared; `@next/bundle-analyzer` (`ANALYZE=true npm run build`).
+- Consequences: first-load JS home 278 → 138 kB, About 213 → 134, AAPC 250 → 146, CPC® 244 → 146. New interactive sections should go through `deferHydration` unless they are above the fold. Tests that read `innerText` of lazily rendered sections must scroll to them or use textContent.

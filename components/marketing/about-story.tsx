@@ -45,47 +45,43 @@ function Chips({ label, items }: { label: string; items: string[] }) {
 export function AboutStory() {
   const { story, documentation, revenueCycle, workforce, closing } = aboutStory;
   const hasPhoto = publicAssetExists(story.founder.photo);
-  const [introParagraphs, founderParagraphs] = [
-    story.paragraphs.slice(0, 1),
-    story.paragraphs.slice(1),
-  ];
 
   return (
     <div data-about-story>
       <section aria-labelledby="our-story-title" className="bg-card">
-        <FadeInView className={cn(band, "flex flex-col gap-4")}>
-          <h2 id="our-story-title" className={heading}>
+        {/* Split grid (client, 2026-09-30): text 7 / photo 5 from 1280px, 60/40 at 1024–1279px,
+            the photo's top level with the heading. Below 1024px: heading, photo (centred, max
+            360px, 32px under the heading), then the text. */}
+        <FadeInView className={cn(band, "split gap-y-0")}>
+          <h2 id="our-story-title" className={cn(heading, "lg:col-start-1 lg:row-start-1")}>
             {story.title}
           </h2>
-          <Paragraphs items={introParagraphs} />
-          {/* ≥1280px the founder photo sits beside the "Our founder…" paragraph; below that it
-              comes first, above the paragraph (client, 2026-09-30). */}
-          <div className="flex flex-col gap-8 xl:grid xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:items-start xl:gap-16">
-            <figure className="flex w-full max-w-sm flex-col gap-4 xl:order-last xl:max-w-md xl:justify-self-end">
-              <div className="rounded-2xl bg-ledger p-4 shadow-sm">
-                {hasPhoto ? (
-                  <Image
-                    src={story.founder.photo}
-                    alt={story.founder.alt}
-                    width={800}
-                    height={1000}
-                    sizes="(min-width: 1280px) 416px, (min-width: 640px) 352px, calc(100vw - 64px)"
-                    className="h-auto w-full rounded-2xl"
-                  />
-                ) : (
-                  <span className="flex aspect-[4/5] w-full items-center justify-center rounded-2xl border-2 border-dashed border-input p-3 text-center text-sm font-semibold text-muted-foreground">
-                    Photo: {story.founder.name}
-                  </span>
-                )}
-              </div>
-              <figcaption className="flex flex-col items-start gap-2">
-                <span className="font-semibold text-ink">{story.founder.caption}</span>
-                <span className="rounded-full bg-mint px-3 py-1 text-xs font-semibold text-ink">
-                  {story.founder.badge}
+          <figure className="mx-auto mt-8 flex w-full max-w-[360px] flex-col gap-3 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:mr-0 lg:ml-auto lg:max-w-[380px] xl:max-w-[460px]">
+            <div className="rounded-2xl bg-ledger p-4 shadow-sm">
+              {hasPhoto ? (
+                <Image
+                  src={story.founder.photo}
+                  alt={story.founder.alt}
+                  width={800}
+                  height={1000}
+                  sizes="(min-width: 1280px) 428px, (min-width: 1024px) 348px, 328px"
+                  className="aspect-[4/5] h-auto w-full rounded-2xl object-contain"
+                />
+              ) : (
+                <span className="flex aspect-[4/5] w-full items-center justify-center rounded-2xl border-2 border-dashed border-input p-3 text-center text-sm font-semibold text-muted-foreground">
+                  Photo: {story.founder.name}
                 </span>
-              </figcaption>
-            </figure>
-            <Paragraphs items={founderParagraphs} />
+              )}
+            </div>
+            <figcaption className="flex flex-col items-start gap-2">
+              <span className="text-sm text-muted-foreground">{story.founder.caption}</span>
+              <span className="rounded-full bg-mint px-3 py-1 text-xs font-semibold text-ink">
+                {story.founder.badge}
+              </span>
+            </figcaption>
+          </figure>
+          <div className="mt-8 flex flex-col gap-4 lg:col-start-1 lg:row-start-2 lg:mt-4">
+            <Paragraphs items={story.paragraphs} />
           </div>
         </FadeInView>
       </section>

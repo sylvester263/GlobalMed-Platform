@@ -12,7 +12,8 @@ import { track } from "@/lib/analytics";
 import { site } from "@/lib/site";
 
 /**
- * Floating help button (client, 2026-09-27): 72px circle, bottom-right. Until the chatbot
+ * Floating help button (client, 2026-09-27): 72px circle, bottom-right; 60px under 768px
+ * (2026-09-30). The footer keeps button height + 24px clear below the last links. Until the chatbot
  * (P7-4) replaces it, it opens a small menu: WhatsApp, call, email. Base UI's menu gives the
  * keyboard behaviour: Enter/Space/arrow keys open it, arrows move between items, Esc
  * closes it and returns focus to the button.
@@ -26,9 +27,9 @@ export function HelpButton() {
     <DropdownMenu>
       <DropdownMenuTrigger
         aria-label="Help and support"
-        className="fixed right-6 bottom-6 z-40 flex size-[72px] items-center justify-center rounded-full bg-mid-blue text-white shadow-[0_8px_24px_rgb(23_38_92/0.35)] transition-[background-color,transform] duration-(--duration-fast) hover:scale-105 hover:bg-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky data-[popup-open]:bg-navy motion-reduce:hover:scale-100"
+        className="fixed right-4 bottom-4 z-40 flex size-[60px] items-center justify-center rounded-full bg-mid-blue text-white shadow-[0_8px_24px_rgb(23_38_92/0.35)] transition-[background-color,transform] duration-(--duration-fast) hover:scale-105 hover:bg-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky data-[popup-open]:bg-navy motion-reduce:hover:scale-100 md:right-6 md:bottom-6 md:size-[72px]"
       >
-        <CircleHelp aria-hidden="true" className="size-8" strokeWidth={2.25} />
+        <CircleHelp aria-hidden="true" className="size-7 md:size-8" strokeWidth={2.25} />
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top" align="end" sideOffset={12} className="w-60 p-1.5">
         <DropdownMenuItem

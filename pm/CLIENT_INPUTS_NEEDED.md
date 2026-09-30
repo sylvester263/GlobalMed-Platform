@@ -5,7 +5,7 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 ## Accounts & access (week 1)
 - ⬜ Domain registrar / DNS access for globalmedtranscriptions.com
 - ⬜ Current website admin access + list of important URLs (for redirects)
-- ⬜ Vercel team (invite SylJo Tech)
+- ✅ Hosting: own hosting (Hostinger), not Vercel (client, 2026-09-30). The old Vercel project global-med-platform(-tljk).vercel.app is still live: client to delete it, or add noindex + a redirect to the live domain
 - ⬜ Supabase organisation (invite SylJo Tech)
 - ⬜ Bunny.net account + Stream library per environment (library ID, API key, CDN hostname, token-auth key; webhook set up per docs/17 §2)
 - ⬜ Stripe account (business verification started)
@@ -70,7 +70,7 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ✅ "Package Includes" for CPC®, CPB® and CPC® + CPB® received 2026-09-30 (data/courses.ts); old "What's included" lists hidden by flag
 - ⬜ [CLIENT TO CONFIRM] CPC® + CPB® AAPC membership length: the package now says one-year (the previous package said two-year)
 - ⬜ [CLIENT TO CONFIRM] CPC® + CPB®: confirm each exam (CPC and CPB) has two attempts
-- ⬜ Replacement text for two "practice tests" mentions, now hidden (features.practiceTestsMentions): the band point "Official AAPC exams and practice tests" and the "How it works" exam-step caption "Your course includes AAPC's certification exam and practice tests."
+- ✅ Replacement text received 2026-09-30 and shown ("Official AAPC certification exam with two attempts" / "Take the AAPC certification exam online, with two attempts included") for two "practice tests" mentions, now hidden (features.practiceTestsMentions): the band point "Official AAPC exams and practice tests" and the "How it works" exam-step caption "Your course includes AAPC's certification exam and practice tests."
 - ⬜ AAPC's approval to use its course descriptions on the GlobalMed site (content/courses/*.ts)
 - ⬜ Whether registration details are shared with AAPC (privacy policy paragraph; the form's consent already covers sharing)
 - ⬜ Payment processing for AAPC course enrollments (added 2026-09-28; privacy policy paragraph marked [CLIENT TO CONFIRM]): who processes the payments (GlobalMed, a bank/payment provider, or AAPC directly), which payment details are kept and for how long, and whether they are shared with AAPC

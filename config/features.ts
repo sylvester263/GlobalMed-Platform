@@ -113,10 +113,10 @@ export const features = {
    */
   whyRegisterLegacy: false,
   /**
-   * Hidden (2026-09-30) — "practice tests" mentions outside the package lists: the band point
-   * "Official AAPC exams and practice tests" and the "How it works" exam-step caption. The
-   * client's packages no longer include practice tests; replacement text pending
-   * (pm/CLIENT_INPUTS_NEEDED.md). Set true to restore.
+   * Replaced (2026-09-30) — the "practice tests" wording outside the package lists: the band
+   * point and the "How it works" exam-step caption show the client's replacement text
+   * ("Official AAPC certification exam with two attempts", "Take the AAPC certification exam
+   * online, with two attempts included"). Set true to show the old practice-test lines.
    */
   practiceTestsMentions: false,
 } as const;

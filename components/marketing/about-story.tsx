@@ -50,13 +50,15 @@ export function AboutStory() {
     <div data-about-story>
       <section aria-labelledby="our-story-title" className="bg-card">
         {/* Split grid (client, 2026-09-30): text 7 / photo 5 from 1280px, 60/40 at 1024–1279px,
-            the photo's top level with the heading. Below 1024px: heading, photo (centred, max
-            360px, 32px under the heading), then the text. */}
-        <FadeInView className={cn(band, "split gap-y-0 lg:grid-rows-[auto_1fr]")}>
-          <h2 id="our-story-title" className={cn(heading, "lg:col-start-1 lg:row-start-1")}>
+            photo max 400px (380px at 1024–1279px); photo and heading + text are centred against
+            each other (empty rows above and below the text absorb any difference)
+            (client, 2026-09-30). Below 1024px: heading, photo (centred, max 360px, 32px under
+            the heading), then the text. */}
+        <FadeInView className={cn(band, "split gap-y-0 lg:grid-rows-[1fr_auto_auto_1fr]")}>
+          <h2 id="our-story-title" className={cn(heading, "lg:col-start-1 lg:row-start-2")}>
             {story.title}
           </h2>
-          <figure className="mx-auto mt-8 flex w-full max-w-[360px] flex-col gap-3 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:mr-0 lg:ml-auto lg:max-w-[380px] xl:max-w-[460px]">
+          <figure className="mx-auto mt-8 flex w-full max-w-[360px] flex-col gap-3 lg:col-start-2 lg:row-span-4 lg:row-start-1 lg:mt-0 lg:mr-0 lg:ml-auto lg:max-w-[380px] lg:self-center xl:max-w-[400px]">
             <div className="rounded-2xl bg-ledger p-4 shadow-sm">
               {hasPhoto ? (
                 <Image
@@ -64,7 +66,7 @@ export function AboutStory() {
                   alt={story.founder.alt}
                   width={800}
                   height={1000}
-                  sizes="(min-width: 1280px) 428px, (min-width: 1024px) 348px, 328px"
+                  sizes="(min-width: 1280px) 368px, (min-width: 1024px) 348px, 328px"
                   className="aspect-[4/5] h-auto w-full rounded-2xl object-contain"
                 />
               ) : (
@@ -80,7 +82,7 @@ export function AboutStory() {
               </span>
             </figcaption>
           </figure>
-          <div className="mt-8 flex flex-col gap-4 lg:col-start-1 lg:row-start-2 lg:mt-4">
+          <div className="mt-8 flex flex-col gap-4 lg:col-start-1 lg:row-start-3 lg:mt-4">
             <Paragraphs items={story.paragraphs} className="lg:text-lg" />
           </div>
         </FadeInView>

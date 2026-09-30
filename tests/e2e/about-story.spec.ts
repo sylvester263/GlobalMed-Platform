@@ -115,8 +115,7 @@ test.describe("about: Our Story", () => {
       expect(new Set(await storyOpacities(page))).toEqual(new Set(["1"]));
 
       // The founder photo sits beside the "Our founder…" paragraph from 1280px, above it below.
-      // Split grid (2026-09-30): photo beside the text from 1024px, its top level with the
-      // heading; below that, heading, then the photo (centred), then the text.
+      // Split grid (2026-09-30): photo beside the text from 1024px, vertically centred; below that, heading, then the photo (centred), then the text.
       const twoColumn = width >= 1024;
       const story = page.locator("[data-about-story] section").first();
       const [heading, text, figure] = await Promise.all([
@@ -125,8 +124,15 @@ test.describe("about: Our Story", () => {
         story.locator("figure").boundingBox(),
       ]);
       expect(figure!.x > text!.x + text!.width).toBe(twoColumn);
-      if (twoColumn) expect(Math.abs(figure!.y - heading!.y)).toBeLessThan(2);
-      else {
+      if (twoColumn) {
+        // Photo vertically centred against the heading + text column (client, 2026-09-30).
+        const paras = await story
+          .locator("p")
+          .evaluateAll((ps) => Math.max(...ps.map((p) => p.getBoundingClientRect().bottom)));
+        const colMid = (heading!.y + paras) / 2;
+        // The centred block is the photo plus its caption and badge.
+        expect(Math.abs(figure!.y + figure!.height / 2 - colMid)).toBeLessThan(60);
+      } else {
         expect(figure!.y).toBeGreaterThan(heading!.y + heading!.height);
         expect(figure!.y + figure!.height).toBeLessThanOrEqual(text!.y);
       }

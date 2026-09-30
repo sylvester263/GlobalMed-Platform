@@ -40,8 +40,10 @@ export const instructorsBand = {
   body: approvedWording.training,
   points: [
     "Live online classes with AAPC faculty",
-    // Hidden (features.practiceTestsMentions): the packages no longer list practice tests.
-    ...(features.practiceTestsMentions ? ["Official AAPC exams and practice tests"] : []),
+    // Client replacement text (2026-09-30); the old line returns with features.practiceTestsMentions.
+    features.practiceTestsMentions
+      ? "Official AAPC exams and practice tests"
+      : "Official AAPC certification exam with two attempts",
     "AAPC membership included",
   ],
   cta: "View CPC® & CPB® Training",
@@ -137,10 +139,10 @@ export const aapcSteps = [
   },
   {
     stage: "Take the AAPC certification exam",
-    // Hidden (features.practiceTestsMentions); replacement text pending from the client.
+    // Client replacement text (2026-09-30); the old caption returns with the flag.
     caption: features.practiceTestsMentions
       ? "Your course includes AAPC's certification exam and practice tests."
-      : undefined,
+      : "Take the AAPC certification exam online, with two attempts included",
     stat: "Official AAPC exam",
   },
   {

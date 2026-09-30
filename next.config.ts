@@ -20,6 +20,12 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Photos are WebP masters (scripts/optimize-images.mjs); next/image serves AVIF or WebP at
+  // these widths (ADR-030). 750/828/1080 are kept for 2x phones.
+  images: {
+    formats: ["image/avif", "image/webp"],
+    deviceSizes: [640, 750, 828, 960, 1080, 1280, 1920, 2560],
+  },
   experimental: {
     // Inline the (small, Tailwind-purged) CSS so it no longer blocks first render (P2-21).
     inlineCss: true,

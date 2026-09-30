@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import { ContactForm } from "@/components/marketing/contact-form";
 import { PageHero, Section } from "@/components/marketing/sections";
+import { heroImages } from "@/content/images";
 import { WhatsAppButton } from "@/components/marketing/whatsapp-button";
 import { pageMetadata } from "@/lib/seo/metadata";
 import { site } from "@/lib/site";
@@ -25,6 +26,7 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Talk to our team"
         intro="Questions about services for your practice, or about AAPC's CPC® and CPB® courses? Send a message and we'll reply within one business day."
+        image={heroImages.contact}
         crumbs={[{ name: "Contact", path: "/contact" }]}
       />
       <Section id="contact-form" className="split-cols-reverse lg:grid lg:items-start">

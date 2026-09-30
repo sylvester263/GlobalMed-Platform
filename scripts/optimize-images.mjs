@@ -54,6 +54,11 @@ const images = [
   ["guides/clean-claim-checklist.jpg", "card", "centre"],
   ["guides/denial-reason-codes.jpg", "card", "right"],
   ["guides/coding-career-90-day-plan.jpg", "card", "centre"],
+  // The share-card photos also serve as page heroes (4:3 masters og/og-*.webp, 2026-10-01).
+  ["og/og-default.jpg", "hero", "right"],
+  ["og/og-blog.jpg", "hero", "right"],
+  ["og/og-services.jpg", "hero", "right"],
+  ["og/og-careers.jpg", "hero", "right"],
   ["og/og-default.jpg", "og", "centre"],
   ["og/og-education.jpg", "og", "centre"],
   ["og/og-services.jpg", "og", "right"],

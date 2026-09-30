@@ -34,6 +34,10 @@ export const heroImages = {
     "/images/heroes/services.webp",
     "GlobalMed team members with headsets working together in a bright open-plan office",
   ),
+  contact: hero(
+    "/images/og/og-careers.webp",
+    "Three GlobalMed colleagues talking and smiling beside their desks",
+  ),
   careers: hero(
     "/images/heroes/careers.webp",
     "Team lead welcoming two new colleagues beside a desk in a modern Lahore office",
@@ -41,9 +45,9 @@ export const heroImages = {
 } satisfies Record<string, SiteImage>;
 
 /**
- * Hero photo per service page (B11–B13). Medical Transcription, AI Clinical Documentation and
- * RCM have no hero photo of their own: their home card photos aren't reused, so no image
- * appears twice on the site (2026-09-30 placement audit).
+ * Hero photo per service page. B11–B13 for billing, coding and denials; Medical Transcription,
+ * AI Clinical Documentation and RCM use the client's share-card photos (og/, otherwise never
+ * shown on a page), so no page repeats a photo (image inventory, 2026-10-01).
  */
 export const serviceHeroImages: Record<string, SiteImage> = {
   "medical-billing": hero(
@@ -53,6 +57,18 @@ export const serviceHeroImages: Record<string, SiteImage> = {
   "medical-coding": hero(
     "/images/heroes/medical-coding.webp",
     "Medical coder with glasses working at a dual-monitor desk, a reference book beside the keyboard",
+  ),
+  "medical-transcription": hero(
+    "/images/og/og-default.webp",
+    "Transcriptionists with headsets typing at a long desk in a bright office",
+  ),
+  "ai-clinical-documentation": hero(
+    "/images/og/og-blog.webp",
+    "Documentation specialist in a light blue dupatta reviewing a draft on a tablet at her desk",
+  ),
+  "revenue-cycle-management": hero(
+    "/images/og/og-services.webp",
+    "Revenue cycle specialist in a navy blazer working on a laptop in the office",
   ),
   "denial-management": hero(
     "/images/heroes/denial-management.webp",

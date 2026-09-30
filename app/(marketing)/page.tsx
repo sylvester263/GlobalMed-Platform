@@ -149,7 +149,13 @@ export default function HomePage() {
       {/* 4. Why register through GlobalMed Transcriptions? (client text, 2026-09-30). Five
           points: 3 + 2 (the 2 centred) on desktop, 2 columns on tablets, 1 on phones; equal
           card heights. */}
-      <Section tone="white" id="why-register" title={whyRegister.title} intro={whyRegister.intro}>
+      <Section
+        deferRender
+        tone="white"
+        id="why-register"
+        title={whyRegister.title}
+        intro={whyRegister.intro}
+      >
         <ul className="grid auto-rows-fr gap-grid md:grid-cols-2 lg:grid-cols-6">
           {whyRegister.points.map((point, i) => (
             <li
@@ -320,7 +326,7 @@ export default function HomePage() {
       )}
 
       {/* 9. FAQ (FaqList emits the FAQPage JSON-LD) */}
-      <Section tone="white" className="split-cols-reverse lg:grid lg:items-start">
+      <Section deferRender tone="white" className="split-cols-reverse lg:grid lg:items-start">
         <div className="flex flex-col gap-3 lg:sticky lg:top-24 lg:self-start">
           <h2 className="text-2xl lg:text-3xl">Questions about CPC® and CPB®</h2>
           <Link

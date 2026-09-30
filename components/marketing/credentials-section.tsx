@@ -16,7 +16,7 @@ import { publicAssetExists } from "@/lib/public-asset";
 export function CredentialsSection({ id = "credentials" }: { id?: string }) {
   const headingId = `${id}-title`;
   return (
-    <section id={id} aria-labelledby={headingId} className="border-b bg-card">
+    <section id={id} aria-labelledby={headingId} className="border-b bg-card cv-auto">
       <div className="container-fluid flex flex-col gap-10 section-y">
         <div className="flex max-w-3xl flex-col gap-4">
           <h2 id={headingId} className="text-2xl lg:text-3xl">

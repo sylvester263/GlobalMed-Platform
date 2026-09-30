@@ -36,7 +36,7 @@ export function AapcInstructorsBand({
       id={id}
       aria-labelledby={headingId}
       data-dark-band={dark || undefined}
-      className={cn("border-b", dark ? "relative isolate bg-navy text-white" : "bg-mint")}
+      className={cn("border-b cv-auto", dark ? "relative isolate bg-navy text-white" : "bg-mint")}
     >
       {background && <ScrollBackground image={background} />}
       <div

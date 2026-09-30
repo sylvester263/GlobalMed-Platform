@@ -67,6 +67,9 @@ export function AboutStory() {
                   width={800}
                   height={1000}
                   sizes="(min-width: 1280px) 368px, (min-width: 1024px) 348px, 328px"
+                  // The About page's largest above-the-fold image on phones (its LCP).
+                  priority
+                  fetchPriority="high"
                   className="aspect-[4/5] h-auto w-full rounded-2xl object-contain"
                 />
               ) : (
@@ -88,7 +91,7 @@ export function AboutStory() {
         </FadeInView>
       </section>
 
-      <section aria-labelledby="documentation-title" className="bg-ledger">
+      <section aria-labelledby="documentation-title" className="bg-ledger cv-auto">
         <FadeInView className={cn(band, "split")}>
           <div className="flex flex-col gap-4">
             <h2 id="documentation-title" className={heading}>
@@ -103,7 +106,7 @@ export function AboutStory() {
         </FadeInView>
       </section>
 
-      <section aria-labelledby="revenue-cycle-title" className="border-y bg-card">
+      <section aria-labelledby="revenue-cycle-title" className="border-y bg-card cv-auto">
         <FadeInView className={cn(band, "split")}>
           <div className="flex flex-col gap-4">
             <h2 id="revenue-cycle-title" className={heading}>
@@ -122,7 +125,7 @@ export function AboutStory() {
         </FadeInView>
       </section>
 
-      <section aria-labelledby="workforce-title" className="bg-primary text-white">
+      <section aria-labelledby="workforce-title" className="bg-primary text-white cv-auto">
         <FadeInView className={cn(band, "split lg:items-center")}>
           <div className="flex flex-col gap-4">
             <h2 id="workforce-title" className={cn(heading, "text-white")}>
@@ -146,7 +149,7 @@ export function AboutStory() {
         </FadeInView>
       </section>
 
-      <section aria-label="Our purpose" className="bg-card">
+      <section aria-label="Our purpose" className="bg-card cv-auto">
         <FadeInView className={cn(band, "flex flex-col items-center gap-8 text-center")}>
           <span aria-hidden="true" className="block h-0.5 w-20 bg-sky" />
           <blockquote className="max-w-[60ch]">

@@ -312,6 +312,15 @@
   }
 }
 
+/*
+ * Below-the-fold sections on long pages (2026-10-01 performance work): the browser skips
+ * style, layout and paint until they come near the screen. No visual change; `auto` keeps
+ * the real height once a section has been rendered.
+ */
+@utility cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
 @utility gap-grid {
   gap: var(--grid-gap);
 }

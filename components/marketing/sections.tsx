@@ -138,6 +138,7 @@ export function Section({
   id,
   children,
   className,
+  deferRender = false,
 }: {
   title?: string;
   intro?: string;
@@ -145,6 +146,8 @@ export function Section({
   id?: string;
   children: React.ReactNode;
   className?: string;
+  /** Below the fold on a long page: render lazily (content-visibility, 2026-10-01). */
+  deferRender?: boolean;
 }) {
   const headingId = id ? `${id}-title` : undefined;
   return (
@@ -155,6 +158,7 @@ export function Section({
         tone === "white" && "border-y bg-card",
         tone === "mint" && "bg-mint",
         tone === "ink" && "bg-ink text-white",
+        deferRender && "cv-auto",
       )}
     >
       <div className={cn("container-fluid flex flex-col gap-10 section-y", className)}>
@@ -209,7 +213,7 @@ export function CtaBand({
   secondary?: { href: string; label: string };
 }) {
   return (
-    <section className="bg-ink text-white">
+    <section className="bg-ink text-white cv-auto">
       <div className="container-fluid flex flex-col items-start gap-4 section-y">
         <h2 className="max-w-3xl text-2xl text-white lg:text-3xl">{title}</h2>
         {body && <p className="max-w-prose text-white/80">{body}</p>}

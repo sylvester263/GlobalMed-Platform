@@ -170,7 +170,7 @@ export function CompactFooter() {
   );
 
   return (
-    <footer className="bg-navy-deep text-footer-link">
+    <footer className="bg-navy-deep text-footer-link cv-auto">
       <div className="container-fluid flex flex-col items-center gap-5 pt-9 pb-[108px] text-center md:items-start md:gap-6 md:text-left xl:flex-row xl:items-center xl:justify-between xl:pb-9">
         {/* Left block */}
         <div className="contents md:flex md:flex-col md:items-start md:gap-3.5">

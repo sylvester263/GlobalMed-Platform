@@ -42,7 +42,9 @@ test.describe("about: Our Story", () => {
     for (const name of headings) {
       await expect(story.getByRole("heading", { level: 2, name, exact: true })).toBeVisible();
     }
-    const texts = await story.locator("p").allInnerTexts();
+    // textContent: sections below the fold render lazily (content-visibility), and innerText
+    // is empty until they do.
+    const texts = (await story.locator("p").allTextContents()).map((t) => t.trim());
     for (const p of [...paragraphs, aboutStory.closing]) expect(texts).toContain(p);
     await expect(page.locator("body")).not.toContainText("®️");
 
@@ -108,8 +110,9 @@ test.describe("about: Our Story", () => {
           }).length,
       );
       expect(tooWide).toBe(0);
-      // Everything faded in and stays visible after scrolling back up.
-      expect(new Set(await storyOpacities(page))).toEqual(new Set(["1"]));
+      // Everything faded in (sections below the fold render lazily, so give the one-time
+      // fades time to finish) and stays visible after scrolling back up.
+      await expect.poll(async () => [...new Set(await storyOpacities(page))]).toEqual(["1"]);
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.waitForTimeout(300);
       expect(new Set(await storyOpacities(page))).toEqual(new Set(["1"]));

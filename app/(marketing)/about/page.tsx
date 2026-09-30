@@ -118,7 +118,7 @@ export default function AboutPage() {
         )
       )}
 
-      <Section className="lg:grid lg:grid-cols-2 lg:gap-16">
+      <Section deferRender className="lg:grid lg:grid-cols-2 lg:gap-16">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             <h2 className="text-2xl lg:text-3xl">Quality First</h2>
@@ -161,7 +161,7 @@ export default function AboutPage() {
 
       <CredentialsSection id="about-credentials" />
 
-      <Section title="The people behind the work">
+      <Section deferRender title="The people behind the work">
         <div className="flex flex-col gap-3 sm:flex-row">
           <Link href="/about/team" className={buttonVariants({ variant: "secondary" })}>
             Meet the team

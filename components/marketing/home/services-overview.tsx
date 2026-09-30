@@ -151,24 +151,25 @@ export function ServicesOverview() {
     <section id="services" aria-labelledby="services-title" className="bg-card">
       <div className="container-fluid flex flex-col gap-10 py-16 lg:py-20">
         {/* Full container width; from 1280px the AAPC note sits beside the lead (60/40). */}
+        <div className="grid gap-4 xl:grid-cols-[3fr_2fr] xl:items-start xl:gap-12">
+          <p className="max-w-[75ch] text-lg text-muted-foreground">{servicesIntro.lead}</p>
+          <Link
+            href={servicesIntro.note.href}
+            className="group rounded-lg border border-sky/40 bg-sky-soft p-5 text-ink transition-colors hover:border-sky focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
+          >
+            {servicesIntro.note.text}
+            <ArrowRight
+              aria-hidden="true"
+              className="ml-1 inline size-4 transition-transform group-hover:translate-x-1"
+            />
+          </Link>
+        </div>
+        {/* Heading sits directly above the card stack (client, 2026-09-30). */}
         <div className="flex flex-col gap-4">
           <h2 id="services-title" className="max-w-[28ch] text-2xl lg:text-3xl">
             {servicesIntro.title}
           </h2>
           <ClaimLine trigger="inView" ticks={8} className="max-w-sm" />
-          <div className="grid gap-4 xl:grid-cols-[3fr_2fr] xl:items-start xl:gap-12">
-            <p className="max-w-[75ch] text-lg text-muted-foreground">{servicesIntro.lead}</p>
-            <Link
-              href={servicesIntro.note.href}
-              className="group rounded-lg border border-sky/40 bg-sky-soft p-5 text-ink transition-colors hover:border-sky focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
-            >
-              {servicesIntro.note.text}
-              <ArrowRight
-                aria-hidden="true"
-                className="ml-1 inline size-4 transition-transform group-hover:translate-x-1"
-              />
-            </Link>
-          </div>
         </div>
         <ServicesStack cards={cards} />
       </div>

@@ -40,7 +40,11 @@ export const heroImages = {
   ),
 } satisfies Record<string, SiteImage>;
 
-/** Hero photo per service page. Three reuse the home "Our Services" card photos. */
+/**
+ * Hero photo per service page (B11–B13). Medical Transcription, AI Clinical Documentation and
+ * RCM have no hero photo of their own: their home card photos aren't reused, so no image
+ * appears twice on the site (2026-09-30 placement audit).
+ */
 export const serviceHeroImages: Record<string, SiteImage> = {
   "medical-billing": hero(
     "/images/heroes/medical-billing.webp",
@@ -53,18 +57,6 @@ export const serviceHeroImages: Record<string, SiteImage> = {
   "denial-management": hero(
     "/images/heroes/denial-management.webp",
     "Accounts receivable specialist in a navy hijab on a follow-up call with a headset",
-  ),
-  "medical-transcription": hero(
-    "/images/services/medical-transcription.webp",
-    "Medical transcriptionist in a hijab with a headset typing at her workstation",
-  ),
-  "ai-clinical-documentation": hero(
-    "/images/services/ai-clinical-documentation.webp",
-    "Laptop showing a voice waveform beside a tablet, as an editor reviews an AI-generated draft",
-  ),
-  "revenue-cycle-management": hero(
-    "/images/services/revenue-cycle-management.webp",
-    "Revenue cycle specialist checking a claim against a dashboard of charts on his laptop",
   ),
 };
 

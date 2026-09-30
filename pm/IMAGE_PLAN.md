@@ -5,6 +5,45 @@
 - **Status today:** only the home page and About have photos. Every other page has a text-only hero on the #EEF6FC band and no image slot. The rows marked "proposed" below are **new** slots: they need a layout change when the image arrives (Task 3), and nothing on those pages is broken without them.
 - **Task 3 (placement)** starts only after you say the images are uploaded.
 
+## Upload check (2026-09-30)
+
+| ID | Result | Path used |
+|---|---|---|
+| B01 | found, **wrong folder** (uploaded to `credentials/slide-3.jpg`): moved to `slider/slide-3.jpg` with your OK, replacing the classroom image | `public/images/slider/slide-3.jpg` (3168×1344) |
+| B02–B04 | found | `public/images/og/og-default.jpg` (2816×1536), `og-education.jpg` (2752×1536), `og-services.jpg` (3168×1344) |
+| B05–B10 | found | `public/images/heroes/{aapc-certification,free-billing-audit,course-cpc,course-cpb,course-cpc-cpb,services}.jpg` (2816×1536 each) |
+| B11–B13 | found, in `heroes/` instead of `services/`. Used where they are (no rename needed); the table paths below are updated | `public/images/heroes/{medical-billing,medical-coding,denial-management}.jpg` |
+| B14 | found | `public/images/heroes/careers.jpg` |
+| B15–B18 | found | `public/images/blog/*.jpg` (2816×1536) |
+| B19–B21 | found | `public/images/guides/*.jpg` (2816×1536) |
+| B22–B23 | found | `public/images/og/og-blog.jpg` (3168×1344), `og-careers.jpg` (2752×1536) |
+| B24 | found (new slot: home "Get Trained by AAPC Instructors" scroll background band) | `public/images/backgrounds/home-aapc-band.jpg` (3168×1344) |
+| C08 | found (regenerated, overwrote the old file) | `public/images/services/revenue-cycle-management.jpg` (2400×1792) |
+| C06, C09 | **missing**: both files unchanged since 2026-09-28. Current photos stay (your decision) until the inpainted files arrive | — |
+
+None is too small: every file is at or above its "generate at" size. The heroes are 2816×1536 (≈16:9) rather than 4:3; they are cropped to 4:3 around the subject when placed.
+
+**Extra file, not placed:** `public/images/backgrounds/course-cpc.jpg` is byte-for-byte the same file as `heroes/course-cpc.jpg`. The untracked `services/*.jfif` files are the 2400×1792 sources of the 28 Sep card photos.
+
+**Flagged for regeneration (not fixed):** no classroom scenes, patient data or distorted hands or faces were found. Readable text or brand logos:
+
+| ID | File | Issue |
+|---|---|---|
+| B01 | slider/slide-3.jpg | Laptop brand logos (Dell) on both laptops |
+| B06 | heroes/free-billing-audit.jpg | Screen title readable ("Practice Revenue Data"); Dell logo |
+| B07 | heroes/course-cpc.jpg | Book cover title readable ("Medical Coding Reference"); screen text |
+| B09 | heroes/course-cpc-cpb.jpg | Book cover readable ("Professional Credentials") |
+| B12 | heroes/medical-coding.jpg | Faint book title and screen text (minor) |
+| B13 | heroes/denial-management.jpg | Wall poster with a map and the word "PAKISTAN" |
+| B14 | heroes/careers.jpg | Laptop shows lines of code (semi-readable) |
+| B15 | blog/why-claims-get-denied.jpg | Folder cover reads "PROJECT ALPHA" |
+| B18 | blog/clean-claim-rate.jpg | Dell logo on the laptop |
+| B19 | guides/clean-claim-checklist.jpg | Apple logo on the laptop lid |
+| B21 | guides/coding-career-90-day-plan.jpg | Screen text readable ("Session 3: Planning"); the face is cut at the top edge |
+| B23 | og/og-careers.jpg | Dell logo; a shop sign in the background |
+| B24 | backgrounds/home-aapc-band.jpg | Book cover title readable |
+| C08 | services/revenue-cycle-management.jpg | Dashboard labels readable ("Revenue", "Claims processed") |
+
 ## Prompt rules for group B (apply to every AI-generated image)
 
 1. Realistic editorial / corporate photography. Where people appear they are Pakistani professionals, a mix of men and women, some women in hijab or dupatta, in modern, clean offices or home workspaces.
@@ -51,9 +90,9 @@
 | B08 | CPB® course page | Hero, right side (proposed) | `public/images/heroes/course-cpb.jpg` | 1200×900 (4:3) | Billing student online at home | missing (proposed) | P2 |
 | B09 | CPC® + CPB® course page | Hero, right side (proposed) | `public/images/heroes/course-cpc-cpb.jpg` | 1200×900 (4:3) | Committed learner, longer programme, online | missing (proposed) | P2 |
 | B10 | Services index | Hero, right side (proposed) | `public/images/heroes/services.jpg` | 1200×900 (4:3) | GlobalMed team working across the revenue cycle | missing (proposed) | P2 |
-| B11 | /services/medical-billing | Hero, right side (proposed) | `public/images/services/medical-billing.jpg` | 1200×900 (4:3) | Biller preparing claims | missing (proposed) | P2 |
-| B12 | /services/medical-coding | Hero, right side (proposed) | `public/images/services/medical-coding.jpg` | 1200×900 (4:3) | Certified coder at work | missing (proposed) | P2 |
-| B13 | /services/denial-management | Hero, right side (proposed) | `public/images/services/denial-management.jpg` | 1200×900 (4:3) | Specialist working an A/R follow-up call | missing (proposed) | P2 |
+| B11 | /services/medical-billing | Hero, right side (proposed) | `public/images/heroes/medical-billing.jpg` | 1200×900 (4:3) | Biller preparing claims | missing (proposed) | P2 |
+| B12 | /services/medical-coding | Hero, right side (proposed) | `public/images/heroes/medical-coding.jpg` | 1200×900 (4:3) | Certified coder at work | missing (proposed) | P2 |
+| B13 | /services/denial-management | Hero, right side (proposed) | `public/images/heroes/denial-management.jpg` | 1200×900 (4:3) | Specialist working an A/R follow-up call | missing (proposed) | P2 |
 | B14 | Careers | Hero, right side (proposed) | `public/images/heroes/careers.jpg` | 1200×900 (4:3) | Welcoming team, career growth | missing (proposed) | P2 |
 | B15 | Blog: "Why claims get denied…" | Post cover + blog card | `public/images/blog/why-claims-get-denied.jpg` | 1200×675 (16:9) | Resolving denied claims | missing (proposed) | P2 |
 | B16 | Blog: "Modifier 25 explained…" | Post cover + blog card | `public/images/blog/modifier-25-explained.jpg` | 1200×675 (16:9) | Coder checking a same-day visit | missing (proposed) | P2 |
@@ -63,6 +102,7 @@
 | B20 | Guides: "Denial reason codes, decoded" | Guide card (proposed) | `public/images/guides/denial-reason-codes.jpg` | 1200×900 (4:3) | Analyst sorting denials | missing (proposed) | P2 |
 | B21 | Guides: "Start a coding career: a 90-day plan" | Guide card (proposed) | `public/images/guides/coding-career-90-day-plan.jpg` | 1200×900 (4:3) | Planner and laptop at home | missing (proposed) | P2 |
 | B22 | Blog index, categories, posts without a cover, Guides | Social share | `public/images/og/og-blog.jpg` | 1200×630 (1.91:1) | Background for articles; title added in code | missing | P2 |
+| B24 | Home | "Get Trained by AAPC Instructors" scroll background band (added by the client) | `public/images/backgrounds/home-aapc-band.jpg` | 1920×800 (21:9), 2560 for large screens | Online learner at home in the evening, navy overlay on top | uploaded | P1 |
 | B23 | Careers | Social share | `public/images/og/og-careers.jpg` | 1200×630 (1.91:1) | Background for careers; title added in code | missing | P2 |
 
 ### Generation details
@@ -127,19 +167,19 @@
 - Negative prompt: standard
 - Seed: 240926
 
-**B11 · `services/medical-billing.jpg`**
+**B11 · `heroes/medical-billing.jpg`**
 - Final 1200×900; generate at 4:3.
 - Prompt: `Editorial photograph of a Pakistani medical biller, a woman in a light blue dupatta, working at a clean office desk with a laptop showing soft, unreadable blue charts, a calculator and a neat stack of blank folders. Focused, confident. Daylight from a window, white and navy office, sky blue accents. Subject right of centre, calm left side. Realistic, 50mm lens, shallow depth of field.`
 - Negative prompt: standard + `paper forms with writing, invoices, dollar signs`
 - Seed: 240926
 
-**B12 · `services/medical-coding.jpg`**
+**B12 · `heroes/medical-coding.jpg`**
 - Final 1200×900; generate at 4:3.
 - Prompt: `Editorial photograph of a Pakistani medical coder, a man in his thirties with glasses and a navy sweater, working at a dual-monitor desk in a quiet, modern office, screens angled away from the camera, a closed thick reference book with a plain cover beside the keyboard. Concentrated, precise. Soft daylight, white walls, sky blue accents. Subject right of centre, calm left side. Realistic, 50mm lens, shallow depth of field.`
 - Negative prompt: standard + `book titles`
 - Seed: 240926
 
-**B13 · `services/denial-management.jpg`**
+**B13 · `heroes/denial-management.jpg`**
 - Final 1200×900; generate at 4:3.
 - Prompt: `Editorial photograph of a Pakistani accounts receivable specialist, a woman in a navy hijab, on a phone call with a headset at a clean office desk, laptop showing a blurred, unreadable list, a notebook with a pen. Calm, persistent, professional expression. Bright office, daylight, white and sky blue tones. Subject right of centre, calm left side. Realistic, 50mm lens, shallow depth of field.`
 - Negative prompt: standard + `red warning signs, stamps, "denied" marks`

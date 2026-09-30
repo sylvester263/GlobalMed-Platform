@@ -4,9 +4,7 @@ import Image from "next/image";
 import { CredentialLightbox } from "@/components/marketing/credential-lightbox";
 import { ClaimLine } from "@/components/motion/claim-line";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger-group";
-import { credentials } from "@/data/credentials";
-
-const visibleCredentials = credentials.filter((credential) => !credential.hidden);
+import { visibleCredentials } from "@/data/credentials";
 import { publicAssetExists } from "@/lib/public-asset";
 
 /**
@@ -30,7 +28,7 @@ export function CredentialsSection({ id = "credentials" }: { id?: string }) {
           </p>
         </div>
         <StaggerGroup as="ul" className="flex flex-wrap justify-center gap-6">
-          {visibleCredentials.map((credential) => {
+          {visibleCredentials().map((credential) => {
             const hasLogo = publicAssetExists(credential.image);
             return (
               <StaggerItem

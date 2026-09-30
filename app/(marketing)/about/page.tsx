@@ -33,17 +33,18 @@ function LeaderCard({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className="relative aspect-[4/5] w-full max-w-60 overflow-hidden rounded-md bg-ledger">
+      <div className="w-full max-w-60 rounded-2xl bg-ledger p-3 shadow-sm">
         {hasPhoto ? (
           <Image
             src={leader.photo}
-            alt={`${leader.name}, ${leader.role}`}
-            fill
-            sizes="240px"
-            className="object-cover"
+            alt={`${leader.name}, ${leader.role} of GlobalMed Transcriptions`}
+            width={400}
+            height={500}
+            sizes="216px"
+            className="h-auto w-full rounded-2xl"
           />
         ) : (
-          <span className="absolute inset-2 flex items-center justify-center rounded-md border-2 border-dashed border-input p-3 text-center text-xs font-semibold text-muted-foreground">
+          <span className="flex aspect-[4/5] w-full items-center justify-center rounded-2xl border-2 border-dashed border-input p-3 text-center text-xs font-semibold text-muted-foreground">
             Photo: {leader.name}
           </span>
         )}

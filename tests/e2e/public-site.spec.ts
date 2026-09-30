@@ -271,6 +271,17 @@ test.describe("client review 2026-09-25", () => {
     await expect(trigger).toBeFocused();
   });
 
+  test("LCCI certificate opens in the lightbox with its PDF", async ({ page }) => {
+    await page.goto("/about");
+    await page.getByRole("button", { name: /View certificate.*LCCI/ }).click();
+    const dialog = page.getByRole("dialog", { name: "LCCI" });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("link", { name: /PDF/ })).toHaveAttribute(
+      "href",
+      "/images/credentials/lcci-certificate.pdf",
+    );
+  });
+
   test("footer shows the client's contact details", async ({ page }) => {
     await page.goto("/about");
     const footer = page.locator("footer");

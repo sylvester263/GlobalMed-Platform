@@ -11,7 +11,9 @@ export const aboutStory = {
       "Our founder, Riaz Naveed, brought experience in clinical laboratory work, medical transcription, quality assurance, and CPC and CPB training to the company. That understanding of both healthcare and documentation continues to shape how we work: We listen to each client's requirements, build processes around their systems, and give every report and claim the attention it deserves.",
     ],
     founder: {
-      photo: "/images/about/riaz-naveed.jpg",
+      // 800×1000 WebP made from the client's original, public/images/Founder/Riaz Picture.png.
+      photo: "/images/about/riaz-naveed-800.webp",
+      alt: "Riaz Naveed, Founder & CEO of GlobalMed Transcriptions",
       name: "Riaz Naveed",
       caption: "Riaz Naveed, Founder & CEO",
       badge: "Est. 2007 · Lahore, Pakistan",

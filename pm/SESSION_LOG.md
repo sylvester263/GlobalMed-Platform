@@ -350,6 +350,21 @@ Newest entry at the bottom. One entry per Claude Code session.
 
 ---
 
+### Session 010 — LCCI credential and founder photo
+- **Date:** 2026-09-30
+- **Done:**
+  - LCCI: client files public/images/credentials/LCCI.jpg (1755×1240) and LCCI.pdf (1 page, same scan) copied, not moved, to lcci-certificate.jpg / .pdf; lcci-certificate-thumb.jpg 640×604, cropped to the certificate border (drops the scan's white margin and CamScanner mark; the full image and PDF are unchanged).
+  - Certificate reads: "Membership Certificate", The Lahore Chamber of Commerce & Industry, M/s GlobalMed Transcriptions (SMC-Pvt.) Ltd, 44-Dil Khusha Garden Kot Lakhpat, Lahore; Membership No. 94721 C; NTN 3625002-3; member since 04/06/2018; given 11 Apr 2026; valid up to 31 Mar 2027 (Book No. B 19668, Serial No. B 1966773).
+  - data/credentials.ts: `lcci` entry second, after PSEB, in the existing Credential shape (name/meaning/number/issuer/validity) plus a new `validTill` field. New `visibleCredentials()` drops hidden entries and any credential past `validTill`. There was no expiry rule before; this adds one. Pages are static, so an expiry takes effect on the next build/deploy.
+  - Founder photo: public/images/Founder/Riaz Picture.png (1122×1402, already 4:5 with the face in the upper third) kept untouched; riaz-naveed-800.webp (800×1000, 58 KB) and riaz-naveed-400.webp (400×500, 17 KB) in public/images/about/, resized only (a 1-2 px trim to exact 4:5), no AI edits. Kept out of a lowercase `founder/` folder because Windows treats Founder/founder as one folder while Vercel (Linux) does not.
+  - About "Our Story": heading and first paragraph full width; from 1280px the photo sits beside the "Our founder, Riaz Naveed…" paragraph (3fr/2fr), below 1280px it comes above that paragraph. #EEF6FC panel, 16px radius, subtle shadow, width/height 800×1000, alt "Riaz Naveed, Founder & CEO of GlobalMed Transcriptions".
+  - Leadership card: uses the 400×500 photo with the same styling, but stays hidden (`aboutLeaderCard: false`, client 2026-09-29), so it doesn't show.
+- **Verified:** tsc, eslint, 121 unit tests (new tests/unit/credentials.test.ts: order PSEB/LCCI/HIPAA, LCCI kept on 2027-03-31 and dropped on 2027-04-01), `next build`; e2e about-story (layout rule updated to 1280px, photo above the paragraph below that), public-site (new: LCCI lightbox and PDF link), certification-content: 43 passed. Browser check at 360/768/1280/1920 on / and /about: no horizontal scroll, three tiles, photo loaded at 288×360 / 352×440 / 403×504 / 416×520.
+- **Files touched:** data/credentials.ts, components/marketing/{credentials-section,about-story}.tsx, content/{about-story,company}.ts, app/(marketing)/about/page.tsx, public/images/{credentials,about,Founder}/*, tests/unit/credentials.test.ts, tests/e2e/{about-story,public-site}.spec.ts, pm/*
+- **Next:** image audit (pm/IMAGE_PLAN.md).
+- **Blockers:** none. Client to confirm "04/06/2018" is 4 June 2018.
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

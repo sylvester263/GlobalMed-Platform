@@ -239,7 +239,7 @@ export const about = {
     name: "Riaz Naveed",
     role: "Founder & CEO",
     bio: "A university graduate with a diploma in Medical Laboratory Technology, he founded GlobalMed in 2007.",
-    photo: "/images/team/riaz-naveed.jpg",
+    photo: "/images/about/riaz-naveed-400.webp",
   },
   partnership: approvedWording.partnership,
   /** Second line of the Strategic Partnership block. */

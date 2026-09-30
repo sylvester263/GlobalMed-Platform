@@ -3,7 +3,7 @@
  * entry here and dropping its image into public/images/credentials/. Until an image exists,
  * the tile shows a labelled placeholder slot of the same size, so nothing shifts when it lands.
  *
- * PSEB and HIPAA training certificates supplied 2026-09-26. [CLIENT TO CONFIRM] SECP certificate
+ * PSEB and HIPAA training certificates supplied 2026-09-26; LCCI membership certificate 2026-09-30. [CLIENT TO CONFIRM] SECP certificate
  * and number, and the third credential (pm/CLIENT_INPUTS_NEEDED.md).
  */
 export type Credential = {
@@ -28,6 +28,8 @@ export type Credential = {
   pdf?: string;
   /** Validity period, when the certificate states one. */
   validity?: string;
+  /** Last valid day (YYYY-MM-DD). Once it has passed, the tile is no longer shown. */
+  validTill?: string;
   /** Label for the placeholder slot while the image is missing. */
   placeholder: string;
   /** Kept in the data but not shown on the site (e.g. waiting for the certificate). */
@@ -50,6 +52,22 @@ export const credentials: Credential[] = [
     certificateAlt:
       "Pakistan Software Export Board certificate of registration for GlobalMed Transcriptions (SMC-Pvt.) Limited, registration number Z-25-8395/23, valid February 2026 to January 2027",
     placeholder: "PSEB certificate",
+  },
+  {
+    id: "lcci",
+    name: "LCCI",
+    meaning: "Member, The Lahore Chamber of Commerce & Industry",
+    number: "Membership No. 94721 C",
+    issuer: "Issued by The Lahore Chamber of Commerce & Industry",
+    validity: "Member since 04/06/2018 · valid until 31 Mar 2027",
+    validTill: "2027-03-31",
+    image: "/images/credentials/lcci-certificate-thumb.jpg",
+    certificate: "/images/credentials/lcci-certificate.jpg",
+    orientation: "landscape",
+    pdf: "/images/credentials/lcci-certificate.pdf",
+    certificateAlt:
+      "The Lahore Chamber of Commerce & Industry membership certificate for M/s GlobalMed Transcriptions (SMC-Pvt.) Ltd, membership number 94721 C, member since 04/06/2018, given on 11 April 2026, valid up to 31 March 2027",
+    placeholder: "LCCI certificate",
   },
   {
     id: "secp",
@@ -92,3 +110,10 @@ export const credentials: Credential[] = [
     placeholder: "HIPAA certificate",
   },
 ];
+
+/** Credentials shown on the site: not hidden, and not past their last valid day. */
+export function visibleCredentials(today = new Date().toISOString().slice(0, 10)): Credential[] {
+  return credentials.filter(
+    (credential) => !credential.hidden && !(credential.validTill && credential.validTill < today),
+  );
+}

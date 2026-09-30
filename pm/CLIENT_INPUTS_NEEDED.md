@@ -60,6 +60,8 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ✅ PSEB certificate (Z-25-8395/23) and HIPAA training certificate (HIPAATraining.us, HIPAA-0126590) received 2026-09-26
 - ✅ Official favicon set and stacked logos received 2026-09-26 (public/images/brand/)
 - ⬜ Official horizontal logo file (PNG or SVG). Until then the site uses a horizontal lockup made from the supplied stacked artwork (public/images/brand/globalmed-logo-horizontal.png)
+- ✅ LCCI membership certificate (No. 94721 C, valid until 31 Mar 2027) received 2026-09-30 (image + PDF, public/images/credentials/lcci-certificate.*)
+- ⬜ LCCI "Member since 04/06/2018": confirm this is 4 June 2018 (day/month), as the site shows the date exactly as printed
 - ⬜ SECP certificate image and registration number
 - ⬜ Name and details of the third credential
 - ⬜ HIPAA: the certificate supplied is a staff training-completion certificate, not a company compliance assessment. The tile says "HIPAA Compliance Training Program completed". Confirm this wording, or supply a third-party HIPAA assessment if one exists
@@ -70,7 +72,8 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Payment processing for AAPC course enrollments (added 2026-09-28; privacy policy paragraph marked [CLIENT TO CONFIRM]): who processes the payments (GlobalMed, a bank/payment provider, or AAPC directly), which payment details are kept and for how long, and whether they are shared with AAPC
 - ⬜ Counsel review of the new Terms ("AAPC courses and certification") and Privacy (AAPC registrations) wording
 - ⬜ Social profile links (Facebook, Instagram, LinkedIn, YouTube, X); icons stay hidden until provided
-- ⬜ Instructor photos (optional, public/images/instructors/) and founder photo (public/images/team/riaz-naveed.jpg)
+- ✅ Founder photo received 2026-09-30 (public/images/Founder/Riaz Picture.png, 1122×1402); shown in About "Our Story"
+- ⬜ Instructor photos (optional, public/images/instructors/)
 
 ## Payments setup (Phase 5)
 - ⬜ Stripe test + live keys (STRIPE_SECRET_KEY, NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) and a webhook endpoint at /api/stripe/webhook subscribed to checkout.session.completed, .expired, .async_payment_succeeded, .async_payment_failed (STRIPE_WEBHOOK_SECRET)

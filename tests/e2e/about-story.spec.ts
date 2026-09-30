@@ -63,7 +63,11 @@ test.describe("about: Our Story", () => {
     // Our Story.
     await expect(page.getByRole("heading", { name: "Riaz Naveed" })).toHaveCount(0);
     await expect(page.locator("body")).not.toContainText("diploma in Medical Laboratory");
-    await expect(page.getByText("Photo: Riaz Naveed")).toHaveCount(1);
+    await expect(page.getByText("Photo: Riaz Naveed")).toHaveCount(0);
+    const founder = story.getByAltText("Riaz Naveed, Founder & CEO of GlobalMed Transcriptions");
+    await expect(founder).toHaveCount(1);
+    await expect(founder).toHaveAttribute("width", "800");
+    await expect(founder).toHaveAttribute("height", "1000");
 
     await expect(story.getByRole("link", { name: "View CPC® & CPB® Courses" })).toHaveAttribute(
       "href",
@@ -110,13 +114,15 @@ test.describe("about: Our Story", () => {
       await page.waitForTimeout(300);
       expect(new Set(await storyOpacities(page))).toEqual(new Set(["1"]));
 
-      const twoColumn = width >= 1024;
+      // The founder photo sits beside the "Our founder…" paragraph from 1280px, above it below.
+      const twoColumn = width >= 1280;
       const story = page.locator("[data-about-story] section").first();
       const [text, figure] = await Promise.all([
-        story.locator("h2").boundingBox(),
+        story.locator("figure ~ p").first().boundingBox(),
         story.locator("figure").boundingBox(),
       ]);
       expect(figure!.x > text!.x + text!.width).toBe(twoColumn);
+      if (!twoColumn) expect(figure!.y + figure!.height).toBeLessThanOrEqual(text!.y);
 
       if (width === 360 || width === 1920) {
         await page.screenshot({ path: `pm/screenshots/about-story-${width}.png`, fullPage: true });

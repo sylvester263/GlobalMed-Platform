@@ -50,6 +50,7 @@ export function PageHero({
   intro,
   crumbs,
   image,
+  aside,
   children,
   className,
 }: {
@@ -58,6 +59,8 @@ export function PageHero({
   intro?: string;
   crumbs?: Crumb[];
   image?: SiteImage;
+  /** Shown under the photo (right column from 1024px, last on phones). */
+  aside?: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
 }) {
@@ -92,13 +95,14 @@ export function PageHero({
             <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, ...crumbs])} />
           </>
         )}
-        <div
-          className={cn(
-            image &&
-              "grid gap-8 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:items-center lg:gap-12 wide:gap-16",
-          )}
-        >
-          <div className="flex flex-col gap-8">
+        {/* With a photo: the shared split grid (7/5 from 1280px, 60/40 at 1024–1279px), photo
+            top level with the eyebrow and heading, and an optional `aside` (e.g. the course
+            price card) under the photo so the columns stay balanced. Phones: photo, text,
+            then the aside. */}
+        <div className={cn(image && "split lg:grid-rows-[auto_1fr]")}>
+          {/* Centred against the photo column: when the text is taller it starts level with the
+              photo's top; when it's shorter it sits in the middle, so no empty band. */}
+          <div className="flex flex-col gap-8 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-center">
             <div className="flex max-w-3xl flex-col gap-4">
               {eyebrow && (
                 <p className="text-xs font-semibold tracking-[0.12em] text-teal-deep uppercase">
@@ -119,12 +123,12 @@ export function PageHero({
               height={image.height}
               priority
               fetchPriority="high"
-              sizes="(min-width: 1920px) 800px, (min-width: 1024px) 42vw, calc(100vw - 40px)"
-              style={{ aspectRatio: `${image.width} / ${image.height}` }}
-              className="order-first h-auto w-full rounded-2xl object-cover shadow-sm lg:order-none"
+              sizes="(min-width: 1920px) 760px, (min-width: 1280px) 38vw, (min-width: 1024px) 36vw, calc(100vw - 40px)"
+              className="order-first aspect-[4/3] h-auto w-full rounded-2xl object-cover shadow-sm lg:order-none lg:col-start-2 lg:row-start-1"
               data-hero-image
             />
           )}
+          {image && aside && <div className="lg:col-start-2 lg:row-start-2">{aside}</div>}
         </div>
       </div>
     </section>
@@ -189,7 +193,7 @@ export function Section({
 export function FaqList({ faqs, withJsonLd = true }: { faqs: Faq[]; withJsonLd?: boolean }) {
   return (
     <>
-      <Accordion className="rounded-lg border bg-card px-6">
+      <Accordion className="rounded-2xl border bg-card px-6">
         {faqs.map((faq) => (
           <AccordionItem key={faq.question} value={faq.question}>
             <AccordionTrigger>{faq.question}</AccordionTrigger>
@@ -256,7 +260,7 @@ export function CourseCard({
 }) {
   const Heading = headingLevel;
   return (
-    <article className="relative flex h-full flex-col gap-4 rounded-lg border bg-card p-6 transition-colors hover:border-teal">
+    <article className="relative flex h-full flex-col gap-4 rounded-2xl border bg-card p-6 transition-colors hover:border-teal">
       <div className="flex flex-wrap gap-2">
         <Badge variant="neutral">{levelLabels[course.level]}</Badge>
         <Badge variant="secondary">{categoryLabels[course.category]}</Badge>

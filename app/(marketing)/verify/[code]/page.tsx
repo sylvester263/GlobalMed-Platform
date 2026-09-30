@@ -51,7 +51,7 @@ export default async function VerifyResultPage({ params }: Props) {
       <Section className="max-w-3xl">
         <div aria-live="polite">
           {(result.kind === "valid" || result.kind === "revoked") && (
-            <article className="flex flex-col items-center gap-6 rounded-lg border bg-card p-8 text-center">
+            <article className="flex flex-col items-center gap-6 rounded-2xl border bg-card p-8 text-center">
               <SealStamp status={result.kind} size={104} />
               <div className="flex flex-col items-center gap-2">
                 <p className="text-sm text-muted-foreground">
@@ -87,7 +87,7 @@ export default async function VerifyResultPage({ params }: Props) {
           )}
 
           {result.kind === "not-found" && (
-            <div className="flex flex-col items-center gap-4 rounded-lg border bg-card p-8 text-center">
+            <div className="flex flex-col items-center gap-4 rounded-2xl border bg-card p-8 text-center">
               <SearchX aria-hidden="true" className="size-10 text-muted-foreground" />
               <h2 className="text-2xl">We couldn&apos;t find that certificate</h2>
               <p className="max-w-md text-muted-foreground">
@@ -100,7 +100,7 @@ export default async function VerifyResultPage({ params }: Props) {
           {(result.kind === "invalid-code" ||
             result.kind === "unavailable" ||
             result.kind === "rate-limited") && (
-            <div className="flex flex-col items-center gap-4 rounded-lg border bg-card p-8 text-center">
+            <div className="flex flex-col items-center gap-4 rounded-2xl border bg-card p-8 text-center">
               <ServerCrash aria-hidden="true" className="size-10 text-muted-foreground" />
               <h2 className="text-2xl">
                 {result.kind === "invalid-code"

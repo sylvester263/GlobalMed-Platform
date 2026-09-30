@@ -19,7 +19,7 @@ export function DenialBars() {
 
   return (
     <MotionFeatures>
-      <figure ref={ref} className="flex flex-col gap-6 rounded-lg border bg-card p-6 shadow-sm">
+      <figure ref={ref} className="flex flex-col gap-6 rounded-2xl border bg-card p-6 shadow-sm">
         <p className="font-serif text-lg font-semibold">Six months with denial management</p>
         <div className="grid grid-cols-2 gap-6">
           {metrics.map((metric) => (

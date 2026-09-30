@@ -32,7 +32,7 @@ export default function CareersPage() {
           {openRoles.map((role) => (
             <li
               key={role.title}
-              className="flex flex-col gap-3 rounded-lg border bg-card p-6 md:flex-row md:items-center md:justify-between"
+              className="flex flex-col gap-3 rounded-2xl border bg-card p-6 md:flex-row md:items-center md:justify-between"
             >
               <div className="flex flex-col gap-2">
                 <h3 className="text-xl">{role.title}</h3>

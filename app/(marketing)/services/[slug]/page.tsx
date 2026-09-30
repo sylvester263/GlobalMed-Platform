@@ -132,7 +132,7 @@ export default async function ServicePage({ params }: Props) {
         title="Results we work toward"
         intro="Targets we agree with you from your audit baseline and report against every month."
       >
-        <div className="grid gap-8 rounded-lg border bg-card p-6 sm:grid-cols-3">
+        <div className="grid gap-8 rounded-2xl border bg-card p-6 sm:grid-cols-3">
           {service.results.map((r) => (
             <StatBlock
               key={r.label}
@@ -162,8 +162,8 @@ export default async function ServicePage({ params }: Props) {
         </Section>
       )}
 
-      <Section className="lg:grid lg:grid-cols-[1fr_2fr] lg:gap-16">
-        <div className="flex flex-col gap-4">
+      <Section className="split-cols-reverse lg:grid lg:items-start">
+        <div className="flex flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
           <h2 className="text-2xl lg:text-3xl">Questions about {service.name.toLowerCase()}</h2>
           <div className="flex items-start gap-3 rounded-lg bg-mint p-4 text-teal-deep">
             <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0" />

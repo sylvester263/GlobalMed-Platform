@@ -87,9 +87,7 @@ export function AboutStory() {
       </section>
 
       <section aria-labelledby="documentation-title" className="bg-ledger">
-        <FadeInView
-          className={cn(band, "flex flex-col gap-12 lg:grid lg:grid-cols-[3fr_2fr] lg:gap-16")}
-        >
+        <FadeInView className={cn(band, "split")}>
           <div className="flex flex-col gap-4">
             <h2 id="documentation-title" className={heading}>
               {documentation.title}
@@ -104,16 +102,14 @@ export function AboutStory() {
       </section>
 
       <section aria-labelledby="revenue-cycle-title" className="border-y bg-card">
-        <FadeInView
-          className={cn(band, "flex flex-col gap-12 lg:grid lg:grid-cols-[11fr_9fr] lg:gap-16")}
-        >
+        <FadeInView className={cn(band, "split")}>
           <div className="flex flex-col gap-4">
             <h2 id="revenue-cycle-title" className={heading}>
               {revenueCycle.title}
             </h2>
             <Paragraphs items={revenueCycle.paragraphs} />
           </div>
-          <ul className="grid gap-x-6 gap-y-3 self-center rounded-lg border bg-ledger/50 p-6 sm:grid-cols-2">
+          <ul className="grid gap-x-6 gap-y-3 self-center rounded-2xl border bg-ledger/50 p-6 sm:grid-cols-2">
             {revenueCycle.services.map((service) => (
               <li key={service} className="flex items-start gap-2">
                 <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-primary" />
@@ -125,12 +121,7 @@ export function AboutStory() {
       </section>
 
       <section aria-labelledby="workforce-title" className="bg-primary text-white">
-        <FadeInView
-          className={cn(
-            band,
-            "flex flex-col gap-12 lg:grid lg:grid-cols-[3fr_2fr] lg:items-center lg:gap-16",
-          )}
-        >
+        <FadeInView className={cn(band, "split lg:items-center")}>
           <div className="flex flex-col gap-4">
             <h2 id="workforce-title" className={cn(heading, "text-white")}>
               {workforce.title}

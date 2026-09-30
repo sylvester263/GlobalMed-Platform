@@ -139,7 +139,7 @@ export default function AapcCertificationPage() {
           aria-label="Course comparison table"
           tabIndex={0}
           data-scroll-x
-          className="relative overflow-x-auto rounded-lg border bg-card"
+          className="relative overflow-x-auto rounded-2xl border bg-card"
         >
           <table className="w-full min-w-[640px] text-left">
             <caption className="sr-only">
@@ -207,8 +207,10 @@ export default function AapcCertificationPage() {
         stages={aapcSteps}
       />
 
-      <Section className="lg:grid lg:grid-cols-[1fr_2fr] lg:gap-16">
-        <h2 className="text-2xl lg:text-3xl">Questions about AAPC certification</h2>
+      <Section className="split-cols-reverse lg:grid lg:items-start">
+        <h2 className="text-2xl lg:sticky lg:top-24 lg:self-start lg:text-3xl">
+          Questions about AAPC certification
+        </h2>
         <FaqList faqs={aapcFaqs} />
       </Section>
 

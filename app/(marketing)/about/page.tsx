@@ -29,7 +29,7 @@ function LeaderCard({ className }: { className?: string }) {
   return (
     <article
       className={cn(
-        "flex flex-col gap-5 self-start rounded-lg border bg-card p-6 shadow-sm",
+        "flex flex-col gap-5 self-start rounded-2xl border bg-card p-6 shadow-sm",
         className,
       )}
     >
@@ -73,7 +73,7 @@ export default function AboutPage() {
       {/* Hidden at client request (2026-09-29): replaced by the new "Our Story" above. */}
       {features.aboutStoryOld ? (
         <>
-          <Section className="lg:grid lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+          <Section className="split-cols lg:grid lg:items-start">
             <div className="flex flex-col gap-4">
               <h2 className="text-2xl lg:text-3xl">Our Story</h2>
               {about.story.map((paragraph) => (
@@ -85,7 +85,7 @@ export default function AboutPage() {
             <LeaderCard />
           </Section>
 
-          <Section tone="white" className="lg:grid lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+          <Section tone="white" className="split-cols lg:grid lg:items-start">
             <div className="flex flex-col gap-4">
               <h2 className="text-2xl lg:text-3xl">What We Do</h2>
               {about.whatWeDo.map((paragraph) => (
@@ -133,7 +133,7 @@ export default function AboutPage() {
         </div>
         <ul className="grid gap-grid sm:grid-cols-2">
           {values.map((v) => (
-            <li key={v.title} className="flex flex-col gap-2 rounded-lg border bg-card p-5">
+            <li key={v.title} className="flex flex-col gap-2 rounded-2xl border bg-card p-6">
               <h3 className="text-lg">{v.title}</h3>
               <p className="text-sm text-muted-foreground">{v.body}</p>
             </li>

@@ -35,7 +35,7 @@ export default function ServicesPage() {
         >
           {services.map((service) => (
             <StaggerItem as="li" key={service.slug}>
-              <article className="relative flex h-full gap-5 rounded-lg border bg-card p-6 transition-colors hover:border-teal">
+              <article className="relative flex h-full gap-5 rounded-2xl border bg-card p-6 transition-colors hover:border-teal">
                 <span className="flex size-12 shrink-0 items-center justify-center rounded-md bg-mint text-teal-deep">
                   <ServiceIcon slug={service.slug} className="size-6" />
                 </span>

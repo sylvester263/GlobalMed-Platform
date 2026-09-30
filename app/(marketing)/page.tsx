@@ -226,7 +226,7 @@ export default function HomePage() {
             {upcomingBatches.map((batch) => (
               <li
                 key={batch.title}
-                className="flex flex-col gap-5 rounded-lg border bg-card p-6 shadow-sm"
+                className="flex flex-col gap-5 rounded-2xl border bg-card p-6 shadow-sm"
               >
                 <h3 className="text-xl">{batch.title}</h3>
                 <dl className="grid gap-3 text-sm">
@@ -272,7 +272,7 @@ export default function HomePage() {
       {/* 8. Services for US practices. Hidden at client request — replaced by "Our Services"
           after the hero (2026-09-28). */}
       {features.homeServicesOverviewOld && (
-        <Section className="lg:grid lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+        <Section className="split-cols-reverse lg:grid lg:items-start">
           <div className="flex flex-col gap-4">
             <h2 className="text-2xl lg:text-3xl">Medical billing services for US practices</h2>
             <p className="max-w-prose text-muted-foreground">
@@ -320,8 +320,8 @@ export default function HomePage() {
       )}
 
       {/* 9. FAQ (FaqList emits the FAQPage JSON-LD) */}
-      <Section tone="white" className="lg:grid lg:grid-cols-[1fr_2fr] lg:gap-16">
-        <div className="flex flex-col gap-3">
+      <Section tone="white" className="split-cols-reverse lg:grid lg:items-start">
+        <div className="flex flex-col gap-3 lg:sticky lg:top-24 lg:self-start">
           <h2 className="text-2xl lg:text-3xl">Questions about CPC® and CPB®</h2>
           <Link
             href="/faq"

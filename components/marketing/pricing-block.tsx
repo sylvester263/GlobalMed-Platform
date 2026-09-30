@@ -38,7 +38,7 @@ export function PricingBlock({
   return (
     <section
       aria-label={`${title} pricing`}
-      className={cn("flex flex-col gap-5 rounded-lg border bg-card p-6", className)}
+      className={cn("flex flex-col gap-5 rounded-2xl border bg-card p-6", className)}
     >
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-xl">{title}</h3>

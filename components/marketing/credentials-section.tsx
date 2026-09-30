@@ -36,7 +36,7 @@ export function CredentialsSection({ id = "credentials" }: { id?: string }) {
                 key={credential.id}
                 className="flex w-full sm:w-[calc((100%-var(--grid-gap))/2)] lg:w-[calc((100%-2*var(--grid-gap))/3)] wide:w-[calc((100%-3*var(--grid-gap))/4)]"
               >
-                <article className="credential-tile flex w-full flex-col overflow-hidden rounded-lg border bg-card shadow-sm hover:shadow-md">
+                <article className="credential-tile flex w-full flex-col overflow-hidden rounded-2xl border bg-card shadow-sm hover:shadow-md">
                   {/* Navy top rule with the claim-line ticks. */}
                   <div className="bg-primary px-5 pt-3 pb-2">
                     <ClaimLine

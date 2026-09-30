@@ -32,7 +32,7 @@ export default function SpecialtiesPage() {
         >
           {specialties.map((s) => (
             <StaggerItem as="li" key={s.slug}>
-              <article className="relative flex h-full flex-col gap-3 rounded-lg border bg-card p-6 transition-colors hover:border-teal">
+              <article className="relative flex h-full flex-col gap-3 rounded-2xl border bg-card p-6 transition-colors hover:border-teal">
                 <h2 className="text-xl">
                   <Link href={`/specialties/${s.slug}`} className="after:absolute after:inset-0">
                     {s.name}

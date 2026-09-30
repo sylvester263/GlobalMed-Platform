@@ -44,7 +44,7 @@ const components: Components = {
       aria-label="Table"
       tabIndex={0}
       data-scroll-x
-      className="mb-6 overflow-x-auto rounded-lg border"
+      className="mb-6 overflow-x-auto rounded-2xl border"
     >
       <table className="w-full">{children}</table>
     </div>

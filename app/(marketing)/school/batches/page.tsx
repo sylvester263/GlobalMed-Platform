@@ -44,7 +44,7 @@ export default function BatchesPage() {
             return (
               <li
                 key={`${batch.course}-${batch.starts}`}
-                className="flex flex-col gap-4 rounded-lg border bg-card p-6"
+                className="flex flex-col gap-4 rounded-2xl border bg-card p-6"
               >
                 <Badge variant="secondary">{batch.mode}</Badge>
                 <h2 className="text-xl">{course.title}</h2>

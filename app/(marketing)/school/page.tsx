@@ -170,7 +170,7 @@ export default function EducationPage() {
       <Section title="Learn from working professionals">
         <ul className="grid gap-6 md:grid-cols-2">
           {instructors.map((i) => (
-            <li key={i.id} className="flex gap-4 rounded-lg border bg-card p-6">
+            <li key={i.id} className="flex gap-4 rounded-2xl border bg-card p-6">
               <Avatar className="size-14">
                 <AvatarFallback className="bg-mint text-lg font-semibold text-teal-deep">
                   {i.initials}

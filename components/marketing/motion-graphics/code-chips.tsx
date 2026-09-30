@@ -20,7 +20,7 @@ export function CodeChips() {
 
   return (
     <MotionFeatures>
-      <figure ref={ref} className="flex flex-col gap-4 rounded-lg border bg-card p-6 shadow-sm">
+      <figure ref={ref} className="flex flex-col gap-4 rounded-2xl border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between">
           <p className="font-serif text-lg font-semibold">Claim lines</p>
           <span className="rounded-full bg-success-soft px-2.5 py-0.5 text-xs font-semibold text-success-ink">

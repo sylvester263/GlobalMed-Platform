@@ -131,7 +131,7 @@ export default async function CoursePage({ params }: Props) {
             {/* MG-11: smooth height via the accordion; first preview icon pulses once. */}
             <Accordion
               defaultValue={[course.curriculum[0]!.title]}
-              className="rounded-lg border bg-card px-6"
+              className="rounded-2xl border bg-card px-6"
             >
               {course.curriculum.map((module, mi) => (
                 <AccordionItem key={module.title} value={module.title}>

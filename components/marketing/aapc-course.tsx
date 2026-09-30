@@ -158,7 +158,7 @@ function GroupCards({ groups }: { groups: CourseGroup[] }) {
       {groups.map((group) => (
         <li
           key={group.title}
-          className="flex flex-col gap-3 rounded-lg border bg-card p-5 shadow-sm"
+          className="flex flex-col gap-3 rounded-2xl border bg-card p-6 shadow-sm"
         >
           <h3 className="flex items-start gap-2 text-lg leading-snug">
             <CircleCheck aria-hidden="true" className="mt-1 size-5 shrink-0 text-sky" />
@@ -190,7 +190,7 @@ export function AapcCourseCard({
   return (
     <article
       className={cn(
-        "relative flex h-full flex-col gap-5 rounded-lg border bg-card p-6 shadow-sm",
+        "relative flex h-full flex-col gap-5 rounded-2xl border bg-card p-6 shadow-sm",
         course.bestValue && "border-2 border-primary shadow-md lg:-my-3 lg:py-9",
       )}
     >
@@ -232,8 +232,8 @@ export function AapcCourseCard({
 export function AapcRegisterBand({ defaultCourse }: { defaultCourse?: AapcCourseSlug }) {
   return (
     <section id="register" aria-labelledby="register-title" className="bg-ink text-white">
-      <div className="container-fluid grid gap-10 section-y lg:grid-cols-[1fr_1.3fr] lg:items-start lg:gap-16">
-        <div className="flex flex-col gap-5">
+      <div className="container-fluid grid split-cols-reverse gap-10 section-y lg:items-start">
+        <div className="flex flex-col gap-5 lg:sticky lg:top-24 lg:self-start">
           <h2 id="register-title" className="text-2xl text-white lg:text-3xl">
             Register for AAPC Training
           </h2>
@@ -283,13 +283,18 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
         title={course.title}
         intro={course.summary}
         image={courseHeroImages[course.slug]}
+        aside={
+          <div className="rounded-2xl border bg-card p-6 shadow-sm">
+            <PriceBlock course={course} />
+          </div>
+        }
         crumbs={[
           { name: "Education", path: aapcCertificationPath },
           { name: course.credential, path },
         ]}
       >
-        {/* Beside the hero photo the facts and price stack until there's room for both. */}
-        <div className="grid gap-6 wide:grid-cols-[1.2fr_1fr] wide:items-end">
+        {/* Facts and buttons; the price card sits under the photo (hero aside). */}
+        <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             {course.bestValue && <BestValue className="self-start" />}
             <dl className="grid gap-x-6 gap-y-2 text-sm sm:grid-cols-[auto_1fr]">
@@ -300,15 +305,12 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
               <dt className="font-semibold">Certification awarded by</dt>
               <dd className="text-muted-foreground">{aapcCourseFacts.awardedBy}</dd>
             </dl>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link href="#register" className={buttonVariants({ size: "lg" })}>
-                Register Now <ArrowRight aria-hidden="true" />
-              </Link>
-              <WhatsAppLink className={buttonVariants({ size: "lg", variant: "secondary" })} />
-            </div>
           </div>
-          <div className="rounded-lg border bg-card p-5 shadow-sm">
-            <PriceBlock course={course} />
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link href="#register" className={buttonVariants({ size: "lg" })}>
+              Register Now <ArrowRight aria-hidden="true" />
+            </Link>
+            <WhatsAppLink className={buttonVariants({ size: "lg", variant: "secondary" })} />
           </div>
         </div>
       </PageHero>
@@ -323,7 +325,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
         {content.intro.columns && (
           <div className="grid gap-grid md:grid-cols-2">
             {content.intro.columns.map((col) => (
-              <div key={col.heading} className="flex flex-col gap-3 rounded-lg border bg-card p-6">
+              <div key={col.heading} className="flex flex-col gap-3 rounded-2xl border bg-card p-6">
                 <h3 className="text-xl">{col.heading}</h3>
                 <p className="text-muted-foreground">{col.body}</p>
               </div>
@@ -337,7 +339,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
         <Section tone="white" id="included" title="What's included">
           <ul className="grid gap-3 sm:grid-cols-2">
             {course.included.map((item) => (
-              <li key={item} className="flex items-start gap-3 rounded-lg border bg-card p-4">
+              <li key={item} className="flex items-start gap-3 rounded-2xl border bg-card p-4">
                 <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-sky" />
                 <span>{item}</span>
               </li>
@@ -437,8 +439,10 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
 
       {/* 11. FAQ (FaqList emits the FAQPage JSON-LD) */}
       {faqs.length > 0 && (
-        <Section className="lg:grid lg:grid-cols-[1fr_2fr] lg:gap-16">
-          <h2 className="text-2xl lg:text-3xl">Questions about {course.credential}</h2>
+        <Section className="split-cols-reverse lg:grid lg:items-start">
+          <h2 className="text-2xl lg:sticky lg:top-24 lg:self-start lg:text-3xl">
+            Questions about {course.credential}
+          </h2>
           <FaqList faqs={faqs} />
         </Section>
       )}
@@ -450,7 +454,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
             <li key={other.slug}>
               <Link
                 href={aapcCoursePath(other.slug)}
-                className="group flex h-full flex-col gap-2 rounded-lg border bg-card p-6 transition-colors hover:border-primary"
+                className="group flex h-full flex-col gap-2 rounded-2xl border bg-card p-6 transition-colors hover:border-primary"
               >
                 <span className="font-serif text-2xl font-semibold text-primary">
                   {other.credential}

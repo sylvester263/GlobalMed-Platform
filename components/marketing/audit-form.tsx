@@ -111,7 +111,7 @@ export function AuditForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="flex flex-col gap-6 rounded-lg border bg-card p-6 shadow-sm md:p-8"
+      className="flex flex-col gap-6 rounded-2xl border bg-card p-6 shadow-sm md:p-8"
     >
       <div className="flex flex-col gap-3">
         <p className="text-sm font-semibold text-muted-foreground" aria-live="polite">

@@ -78,7 +78,7 @@ export function ContactForm({ defaultInterest }: ContactFormProps) {
         ref={successRef}
         tabIndex={-1}
         role="status"
-        className="flex flex-col items-center gap-4 rounded-lg border bg-card p-8 text-center focus:outline-none"
+        className="flex flex-col items-center gap-4 rounded-2xl border bg-card p-8 text-center focus:outline-none"
       >
         <CheckStamp size={72} />
         <h3 className="text-2xl">Thanks, your message is on its way</h3>
@@ -93,7 +93,7 @@ export function ContactForm({ defaultInterest }: ContactFormProps) {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="flex flex-col gap-5 rounded-lg border bg-card p-6 md:p-8"
+      className="flex flex-col gap-5 rounded-2xl border bg-card p-6 md:p-8"
     >
       {serverError && (
         <Alert variant="destructive">

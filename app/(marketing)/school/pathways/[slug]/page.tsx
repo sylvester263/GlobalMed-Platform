@@ -94,7 +94,7 @@ export default async function PathwayPage({ params }: Props) {
             ))}
           </ul>
         </div>
-        <div className="flex flex-col gap-4 rounded-lg border bg-card p-6">
+        <div className="flex flex-col gap-4 rounded-2xl border bg-card p-6">
           <h2 className="text-xl">Bundle price</h2>
           <p className="text-muted-foreground">
             {allCourses.length} courses bought separately:{" "}

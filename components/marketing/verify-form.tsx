@@ -13,7 +13,7 @@ export function VerifyForm({ defaultCode, error }: { defaultCode?: string; error
     <form
       method="get"
       action="/verify"
-      className="flex flex-col gap-4 rounded-lg border bg-card p-6"
+      className="flex flex-col gap-4 rounded-2xl border bg-card p-6"
     >
       <label htmlFor="certificate-code" className="text-sm font-semibold">
         Certificate ID

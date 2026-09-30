@@ -36,7 +36,7 @@ export default function TeamPage() {
       <Section>
         <ul className="grid gap-grid sm:grid-cols-2 lg:grid-cols-3">
           {team.map((member) => (
-            <li key={member.role} className="flex flex-col gap-4 rounded-lg border bg-card p-6">
+            <li key={member.role} className="flex flex-col gap-4 rounded-2xl border bg-card p-6">
               <Avatar className="size-16">
                 <AvatarFallback className="bg-mint text-lg font-semibold text-teal-deep">
                   {initialsFromRole(member.role)}

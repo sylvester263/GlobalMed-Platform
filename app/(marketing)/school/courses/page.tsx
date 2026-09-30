@@ -70,7 +70,7 @@ export default async function CoursesPage({ searchParams }: Props) {
           method="get"
           role="search"
           aria-label="Filter courses"
-          className="grid gap-4 rounded-lg border bg-card p-5 sm:grid-cols-2 lg:grid-cols-[2fr_repeat(4,1fr)_auto] lg:items-end"
+          className="grid gap-4 rounded-2xl border bg-card p-5 sm:grid-cols-2 lg:grid-cols-[2fr_repeat(4,1fr)_auto] lg:items-end"
         >
           <label className="flex flex-col gap-1.5 text-sm font-semibold sm:col-span-2 lg:col-span-1">
             Search

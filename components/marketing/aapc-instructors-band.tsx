@@ -86,7 +86,7 @@ export function AapcInstructorsBand({
             {instructorsBand.photos.map((photo) => (
               <li
                 key={photo.src}
-                className="relative aspect-[4/5] overflow-hidden rounded-lg border bg-card"
+                className="relative aspect-[4/5] overflow-hidden rounded-2xl border bg-card"
               >
                 {publicAssetExists(photo.src) ? (
                   <Image

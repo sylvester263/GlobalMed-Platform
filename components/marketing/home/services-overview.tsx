@@ -49,11 +49,20 @@ function CardImage({ card, dark }: { card: ServiceCard; dark: boolean }) {
 function CardContent({ card, index }: { card: ServiceCard; index: number }) {
   const dark = tones[index] === "navy";
   const muted = dark ? "text-white/90" : "text-muted-foreground";
+  const flip = index % 2 === 1;
 
   return (
-    // ≥1024px (client, 2026-09-28): text 50% / image 50%, the image flush to the card's right
-    // edge (the card clips it to its outer corners). 768–1023px keeps the 55/45 layout.
-    <div className="grid gap-6 md:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] md:gap-10 lg:flex-1 lg:grid-cols-2 lg:gap-0">
+    // ≥1024px (client, 2026-09-28): text 50% / image 50%, the image flush to the card's edge
+    // (the card clips it to its outer corners). 768–1023px keeps the 55/45 layout. The photo
+    // alternates sides from 768px: right on cards 1 and 3, left on 2 and 4 (2026-09-30).
+    <div
+      className={cn(
+        "grid gap-6 md:gap-10 lg:flex-1 lg:grid-cols-2 lg:gap-0",
+        flip
+          ? "md:grid-cols-[minmax(0,45fr)_minmax(0,55fr)]"
+          : "md:grid-cols-[minmax(0,55fr)_minmax(0,45fr)]",
+      )}
+    >
       <div
         data-stack-text
         className="flex flex-col gap-3 lg:self-start lg:p-[clamp(32px,4vw,72px)] lg:[&_p]:max-w-[65ch]"
@@ -128,7 +137,7 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
           ))}
         </div>
       </div>
-      <div className="order-first md:order-none lg:relative">
+      <div className={cn("order-first lg:relative", flip ? "md:order-first" : "md:order-none")}>
         <CardImage card={card} dark={dark} />
       </div>
     </div>
@@ -150,11 +159,11 @@ export function ServicesOverview() {
     <section id="services" aria-labelledby="services-title" className="bg-card">
       <div className="container-fluid flex flex-col gap-10 section-y">
         {/* Full container width; from 1280px the AAPC note sits beside the lead (60/40). */}
-        <div className="grid gap-4 xl:grid-cols-[3fr_2fr] xl:items-start xl:gap-12">
+        <div className="grid gap-4 xl:grid-cols-[3fr_2fr] xl:items-center xl:gap-12">
           <p className="max-w-[75ch] text-lg text-muted-foreground">{servicesIntro.lead}</p>
           <Link
             href={servicesIntro.note.href}
-            className="group rounded-lg border border-sky/40 bg-sky-soft p-5 text-ink transition-colors hover:border-sky focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
+            className="group rounded-2xl border border-sky/40 bg-sky-soft p-5 text-ink transition-colors hover:border-sky focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
           >
             {servicesIntro.note.text}
             <ArrowRight

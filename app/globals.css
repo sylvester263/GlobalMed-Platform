@@ -275,10 +275,30 @@
 }
 
 /*
- * Text + image sections (2026-09-30): one grid everywhere. One column below 1024px; 60/40
- * at 1024–1279px; 7/5 of a 12-column grid from 1280px; column gap clamp(40px, 5vw, 80px);
- * columns aligned to the top. `split-reverse` puts the wider (text) column on the right.
+ * Two-column sections (2026-09-30): one grid everywhere. One column below 1024px; 60/40 at
+ * 1024–1279px; 7/5 of a 12-column grid from 1280px; column gap clamp(40px, 5vw, 80px);
+ * columns aligned to the top. `split` is the whole grid (text + image). On an existing
+ * grid, `split-cols` gives the text-first columns and `split-cols-reverse` the 5/7 version
+ * (narrow intro left, wide content right: forms, FAQs).
  */
+@utility split-cols {
+  @media (min-width: 1024px) {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    column-gap: clamp(40px, 5vw, 80px);
+  }
+  @media (min-width: 1280px) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+@utility split-cols-reverse {
+  @media (min-width: 1024px) {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    column-gap: clamp(40px, 5vw, 80px);
+  }
+  @media (min-width: 1280px) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+}
 @utility split {
   display: grid;
   gap: 32px;
@@ -291,14 +311,7 @@
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   }
 }
-@utility split-reverse {
-  @media (min-width: 1024px) {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  }
-  @media (min-width: 1280px) {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  }
-}
+
 @utility gap-grid {
   gap: var(--grid-gap);
 }

@@ -23,7 +23,7 @@ export function VoiceToNote() {
 
   return (
     <MotionFeatures>
-      <figure ref={ref} className="flex flex-col gap-5 rounded-lg border bg-card p-6 shadow-sm">
+      <figure ref={ref} className="flex flex-col gap-5 rounded-2xl border bg-card p-6 shadow-sm">
         <div
           aria-hidden="true"
           className="flex h-16 items-center justify-center gap-1 rounded-md bg-ledger px-4"

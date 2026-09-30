@@ -114,7 +114,7 @@ export function AapcRegistrationForm({
         ref={successRef}
         tabIndex={-1}
         role="status"
-        className="flex flex-col items-center gap-4 rounded-lg border bg-card p-8 text-center text-foreground focus:outline-none"
+        className="flex flex-col items-center gap-4 rounded-2xl border bg-card p-8 text-center text-foreground focus:outline-none"
       >
         <CheckStamp size={72} />
         <h3 className="text-2xl">Thank you, your registration is in</h3>
@@ -140,7 +140,7 @@ export function AapcRegistrationForm({
       onSubmit={onSubmit}
       noValidate
       aria-labelledby="register-form-title"
-      className="flex flex-col gap-5 rounded-lg border bg-card p-6 text-foreground md:p-8"
+      className="flex flex-col gap-5 rounded-2xl border bg-card p-6 text-foreground md:p-8"
     >
       <div className="flex flex-col gap-1">
         <h3 id="register-form-title" className="text-2xl">

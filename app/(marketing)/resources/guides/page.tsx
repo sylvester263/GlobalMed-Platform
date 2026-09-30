@@ -30,7 +30,7 @@ export default function GuidesPage() {
           {guides.map((guide) => {
             const image = guideImages[guide.id];
             return (
-              <li key={guide.title} className="flex flex-col gap-3 rounded-lg border bg-card p-6">
+              <li key={guide.title} className="flex flex-col gap-3 rounded-2xl border bg-card p-6">
                 {image ? (
                   <Image
                     src={image.src}

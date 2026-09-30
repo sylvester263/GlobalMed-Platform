@@ -21,7 +21,7 @@ function initials(name: string): string {
 /** Testimonial with consent-approved text only (pm/CLIENT_INPUTS_NEEDED.md). */
 export function Testimonial({ quote, name, role, audience, className }: TestimonialProps) {
   return (
-    <figure className={cn("flex flex-col gap-5 rounded-lg border bg-card p-6", className)}>
+    <figure className={cn("flex flex-col gap-5 rounded-2xl border bg-card p-6", className)}>
       <Badge variant={audience === "practice" ? "secondary" : "gold"}>
         {audience === "practice" ? "Practice client" : "Student"}
       </Badge>

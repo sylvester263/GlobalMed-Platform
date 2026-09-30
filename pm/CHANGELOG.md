@@ -19,6 +19,7 @@ Format: Keep a Changelog · Semantic Versioning
 - Home "Our Services" sticky stacking cards with the client's text and photos; lead detail page and admin CSV export of leads; official App Store / Google Play footer badges ("Coming soon" until links are set) (2026-09-28)
 - About page "Our Story": four parts (story + founder photo slot, documentation with country/specialty chips, coding/billing/RCM checklist, navy AAPC workforce band with partner lockup and "View CPC® & CPB® Courses") and a closing statement, client text used exactly, one-time fade on scroll (2026-09-29)
 - LCCI membership credential (No. 94721 C, valid until 31 Mar 2027) in "Registered, Certified & Compliant" with thumbnail, lightbox and PDF; credentials past their `validTill` date are no longer shown. Founder photo (Riaz Naveed) in About "Our Story" beside the founder paragraph (2026-09-30)
+- pm/IMAGE_PLAN.md: full-site image audit with prompts for AI images and the list of real photos needed (2026-09-30)
 
 ### Changed
 - GlobalMed presented as AAPC's Strategic Partner in Pakistan only: AAPC faculty teach online, AAPC certifies; approved wording site-wide, chatbot knowledge updated (ADR-026) (2026-09-26)

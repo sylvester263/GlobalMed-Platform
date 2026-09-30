@@ -365,6 +365,16 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** none. Client to confirm "04/06/2018" is 4 June 2018.
 
 ---
+
+### Session 010b — Image audit and generation plan
+- **Date:** 2026-09-30
+- **Done:** pm/IMAGE_PLAN.md: every visible route scanned in the browser at 1280px (22 routes, hidden flags excluded) plus header, footer and Open Graph. 39 slots to fill: 7 P1 (AAPC logo PNG; slide 3; OG default/education/services; AAPC page and Free Billing Audit hero images) and 32 P2; 12 slots already good. Prompt rules, standard negative prompt, per-image prompts and seeds (240926, variations 240927–240932 for the similar education shots), totals and an upload naming checklist. Report only; nothing placed.
+- **Findings:** slide 3 shows an instructor in a physical classroom, which breaks the online-only rule (B01, P1). Only home and About have photos; all other pages are text-only, so their hero/cover slots are proposals that need a layout change in Task 3. The default OG card still draws the retired claim-line ticks. Service card photos: a few readable words (mug, poster, book spines); the untracked `.jfif` files are 2400×1792 sources of the same four photos. The slide 3 and service-card prompts are not saved in the repo, so the plan marks them "already provided".
+- **Files touched:** pm/IMAGE_PLAN.md, pm/SESSION_LOG.md, pm/CHANGELOG.md
+- **Next:** Task 3 (placement) once the client says the images are uploaded.
+- **Blockers:** the images themselves; AAPC logo permission.
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

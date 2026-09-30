@@ -165,3 +165,136 @@ Local production build (`next start`), Lighthouse 13.5, default mobile (simulate
 2. Regenerate the 14 flagged images (§2), and upload the inpainted C06 / C09.
 3. Floating help button: it stays at the client's 72px. On phones it sits over content at the bottom-right of the first screen on a few pages (FAQ questions, some CTAs) until the visitor scrolls. A 56px button on phones would remove most of this; client decision.
 4. Social image URLs use `NEXT_PUBLIC_SITE_URL`. It has to be the live domain in the Vercel environment for share previews to work.
+
+---
+
+# Part 2: fixes brief (image placement, founder photo, packages, Why register, alignment)
+
+Commits: `1b5df33` step 1 · `e8d0011` + `9e507a0` step 2 · `772fe4e` step 3 · `d985829` step 4 · step 5 (this update).
+
+## 7. Image placement audit (step 1)
+
+Every image rendered on the site was listed by page and section in the browser (1280px), then compared with pm/IMAGE_PLAN.md and with the photo's content.
+
+| ID | File | Planned page + section | Where it actually shows | Correct? | Fix |
+|---|---|---|---|---|---|
+| B01 | slider/slide-3.webp | Home slider, slide 3 | Home slider, slide 3 | ✅ | — |
+| C06 | services/medical-transcription.webp | Home card 1, Medical Transcription | Card 1 **and** the /services/medical-transcription hero | ❌ used twice | Hero removed (no planned hero photo) |
+| C07 | services/ai-clinical-documentation.webp | Home card 2, AI Documentation | Card 2 **and** the /services/ai-clinical-documentation hero | ❌ used twice | Hero removed |
+| C08 | services/revenue-cycle-management.webp | Home card 3, RCM | Card 3 **and** the /services/revenue-cycle-management hero | ❌ used twice | Hero removed |
+| C09 | services/aapc-certification.webp | Home card 4, AAPC | Card 4 | ✅ | — |
+| B05 | heroes/aapc-certification.webp | AAPC Certification hero | Same | ✅ | — |
+| B07 | heroes/course-cpc.webp | CPC® hero | Same | ✅ | — |
+| B08 | heroes/course-cpb.webp | CPB® hero | Same | ✅ | — |
+| B09 | heroes/course-cpc-cpb.webp | CPC® + CPB® hero | Same | ✅ | — |
+| B06 | heroes/free-billing-audit.webp | Free Billing Audit hero | Same | ✅ | — |
+| B10 | heroes/services.webp | Services hero | Same | ✅ | — |
+| B11 | heroes/medical-billing.webp | Medical Billing hero | Same | ✅ | — |
+| B12 | heroes/medical-coding.webp | Medical Coding hero | Same | ✅ | — |
+| B13 | heroes/denial-management.webp | Denial Management hero | Same | ✅ | — |
+| B14 | heroes/careers.webp | Careers hero | Same | ✅ | — |
+| B15 | blog/why-claims-get-denied.webp | "Why claims get denied" cover + card | Same (matching article) | ✅ | — |
+| B16 | blog/modifier-25-explained.webp | "Modifier 25 explained" cover + card | Same (matching article) | ✅ | — |
+| B17 | blog/start-medical-coding-career-pakistan.webp | "How to start a medical coding career" cover + card | Same (matching article) | ✅ | — |
+| B18 | blog/clean-claim-rate.webp | "Clean claim rate" cover + card | Same (matching article) | ✅ | — |
+| B19–B21 | guides/*.webp | Guide cards | Same, each on its guide | ✅ | — |
+| B24 | backgrounds/home-aapc-band.webp | Home "Get Trained by AAPC Instructors" background | Same | ⚠️ photo barely visible on phones (80% navy overlay) | Phone overlay 65% |
+| — | about/riaz-naveed-800.webp | About › Our Story | Same | ✅ | Layout fixed in step 2 |
+
+- Order of the home cards confirmed: 1 Transcription, 2 AI Documentation, 3 RCM, 4 AAPC.
+- Crops were checked at 1280px and 360px. The blog covers now use the 4:3 hero crop in the post hero (step 4); the blog cards keep 16:9.
+- The earlier "cut off" look of the home cards in screenshots was the sticky header overlapping them; captured without it, all four are complete.
+- Screenshots of every slot: `pm/screenshots/2026-09-30-alignment/slots/` (1280 and 360).
+
+## 8. About › Our Story (step 2)
+
+- New shared **split grid**: one column below 1024px, 60/40 at 1024–1279px, 7/5 of 12 columns from 1280px, column gap clamp(40px, 5vw, 80px).
+- The photo's top is level with the "Our Story" heading. Photo size: 4:5, max 460px (380px at 1024–1279px, 360px centred on phones), 16px radius, 16px #EEF6FC frame.
+- The whole photo is visible (`object-contain`, nothing cropped). The caption "Riaz Naveed, Founder & CEO" is small and muted, with the existing "Est. 2007" badge.
+- On phones the order is heading, then the photo 32px below it, then the text.
+- The story text runs directly under the heading (the heading row no longer stretches), at 18px from 1024px.
+- **Still open:** the text column is 25–40% shorter than the photo at 1280–1920px, because the brief fixes both the photo size and its top alignment. Choosing between them is the client's call.
+- **Help button:** 60px on screens under 768px (72px above). The footer keeps button height + 24px clear under its last links, so nothing sits under the button at the end of any page.
+
+## 9. Course packages and "Why register" (step 3)
+
+- **Package Includes:** bold 16px heading, sky-blue checks, 8px apart, client text exactly. It sits under the price note:
+  - on every course card (AAPC page and home);
+  - on each course page, in the price card beside the hero.
+- **Old lists hidden, nothing deleted:** "What's included" is hidden by flags (`cpcIncludedLegacy`, `cpbIncludedLegacy`, `dualIncludedLegacy` = false).
+- **Comparison table:**
+  - Duration and Format stay.
+  - Then one row per package item: Training · Blackboard access (6 months) · Certification exam(s) (CPC exam with two attempts / CPB exam with two attempts / CPC and CPB exams with two attempts each) · AAPC membership (1 year) · Books (Latest edition included).
+  - Then Price.
+  - The old rows (practice tests, Practicode, Codify, Denials guide, 1/2 off prerequisite) are hidden by `comparisonLegacyRows`.
+- **Old package mentions elsewhere:**
+  - Hidden by `practiceTestsMentions`: the band point "Official AAPC exams and practice tests" and the "How it works" exam-step caption. Replacement text is requested in CLIENT_INPUTS_NEEDED.
+  - The only wording change: I removed the clause "(1/2 off with this course)" from the CPC® and CPB® "Experience requirements" and "at 1/2 off with your course" from the FAQ answer. The rest of those sentences is unchanged.
+  - A new e2e test checks that the home, AAPC, course and FAQ pages mention none of Practicode, Codify, "practice tests", "Denials Management", "1/2 off" or "two-year".
+- **"Why register through GlobalMed Transcriptions?"** (home, client text exactly):
+  - Intro, then five cards: bold lead word, then the rest, with sky checks instead of ✅.
+  - Layout: 3 + 2 on desktop (the 2 centred), 2 columns on tablet, 1 on phones; all cards the same height.
+  - Then the tagline (large, navy, centred), the closing line, and "Register Now" (registration form) with "Ask on WhatsApp".
+  - The previous four cards are hidden (`whyRegisterLegacy`).
+- **Chatbot (docs/09):**
+  - The three package lists replace the old package details.
+  - It now knows the "Why register" points (special pricing, installments, upcoming batch).
+  - "Upcoming batch" is allowed alongside "batch schedules".
+- **CLIENT_INPUTS_NEEDED:** the dual course's membership length (previously two-year), whether each exam has two attempts, and replacement text for the two practice-test mentions.
+
+## 10. Alignment and symmetry (step 4)
+
+| Area | Change |
+|---|---|
+| Container | One `container-fluid` for every section, header and footer (ADR-029); the alignment audit confirms section headings share the container's left edge on every page |
+| Two-column grid | One split grid everywhere: heroes, About sections (Our Story, Documentation, Revenue Cycle, Workforce), text + form (Free Billing Audit, Contact, Register for AAPC Training) and heading + FAQ sections (5/7 variant). It replaces nine different ad-hoc column ratios |
+| Heroes | Photo always the 4:3 hero crop, aligned to the top; the text column centres against it (when the text is taller it starts level with the photo's top). Course pages: the price + Package Includes card moved under the photo, so the columns balance |
+| Long forms and FAQ lists | The intro column stays in view (sticky) beside the long form or question list, instead of leaving an empty column |
+| Alternating sides | Home service cards: photo right on 1 and 3, left on 2 and 4 (from 768px) |
+| Section spacing | Tokens from part 1 (96/72/56; 16px heading → text, 32px text → buttons, 24/32px grid gaps). Course hero: facts → buttons now 32px |
+| Cards | 16px radius on all cards and panels (was 12px), 24px padding (a few had 16–20px), 24px radius on the large stacking cards; buttons pinned to the card bottom |
+| Headings | h2 is 24/30px everywhere; "What we review" was 24px on desktop and now matches |
+| Buttons | All buttons 48px tall (were 44px default / 48px large), header CTA included |
+| Images | 4:3 heroes and cards, 16:9 blog cards, 4:5 portrait; none stretched (UI audit) |
+
+**Alignment audit** (`tests/audit/alignment.mjs`, 41 routes × 1024/1280/1440/1920):
+- 125 findings before, 4 after.
+- Three are Our Story (see §8).
+- One is a home service card at 1920px, where the full-height photo panel is taller than the card text by design.
+
+## 11. Checks (step 5)
+
+- **UI audit** at 360, 390, 768, 1024, 1280, 1440 and 1920 on all 41 routes, in Chrome, WebKit and Firefox:
+  - no horizontal scroll, no touch targets under 44px, no paragraphs under 16px on phones, no stretched or cut-off images, in any browser;
+  - remaining hits: the help button passing over content while the page scrolls, the Medical Coding code-chip graphic (design, not a placeholder), and one card link counted as long text.
+- **Tests:**
+  - unit 121 passed;
+  - E2E 248 passed, 53 skipped by flag, including the new `packages.spec.ts`;
+  - two tests failed once while the three browser audits were loading the machine, and pass when re-run.
+- **Screenshots:** `pm/screenshots/2026-09-30-alignment/`:
+  - Our Story, the AAPC course cards, the CPC® hero and full page, and "Why register" at 1920 and 360;
+  - every page at 360 and 1920 in `pages/`;
+  - every image slot in `slots/`.
+
+### Lighthouse (local production build)
+
+| Page | Mobile P / A / BP / SEO | Mobile LCP · CLS · TBT | Desktop P / A / BP / SEO |
+|---|---|---|---|
+| Home | **42** / 100 / 100 / 100 | 5.08 s · 0.000 · 3757 ms | 97 / 100 / 100 / 100 |
+| About | **49** / 100 / 100 / 100 | 4.97 s · 0.000 · 2679 ms | 92 / 100 / 100 / 100 (first run 81: TBT noise) |
+| AAPC Certification | **70** / 100 / 100 / 100 | 4.67 s · 0.000 · 487 ms | 99 / 100 / 100 / 100 |
+| CPC® | **50** / 100 / 100 / 100 | 5.04 s · 0.000 · 1260 ms | 99 / 100 / 100 / 100 |
+
+**Desktop passes (92–99). Accessibility, Best Practices and SEO are 100 everywhere. Mobile Performance fails (42–70).**
+
+What the measurements show:
+- The cost isn't the images or today's changes. The LCP photo loads in under 0.2s.
+- In Lighthouse the time goes to style/layout of the first render and to React hydration and link prefetching.
+- A CPU-throttled trace shows no continuous animation cost after load (style ≤ 40ms, layout ≤ 26ms over 6s idle).
+- Run-to-run noise on this machine is large: home TBT has measured anywhere from 1.6s to 3.8s.
+
+Getting mobile to 90 needs a dedicated performance task:
+- fewer client components and less hydration on the home and course pages;
+- defer below-the-fold interactive sections;
+- review Next's link prefetching;
+- measure on the Vercel deployment.

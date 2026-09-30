@@ -391,6 +391,21 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** push waits on the mobile Performance target, or the client's go-ahead.
 
 ---
+
+### Session 012 — Fixes: image placement, founder photo, packages, Why register, alignment
+- **Date:** 2026-09-30
+- **Done:** (details in pm/UI_UX_REPORT_2026-09-30.md, part 2)
+  - Step 1: placement audit of every rendered image. All slots show their planned photo; the three service pages that reused home card photos as heroes no longer do. Band overlay on phones 80% → 65%.
+  - Step 2: shared split grid; Our Story photo top-aligned with the heading, 4:5, max 460/380/360px, #EEF6FC frame, whole photo visible; help button 60px under 768px.
+  - Step 3: "Package Includes" for CPC®, CPB®, CPC® + CPB® (client text) under the price note on cards and course heroes; old lists and comparison rows hidden by flags; practice-test mentions hidden; "1/2 off" clause removed from two course paragraphs and one FAQ; new home "Why register through GlobalMed Transcriptions?"; docs/09 updated.
+  - Step 4: split grid for heroes, About, forms and FAQs; 4:3 hero crop with centred text; course price card under the hero photo; sticky intro columns; 48px buttons; 16px card radius and 24px padding; alternating photos on the home service cards; alignment audit script.
+  - Step 5: UI audit in Chrome, WebKit, Firefox at 7 widths (no overflow, no small targets); E2E 248 passed; screenshots pm/screenshots/2026-09-30-alignment/; Lighthouse.
+- **Not met:** Lighthouse mobile Performance 42–70 (desktop 92–99, A/BP/SEO 100). Cause: first-render style/layout and hydration JS, not today's changes. Not pushed yet.
+- **Files touched:** content/{images,home,aapc}.ts, content/courses/{cpc,cpb}.ts, data/courses.ts, config/features.ts, components/marketing/{sections,aapc-course,about-story,help-button,…}.tsx, components/marketing/home/*, components/motion/scroll-background.tsx, components/ui/button.tsx, app/(marketing)/** pages, app/globals.css, docs/09, tests/{audit,e2e}/*, pm/*
+- **Next:** mobile performance task; client answers on package details and practice-test replacement text.
+- **Blockers:** push waits on mobile Performance or the client's go-ahead.
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

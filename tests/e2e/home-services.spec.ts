@@ -118,7 +118,9 @@ test.describe("home services (phone and reduced motion)", () => {
         await page.goto("/");
         const cards = page.locator("#services article");
         await expect(cards).toHaveCount(4);
-        // After hydration the plain stack (one-time fade wrappers) replaces the server markup.
+        // The stack hydrates when it comes near the screen (deferred hydration, 2026-10-01);
+        // after that the plain stack (one-time fade wrappers) replaces the server markup.
+        await page.locator("#services").scrollIntoViewIfNeeded();
         await expect(page.locator("#services .transition-opacity > article")).toHaveCount(4);
         const { top, bottom } = await servicesRange(page);
         for (let y = top; y <= bottom; y += 400) {

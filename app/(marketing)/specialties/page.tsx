@@ -34,7 +34,11 @@ export default function SpecialtiesPage() {
             <StaggerItem as="li" key={s.slug}>
               <article className="relative flex h-full flex-col gap-3 rounded-2xl border bg-card p-6 transition-colors hover:border-teal">
                 <h2 className="text-xl">
-                  <Link href={`/specialties/${s.slug}`} className="after:absolute after:inset-0">
+                  <Link
+                    prefetch={false}
+                    href={`/specialties/${s.slug}`}
+                    className="after:absolute after:inset-0"
+                  >
                     {s.name}
                   </Link>
                 </h2>

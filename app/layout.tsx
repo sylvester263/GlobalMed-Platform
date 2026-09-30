@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { JetBrains_Mono, Public_Sans, Source_Serif_4 } from "next/font/google";
 
 import { MotionProvider } from "@/components/motion/motion-provider";
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { publicEnv } from "@/lib/env";
 
 import "./globals.css";
@@ -49,10 +47,9 @@ export default function RootLayout({
       className={`${publicSans.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`}
     >
       <body className="antialiased">
-        <MotionProvider>
-          <TooltipProvider>{children}</TooltipProvider>
-          <Toaster />
-        </MotionProvider>
+        {/* Tooltip and toast providers live in the dashboard and styleguide layouts only: the
+            public pages use neither, and they cost ~20 kB on every page (2026-10-01). */}
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

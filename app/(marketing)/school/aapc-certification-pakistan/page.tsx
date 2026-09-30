@@ -2,9 +2,10 @@ import { ArrowRight, Check, Minus } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { AapcCourseCard, AapcRegisterBand } from "@/components/marketing/aapc-course";
+import { AapcRegisterBand } from "@/components/marketing/aapc-course";
+import { AapcCourseCard } from "@/components/marketing/aapc-course-card";
 import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
-import { ClaimJourneySection } from "@/components/marketing/home/claim-journey";
+import { DeferredClaimJourneySection } from "@/components/defer/islands";
 import { FaqList, PageHero, Section } from "@/components/marketing/sections";
 import { heroImages } from "@/content/images";
 import { buttonVariants } from "@/components/ui/button";
@@ -200,7 +201,7 @@ export default function AapcCertificationPage() {
         <p className="text-sm text-muted-foreground">{aapcCourseFacts.priceNote}</p>
       </Section>
 
-      <ClaimJourneySection
+      <DeferredClaimJourneySection
         id="how-it-works"
         title="How it works"
         intro="From registration to your AAPC credential, in five steps."

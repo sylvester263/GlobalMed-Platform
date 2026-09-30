@@ -151,6 +151,7 @@ export default async function ServicePage({ params }: Props) {
             {specialties.map((s) => (
               <li key={s.slug}>
                 <Link
+                  prefetch={false}
                   href={`/specialties/${s.slug}`}
                   className="inline-flex h-11 items-center rounded-full border bg-card px-4 font-semibold hover:border-teal hover:bg-mint"
                 >

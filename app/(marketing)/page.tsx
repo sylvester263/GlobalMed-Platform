@@ -11,11 +11,11 @@ import {
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { AapcCourseCard, WhatsAppLink } from "@/components/marketing/aapc-course";
+import { AapcCourseCard, WhatsAppLink } from "@/components/marketing/aapc-course-card";
 import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
 import { aapcBandBackground } from "@/content/images";
 import { CredentialsSection } from "@/components/marketing/credentials-section";
-import { ClaimJourneySection } from "@/components/marketing/home/claim-journey";
+import { DeferredClaimJourneySection } from "@/components/defer/islands";
 import { HeroSlider } from "@/components/marketing/home/hero-slider";
 import { ServicesOverview } from "@/components/marketing/home/services-overview";
 import { CtaBand, FaqList, Section } from "@/components/marketing/sections";
@@ -205,7 +205,7 @@ export default function HomePage() {
       )}
 
       {/* 5. How it works (MG-3 claim line) */}
-      <ClaimJourneySection
+      <DeferredClaimJourneySection
         id="certification-path"
         title="How it works"
         intro="From registration to your AAPC credential, in five steps."
@@ -214,7 +214,7 @@ export default function HomePage() {
         <Link href={registerHref} className={cn(buttonVariants({ size: "lg" }), "self-start")}>
           Register Now
         </Link>
-      </ClaimJourneySection>
+      </DeferredClaimJourneySection>
 
       {/* 6. Upcoming batches. Hidden at client request — GlobalMed education plans are future scope. */}
       {features.batches && (

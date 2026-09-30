@@ -4,12 +4,7 @@ import Link from "next/link";
 import { Fragment } from "react";
 
 import { ClaimLine } from "@/components/motion/claim-line";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { DeferredFaqAccordion } from "@/components/defer/islands";
 import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
@@ -193,14 +188,7 @@ export function Section({
 export function FaqList({ faqs, withJsonLd = true }: { faqs: Faq[]; withJsonLd?: boolean }) {
   return (
     <>
-      <Accordion className="rounded-2xl border bg-card px-6">
-        {faqs.map((faq) => (
-          <AccordionItem key={faq.question} value={faq.question}>
-            <AccordionTrigger>{faq.question}</AccordionTrigger>
-            <AccordionContent className="text-base">{faq.answer}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+      <DeferredFaqAccordion faqs={faqs} />
       {withJsonLd && <JsonLd data={faqJsonLd(faqs)} />}
     </>
   );

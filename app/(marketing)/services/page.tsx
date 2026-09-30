@@ -42,6 +42,7 @@ export default function ServicesPage() {
                 <div className="flex flex-col gap-2">
                   <h2 className="text-xl">
                     <Link
+                      prefetch={false}
                       href={`/services/${service.slug}`}
                       className="after:absolute after:inset-0"
                     >

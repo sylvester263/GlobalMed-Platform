@@ -1,21 +1,16 @@
 "use client";
 
-import { m } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
-import { MotionFeatures } from "@/components/motion/motion-features";
 import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
-import { dur, ease } from "@/lib/motion";
-
-const variants = {
-  waiting: { opacity: 0, transition: { duration: 0 } },
-  shown: { opacity: 1, transition: { duration: dur.slow, ease: ease.enter } },
-};
+import { cn } from "@/lib/utils";
 
 /**
- * Motion `whileInView` fade, played once. Visible by default (server HTML, no JS, reduced
- * motion): only a block that starts below the fold is hidden after mount, and it never hides
- * again once shown, so scrolling back up leaves it in place.
+ * One-time fade on scroll. Visible by default (server HTML, no JS, reduced motion): only a
+ * block that starts below the fold is hidden after mount, then fades in (480ms, ease-enter,
+ * the same tokens Motion used) the first time it enters the viewport and never hides again.
+ * CSS transition + IntersectionObserver instead of Motion, so the About page loads no
+ * animation library (2026-10-01 performance work).
  */
 export function FadeInView({
   children,
@@ -26,28 +21,37 @@ export function FadeInView({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
-  const [armed, setArmed] = useState(false);
+  const [state, setState] = useState<"idle" | "waiting" | "shown">("idle");
 
   useEffect(() => {
     // The hook reads false during hydration, so ask the media query directly as well.
     const reduce = reduced || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const el = ref.current;
-    setArmed(!reduce && !!el && el.getBoundingClientRect().top >= window.innerHeight);
+    if (reduce || !el || el.getBoundingClientRect().top < window.innerHeight) return;
+    setState("waiting");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setState("shown");
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [reduced]);
 
   return (
-    <MotionFeatures>
-      <m.div
-        ref={ref}
-        className={className}
-        variants={variants}
-        initial={false}
-        animate={armed ? "waiting" : undefined}
-        whileInView="shown"
-        viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-      >
-        {children}
-      </m.div>
-    </MotionFeatures>
+    <div
+      ref={ref}
+      className={cn(
+        className,
+        state !== "idle" && "transition-opacity duration-(--duration-slow) ease-(--ease-enter)",
+        state === "waiting" && "opacity-0",
+      )}
+    >
+      {children}
+    </div>
   );
 }

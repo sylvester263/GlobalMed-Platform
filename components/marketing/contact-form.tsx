@@ -1,11 +1,12 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useRef, useState, useTransition } from "react";
 import { useForm, type FieldPath } from "react-hook-form";
 
 import { Turnstile } from "@/components/marketing/turnstile";
-import { CheckStamp } from "@/components/motion/check-stamp";
+
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
@@ -18,6 +19,12 @@ import { useUtm } from "@/lib/hooks/use-utm";
 import { features } from "@/config/features";
 import { submitContactEnquiry } from "@/lib/leads/actions";
 import { contactInterests, contactLeadSchema, type ContactLeadInput } from "@/lib/validation/leads";
+
+// The success tick uses Motion; load it only after a successful submit (2026-10-01 perf work).
+const CheckStamp = dynamic(
+  () => import("@/components/motion/check-stamp").then((m) => m.CheckStamp),
+  { ssr: false, loading: () => <span className="block size-[72px]" aria-hidden="true" /> },
+);
 
 // "Corporate training" is offered only while that page is on. Hidden at client request — GlobalMed education plans are future scope.
 const visibleContactInterests = contactInterests.filter(

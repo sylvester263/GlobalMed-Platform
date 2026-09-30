@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MessageCircle } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
@@ -7,7 +8,7 @@ import { useForm, type FieldPath } from "react-hook-form";
 
 import { Turnstile } from "@/components/marketing/turnstile";
 import { features } from "@/config/features";
-import { CheckStamp } from "@/components/motion/check-stamp";
+
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
@@ -36,6 +37,12 @@ import {
   registrationConsentText,
   type AapcRegistrationInput,
 } from "@/lib/validation/leads";
+
+// The success tick uses Motion; load it only after a successful submit (2026-10-01 perf work).
+const CheckStamp = dynamic(
+  () => import("@/components/motion/check-stamp").then((m) => m.CheckStamp),
+  { ssr: false, loading: () => <span className="block size-[72px]" aria-hidden="true" /> },
+);
 
 function courseForSlug(slug: string | null): RegistrationCourse | undefined {
   const course = aapcCourses.find((c) => c.slug === (slug as AapcCourseSlug));

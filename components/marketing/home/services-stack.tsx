@@ -1,6 +1,5 @@
 "use client";
 
-import { m, useMotionValue, useScroll, useTransform, type MotionValue } from "motion/react";
 import {
   Fragment,
   useEffect,
@@ -11,7 +10,6 @@ import {
 } from "react";
 
 import { FadeInOnce } from "@/components/motion/fade-in-once";
-import { MotionFeatures } from "@/components/motion/motion-features";
 import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
 import { cn } from "@/lib/utils";
 
@@ -56,7 +54,8 @@ type Geometry = { start: number; end: number };
  * Sticky stacking service cards (client, 2026-09-28). From 768px each card is CSS sticky,
  * `PEEK` px lower than the one before; as the next card slides up, the cards underneath
  * scale down 4% per card stacked above them (min 0.88) and a navy overlay fades 0 → 10%.
- * Only transform and opacity animate.
+ * Only transform and opacity animate, written straight to the DOM from one passive scroll
+ * listener (rAF-throttled), so the home page loads no animation library (2026-10-01).
  *
  * Scroll bug guard (docs/15, Session 007b): no ancestor may clip or transform, the cards are
  * visible in the server HTML, and nothing fades out on scroll. A card taller than the
@@ -73,11 +72,7 @@ export function ServicesStack({ cards }: { cards: StackCard[] }) {
   );
   const stacking = desktop && !reduced;
 
-  return (
-    <MotionFeatures>
-      {stacking ? <StickyStack cards={cards} /> : <PlainStack cards={cards} />}
-    </MotionFeatures>
-  );
+  return stacking ? <StickyStack cards={cards} /> : <PlainStack cards={cards} />;
 }
 
 function StickyStack({ cards }: { cards: StackCard[] }) {
@@ -90,15 +85,43 @@ function StickyStack({ cards }: { cards: StackCard[] }) {
   // below the one covering it.
   const [cardHeight, setCardHeight] = useState<number>();
 
+  const articleRefs = useRef<(HTMLElement | null)[]>([]);
+  const overlayRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   // Page scroll drives everything: arrival[j] is 0 when card j's natural position enters the
-  // bottom of the viewport and 1 once it is stuck in place.
-  const { scrollY } = useScroll();
-  const tick = useMotionValue(0);
-  const arrivals = useTransform([scrollY, tick], ([y]) =>
-    geometry.current.map(({ start, end }) =>
-      end > start ? Math.min(1, Math.max(0, ((y as number) - start) / (end - start))) : 0,
-    ),
-  );
+  // bottom of the viewport and 1 once it is stuck in place. Card i scales down 4% per card
+  // arrived above it (min 0.88); its overlay fades with the next card's arrival.
+  const paint = useRef(() => {});
+  paint.current = () => {
+    const y = window.scrollY;
+    const arrivals = geometry.current.map(({ start, end }) =>
+      end > start ? Math.min(1, Math.max(0, (y - start) / (end - start))) : 0,
+    );
+    arrivals.forEach((_, i) => {
+      const above = arrivals.slice(i + 1).reduce((sum, v) => sum + v, 0);
+      const article = articleRefs.current[i];
+      const overlay = overlayRefs.current[i];
+      if (article)
+        article.style.transform = `scale(${Math.max(MIN_SCALE, 1 - SCALE_STEP * above)})`;
+      if (overlay) overlay.style.opacity = String(MAX_OVERLAY * (arrivals[i + 1] ?? 0));
+    });
+  };
+
+  useEffect(() => {
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        paint.current();
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useIsoLayoutEffect(() => {
     const wrapper = wrapperRef.current;
@@ -135,7 +158,7 @@ function StickyStack({ cards }: { cards: StackCard[] }) {
       });
       setTops((prev) => (prev.every((t, i) => t === nextTops[i]) ? prev : nextTops));
       setCardHeight(height);
-      tick.set(tick.get() + 1);
+      paint.current();
     };
 
     measure();
@@ -146,7 +169,7 @@ function StickyStack({ cards }: { cards: StackCard[] }) {
       observer.disconnect();
       window.removeEventListener("resize", measure);
     };
-  }, [cards, tick]);
+  }, [cards]);
 
   // Flat children: every sticky card shares this one containing block, so earlier cards stay
   // stuck underneath until the last card scrolls away. Spacers (not margins) give each card
@@ -169,9 +192,14 @@ function StickyStack({ cards }: { cards: StackCard[] }) {
             index={i}
             top={tops[i] ?? STACK_TOP}
             height={cardHeight}
-            arrivals={arrivals}
             cardRef={(el) => {
               cardRefs.current[i] = el;
+            }}
+            articleRef={(el) => {
+              articleRefs.current[i] = el;
+            }}
+            overlayRef={(el) => {
+              overlayRefs.current[i] = el;
             }}
           />
           {i < cards.length - 1 && (
@@ -188,36 +216,34 @@ function StickyCard({
   index,
   top,
   height,
-  arrivals,
   cardRef,
+  articleRef,
+  overlayRef,
 }: {
   card: StackCard;
   index: number;
   top: number;
   height: number | undefined;
-  arrivals: MotionValue<number[]>;
   cardRef: (el: HTMLDivElement | null) => void;
+  articleRef: (el: HTMLElement | null) => void;
+  overlayRef: (el: HTMLDivElement | null) => void;
 }) {
-  const scale = useTransform(arrivals, (a) => {
-    const above = a.slice(index + 1).reduce((sum, v) => sum + v, 0);
-    return Math.max(MIN_SCALE, 1 - SCALE_STEP * above);
-  });
-  const overlay = useTransform(arrivals, (a) => MAX_OVERLAY * (a[index + 1] ?? 0));
-
   return (
     <div ref={cardRef} className="md:motion-safe:sticky" style={{ top, zIndex: index + 1 }}>
-      <m.article
+      <article
+        ref={articleRef}
         aria-labelledby={`${card.id}-title`}
-        style={{ scale, transformOrigin: "50% 0%", minHeight: height }}
+        style={{ transformOrigin: "50% 0%", minHeight: height }}
         className={cardShell(card.tone)}
       >
         {card.content}
-        <m.div
+        <div
+          ref={overlayRef}
           aria-hidden="true"
-          style={{ opacity: overlay }}
+          style={{ opacity: 0 }}
           className="pointer-events-none absolute inset-0 rounded-[24px] bg-navy-deep"
         />
-      </m.article>
+      </article>
     </div>
   );
 }

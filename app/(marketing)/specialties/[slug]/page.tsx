@@ -119,6 +119,7 @@ export default async function SpecialtyPage({ params }: Props) {
               <span key={s.slug}>
                 {i > 0 && ", "}
                 <Link
+                  prefetch={false}
                   href={`/services/${s.slug}`}
                   className="font-semibold text-teal-deep underline underline-offset-4"
                 >

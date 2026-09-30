@@ -1,4 +1,4 @@
-import { HeroCarousel } from "@/components/marketing/home/hero-carousel";
+import { DeferredHeroCarousel } from "@/components/defer/islands";
 import { PartnerLockup } from "@/components/marketing/partner-lockup";
 import { heroSlides } from "@/content/home";
 import { publicAssetExists } from "@/lib/public-asset";
@@ -10,5 +10,5 @@ export function HeroSlider() {
     hasImage: publicAssetExists(slide.image),
     lockup: slide.id === "aapc" ? <PartnerLockup /> : undefined,
   }));
-  return <HeroCarousel slides={slides} />;
+  return <DeferredHeroCarousel slides={slides} />;
 }

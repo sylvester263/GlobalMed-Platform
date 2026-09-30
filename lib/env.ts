@@ -1,17 +1,28 @@
-import { z } from "zod";
-
-const publicEnvSchema = z.object({
-  NEXT_PUBLIC_SITE_URL: z.url().default("http://localhost:3000"),
-  NEXT_PUBLIC_SUPABASE_URL: z.url().optional(),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1).optional(),
-});
+/**
+ * Public (browser-safe) settings. Validated without zod on purpose: the header and footer
+ * import this through lib/site, and zod would add ~24 kB to every page (2026-10-01 perf work).
+ */
+function optionalUrl(name: string, value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  try {
+    new URL(value);
+    return value;
+  } catch {
+    throw new Error(`${name} must be a valid URL, got "${value}".`);
+  }
+}
 
 // Next.js inlines NEXT_PUBLIC_* only when referenced literally, so list each one.
-export const publicEnv = publicEnvSchema.parse({
-  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || undefined,
-  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || undefined,
+export const publicEnv = {
+  NEXT_PUBLIC_SITE_URL:
+    optionalUrl("NEXT_PUBLIC_SITE_URL", process.env.NEXT_PUBLIC_SITE_URL) ??
+    "http://localhost:3000",
+  NEXT_PUBLIC_SUPABASE_URL: optionalUrl(
+    "NEXT_PUBLIC_SUPABASE_URL",
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+  ),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || undefined,
-});
+} as const;
 
 export function isSupabaseConfigured(): boolean {
   return Boolean(publicEnv.NEXT_PUBLIC_SUPABASE_URL && publicEnv.NEXT_PUBLIC_SUPABASE_ANON_KEY);

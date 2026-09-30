@@ -1,6 +1,7 @@
 import { execSync } from "node:child_process";
 import path from "node:path";
 
+import bundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs/config";
 import type { NextConfig } from "next";
 
@@ -74,7 +75,14 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+// `ANALYZE=true npm run build` writes .next/analyze/client.json (bundle sizes per module).
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+  openAnalyzer: false,
+  analyzerMode: "json",
+});
+
+export default withSentryConfig(withBundleAnalyzer(nextConfig), {
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
   authToken: process.env.SENTRY_AUTH_TOKEN,

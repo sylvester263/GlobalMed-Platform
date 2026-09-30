@@ -53,6 +53,7 @@ export function PostList({ posts }: { posts: Post[] }) {
                 <Badge variant="neutral">{postCategories[post.category] ?? post.category}</Badge>
                 <h2 className="text-2xl">
                   <Link
+                    prefetch={false}
                     href={`/blog/${post.slug}`}
                     className="after:absolute after:inset-0 hover:text-teal-deep"
                   >
@@ -75,6 +76,7 @@ export function CategoryNav({ active }: { active?: string }) {
       <ul className="flex flex-wrap gap-2">
         <li>
           <Link
+            prefetch={false}
             href="/blog"
             aria-current={!active ? "page" : undefined}
             className="inline-flex h-11 items-center rounded-full border bg-card px-4 text-sm font-semibold hover:bg-mint aria-[current=page]:border-teal aria-[current=page]:bg-mint aria-[current=page]:text-teal-deep"
@@ -85,6 +87,7 @@ export function CategoryNav({ active }: { active?: string }) {
         {Object.entries(postCategories).map(([slug, name]) => (
           <li key={slug}>
             <Link
+              prefetch={false}
               href={`/blog/category/${slug}`}
               aria-current={active === slug ? "page" : undefined}
               className="inline-flex h-11 items-center rounded-full border bg-card px-4 text-sm font-semibold hover:bg-mint aria-[current=page]:border-teal aria-[current=page]:bg-mint aria-[current=page]:text-teal-deep"

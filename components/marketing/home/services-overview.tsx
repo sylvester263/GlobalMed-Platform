@@ -2,7 +2,8 @@ import { ArrowRight, Check } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { ServicesStack, type StackCard } from "@/components/marketing/home/services-stack";
+import { DeferredServicesStack } from "@/components/defer/islands";
+import type { StackCard } from "@/components/marketing/home/services-stack";
 import { ClaimLine } from "@/components/motion/claim-line";
 import { buttonVariants } from "@/components/ui/button";
 import { serviceCards, servicesIntro, type ServiceCard } from "@/content/home-services";
@@ -179,7 +180,7 @@ export function ServicesOverview() {
           </h2>
           <ClaimLine trigger="inView" ticks={8} className="max-w-sm" />
         </div>
-        <ServicesStack cards={cards} />
+        <DeferredServicesStack cards={cards} />
       </div>
     </section>
   );

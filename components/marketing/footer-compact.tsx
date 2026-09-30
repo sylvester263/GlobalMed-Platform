@@ -175,6 +175,7 @@ export function CompactFooter() {
         {/* Left block */}
         <div className="contents md:flex md:flex-col md:items-start md:gap-3.5">
           <Link
+            prefetch={false}
             href="/"
             aria-label="GlobalMed home"
             className={cn(
@@ -197,7 +198,7 @@ export function CompactFooter() {
               items={[
                 <span key="copy">© 2026 GlobalMed Transcriptions</span>,
                 ...footerLinks.map((link) => (
-                  <Link key={link.href} href={link.href} className={linkClass}>
+                  <Link prefetch={false} key={link.href} href={link.href} className={linkClass}>
                     {link.label}
                   </Link>
                 )),

@@ -22,14 +22,14 @@ How to connect the Phase 4 LMS to Bunny Stream and Supabase Storage, and what to
 3. **Security** tab:
    - Turn on **Token authentication**. Copy the key → `BUNNY_STREAM_TOKEN_AUTH_KEY`.
    - Turn **off** "Allow direct play" and the public embed/"MP4 fallback" downloads.
-   - Add the site domains (and the Vercel preview domain) to **Allowed referrers**.
+   - Add the site domains (live and staging) to **Allowed referrers**.
 4. **Encoding** tab: enable 360p, 480p, 720p and 1080p. Enable caption generation if the client wants auto-captions (review them before publishing).
 5. **Webhook** tab:
    - Webhook URL: `https://<domain>/api/video/webhook?token=<BUNNY_WEBHOOK_SECRET>`
    - Generate the secret with `openssl rand -hex 32`.
    - The route re-reads the video from the Bunny API rather than trusting the payload, so a forged call can at most trigger a refresh.
 
-Add all five variables to Vercel (Production and Preview) and to `.env.local`.
+Add all five variables to the hosting environment (production and staging) and to `.env.local`.
 
 ## 3. How it fits together
 

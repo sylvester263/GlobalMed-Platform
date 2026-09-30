@@ -84,7 +84,7 @@ See docs/09. Website chatbot P0; WhatsApp bot P0; human handoff P0; lead capture
 | Performance | LCP < 2.5s, INP < 200ms, CLS < 0.1 on mobile 4G |
 | Accessibility | WCAG 2.1 AA |
 | Security | OWASP Top 10 addressed; RLS on all tables; rate limiting on auth, forms, chatbot |
-| Availability | 99.9% (Vercel + Supabase managed) |
+| Availability | 99.9% (hosting provider + Supabase managed) |
 | Backups | Daily DB backups, PITR on Supabase Pro |
 | i18n | English at launch; architecture ready for Urdu (P2) |
 | Browser support | Last 2 versions of Chrome, Safari, Edge, Firefox; iOS Safari, Android Chrome |

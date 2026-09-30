@@ -6,7 +6,7 @@ Last updated: 2026-09-30 · Current phase: **5 — Payments & enrollment** (card
 |---|---|---|
 | 0 Foundation | 🟥 Blocked on client accounts (P0-4, P0-9) | 75 |
 | 1 Design system | 🟨 Built; awaiting client sign-off (P1-7, P1-10) | 85 |
-| 2 Public website | 🟨 Pages built; awaiting content review, motion assets, perf check on Vercel | 83 |
+| 2 Public website | 🟨 Pages built; awaiting content review, motion assets, mobile performance on the live hosting | 83 |
 | 3 Auth & dashboard shells | 🟨 Built and tested without Supabase; end-to-end auth verification pending P0-4 | 90 |
 | 4 LMS core | 🟨 Built and tested without Supabase/Bunny; signing formats + webhook verification pending (docs/17 §4) | 90 |
 | 5 Payments & enrollment | 🟨 Card checkout + webhook built; manual payments next | 30 |
@@ -26,7 +26,7 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [x] P0-6 Supabase SSR clients + middleware
 - [x] P0-7 .env.local + .env.example synced
 - [x] P0-8 GitHub Actions CI
-- [ ] P0-9 Vercel staging deploy — 🟥 blocked: Vercel team invite
+- [x] P0-9 Deploy — live on own hosting (Hostinger), deployed from GitHub `main` (ADR-032); a staging subdomain is still to be set up
 - [x] P0-10 Sentry installed (inert until SENTRY_DSN / NEXT_PUBLIC_SENTRY_DSN set)
 
 ## Phase 1 — Design system

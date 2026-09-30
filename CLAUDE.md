@@ -26,8 +26,8 @@ You are the lead engineer building the GlobalMed Transcriptions & Billing Soluti
 - WhatsApp: Meta WhatsApp Cloud API webhook
 - Forms/validation: react-hook-form + zod
 - Data tables/charts: TanStack Table, Recharts
-- Monitoring: Sentry, Vercel Analytics; GA4 + GTM + Meta Pixel for marketing
-- Hosting: Vercel (app), Supabase (data)
+- Monitoring: Sentry; GA4 + GTM + Meta Pixel for marketing
+- Hosting: own hosting (Hostinger Node.js, deployed from GitHub `main`; ADR-032), Supabase (data)
 
 ## 4. Code rules
 - `app/(marketing)` public site, `app/(auth)` auth, `app/(dashboard)/student|instructor|admin` dashboards, `app/api` route handlers.

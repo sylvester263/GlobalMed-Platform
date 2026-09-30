@@ -140,7 +140,7 @@ Local production build (`next start`), Lighthouse 13.5, default mobile (simulate
   - Mobile LCP is 4.2–5.5s, against a target of ≤ 2.5s.
 - **Not caused by the images:**
   - The LCP photo downloads in under 0.2s. The delay is "element render delay", which is main-thread JavaScript (React hydration) in Lighthouse's simulated throttling.
-  - Yesterday's code, measured live on global-med-platform.vercel.app from the same machine, scores home 50 / CPC 62.
+  - Yesterday's code, measured on a live deployment from the same machine, scores home 50 / CPC 62.
 - **Improved today (ADR-031):**
   - `experimental.inlineCss` was inlining the 125 kB stylesheet into every page twice. With it off, home HTML drops from 545 kB to 279 kB.
   - Main-thread script evaluation on home drops from 6.6s to 2.7s, and style/layout from 3.0s to 1.6s.
@@ -148,7 +148,7 @@ Local production build (`next start`), Lighthouse 13.5, default mobile (simulate
 - **Still to do for mobile ≥ 90** (next task, not started):
   - Cut client-side JavaScript: fewer `"use client"` components on the home page (slider, stack and motion wrappers), and a smaller RSC payload.
   - Defer below-the-fold interactive sections.
-  - Re-measure on the Vercel deployment (real CDN and edge caching). Local Windows runs are noisy; the benchmark index was ~1000–1180.
+  - Re-measure on the live hosting. Local Windows runs are noisy; the benchmark index was ~1000–1180.
 
 ## 5. Tests
 - Unit: 121 passed.
@@ -164,7 +164,7 @@ Local production build (`next start`), Lighthouse 13.5, default mobile (simulate
 1. **Mobile Performance ≥ 90 and LCP ≤ 2.5s are not met** (see §4); the brief blocks the push until this passes.
 2. Regenerate the 14 flagged images (§2), and upload the inpainted C06 / C09.
 3. Floating help button: it stays at the client's 72px. On phones it sits over content at the bottom-right of the first screen on a few pages (FAQ questions, some CTAs) until the visitor scrolls. A 56px button on phones would remove most of this; client decision.
-4. Social image URLs use `NEXT_PUBLIC_SITE_URL`. It has to be the live domain in the Vercel environment for share previews to work.
+4. Social image URLs use `NEXT_PUBLIC_SITE_URL`. It has to be the live domain in the hosting environment for share previews to work (set in `.env.production`, ADR-032).
 
 ---
 
@@ -297,4 +297,4 @@ Getting mobile to 90 needs a dedicated performance task:
 - fewer client components and less hydration on the home and course pages;
 - defer below-the-fold interactive sections;
 - review Next's link prefetching;
-- measure on the Vercel deployment.
+- measure on the live hosting.

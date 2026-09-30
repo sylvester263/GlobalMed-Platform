@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import path from "node:path";
 
 import { withSentryConfig } from "@sentry/nextjs/config";
@@ -18,7 +19,20 @@ const securityHeaders = [
   },
 ];
 
+/** The commit being built, for /api/health (any host; ADR-032). */
+function buildCommit(): string {
+  if (process.env.VERCEL_GIT_COMMIT_SHA) return process.env.VERCEL_GIT_COMMIT_SHA.slice(0, 7);
+  try {
+    return execSync("git rev-parse --short=7 HEAD", { stdio: ["ignore", "pipe", "ignore"] })
+      .toString()
+      .trim();
+  } catch {
+    return "";
+  }
+}
+
 const nextConfig: NextConfig = {
+  env: { BUILD_COMMIT: buildCommit() },
   poweredByHeader: false,
   // Photos are WebP masters (scripts/optimize-images.mjs); next/image serves AVIF or WebP at
   // these widths (ADR-030). 750/828/1080 are kept for 2x phones.

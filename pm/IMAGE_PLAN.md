@@ -303,7 +303,7 @@ Group C: 12 slots already good, no action.
 
 ## File-naming checklist for uploads
 
-- [ ] Save each file at the exact path in the table. Lowercase letters, numbers and hyphens only: no spaces, capitals or brackets (`slide-3.jpg`, not `Slide 3 (final).JPG`). Vercel is case-sensitive; Windows is not.
+- [ ] Save each file at the exact path in the table. Lowercase letters, numbers and hyphens only: no spaces, capitals or brackets (`slide-3.jpg`, not `Slide 3 (final).JPG`). The live server (Linux) is case-sensitive; Windows is not.
 - [ ] Use `.jpg` for photos (or `.png` if that's what the generator gives). Not `.jfif`, `.heic` or `.webp`; Task 3 makes the WebP.
 - [ ] Upload at the "generate at" size or larger, never smaller than the final size.
 - [ ] One file per ID. To replace an image, overwrite the same file name; don't add `-v2`.

@@ -9,7 +9,7 @@ flowchart LR
     W[WhatsApp user]
   end
 
-  subgraph Vercel["Vercel — Next.js 15 app"]
+  subgraph Host["Hosting (Hostinger Node.js) — Next.js 15 app"]
     MKT[Public site<br/>app/(marketing)]
     DASH[Dashboards<br/>app/(dashboard)]
     API[Route handlers<br/>app/api/*]
@@ -42,7 +42,7 @@ flowchart LR
   SA & API --> AUTH
   EF --> DB & RESEND
   MKT --> GA
-  Vercel --> SENTRY
+  Host --> SENTRY
 ```
 
 ## 2. Stack and why
@@ -134,7 +134,7 @@ tests/ (unit, e2e)
 | Env | URL | Data |
 |---|---|---|
 | Local | localhost:3000 | Supabase local (CLI) |
-| Staging | staging.globalmedtranscriptions.com (Vercel preview) | Supabase staging project |
+| Staging | staging subdomain on the same hosting (to be set up) | Supabase staging project |
 | Production | globalmedtranscriptions.com | Supabase production project |
 
 ## 7. Scalability notes

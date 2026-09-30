@@ -10,8 +10,8 @@
 | /api/video/upload | POST | instructor/admin | Bunny tus upload credentials |
 | /api/certificates/[id]/pdf | GET | owner/admin | Signed download |
 | /api/revalidate | POST | secret header | On-demand ISR after admin edits |
-| /api/cron/daily-stats | GET | Vercel cron secret | Fill daily_stats |
-| /api/cron/expiry-reminders | GET | Vercel cron secret | Access-expiry emails |
+| /api/cron/daily-stats | GET | Cron secret (hosting cron job) | Fill daily_stats |
+| /api/cron/expiry-reminders | GET | Cron secret (hosting cron job) | Access-expiry emails |
 
 ## 2. Server Actions (examples)
 `submitLead`, `createCheckout`, `submitManualPayment`, `approveManualPayment`, `saveProgress`, `startAttempt`, `submitAttempt`, `issueCertificate`, `revokeCertificate`, `upsertCourse`, `upsertLesson`, `upsertKbDocument`, `assignLead`, `addLeadNote`, `agentReply`.
@@ -20,7 +20,7 @@ Each: zod-validate → auth + role check → DB → `revalidatePath` → audit_l
 ## 3. Payments
 **Stripe:** Checkout Session in USD; metadata `{order_id}`; webhook events `checkout.session.completed`, `charge.refunded`; idempotent handling keyed by event id.
 **Manual:** show bank / JazzCash / Easypaisa details from `settings`; student uploads proof (image/PDF ≤ 5MB) to private bucket; admin approves → enrollment.
-**Geo pricing:** show PKR to visitors from Pakistan (Vercel `x-vercel-ip-country`), USD elsewhere; user can switch.
+**Geo pricing:** show PKR to visitors from Pakistan (country from a geo-IP header or lookup; the hosting has no Vercel geo header), USD elsewhere; user can switch.
 
 ## 4. Email (Resend + React Email templates)
 Verify email · welcome · password reset · order receipt · manual payment received / approved / rejected · enrollment welcome · certificate issued · access expiring · lead notification (internal) · handoff alert (internal) · newsletter confirm.
@@ -28,7 +28,7 @@ Verify email · welcome · password reset · order receipt · manual payment rec
 ## 5. Third-party accounts needed
 | Service | Owner account | Notes |
 |---|---|---|
-| Vercel | Client (SylJo as member) | Pro plan for team + cron |
+| Hosting (Hostinger) | Client (SylJo as member) | Node.js hosting, deploys from GitHub `main`; cron jobs in the hosting panel |
 | Supabase | Client | Pro plan for backups/PITR |
 | Bunny.net | Client | Stream library |
 | Stripe | Client | Business verification needed |

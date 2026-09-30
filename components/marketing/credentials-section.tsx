@@ -17,8 +17,8 @@ export function CredentialsSection({ id = "credentials" }: { id?: string }) {
   const headingId = `${id}-title`;
   return (
     <section id={id} aria-labelledby={headingId} className="border-b bg-card">
-      <div className="container-fluid flex flex-col gap-10 py-16 lg:py-20">
-        <div className="flex max-w-3xl flex-col gap-3">
+      <div className="container-fluid flex flex-col gap-10 section-y">
+        <div className="flex max-w-3xl flex-col gap-4">
           <h2 id={headingId} className="text-2xl lg:text-3xl">
             Registered, Certified &amp; Compliant
           </h2>
@@ -27,14 +27,14 @@ export function CredentialsSection({ id = "credentials" }: { id?: string }) {
             healthcare providers worldwide since 2007.
           </p>
         </div>
-        <StaggerGroup as="ul" className="flex flex-wrap justify-center gap-6">
+        <StaggerGroup as="ul" className="flex flex-wrap justify-center gap-grid">
           {visibleCredentials().map((credential) => {
             const hasLogo = publicAssetExists(credential.image);
             return (
               <StaggerItem
                 as="li"
                 key={credential.id}
-                className="flex w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)] wide:w-[calc((100%-4.5rem)/4)]"
+                className="flex w-full sm:w-[calc((100%-var(--grid-gap))/2)] lg:w-[calc((100%-2*var(--grid-gap))/3)] wide:w-[calc((100%-3*var(--grid-gap))/4)]"
               >
                 <article className="credential-tile flex w-full flex-col overflow-hidden rounded-lg border bg-card shadow-sm hover:shadow-md">
                   {/* Navy top rule with the claim-line ticks. */}

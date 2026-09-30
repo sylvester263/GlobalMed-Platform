@@ -46,7 +46,7 @@ export function SiteHeader() {
           )}
           <Link
             href="/free-billing-audit"
-            className={cn(buttonVariants({ size: "sm" }), "hidden sm:inline-flex")}
+            className={cn(buttonVariants({ size: "sm" }), "hidden h-11 px-4 sm:inline-flex")}
           >
             Free billing audit
           </Link>

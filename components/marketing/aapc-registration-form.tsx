@@ -259,10 +259,11 @@ export function AapcRegistrationForm({
         </FormField>
       </div>
       <div className="flex flex-col gap-1">
-        <label className="flex items-start gap-3 text-sm">
+        {/* The whole label is the tap target (min 44px tall); 16px text on phones. */}
+        <label className="flex min-h-11 cursor-pointer items-start gap-3 py-1 text-base md:text-sm">
           <input
             type="checkbox"
-            className="mt-0.5 size-5 shrink-0 accent-primary"
+            className="mt-0.5 size-6 shrink-0 accent-primary md:size-5"
             aria-invalid={errors.consent ? true : undefined}
             aria-describedby={errors.consent ? "consent-error" : undefined}
             {...register("consent")}

@@ -104,7 +104,7 @@ export default function AapcCertificationPage() {
         title="AAPC courses available in Pakistan"
         intro="Three AAPC official courses, taught live online by AAPC faculty. Choose one credential, or both."
       >
-        <ul className="grid gap-8 lg:grid-cols-3 lg:items-stretch lg:gap-6">
+        <ul className="grid gap-grid lg:grid-cols-3 lg:items-stretch">
           {courses.map((course) => (
             <li key={course.slug} className="flex">
               <AapcCourseCard course={course} registerHref={`?course=${course.slug}#register`} />
@@ -114,15 +114,26 @@ export default function AapcCertificationPage() {
       </Section>
 
       <Section tone="white" id="compare" title="Compare the courses">
-        {/* relative: the sr-only cell labels are absolutely positioned and must stay clipped. */}
-        <div className="relative overflow-x-auto rounded-lg border bg-card">
-          <table className="w-full min-w-[640px] text-left text-sm">
+        {/* relative: the sr-only cell labels are absolutely positioned and must stay clipped.
+            On narrow screens the table scrolls inside this box (focusable, so keyboard users can
+            scroll it) and the row labels stay pinned on the left. */}
+        <div
+          role="region"
+          aria-label="Course comparison table"
+          tabIndex={0}
+          data-scroll-x
+          className="relative overflow-x-auto rounded-lg border bg-card"
+        >
+          <table className="w-full min-w-[640px] text-left">
             <caption className="sr-only">
               Comparison of the CPC®, CPB® and CPC® + CPB® AAPC courses
             </caption>
             <thead className="bg-ledger">
               <tr>
-                <th scope="col" className="px-4 py-3 font-semibold lg:px-6 lg:py-4">
+                <th
+                  scope="col"
+                  className="sticky left-0 z-10 bg-ledger px-4 py-3 font-semibold lg:px-6 lg:py-4"
+                >
                   <span className="sr-only">Detail</span>
                 </th>
                 {courses.map((course) => (
@@ -149,7 +160,7 @@ export default function AapcCertificationPage() {
                 <tr key={row.label} className="border-t">
                   <th
                     scope="row"
-                    className="px-4 py-3 font-semibold whitespace-nowrap lg:px-6 lg:py-4"
+                    className="sticky left-0 z-10 bg-card px-4 py-3 font-semibold whitespace-nowrap shadow-[1px_0_0_var(--border)] lg:px-6 lg:py-4"
                   >
                     {row.label}
                   </th>

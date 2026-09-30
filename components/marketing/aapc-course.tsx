@@ -93,7 +93,7 @@ function CourseFacts({ course }: { course: AapcCourse }) {
 
 function CheckList({ items, className }: { items: string[]; className?: string }) {
   return (
-    <ul className={cn("flex flex-col gap-2", className)}>
+    <ul className={cn("flex max-w-[75ch] flex-col gap-2", className)}>
       {items.map((item, i) => (
         <li key={item} className="flex items-start gap-2">
           <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-sky" />
@@ -117,7 +117,7 @@ function GroupCards({ groups }: { groups: CourseGroup[] }) {
   return (
     <ul
       className={cn(
-        "grid gap-6 md:grid-cols-2",
+        "grid gap-grid md:grid-cols-2",
         groups.length > 3 ? "xl:grid-cols-4" : "lg:grid-cols-3",
       )}
     >
@@ -198,7 +198,7 @@ export function AapcCourseCard({
 export function AapcRegisterBand({ defaultCourse }: { defaultCourse?: AapcCourseSlug }) {
   return (
     <section id="register" aria-labelledby="register-title" className="bg-ink text-white">
-      <div className="container-fluid grid gap-10 py-16 lg:grid-cols-[1fr_1.3fr] lg:items-start lg:gap-16">
+      <div className="container-fluid grid gap-10 section-y lg:grid-cols-[1fr_1.3fr] lg:items-start lg:gap-16">
         <div className="flex flex-col gap-5">
           <h2 id="register-title" className="text-2xl text-white lg:text-3xl">
             Register for AAPC Training
@@ -287,7 +287,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
           ))}
         </div>
         {content.intro.columns && (
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-grid md:grid-cols-2">
             {content.intro.columns.map((col) => (
               <div key={col.heading} className="flex flex-col gap-3 rounded-lg border bg-card p-6">
                 <h3 className="text-xl">{col.heading}</h3>
@@ -409,7 +409,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
 
       {/* Other courses */}
       <Section tone="white" title="Other AAPC courses" id="other-courses">
-        <ul className="grid gap-6 md:grid-cols-2">
+        <ul className="grid gap-grid md:grid-cols-2">
           {others.map((other) => (
             <li key={other.slug}>
               <Link

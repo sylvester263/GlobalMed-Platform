@@ -62,7 +62,7 @@ export function NewsletterForm() {
           type="submit"
           size="lg"
           loading={pending}
-          className="h-10 bg-sky text-ink hover:bg-white"
+          className="h-11 bg-sky text-ink hover:bg-white"
         >
           Subscribe
         </Button>

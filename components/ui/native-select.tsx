@@ -13,7 +13,7 @@ function NativeSelect({ className, children, ...props }: React.ComponentProps<"s
     <span className="relative block">
       <select
         data-slot="native-select"
-        className={cn(inputClasses, "h-10 cursor-pointer appearance-none pr-10", className)}
+        className={cn(inputClasses, "h-11 cursor-pointer appearance-none pr-10", className)}
         {...props}
       >
         {children}

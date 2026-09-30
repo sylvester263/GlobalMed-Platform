@@ -26,7 +26,7 @@ export default function FaqPage() {
               <li key={g.id}>
                 <a
                   href={`#${g.id}`}
-                  className="inline-flex h-10 items-center rounded-full border bg-card px-4 text-sm font-semibold hover:bg-mint"
+                  className="inline-flex h-11 items-center rounded-full border bg-card px-4 text-sm font-semibold hover:bg-mint"
                 >
                   {g.title}
                 </a>

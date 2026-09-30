@@ -102,7 +102,7 @@ export default function HomePage() {
 
       {/* 2. Partnership strip (MG-4 count-up) */}
       <section aria-label="GlobalMed and AAPC partnership" className="bg-primary text-white">
-        <div className="container-fluid flex flex-col gap-10 py-14">
+        <div className="container-fluid flex flex-col gap-10 section-y">
           <p className="max-w-4xl font-serif text-xl leading-snug font-semibold text-white lg:text-2xl">
             {approvedWording.partnership}
           </p>
@@ -132,7 +132,7 @@ export default function HomePage() {
         title="AAPC certification courses"
         intro={`${approvedWording.training} ${approvedWording.certification}`}
       >
-        <ul className="grid gap-8 lg:grid-cols-3 lg:items-stretch lg:gap-6">
+        <ul className="grid gap-grid lg:grid-cols-3 lg:items-stretch">
           {getAapcCourses().map((course) => (
             <li key={course.slug} className="flex">
               <AapcCourseCard
@@ -147,7 +147,7 @@ export default function HomePage() {
 
       {/* 4. Why register through GlobalMed */}
       <Section tone="white" title="Why register through GlobalMed">
-        <StaggerGroup as="ul" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <StaggerGroup as="ul" className="grid gap-grid sm:grid-cols-2 lg:grid-cols-4">
           {whyUs.map((item, i) => {
             const Icon = whyIcons[i] ?? Check;
             return (
@@ -181,7 +181,7 @@ export default function HomePage() {
           title="Upcoming CPC® and CPB® batches"
           intro="Seats are limited in every batch so instructors can give each student feedback."
         >
-          <ul className="grid gap-6 md:grid-cols-2">
+          <ul className="grid gap-grid md:grid-cols-2">
             {upcomingBatches.map((batch) => (
               <li
                 key={batch.title}
@@ -220,7 +220,7 @@ export default function HomePage() {
       {/* 7. Student testimonials, shown only once the client supplies consent-approved quotes */}
       {studentTestimonials.length > 0 && (
         <Section tone="white" title="What our students say">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-grid md:grid-cols-2">
             {studentTestimonials.map((t) => (
               <Testimonial key={t.quote} {...t} />
             ))}
@@ -269,7 +269,7 @@ export default function HomePage() {
             ))}
           </StaggerGroup>
           {practiceTestimonials.length > 0 && (
-            <div className="grid gap-6 md:grid-cols-2 lg:col-span-2">
+            <div className="grid gap-grid md:grid-cols-2 lg:col-span-2">
               {practiceTestimonials.map((t) => (
                 <Testimonial key={t.quote} {...t} />
               ))}
@@ -282,7 +282,10 @@ export default function HomePage() {
       <Section tone="white" className="lg:grid lg:grid-cols-[1fr_2fr] lg:gap-16">
         <div className="flex flex-col gap-3">
           <h2 className="text-2xl lg:text-3xl">Questions about CPC® and CPB®</h2>
-          <Link href="/faq" className={cn(buttonVariants({ variant: "link" }), "self-start")}>
+          <Link
+            href="/faq"
+            className={cn(buttonVariants({ variant: "link" }), "min-h-11 self-start")}
+          >
             All FAQs
           </Link>
         </div>

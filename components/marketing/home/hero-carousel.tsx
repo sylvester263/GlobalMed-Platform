@@ -100,6 +100,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                   fill
                   sizes="100vw"
                   priority={i === 0}
+                  fetchPriority={i === 0 ? "high" : undefined}
                   loading={i === 0 ? undefined : "lazy"}
                   className="object-cover object-center lg:object-right"
                 />
@@ -113,10 +114,12 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                   </span>
                 </div>
               )}
-              {/* Navy 75% → transparent keeps white text above 4.5:1 on any photo. */}
+              {/* Navy 75% (phones and tablets), then navy 75% → transparent from 1024px, where the
+                  text column is narrow enough to stay on the solid part: white text ≥ 4.5:1
+                  (measured, tests/audit/contrast-over-images.mjs). */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-navy/75 md:bg-transparent md:bg-linear-to-r md:from-navy/75 md:from-55% md:to-transparent"
+                className="absolute inset-0 bg-navy/75 lg:bg-transparent lg:bg-linear-to-r lg:from-navy/75 lg:from-55% lg:to-transparent"
               />
               <div className="relative container-fluid flex h-full flex-col justify-center gap-5 pt-10 pb-24 lg:pb-20">
                 <div className="hero-slide-copy flex max-w-2xl flex-col gap-5">

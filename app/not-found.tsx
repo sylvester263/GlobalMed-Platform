@@ -10,7 +10,7 @@ export default function NotFound() {
     <div className="flex min-h-dvh flex-col">
       <SiteHeader />
       <main id="main" className="flex-1 bg-ledger">
-        <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-4 py-24 text-center">
+        <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-(--gutter) section-y text-center">
           <p className="font-mono text-sm font-semibold text-teal-deep">404</p>
           <h1 className="text-3xl">We couldn&apos;t find that page</h1>
           <ClaimLine ticks={9} filled={4} trigger="static" className="w-56" />

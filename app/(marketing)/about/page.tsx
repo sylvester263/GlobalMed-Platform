@@ -131,7 +131,7 @@ export default function AboutPage() {
             <p className="text-white/90">{about.mission}</p>
           </div>
         </div>
-        <ul className="grid gap-6 sm:grid-cols-2">
+        <ul className="grid gap-grid sm:grid-cols-2">
           {values.map((v) => (
             <li key={v.title} className="flex flex-col gap-2 rounded-lg border bg-card p-5">
               <h3 className="text-lg">{v.title}</h3>

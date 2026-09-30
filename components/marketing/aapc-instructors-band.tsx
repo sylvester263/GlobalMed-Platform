@@ -41,11 +41,11 @@ export function AapcInstructorsBand({
       {background && <ScrollBackground image={background} />}
       <div
         className={cn(
-          "container-fluid grid items-center gap-10 py-14 lg:py-16",
+          "container-fluid grid items-center gap-10 section-y",
           features.instructorPhotos && "lg:grid-cols-[1.3fr_1fr]",
         )}
       >
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4">
           <h2 id={headingId} className={cn("text-2xl lg:text-3xl", dark && "text-white")}>
             {instructorsBand.title}
           </h2>
@@ -72,7 +72,7 @@ export function AapcInstructorsBand({
             href={href}
             className={cn(
               buttonVariants({ size: "lg" }),
-              "self-start",
+              "mt-4 self-start",
               // On navy: sky with ink text (5.4:1), like the About workforce band.
               dark && "bg-sky text-ink hover:bg-white",
             )}

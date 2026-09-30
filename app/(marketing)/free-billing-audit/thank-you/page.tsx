@@ -16,7 +16,7 @@ export const metadata: Metadata = pageMetadata({
 export default function AuditThankYouPage() {
   return (
     <section className="bg-ledger">
-      <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-4 py-20 text-center md:py-28">
+      <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-(--gutter) section-y text-center">
         <CheckStamp />
         <h1 className="text-3xl">Your audit request is in</h1>
         <p className="text-lg text-muted-foreground">

@@ -29,7 +29,10 @@ export default function ServicesPage() {
         crumbs={[{ name: "Services", path: "/services" }]}
       />
       <Section>
-        <StaggerGroup as="ul" className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 wide:grid-cols-4">
+        <StaggerGroup
+          as="ul"
+          className="grid gap-grid md:grid-cols-2 lg:grid-cols-3 wide:grid-cols-4"
+        >
           {services.map((service) => (
             <StaggerItem as="li" key={service.slug}>
               <article className="relative flex h-full gap-5 rounded-lg border bg-card p-6 transition-colors hover:border-teal">

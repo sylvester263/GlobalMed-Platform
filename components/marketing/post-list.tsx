@@ -77,7 +77,7 @@ export function CategoryNav({ active }: { active?: string }) {
           <Link
             href="/blog"
             aria-current={!active ? "page" : undefined}
-            className="inline-flex h-10 items-center rounded-full border bg-card px-4 text-sm font-semibold hover:bg-mint aria-[current=page]:border-teal aria-[current=page]:bg-mint aria-[current=page]:text-teal-deep"
+            className="inline-flex h-11 items-center rounded-full border bg-card px-4 text-sm font-semibold hover:bg-mint aria-[current=page]:border-teal aria-[current=page]:bg-mint aria-[current=page]:text-teal-deep"
           >
             All articles
           </Link>
@@ -87,7 +87,7 @@ export function CategoryNav({ active }: { active?: string }) {
             <Link
               href={`/blog/category/${slug}`}
               aria-current={active === slug ? "page" : undefined}
-              className="inline-flex h-10 items-center rounded-full border bg-card px-4 text-sm font-semibold hover:bg-mint aria-[current=page]:border-teal aria-[current=page]:bg-mint aria-[current=page]:text-teal-deep"
+              className="inline-flex h-11 items-center rounded-full border bg-card px-4 text-sm font-semibold hover:bg-mint aria-[current=page]:border-teal aria-[current=page]:bg-mint aria-[current=page]:text-teal-deep"
             >
               {name}
             </Link>

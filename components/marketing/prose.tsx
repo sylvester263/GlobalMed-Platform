@@ -39,8 +39,14 @@ const components: Components = {
       </a>
     ),
   table: ({ children }) => (
-    <div className="mb-6 overflow-x-auto rounded-lg border">
-      <table className="w-full text-sm">{children}</table>
+    <div
+      role="region"
+      aria-label="Table"
+      tabIndex={0}
+      data-scroll-x
+      className="mb-6 overflow-x-auto rounded-lg border"
+    >
+      <table className="w-full">{children}</table>
     </div>
   ),
   th: ({ children }) => (

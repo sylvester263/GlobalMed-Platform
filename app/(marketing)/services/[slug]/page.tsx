@@ -75,7 +75,7 @@ export default async function ServicePage({ params }: Props) {
       <Section className={Graphic ? "lg:grid lg:grid-cols-2 lg:items-center lg:gap-16" : undefined}>
         <div className="flex flex-col gap-6">
           <h2 className="text-2xl lg:text-3xl">Sound familiar?</h2>
-          <ul className="flex flex-col gap-4">
+          <ul className="flex max-w-[75ch] flex-col gap-4">
             {service.problems.map((problem) => (
               <li key={problem} className="flex items-start gap-3 text-lg">
                 <TriangleAlert

@@ -109,7 +109,7 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
           </div>
         )}
         {card.strong && <p className="font-semibold">{card.strong}</p>}
-        <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           {card.ctas.map((cta, i) => (
             <Link
               key={cta.href}
@@ -149,7 +149,7 @@ export function ServicesOverview() {
 
   return (
     <section id="services" aria-labelledby="services-title" className="bg-card">
-      <div className="container-fluid flex flex-col gap-10 py-16 lg:py-20">
+      <div className="container-fluid flex flex-col gap-10 section-y">
         {/* Full container width; from 1280px the AAPC note sits beside the lead (60/40). */}
         <div className="grid gap-4 xl:grid-cols-[3fr_2fr] xl:items-start xl:gap-12">
           <p className="max-w-[75ch] text-lg text-muted-foreground">{servicesIntro.lead}</p>

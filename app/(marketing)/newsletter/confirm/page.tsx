@@ -70,7 +70,7 @@ export default async function NewsletterConfirmPage({ searchParams }: Props) {
 
   return (
     <section className="bg-ledger">
-      <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-4 py-20 text-center md:py-28">
+      <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-(--gutter) section-y text-center">
         {body}
       </div>
     </section>

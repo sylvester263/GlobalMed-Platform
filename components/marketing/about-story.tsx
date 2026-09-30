@@ -10,7 +10,7 @@ import { publicAssetExists } from "@/lib/public-asset";
 import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const band = "container-fluid py-16 lg:py-24";
+const band = "container-fluid section-y";
 const heading = "text-2xl lg:text-3xl";
 
 function Paragraphs({ items, className }: { items: string[]; className?: string }) {
@@ -53,7 +53,7 @@ export function AboutStory() {
   return (
     <div data-about-story>
       <section aria-labelledby="our-story-title" className="bg-card">
-        <FadeInView className={cn(band, "flex flex-col gap-5")}>
+        <FadeInView className={cn(band, "flex flex-col gap-4")}>
           <h2 id="our-story-title" className={heading}>
             {story.title}
           </h2>
@@ -94,7 +94,7 @@ export function AboutStory() {
         <FadeInView
           className={cn(band, "flex flex-col gap-12 lg:grid lg:grid-cols-[3fr_2fr] lg:gap-16")}
         >
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4">
             <h2 id="documentation-title" className={heading}>
               {documentation.title}
             </h2>
@@ -111,7 +111,7 @@ export function AboutStory() {
         <FadeInView
           className={cn(band, "flex flex-col gap-12 lg:grid lg:grid-cols-[11fr_9fr] lg:gap-16")}
         >
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4">
             <h2 id="revenue-cycle-title" className={heading}>
               {revenueCycle.title}
             </h2>
@@ -135,7 +135,7 @@ export function AboutStory() {
             "flex flex-col gap-12 lg:grid lg:grid-cols-[3fr_2fr] lg:items-center lg:gap-16",
           )}
         >
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4">
             <h2 id="workforce-title" className={cn(heading, "text-white")}>
               {workforce.title}
             </h2>

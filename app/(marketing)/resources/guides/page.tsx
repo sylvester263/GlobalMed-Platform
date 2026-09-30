@@ -26,7 +26,7 @@ export default function GuidesPage() {
         crumbs={[{ name: "Guides", path: "/resources/guides" }]}
       />
       <Section>
-        <ul className="grid gap-6 md:grid-cols-3">
+        <ul className="grid gap-grid md:grid-cols-3">
           {guides.map((guide) => {
             const image = guideImages[guide.id];
             return (

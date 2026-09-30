@@ -163,7 +163,11 @@ export function CompactFooter() {
   const { contact } = site;
   const whatsappUrl = `https://wa.me/${contact.whatsappNumber.replace(/\D/g, "")}`;
   const socials = socialOrder.filter((s) => siteLinks.social[s.key]);
-  const linkClass = cn("hover:text-white hover:underline", focusRing);
+  // 44px tap targets on phones and tablets; compact rows from 1024px (mouse).
+  const linkClass = cn(
+    "inline-flex min-h-11 min-w-11 items-center justify-center hover:text-white hover:underline lg:min-h-6 lg:min-w-0 lg:pointer-coarse:min-h-11 lg:pointer-coarse:min-w-11",
+    focusRing,
+  );
 
   return (
     <footer className="bg-navy-deep text-footer-link">
@@ -239,7 +243,7 @@ export function CompactFooter() {
         <div className="contents md:flex md:flex-wrap md:items-center md:gap-8">
           {socials.length > 0 && (
             <ul
-              className="order-2 flex items-center gap-[26px] md:order-none"
+              className="order-2 flex items-center gap-4 md:order-none"
               aria-label="GlobalMed on social media"
             >
               {socials.map(({ key, label }) => (
@@ -249,7 +253,10 @@ export function CompactFooter() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`GlobalMed on ${label} (opens in a new tab)`}
-                    className={cn("flex text-white transition-colors hover:text-sky", focusRing)}
+                    className={cn(
+                      "flex p-[5px] text-white transition-colors hover:text-sky",
+                      focusRing,
+                    )}
                   >
                     <svg
                       viewBox="0 0 24 24"

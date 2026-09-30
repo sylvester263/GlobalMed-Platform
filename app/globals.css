@@ -244,6 +244,39 @@
   padding-inline: var(--gutter);
 }
 
+/*
+ * Spacing scale (2026-09-30, pm/UI_UX_REPORT_2026-09-30.md). Section padding 56px on phones,
+ * 72px on tablets, 96px from 1024px (`section-y`); grid and card gaps 24px, 32px from
+ * 1440px (`gap-grid`). Inside blocks: heading → paragraph 16px (gap-4), paragraph →
+ * buttons 32px (gap-8 / mt-8).
+ */
+:root {
+  --section-y: 56px;
+  --grid-gap: 24px;
+}
+@media (min-width: 768px) {
+  :root {
+    --section-y: 72px;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --section-y: 96px;
+  }
+}
+@media (min-width: 1440px) {
+  :root {
+    --grid-gap: 32px;
+  }
+}
+
+@utility section-y {
+  padding-block: var(--section-y);
+}
+@utility gap-grid {
+  gap: var(--grid-gap);
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -251,6 +284,10 @@
   html {
     @apply font-sans;
     -webkit-text-size-adjust: 100%;
+    /* In-page links land below the sticky header (65px) with room to spare; focus scrolling
+       keeps controls clear of the 72px floating help button. */
+    scroll-padding-top: 88px;
+    scroll-padding-bottom: 104px;
   }
   body {
     @apply bg-background text-foreground;
@@ -274,6 +311,16 @@
   }
   ::selection {
     @apply bg-mint text-ink;
+  }
+}
+
+/* Phones: no paragraph under 16px (small print included). Unlayered, so it wins over the
+   text-xs / text-sm utilities; 768px and up keep the smaller sizes. */
+@media (max-width: 767.98px) {
+  main p.text-xs,
+  main p.text-sm {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 }
 

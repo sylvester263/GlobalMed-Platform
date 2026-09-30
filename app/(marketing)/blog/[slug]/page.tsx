@@ -68,7 +68,7 @@ export default async function BlogPostPage({ params }: Props) {
       </Section>
       {more.length > 0 && (
         <Section title="Keep reading">
-          <ul className="grid gap-6 md:grid-cols-2">
+          <ul className="grid gap-grid md:grid-cols-2">
             {more.map((p) => (
               <li key={p.slug} className="relative flex flex-col gap-2">
                 <Badge variant="neutral">{postCategories[p.category] ?? p.category}</Badge>

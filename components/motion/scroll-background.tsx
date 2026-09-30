@@ -38,7 +38,7 @@ export function ScrollBackground({ image }: { image: SiteImage }) {
           />
         </m.div>
       </MotionFeatures>
-      <div className="absolute inset-0 bg-navy/75 lg:bg-transparent lg:bg-linear-to-r lg:from-navy/85 lg:from-30% lg:via-navy/60 lg:to-navy/25" />
+      <div className="absolute inset-0 bg-navy/80 lg:bg-transparent lg:bg-linear-to-r lg:from-navy/90 lg:from-40% lg:via-navy/70 lg:to-navy/35" />
     </div>
   );
 }

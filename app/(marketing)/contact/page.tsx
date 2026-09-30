@@ -14,7 +14,8 @@ export const metadata: Metadata = pageMetadata({
   path: "/contact",
 });
 
-const linkClass = "text-primary underline underline-offset-4";
+// 44px tall tap targets; the underline keeps them recognisable as links.
+const linkClass = "inline-flex min-h-11 items-center text-primary underline underline-offset-4";
 
 export default function ContactPage() {
   const { contact } = site;

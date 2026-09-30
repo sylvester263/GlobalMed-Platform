@@ -36,6 +36,9 @@ const usd = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
+/** Breadcrumb links: 44px tap targets (the row keeps its visual size). */
+const crumbLink = "inline-flex min-h-11 min-w-11 items-center";
+
 /**
  * Page heading band with breadcrumbs (and BreadcrumbList JSON-LD). With an `image`, the text
  * sits left and the photo right (about 45%) from 1024px; below that the photo comes first.
@@ -60,13 +63,15 @@ export function PageHero({
 }) {
   return (
     <section className={cn("border-b bg-ledger", className)}>
-      <div className="container-fluid flex flex-col gap-6 py-12 lg:py-16">
+      <div className="container-fluid flex flex-col gap-6 section-y">
         {crumbs && crumbs.length > 0 && (
           <>
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink render={<Link href="/" />}>Home</BreadcrumbLink>
+                  <BreadcrumbLink render={<Link href="/" />} className={crumbLink}>
+                    Home
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 {crumbs.map((crumb, i) => (
                   <Fragment key={crumb.path}>
@@ -75,7 +80,7 @@ export function PageHero({
                       {i === crumbs.length - 1 ? (
                         <BreadcrumbPage>{crumb.name}</BreadcrumbPage>
                       ) : (
-                        <BreadcrumbLink render={<Link href={crumb.path} />}>
+                        <BreadcrumbLink render={<Link href={crumb.path} />} className={crumbLink}>
                           {crumb.name}
                         </BreadcrumbLink>
                       )}
@@ -89,12 +94,11 @@ export function PageHero({
         )}
         <div
           className={cn(
-            image
-              ? "grid gap-8 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:items-center lg:gap-12 wide:gap-16"
-              : "contents",
+            image &&
+              "grid gap-8 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:items-center lg:gap-12 wide:gap-16",
           )}
         >
-          <div className={cn("flex flex-col gap-6", !image && "contents")}>
+          <div className="flex flex-col gap-8">
             <div className="flex max-w-3xl flex-col gap-4">
               {eyebrow && (
                 <p className="text-xs font-semibold tracking-[0.12em] text-teal-deep uppercase">
@@ -114,6 +118,7 @@ export function PageHero({
               width={image.width}
               height={image.height}
               priority
+              fetchPriority="high"
               sizes="(min-width: 1920px) 800px, (min-width: 1024px) 42vw, calc(100vw - 40px)"
               style={{ aspectRatio: `${image.width} / ${image.height}` }}
               className="order-first h-auto w-full rounded-2xl object-cover shadow-sm lg:order-none"
@@ -153,9 +158,9 @@ export function Section({
         tone === "ink" && "bg-ink text-white",
       )}
     >
-      <div className={cn("container-fluid flex flex-col gap-10 py-16 lg:py-20", className)}>
+      <div className={cn("container-fluid flex flex-col gap-10 section-y", className)}>
         {title && (
-          <div className="flex max-w-3xl flex-col gap-3">
+          <div className="flex max-w-3xl flex-col gap-4">
             <h2
               id={headingId}
               className={cn("text-2xl lg:text-3xl", tone === "ink" && "text-white")}
@@ -213,11 +218,11 @@ export function CtaBand({
 }) {
   return (
     <section className="bg-ink text-white">
-      <div className="container-fluid flex flex-col items-start gap-6 py-16">
+      <div className="container-fluid flex flex-col items-start gap-4 section-y">
         <h2 className="max-w-3xl text-2xl text-white lg:text-3xl">{title}</h2>
         {body && <p className="max-w-prose text-white/80">{body}</p>}
         <ClaimLine trigger="inView" ticks={8} goldEnd className="max-w-md" />
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
           {/* Sky with ink text: a navy button would disappear on the dark band. */}
           <Link
             href={href}

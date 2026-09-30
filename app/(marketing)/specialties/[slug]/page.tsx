@@ -51,7 +51,7 @@ export default async function SpecialtyPage({ params }: Props) {
       </PageHero>
 
       <Section title={`What makes ${specialty.name.toLowerCase()} billing hard`}>
-        <ul className="grid gap-6 md:grid-cols-3">
+        <ul className="grid gap-grid md:grid-cols-3">
           {specialty.challenges.map((c) => (
             <li key={c.title} className="flex flex-col gap-2 rounded-lg border bg-card p-6">
               <h3 className="text-xl">{c.title}</h3>
@@ -66,7 +66,13 @@ export default async function SpecialtyPage({ params }: Props) {
         title="Codes we see every day"
         intro="Examples of the codes and modifiers our coders handle for this specialty."
       >
-        <div className="overflow-x-auto rounded-lg border">
+        <div
+          role="region"
+          aria-label={`Common ${specialty.name.toLowerCase()} codes`}
+          tabIndex={0}
+          data-scroll-x
+          className="overflow-x-auto rounded-lg border"
+        >
           <table className="w-full text-left">
             <caption className="sr-only">Common {specialty.name.toLowerCase()} codes</caption>
             <thead className="bg-ledger">

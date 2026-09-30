@@ -13,10 +13,14 @@ const coursePaths = {
 
 test.describe("Package Includes", () => {
   for (const course of aapcCourses) {
-    test(`${course.credential}: listed in the hero, no old "What's included"`, async ({ page }) => {
+    test(`${course.credential}: listed in the price card, no old "What's included"`, async ({
+      page,
+    }) => {
       await page.goto(coursePaths[course.slug]);
-      const hero = page.locator("section:has(h1)");
-      const pkg = hero.locator("[data-package-includes]");
+      // In the price card beside the content (original course template, 2026-10-01).
+      const pkg = page.locator(
+        "aside[aria-label='Price and registration'] [data-package-includes]",
+      );
       await expect(pkg.getByText("Package Includes", { exact: true })).toBeVisible();
       await expect(pkg.locator("li")).toHaveText(course.packageIncludes);
       await expect(page.getByRole("heading", { name: "What's included" })).toHaveCount(0);

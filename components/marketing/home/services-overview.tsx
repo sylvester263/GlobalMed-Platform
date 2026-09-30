@@ -59,14 +59,13 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
         className="flex flex-col gap-3 lg:self-start lg:p-[clamp(32px,4vw,72px)] lg:[&_p]:max-w-[65ch]"
       >
         {/* Decorative ordinal in the client's sky blue; the heading carries the meaning. Sky on
-            white is under 3:1, so it stays aria-hidden decoration (WCAG 1.4.3 exemption). */}
-        <p
+            white is under 3:1, so it stays decoration (WCAG 1.4.3 exemption): the digits are
+            drawn by CSS, so they are not text for screen readers or contrast checkers. */}
+        <span
           aria-hidden="true"
-          data-decorative-ordinal
-          className="font-serif text-2xl leading-none font-semibold text-sky"
-        >
-          {String(index + 1).padStart(2, "0")}
-        </p>
+          data-decorative-ordinal={String(index + 1).padStart(2, "0")}
+          className="block h-6 font-serif text-2xl leading-none font-semibold text-sky before:content-[attr(data-decorative-ordinal)]"
+        />
         <h3 id={`${card.id}-title`} className={cn("text-2xl lg:text-3xl", dark && "text-white")}>
           {card.title}
         </h3>

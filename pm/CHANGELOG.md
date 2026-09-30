@@ -20,8 +20,11 @@ Format: Keep a Changelog · Semantic Versioning
 - About page "Our Story": four parts (story + founder photo slot, documentation with country/specialty chips, coding/billing/RCM checklist, navy AAPC workforce band with partner lockup and "View CPC® & CPB® Courses") and a closing statement, client text used exactly, one-time fade on scroll (2026-09-29)
 - LCCI membership credential (No. 94721 C, valid until 31 Mar 2027) in "Registered, Certified & Compliant" with thumbnail, lightbox and PDF; credentials past their `validTill` date are no longer shown. Founder photo (Riaz Naveed) in About "Our Story" beside the founder paragraph (2026-09-30)
 - pm/IMAGE_PLAN.md: full-site image audit with prompts for AI images and the list of real photos needed (2026-09-30)
+- Photos placed site-wide: page hero photos (AAPC, courses, services, audit, careers), blog covers and cards, guide cards, new slide 3, RCM card, home AAPC band scroll background; WebP/AVIF delivery; Open Graph images per section (2026-09-30)
 
 ### Changed
+- UI/UX pass: spacing tokens (56/72/96 section padding, 24/32 grid gaps), 44px touch targets, 16px text on phones, anchor offsets, slider/band contrast, sticky comparison-table column; CSS no longer inlined (ADR-031) (2026-09-30)
+- Fixed: pages with their own Open Graph data had no og:image (2026-09-30)
 - GlobalMed presented as AAPC's Strategic Partner in Pakistan only: AAPC faculty teach online, AAPC certifies; approved wording site-wide, chatbot knowledge updated (ADR-026) (2026-09-26)
 - GlobalMed's own courses, pathways, batches, corporate training, exam prep, learning platform, instructor area, certificates/verify, checkout, refund policy and public login links hidden behind feature flags with redirects; nothing deleted (2026-09-26)
 

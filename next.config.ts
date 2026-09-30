@@ -27,8 +27,9 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 960, 1080, 1280, 1920, 2560],
   },
   experimental: {
-    // Inline the (small, Tailwind-purged) CSS so it no longer blocks first render (P2-21).
-    inlineCss: true,
+    // Was true (P2-21) while the CSS was small. At 125 kB it was inlined into every page twice
+    // (a <style> tag and the RSC payload), doubling HTML size and main-thread work (ADR-031).
+    inlineCss: false,
   },
   // Social images for dynamic routes render on request: ship the font, logo and photo
   // backgrounds they read (lib/seo/og-image.tsx) with those functions.

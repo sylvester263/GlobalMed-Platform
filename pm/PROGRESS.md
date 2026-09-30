@@ -1,6 +1,6 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-09-29 · Current phase: **5 — Payments & enrollment** (card checkout built but hidden: AAPC registration form replaces it, ADR-026) · Overall: **43%**
+Last updated: 2026-09-30 · Current phase: **5 — Payments & enrollment** (card checkout built but hidden: AAPC registration form replaces it, ADR-026) · Overall: **43%**
 
 | Phase | Status | % |
 |---|---|---|
@@ -68,8 +68,9 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [x] P2-25 "How it works" scroll-up bug fixed (CSS sticky, no GSAP pin); browser check 360/768/1280 ± reduced motion (138 checks) and E2E (146 pass, 53 skipped by flag); pm/CHANGE_REPORT_2026-09-26.md
 - [x] P2-26 Home "Our Services" sticky stacking cards with client text and photos (old services list hidden); approved role wording site-wide + privacy payment paragraph; registration Address replaces City (migration 0005, lead detail page, admin CSV export); official App Store / Google Play footer badges ("Coming soon" until links)
 - [x] P2-27 Claim-line motif removed site-wide (features.claimLine, ADR-028): slider dots, numbered "How it works" steps, audit form step text + plain bar; design docs marked retired
+- [x] P2-29 Client photos placed site-wide (pm/IMAGE_PLAN.md), OG images per section, UI/UX + spacing pass on all pages (pm/UI_UX_REPORT_2026-09-30.md)
 - [x] P2-28 Fluid full-width desktop layout (container-fluid, ADR-029): 1920px max, clamp gutters, 75ch text, 4-column grids from 1440px, full-width "Our Services" cards with flush images
-- [ ] P2-21 Motion performance + reduced-motion QA — 🟨 reduced motion + CLS 0 verified; mobile perf 73–90 locally, re-measure on Vercel preview
+- [ ] P2-21 Motion performance + reduced-motion QA — 🟨 reduced motion + CLS 0 verified; desktop 94–100; mobile Performance 44–65 locally (2026-09-30, hydration JS), needs work
 
 ## Phase 3 — Auth & dashboard shells
 - [x] P3-1 Sign up / login / reset / verify email — server actions + /auth/confirm; live once Supabase is set up per docs/16

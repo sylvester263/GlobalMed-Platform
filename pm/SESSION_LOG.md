@@ -375,6 +375,22 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** the images themselves; AAPC logo permission.
 
 ---
+
+### Session 011 — Images placed, UI/UX and spacing pass
+- **Date:** 2026-09-30
+- **Done:** (details in pm/UI_UX_REPORT_2026-09-30.md)
+  - Step 1: upload check against pm/IMAGE_PLAN.md. B01 moved from credentials/ to slider/ (client OK); B11–B13 used from heroes/; B24 new; C08 regenerated; C06/C09 not uploaded. 14 images flagged for readable text or logos.
+  - Step 2: scripts/optimize-images.mjs (WebP masters cropped per slot, OG backgrounds 1200×630 JPG); next/image AVIF/WebP at 640–2560 (ADR-030). All within size budgets.
+  - Step 3: PageHero photo slot (text left, photo right 4:3 from 1024px, photo first on phones) on the AAPC, 3 course, Services, 6 service, Free Billing Audit and Careers pages; blog covers and cards; guide cards; new slide 3; RCM card; home AAPC band on a scrolling photo with a navy overlay; Open Graph routes (logo + title over photo, JPEG) replacing the old claim-line card; default og:image restored on pages that lost it.
+  - Step 4: spacing tokens (`section-y` 56/72/96, `gap-grid` 24/32) on every section and card grid; 44px touch targets (nav, breadcrumbs, footer, inputs, buttons, chips, consent); scroll-padding for the sticky header and help button; 16px paragraphs on phones; 75ch lists; slider/band overlay contrast ≥ 4.89:1 measured; sticky first column on the comparison table; fetchpriority on LCP images; /api/health returns the commit.
+  - Step 5: `experimental.inlineCss` off (ADR-031): home HTML 545 → 279 kB, main-thread work roughly halved; desktop Lighthouse 94–100; decorative ordinals drawn by CSS.
+- **Verified:** tsc, eslint, 121 unit, 241 E2E (53 skipped by flag) incl. new tests/e2e/images.spec.ts; UI audit across 41 routes × 13 sizes in Chrome plus WebKit and Firefox (no horizontal scroll anywhere); screenshots pm/screenshots/2026-09-30/ (164).
+- **Not met:** Lighthouse mobile Performance 44–65 (target ≥ 90), LCP 4.2–5.5s: hydration JavaScript, same on the live pre-change build (50–62). Not pushed, per the brief.
+- **Files touched:** content/images.ts, components/marketing/{sections,post-list,aapc-course,aapc-instructors-band,footer-compact,site-header,mega-menu,aapc-registration-form,prose,credentials-section,about-story}.tsx, components/marketing/home/*, components/motion/scroll-background.tsx, components/ui/{button,input,native-select}.tsx, app/**/opengraph-image.tsx, app/(marketing)/** pages, app/globals.css, lib/seo/{og-image.tsx,metadata.ts}, next.config.ts, app/api/health/route.ts, scripts/optimize-images.mjs, assets/fonts/, public/images/**, tests/{audit,e2e}/*, pm/*
+- **Next:** mobile performance (cut client JS on home and inner pages), then push and verify on Vercel; regenerate flagged images.
+- **Blockers:** push waits on the mobile Performance target, or the client's go-ahead.
+
+---
 ### Session NNN — <title>
 - **Date:**
 - **Done:**

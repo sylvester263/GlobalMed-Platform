@@ -27,6 +27,9 @@ export type AapcCourse = {
   metaDescription: string;
   summary: string;
   duration: string;
+  /** "Package Includes" (client, 2026-09-30), shown under the price note. Text used exactly. */
+  packageIncludes: string[];
+  /** Previous "What's included" list, hidden (features.*IncludedLegacy). */
   included: string[];
   /** Price in US dollars. */
   priceUsd: number;
@@ -34,7 +37,15 @@ export type AapcCourse = {
   priceSaving?: string;
   /** Marked "Best value: two certifications". */
   bestValue?: boolean;
-  /** Rows of the comparison table on the AAPC Certification page. */
+  /** Comparison table rows built from `packageIncludes` (2026-09-30). */
+  packageCompare: {
+    training: string;
+    blackboard: string;
+    exams: string;
+    membership: string;
+    books: string;
+  };
+  /** Previous comparison values; the old rows are hidden (features.comparisonLegacyRows). */
   compare: {
     duration: string;
     membership: string;
@@ -73,6 +84,20 @@ export const aapcCourses: AapcCourse[] = [
       "Prepare for the CPC® exam, AAPC's credential for physician and outpatient medical coding, through AAPC's live, instructor-led online course.",
     duration:
       "16 weeks, live online sessions of 1.5 hours per week, plus optional one-on-one virtual time with your instructor",
+    packageIncludes: [
+      "Instructor-led CPC Training delivered by AAPC-certified instructors",
+      "Six months of Blackboard access",
+      "CPC Examination with two attempts",
+      "One-year AAPC Membership",
+      "Latest edition of the required books",
+    ],
+    packageCompare: {
+      training: "Instructor-led CPC Training delivered by AAPC-certified instructors",
+      blackboard: "6 months",
+      exams: "CPC exam with two attempts",
+      membership: "1 year",
+      books: "Latest edition included",
+    },
     included: [
       "16-week online training led by world-class AAPC faculty",
       "One-year AAPC membership and networking benefits",
@@ -106,6 +131,20 @@ export const aapcCourses: AapcCourse[] = [
     summary:
       "Prepare for the CPB® exam, AAPC's credential for medical billing, through AAPC's live, instructor-led online course.",
     duration: "16 weeks",
+    packageIncludes: [
+      "Instructor-led CPB Training delivered by AAPC-certified instructors",
+      "Six months of Blackboard access",
+      "CPB Examination with two attempts",
+      "One-year AAPC Membership",
+      "Latest edition of the required books",
+    ],
+    packageCompare: {
+      training: "Instructor-led CPB Training delivered by AAPC-certified instructors",
+      blackboard: "6 months",
+      exams: "CPB exam with two attempts",
+      membership: "1 year",
+      books: "Latest edition included",
+    },
     included: [
       "16-week online course led by AAPC faculty",
       "One-year AAPC membership and benefits",
@@ -140,6 +179,20 @@ export const aapcCourses: AapcCourse[] = [
     summary:
       "Enroll in both AAPC preparation courses (CPC® and CPB®) for the widest foundation for a career in medical billing and coding.",
     duration: "16 weeks",
+    packageIncludes: [
+      "Instructor-led CPC and CPB Training delivered by AAPC-certified instructors",
+      "Six months of Blackboard access",
+      "CPC and CPB Examinations with two attempts each",
+      "One-year AAPC Membership",
+      "Latest edition of the required books",
+    ],
+    packageCompare: {
+      training: "Instructor-led CPC and CPB Training delivered by AAPC-certified instructors",
+      blackboard: "6 months",
+      exams: "CPC and CPB exams with two attempts each",
+      membership: "1 year",
+      books: "Latest edition included",
+    },
     included: [
       "Instructor-led 16-week online courses led by world-class AAPC faculty",
       "Two-year AAPC membership and networking benefits",

@@ -1,3 +1,4 @@
+import { features } from "@/config/features";
 import { aapcCourses, formatUsdPrice, priceText } from "@/data/courses";
 import type { Faq } from "@/lib/content/schema";
 
@@ -39,7 +40,8 @@ export const instructorsBand = {
   body: approvedWording.training,
   points: [
     "Live online classes with AAPC faculty",
-    "Official AAPC exams and practice tests",
+    // Hidden (features.practiceTestsMentions): the packages no longer list practice tests.
+    ...(features.practiceTestsMentions ? ["Official AAPC exams and practice tests"] : []),
     "AAPC membership included",
   ],
   cta: "View CPC® & CPB® Training",
@@ -135,7 +137,10 @@ export const aapcSteps = [
   },
   {
     stage: "Take the AAPC certification exam",
-    caption: "Your course includes AAPC's certification exam and practice tests.",
+    // Hidden (features.practiceTestsMentions); replacement text pending from the client.
+    caption: features.practiceTestsMentions
+      ? "Your course includes AAPC's certification exam and practice tests."
+      : undefined,
     stat: "Official AAPC exam",
   },
   {
@@ -188,7 +193,7 @@ export const aapcFaqs: Faq[] = [
   {
     question: "Do I need a medical background?",
     answer:
-      "Training requires knowledge of medical terminology, anatomy and pathophysiology. If you don't have it, AAPC's prerequisite courses are available at 1/2 off with your course.",
+      "Training requires knowledge of medical terminology, anatomy and pathophysiology. If you don't have it, AAPC's prerequisite courses are available.",
   },
   {
     question: "How do I register for the CPC exam?",

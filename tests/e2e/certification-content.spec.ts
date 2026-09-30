@@ -100,8 +100,9 @@ test.describe("certification content", () => {
     const hero = page.locator("main section").first();
     await expect(hero).toContainText(sessions);
     await expect(hero).toContainText("16 weeks");
+    // The old package line is gone with the old list (Package Includes, 2026-09-30).
     await expect(page.locator("body")).toContainText(
-      "Instructor-led 16-week online courses led by world-class AAPC faculty",
+      "Instructor-led CPC and CPB Training delivered by AAPC-certified instructors",
     );
     await expect(page.locator("body")).toContainText("in a program that runs over 16 weeks");
     await expect(page.locator("body")).not.toContainText("16 weeks for CPC®");

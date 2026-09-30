@@ -11,6 +11,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { aapcFaqs, aapcHero, aapcSteps } from "@/content/aapc";
 import { aapcCourseFacts, formatUsdPrice, getAapcCourses, type AapcCourse } from "@/data/courses";
 import { pageMetadata } from "@/lib/seo/metadata";
+import { features } from "@/config/features";
 import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -24,10 +25,19 @@ export const metadata: Metadata = pageMetadata({
 
 type Cell = string | boolean;
 
-/** Comparison table rows (client, 2026-09-26). Booleans render as ✓ / – with screen-reader text. */
-const comparisonRows: { label: string; value: (course: AapcCourse) => Cell }[] = [
-  { label: "Duration", value: (c) => c.compare.duration },
-  { label: "Format", value: () => aapcCourseFacts.format },
+type Row = { label: string; value: (course: AapcCourse) => Cell };
+
+/** One row per "Package Includes" item (client, 2026-09-30). */
+const packageRows: Row[] = [
+  { label: "Training", value: (c) => c.packageCompare.training },
+  { label: "Blackboard access", value: (c) => c.packageCompare.blackboard },
+  { label: "Certification exam(s)", value: (c) => c.packageCompare.exams },
+  { label: "AAPC membership", value: (c) => c.packageCompare.membership },
+  { label: "Books", value: (c) => c.packageCompare.books },
+];
+
+/** The previous package rows (2026-09-26), hidden by features.comparisonLegacyRows. */
+const legacyRows: Row[] = [
   { label: "AAPC membership", value: (c) => c.compare.membership },
   { label: "Certification exam(s)", value: (c) => c.compare.exams },
   { label: "Practice tests", value: (c) => c.compare.practiceTests },
@@ -35,6 +45,13 @@ const comparisonRows: { label: string; value: (course: AapcCourse) => Cell }[] =
   { label: "Codify by AAPC subscription", value: (c) => c.compare.codify },
   { label: "Denials Management & Appeals Reference Guide", value: (c) => c.compare.denialsGuide },
   { label: "1/2 off Prerequisite course", value: (c) => c.compare.prerequisiteHalfOff },
+];
+
+/** Comparison table rows. Booleans render as ✓ / – with screen-reader text. */
+const comparisonRows: Row[] = [
+  { label: "Duration", value: (c) => c.compare.duration },
+  { label: "Format", value: () => aapcCourseFacts.format },
+  ...(features.comparisonLegacyRows ? legacyRows : packageRows),
   {
     label: "Price",
     value: (c) => {

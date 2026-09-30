@@ -20,6 +20,7 @@ import {
 import type { Faq } from "@/lib/content/schema";
 import { aapcCourseJsonLd, JsonLd } from "@/lib/seo/json-ld";
 import { aapcCertificationPath } from "@/lib/site";
+import { features } from "@/config/features";
 import { cn } from "@/lib/utils";
 
 const courseHeroImages = {
@@ -30,7 +31,7 @@ const courseHeroImages = {
 
 const eyebrowClass = "font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase";
 
-function WhatsAppLink({ className }: { className?: string }) {
+export function WhatsAppLink({ className }: { className?: string }) {
   return (
     <a
       href={aapcCourseFacts.whatsappUrl}
@@ -57,16 +58,49 @@ function BestValue({ className }: { className?: string }) {
   );
 }
 
-/** Price, the dual course's saving, and the delivery note that sits under every price. */
+/** The old "What's included" list is shown only if its flag is back on (config/features.ts). */
+const legacyIncluded: Record<AapcCourseSlug, boolean> = {
+  cpc: features.cpcIncludedLegacy,
+  cpb: features.cpbIncludedLegacy,
+  "cpc-cpb": features.dualIncludedLegacy,
+};
+
+/** "Package Includes" (client, 2026-09-30): bold heading, sky checks, 8px between items. */
+export function PackageIncludes({ course }: { course: AapcCourse }) {
+  const headingId = `package-${course.slug}`;
+  return (
+    <div className="flex flex-col gap-2" data-package-includes>
+      <p id={headingId} className="text-base font-bold text-ink">
+        Package Includes
+      </p>
+      <ul aria-labelledby={headingId} className="flex flex-col gap-2 text-base md:text-sm">
+        {course.packageIncludes.map((item) => (
+          <li key={item} className="flex items-start gap-2">
+            <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/**
+ * Price, the dual course's saving, the delivery note that sits under every price, and the
+ * course's "Package Includes" (cards on the home and AAPC pages, and each course page hero).
+ */
 function PriceBlock({ course }: { course: AapcCourse }) {
   return (
-    <div className="flex flex-col gap-1">
-      <p className="text-sm font-semibold text-muted-foreground">Price</p>
-      <p className="font-serif text-3xl font-semibold">{formatUsdPrice(course.priceUsd)}</p>
-      {course.priceSaving && (
-        <p className="text-sm font-semibold text-success-ink">{course.priceSaving}</p>
-      )}
-      <p className="mt-1 text-xs text-muted-foreground">{aapcCourseFacts.priceNote}</p>
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <p className="text-sm font-semibold text-muted-foreground">Price</p>
+        <p className="font-serif text-3xl font-semibold">{formatUsdPrice(course.priceUsd)}</p>
+        {course.priceSaving && (
+          <p className="text-sm font-semibold text-success-ink">{course.priceSaving}</p>
+        )}
+        <p className="mt-1 text-xs text-muted-foreground">{aapcCourseFacts.priceNote}</p>
+      </div>
+      <PackageIncludes course={course} />
     </div>
   );
 }
@@ -298,17 +332,19 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
         )}
       </Section>
 
-      {/* 3. What's included */}
-      <Section tone="white" id="included" title="What's included">
-        <ul className="grid gap-3 sm:grid-cols-2">
-          {course.included.map((item) => (
-            <li key={item} className="flex items-start gap-3 rounded-lg border bg-card p-4">
-              <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-sky" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </Section>
+      {/* 3. What's included: replaced by "Package Includes" in the hero (2026-09-30). */}
+      {legacyIncluded[course.slug] && (
+        <Section tone="white" id="included" title="What's included">
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {course.included.map((item) => (
+              <li key={item} className="flex items-start gap-3 rounded-lg border bg-card p-4">
+                <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-sky" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
 
       {/* 4. Why earn it */}
       <Section id="why" title={content.why.heading}>

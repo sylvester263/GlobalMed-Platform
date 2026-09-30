@@ -65,7 +65,7 @@ export const cpcContent: CoursePageContent = {
   experience: {
     heading: "Experience requirements",
     paragraphs: [
-      "Training requires a high-level knowledge of medical terminology, anatomy, and pathophysiology. If you don't have medical experience or working knowledge of these subjects, AAPC offers prerequisite courses to prepare you for certification training (1/2 off with this course).",
+      "Training requires a high-level knowledge of medical terminology, anatomy, and pathophysiology. If you don't have medical experience or working knowledge of these subjects, AAPC offers prerequisite courses to prepare you for certification training.",
       "The certification exam will test your understanding of the proper application of CPT® procedure codes, HCPCS Level II procedure and supply codes, and ICD-10-CM diagnosis codes.",
     ],
   },

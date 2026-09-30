@@ -7,7 +7,7 @@ import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
 import { features } from "@/config/features";
 import { cn } from "@/lib/utils";
 
-type Stage = { stage: string; caption: string; stat: string };
+type Stage = { stage: string; caption?: string; stat: string };
 
 /** Sticky offset: the site header (h-16 + 1px border) plus breathing room. */
 const STICKY_TOP = 80;
@@ -82,7 +82,7 @@ function JourneyList({ stages, active }: { stages: Stage[]; active: number }) {
               >
                 {s.stage}
               </h3>
-              <p className="text-foreground">{s.caption}</p>
+              {s.caption && <p className="text-foreground">{s.caption}</p>}
               <p className="text-sm font-semibold text-muted-foreground">{s.stat}</p>
             </li>
           );
@@ -234,7 +234,7 @@ function NumberedStepsSection({ id, title, intro, stages, children }: JourneySec
                   <span className="sr-only">Step {i + 1}: </span>
                   {s.stage}
                 </h3>
-                <p className="text-foreground">{s.caption}</p>
+                {s.caption && <p className="text-foreground">{s.caption}</p>}
                 <p className="text-sm font-semibold text-muted-foreground">{s.stat}</p>
               </FadeInOnce>
             </li>

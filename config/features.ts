@@ -93,6 +93,32 @@ export const features = {
    * page. Set true to restore.
    */
   aboutPartnershipBlockOld: false,
+  /**
+   * Hidden at client request (2026-09-30) — the previous "What's included" lists on the CPC®,
+   * CPB® and CPC® + CPB® pages (Practicode, Codify, practice tests, 1/2 off prerequisite…),
+   * replaced by "Package Includes" under the price. Set true to restore a course's old list.
+   */
+  cpcIncludedLegacy: false,
+  cpbIncludedLegacy: false,
+  dualIncludedLegacy: false,
+  /**
+   * Hidden (2026-09-30) — the old comparison rows (practice tests, Practicode, Codify, Denials
+   * guide, 1/2 off prerequisite) and the old membership/exam values on the AAPC page. The
+   * table now has one row per "Package Includes" item. Set true to restore.
+   */
+  comparisonLegacyRows: false,
+  /**
+   * Hidden (2026-09-30) — the previous four-card "Why register through GlobalMed" on the home
+   * page, replaced by the client's new text. Set true to restore it.
+   */
+  whyRegisterLegacy: false,
+  /**
+   * Hidden (2026-09-30) — "practice tests" mentions outside the package lists: the band point
+   * "Official AAPC exams and practice tests" and the "How it works" exam-step caption. The
+   * client's packages no longer include practice tests; replacement text pending
+   * (pm/CLIENT_INPUTS_NEEDED.md). Set true to restore.
+   */
+  practiceTestsMentions: false,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

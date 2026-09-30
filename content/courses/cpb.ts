@@ -88,7 +88,7 @@ export const cpbContent: CoursePageContent = {
     heading: "Experience requirements",
     paragraphs: [
       "A high-level knowledge of medical terminology, anatomy, and pathophysiology, along with understanding of the proper application of payer policies; compliance rules; healthcare regulations; CPT® procedure codes, HCPCS Level II procedure and supply codes, and ICD-10-CM diagnosis codes.",
-      "If you don't have billing experience or working knowledge of these subjects, AAPC offers recommended prerequisite courses to prepare you for the CPB certification training course (1/2 off with this course).",
+      "If you don't have billing experience or working knowledge of these subjects, AAPC offers recommended prerequisite courses to prepare you for the CPB certification training course.",
     ],
   },
   maintaining: {

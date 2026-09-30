@@ -123,6 +123,41 @@ export const programs = [
   },
 ] as const;
 
+/**
+ * "Why register through GlobalMed Transcriptions?" (client, 2026-09-30). Text used exactly;
+ * each point's bold lead and the rest are split only for styling. Replaces `whyUs` below
+ * (hidden, features.whyRegisterLegacy).
+ */
+export const whyRegister = {
+  title: "Why register through GlobalMed Transcriptions?",
+  intro:
+    "GlobalMed Transcriptions, in strategic partnership with AAPC, helps aspiring professionals in Pakistan take the next step toward CPC® and CPB® certification.",
+  points: [
+    {
+      lead: "Special pricing for Pakistan",
+      rest: "making training more accessible and affordable.",
+    },
+    {
+      lead: "Local registration support",
+      rest: "guidance with enrollment and coordination with AAPC.",
+    },
+    {
+      lead: "Program guidance",
+      rest: "help understanding medical coding and billing pathways before choosing your course.",
+    },
+    {
+      lead: "Industry experience",
+      rest: "benefit from GlobalMed's practical understanding of international healthcare documentation and billing services.",
+    },
+    {
+      lead: "Flexible payment options",
+      rest: "GlobalMed facilitates installment plans when needed.",
+    },
+  ],
+  tagline: "Get Trained. Get Certified. Go Global.",
+  closing: "Contact GlobalMed to learn about the upcoming batch, fees, and package inclusions.",
+} as const;
+
 /** "Why register through GlobalMed" (client, 2026-09-26: AAPC teaches; GlobalMed registers). */
 export const whyUs = [
   {

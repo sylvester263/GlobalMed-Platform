@@ -11,7 +11,7 @@ import {
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { AapcCourseCard } from "@/components/marketing/aapc-course";
+import { AapcCourseCard, WhatsAppLink } from "@/components/marketing/aapc-course";
 import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
 import { aapcBandBackground } from "@/content/images";
 import { CredentialsSection } from "@/components/marketing/credentials-section";
@@ -32,6 +32,7 @@ import {
   serviceSlugs,
   testimonials,
   upcomingBatches,
+  whyRegister,
   whyUs,
 } from "@/content/home";
 import { getCourse, getServices } from "@/lib/content";
@@ -145,23 +146,63 @@ export default function HomePage() {
         <p className="text-sm text-muted-foreground">{aapcCourseFacts.priceNote}</p>
       </Section>
 
-      {/* 4. Why register through GlobalMed */}
-      <Section tone="white" title="Why register through GlobalMed">
-        <StaggerGroup as="ul" className="grid gap-grid sm:grid-cols-2 lg:grid-cols-4">
-          {whyUs.map((item, i) => {
-            const Icon = whyIcons[i] ?? Check;
-            return (
-              <StaggerItem as="li" key={item.title} className="flex flex-col gap-3">
-                <span className="flex size-11 items-center justify-center rounded-md bg-mint text-teal-deep">
-                  <Icon aria-hidden="true" className="size-5" />
-                </span>
-                <h3 className="text-xl">{item.title}</h3>
-                <p className="text-muted-foreground">{item.body}</p>
-              </StaggerItem>
-            );
-          })}
-        </StaggerGroup>
+      {/* 4. Why register through GlobalMed Transcriptions? (client text, 2026-09-30). Five
+          points: 3 + 2 (the 2 centred) on desktop, 2 columns on tablets, 1 on phones; equal
+          card heights. */}
+      <Section tone="white" id="why-register" title={whyRegister.title} intro={whyRegister.intro}>
+        <ul className="grid auto-rows-fr gap-grid md:grid-cols-2 lg:grid-cols-6">
+          {whyRegister.points.map((point, i) => (
+            <li
+              key={point.lead}
+              className={cn(
+                "flex items-start gap-3 rounded-2xl border bg-card p-6 shadow-sm lg:col-span-2",
+                i === 3 && "lg:col-start-2",
+                i === 4 &&
+                  "md:col-span-2 md:w-[calc((100%-var(--grid-gap))/2)] md:justify-self-center lg:col-span-2 lg:w-auto lg:justify-self-stretch",
+              )}
+            >
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-mint text-teal-deep">
+                <Check aria-hidden="true" className="size-4 text-sky" strokeWidth={3} />
+              </span>
+              <p>
+                <strong className="font-semibold text-ink">{point.lead}</strong> — {point.rest}
+              </p>
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-col items-center gap-4 text-center">
+          <p className="font-serif text-3xl font-semibold text-primary lg:text-4xl">
+            {whyRegister.tagline}
+          </p>
+          <p className="max-w-prose text-lg text-muted-foreground">{whyRegister.closing}</p>
+          <div className="mt-4 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
+            <Link href={registerHref} className={buttonVariants({ size: "lg" })}>
+              Register Now <ArrowRight aria-hidden="true" />
+            </Link>
+            <WhatsAppLink className={buttonVariants({ size: "lg", variant: "secondary" })} />
+          </div>
+        </div>
       </Section>
+
+      {/* 4b. Previous "Why register through GlobalMed" (hidden, features.whyRegisterLegacy). */}
+      {features.whyRegisterLegacy && (
+        <Section tone="white" title="Why register through GlobalMed">
+          <StaggerGroup as="ul" className="grid gap-grid sm:grid-cols-2 lg:grid-cols-4">
+            {whyUs.map((item, i) => {
+              const Icon = whyIcons[i] ?? Check;
+              return (
+                <StaggerItem as="li" key={item.title} className="flex flex-col gap-3">
+                  <span className="flex size-11 items-center justify-center rounded-md bg-mint text-teal-deep">
+                    <Icon aria-hidden="true" className="size-5" />
+                  </span>
+                  <h3 className="text-xl">{item.title}</h3>
+                  <p className="text-muted-foreground">{item.body}</p>
+                </StaggerItem>
+              );
+            })}
+          </StaggerGroup>
+        </Section>
+      )}
 
       {/* 5. How it works (MG-3 claim line) */}
       <ClaimJourneySection

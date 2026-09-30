@@ -115,14 +115,27 @@ test.describe("about: Our Story", () => {
       expect(new Set(await storyOpacities(page))).toEqual(new Set(["1"]));
 
       // The founder photo sits beside the "Our founder…" paragraph from 1280px, above it below.
-      const twoColumn = width >= 1280;
+      // Split grid (2026-09-30): photo beside the text from 1024px, its top level with the
+      // heading; below that, heading, then the photo (centred), then the text.
+      const twoColumn = width >= 1024;
       const story = page.locator("[data-about-story] section").first();
-      const [text, figure] = await Promise.all([
-        story.locator("figure ~ p").first().boundingBox(),
+      const [heading, text, figure] = await Promise.all([
+        story.locator("h2").boundingBox(),
+        story.locator("p").first().boundingBox(),
         story.locator("figure").boundingBox(),
       ]);
       expect(figure!.x > text!.x + text!.width).toBe(twoColumn);
-      if (!twoColumn) expect(figure!.y + figure!.height).toBeLessThanOrEqual(text!.y);
+      if (twoColumn) expect(Math.abs(figure!.y - heading!.y)).toBeLessThan(2);
+      else {
+        expect(figure!.y).toBeGreaterThan(heading!.y + heading!.height);
+        expect(figure!.y + figure!.height).toBeLessThanOrEqual(text!.y);
+      }
+      // The whole photo is visible: nothing cropped (4:5, object-contain).
+      const img = story.locator("figure img");
+      const ratio = await img.evaluate(
+        (el: HTMLImageElement) => el.naturalWidth / el.naturalHeight,
+      );
+      expect(ratio).toBeCloseTo(0.8, 2);
 
       if (width === 360 || width === 1920) {
         await page.screenshot({ path: `pm/screenshots/about-story-${width}.png`, fullPage: true });

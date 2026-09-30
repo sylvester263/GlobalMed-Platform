@@ -52,7 +52,7 @@ export function AboutStory() {
         {/* Split grid (client, 2026-09-30): text 7 / photo 5 from 1280px, 60/40 at 1024–1279px,
             the photo's top level with the heading. Below 1024px: heading, photo (centred, max
             360px, 32px under the heading), then the text. */}
-        <FadeInView className={cn(band, "split gap-y-0")}>
+        <FadeInView className={cn(band, "split gap-y-0 lg:grid-rows-[auto_1fr]")}>
           <h2 id="our-story-title" className={cn(heading, "lg:col-start-1 lg:row-start-1")}>
             {story.title}
           </h2>
@@ -81,7 +81,7 @@ export function AboutStory() {
             </figcaption>
           </figure>
           <div className="mt-8 flex flex-col gap-4 lg:col-start-1 lg:row-start-2 lg:mt-4">
-            <Paragraphs items={story.paragraphs} />
+            <Paragraphs items={story.paragraphs} className="lg:text-lg" />
           </div>
         </FadeInView>
       </section>

@@ -7,6 +7,7 @@ import { CodeChips } from "@/components/marketing/motion-graphics/code-chips";
 import { DenialBars } from "@/components/marketing/motion-graphics/denial-bars";
 import { VoiceToNote } from "@/components/marketing/motion-graphics/voice-to-note";
 import { CtaBand, FaqList, PageHero, Section } from "@/components/marketing/sections";
+import { serviceHeroImages } from "@/content/images";
 import { ClaimLine } from "@/components/motion/claim-line";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger-group";
 import { buttonVariants } from "@/components/ui/button";
@@ -27,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = getService((await params).slug);
   if (!service) return {};
   return pageMetadata({
+    defaultImage: false,
     title: service.metaTitle,
     description: service.metaDescription,
     path: `/services/${service.slug}`,
@@ -53,6 +55,7 @@ export default async function ServicePage({ params }: Props) {
         eyebrow={service.eyebrow}
         title={service.headline}
         intro={service.intro}
+        image={serviceHeroImages[service.slug]}
         crumbs={[
           { name: "Services", path: "/services" },
           { name: service.name, path },

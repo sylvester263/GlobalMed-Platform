@@ -193,16 +193,19 @@ export const faqGroups: FaqGroup[] = [
 /** [CLIENT TO CONFIRM] Downloadable guides (lead magnets). Files arrive with the content review (P2-14). */
 export const guides = [
   {
+    id: "clean-claim-checklist",
     title: "The clean-claim checklist",
     audience: "Practices",
     body: "Twenty checks to run before a claim leaves your office.",
   },
   {
+    id: "denial-reason-codes",
     title: "Denial reason codes, decoded",
     audience: "Practices",
     body: "The most common CARC codes, what they mean and what to do next.",
   },
   {
+    id: "coding-career-90-day-plan",
     title: "Start a coding career: a 90-day plan",
     audience: "Students",
     body: "What to learn, in what order, and how to show employers you're ready.",

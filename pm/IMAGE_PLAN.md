@@ -5,6 +5,29 @@
 - **Status today:** only the home page and About have photos. Every other page has a text-only hero on the #EEF6FC band and no image slot. The rows marked "proposed" below are **new** slots: they need a layout change when the image arrives (Task 3), and nothing on those pages is broken without them.
 - **Task 3 (placement)** starts only after you say the images are uploaded.
 
+## Placement (2026-09-30)
+
+- [x] **B01** slider slide 3 (`slider/slide-3.webp`), replacing the classroom image
+- [x] **B02** default social image, `app/opengraph-image.tsx` (every page without its own); the old navy card with the claim-line ticks is gone
+- [x] **B03** social image for the AAPC page and the CPC®, CPB®, CPC® + CPB® pages
+- [x] **B04** social image for Services, the 6 service pages, Specialties and the 6 specialty pages
+- [x] **B05** AAPC Certification page hero
+- [x] **B06** Free Billing Audit hero
+- [x] **B07 / B08 / B09** CPC®, CPB®, CPC® + CPB® course heroes
+- [x] **B10** Services hero
+- [x] **B11 / B12 / B13** Medical Billing, Medical Coding, Denial Management heroes. The other three service pages (Medical Transcription, AI Clinical Documentation, RCM) reuse the home card photos C06, C07, C08
+- [x] **B14** Careers hero
+- [x] **B15–B18** blog post covers (post hero) and blog index / category cards
+- [x] **B19–B21** guide cards
+- [x] **B22** social image for the Blog index, posts, categories and Guides
+- [x] **B23** social image for Careers
+- [x] **B24** home "Get Trained by AAPC Instructors" band: scrolling photo background under a navy overlay (static with reduced motion); the AAPC page keeps the plain band
+- [x] **C08** service card 3 (regenerated RCM photo)
+- [ ] **C06 / C09** inpainted card 1 and card 4 photos: not uploaded yet; the current photos stay (now served as WebP)
+- [x] **C04 / C05** slides 1 and 2 now served as WebP
+
+Every photo has width/height and alt text describing what it shows (content/images.ts, content/home.ts, content/home-services.ts). Only slide 1 and each page's hero photo load with priority; everything else is lazy.
+
 ## Upload check (2026-09-30)
 
 | ID | Result | Path used |

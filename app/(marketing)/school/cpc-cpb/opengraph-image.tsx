@@ -1,11 +1,12 @@
 import { ogImage, ogSize } from "@/lib/seo/og-image";
+import { getAapcCourse } from "@/data/courses";
 import { site } from "@/lib/site";
 
-export const alt = site.name;
+export const alt = getAapcCourse("cpc-cpb")?.title ?? site.name;
 export const size = ogSize;
 export const contentType = "image/jpeg";
 
-/** Social share image (default for every page without its own; pm/IMAGE_PLAN.md B02). */
+/** Social share image (B03). */
 export default function OpengraphImage() {
-  return ogImage({ background: "default", title: site.name });
+  return ogImage({ background: "education", title: alt });
 }

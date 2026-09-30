@@ -6,6 +6,7 @@ import { getPosts } from "@/lib/content/markdown";
 import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = pageMetadata({
+  defaultImage: false,
   title: "Medical Billing and Coding Blog",
   description:
     "Practical articles on claim denials, coding, practice revenue and starting a career in medical billing and coding.",

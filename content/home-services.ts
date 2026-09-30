@@ -32,7 +32,7 @@ export const serviceCards: ServiceCard[] = [
     id: "medical-transcription",
     title: "Medical Transcription",
     image: {
-      src: "/images/services/medical-transcription.jpg",
+      src: "/images/services/medical-transcription.webp",
       alt: "Medical transcriptionist with a headset typing a clinical report at her workstation",
     },
     paragraphs: [
@@ -46,7 +46,7 @@ export const serviceCards: ServiceCard[] = [
     id: "ai-clinical-documentation",
     title: "AI-Powered Clinical Documentation",
     image: {
-      src: "/images/services/ai-clinical-documentation.jpg",
+      src: "/images/services/ai-clinical-documentation.webp",
       alt: "Laptop screen showing a voice waveform turning into a structured draft report",
     },
     paragraphs: [
@@ -60,8 +60,8 @@ export const serviceCards: ServiceCard[] = [
     id: "revenue-cycle-management",
     title: "Revenue Cycle Management (RCM)",
     image: {
-      src: "/images/services/revenue-cycle-management.jpg",
-      alt: "Medical biller reviewing a CMS-1500 claim form beside a revenue dashboard",
+      src: "/images/services/revenue-cycle-management.webp",
+      alt: "Revenue cycle specialist checking a claim against a dashboard of charts on his laptop",
     },
     paragraphs: [
       "GlobalMed supports your revenue cycle from patient registration through final payment. Our team includes certified medical billing and coding professionals who help practices submit accurate claims, address denials, and improve collections.",
@@ -87,7 +87,7 @@ export const serviceCards: ServiceCard[] = [
     id: "aapc-certifications",
     title: "AAPC Certifications: CPC® and CPB®",
     image: {
-      src: "/images/services/aapc-certification.jpg",
+      src: "/images/services/aapc-certification.webp",
       alt: "Student taking notes during a live online medical coding class",
     },
     paragraphs: [

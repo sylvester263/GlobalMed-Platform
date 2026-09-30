@@ -3,12 +3,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CtaBand, PageHero, Section, StatsStrip } from "@/components/marketing/sections";
+import { heroImages } from "@/content/images";
 import { ServiceIcon } from "@/components/marketing/service-icon";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger-group";
 import { getServices } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = pageMetadata({
+  defaultImage: false,
   title: "Medical Billing & Coding Services",
   description:
     "Medical billing, coding, transcription, AI clinical documentation, RCM and denial management for US practices, from one accountable team.",
@@ -23,6 +25,7 @@ export default function ServicesPage() {
         eyebrow="Services for US practices"
         title="Every step of the revenue cycle, handled by one team"
         intro="Choose a single service or hand over the whole cycle. Either way, you get certified people, HIPAA-compliant processes and a monthly report you can read."
+        image={heroImages.services}
         crumbs={[{ name: "Services", path: "/services" }]}
       />
       <Section>

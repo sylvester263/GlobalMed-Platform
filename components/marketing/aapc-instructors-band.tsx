@@ -3,9 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { ClaimLine } from "@/components/motion/claim-line";
+import { ScrollBackground } from "@/components/motion/scroll-background";
 import { buttonVariants } from "@/components/ui/button";
 import { features } from "@/config/features";
 import { instructorsBand } from "@/content/aapc";
+import type { SiteImage } from "@/content/images";
 import { publicAssetExists } from "@/lib/public-asset";
 import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -15,18 +17,28 @@ const pointIcons = [Video, ClipboardCheck, BadgeCheck] as const;
 /**
  * "Get Trained by AAPC Instructors" highlight (home, AAPC Certification page, Education
  * landing). Instructor photos are optional: each slot shows a labelled placeholder until
- * its file is in public/images/instructors/.
+ * its file is in public/images/instructors/. With a `background` (home), the band sits on a
+ * scrolling photo under a navy overlay, with white text.
  */
 export function AapcInstructorsBand({
   href = `${aapcCertificationPath}#courses`,
   id = "aapc-instructors",
+  background,
 }: {
   href?: string;
   id?: string;
+  background?: SiteImage;
 }) {
   const headingId = `${id}-title`;
+  const dark = !!background;
   return (
-    <section id={id} aria-labelledby={headingId} className="border-b bg-mint">
+    <section
+      id={id}
+      aria-labelledby={headingId}
+      data-dark-band={dark || undefined}
+      className={cn("border-b", dark ? "relative isolate bg-navy text-white" : "bg-mint")}
+    >
+      {background && <ScrollBackground image={background} />}
       <div
         className={cn(
           "container-fluid grid items-center gap-10 py-14 lg:py-16",
@@ -34,11 +46,15 @@ export function AapcInstructorsBand({
         )}
       >
         <div className="flex flex-col gap-5">
-          <h2 id={headingId} className="text-2xl lg:text-3xl">
+          <h2 id={headingId} className={cn("text-2xl lg:text-3xl", dark && "text-white")}>
             {instructorsBand.title}
           </h2>
           <ClaimLine trigger="inView" ticks={8} className="max-w-xs" />
-          <p className="max-w-prose text-lg text-muted-foreground">{instructorsBand.body}</p>
+          <p
+            className={cn("max-w-prose text-lg", dark ? "text-white/90" : "text-muted-foreground")}
+          >
+            {instructorsBand.body}
+          </p>
           <ul className="grid gap-3 sm:grid-cols-3">
             {instructorsBand.points.map((point, i) => {
               const Icon = pointIcons[i] ?? Target;
@@ -52,7 +68,15 @@ export function AapcInstructorsBand({
               );
             })}
           </ul>
-          <Link href={href} className={cn(buttonVariants({ size: "lg" }), "self-start")}>
+          <Link
+            href={href}
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "self-start",
+              // On navy: sky with ink text (5.4:1), like the About workforce band.
+              dark && "bg-sky text-ink hover:bg-white",
+            )}
+          >
             {instructorsBand.cta} <ArrowRight aria-hidden="true" />
           </Link>
         </div>

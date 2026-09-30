@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const specialty = getSpecialty((await params).slug);
   if (!specialty) return {};
   return pageMetadata({
+    defaultImage: false,
     title: specialty.metaTitle,
     description: specialty.metaDescription,
     path: `/specialties/${specialty.slug}`,

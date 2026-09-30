@@ -8,6 +8,7 @@ import { getSpecialties } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = pageMetadata({
+  defaultImage: false,
   title: "Specialty Billing and Coding",
   description:
     "Billing and coding by specialty: cardiology, orthopedics, family and internal medicine, behavioral health and urgent care.",

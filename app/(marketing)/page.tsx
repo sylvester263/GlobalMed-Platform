@@ -13,6 +13,7 @@ import Link from "next/link";
 
 import { AapcCourseCard } from "@/components/marketing/aapc-course";
 import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
+import { aapcBandBackground } from "@/content/images";
 import { CredentialsSection } from "@/components/marketing/credentials-section";
 import { ClaimJourneySection } from "@/components/marketing/home/claim-journey";
 import { HeroSlider } from "@/components/marketing/home/hero-slider";
@@ -94,7 +95,7 @@ export default function HomePage() {
       <ServicesOverview />
 
       {/* 1a. Get Trained by AAPC Instructors */}
-      <AapcInstructorsBand href="#certification-programs" />
+      <AapcInstructorsBand href="#certification-programs" background={aapcBandBackground} />
 
       {/* 1b. Registered, Certified & Compliant */}
       <CredentialsSection />

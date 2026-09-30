@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const name = postCategories[slug];
   if (!name) return {};
   return pageMetadata({
+    defaultImage: false,
     title: `${name} articles`,
     description: `GlobalMed articles about ${name.toLowerCase()} for US practices and billing and coding students.`,
     path: `/blog/category/${slug}`,

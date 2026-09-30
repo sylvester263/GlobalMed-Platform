@@ -2,6 +2,7 @@ import { Briefcase, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 
 import { PageHero, Section } from "@/components/marketing/sections";
+import { heroImages } from "@/content/images";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { openRoles } from "@/content/company";
@@ -9,6 +10,7 @@ import { pageMetadata } from "@/lib/seo/metadata";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
+  defaultImage: false,
   title: "Careers at GlobalMed",
   description:
     "Work with GlobalMed as a medical coder, transcriptionist or AR specialist. See open roles in Lahore and remote.",
@@ -22,6 +24,7 @@ export default function CareersPage() {
         eyebrow="Careers"
         title="Build a healthcare career serving US practices"
         intro="We hire coders, billers, transcriptionists and editors. [CLIENT TO CONFIRM open roles]"
+        image={heroImages.careers}
         crumbs={[{ name: "Careers", path: "/careers" }]}
       />
       <Section title="Open roles">

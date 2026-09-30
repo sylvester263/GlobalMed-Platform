@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { formatPostDate } from "@/components/marketing/post-list";
 import { Prose } from "@/components/marketing/prose";
 import { CtaBand, PageHero, Section } from "@/components/marketing/sections";
+import { blogCovers } from "@/content/images";
 import { Badge } from "@/components/ui/badge";
 import { getPost, getPosts, postCategories } from "@/lib/content/markdown";
 import { articleJsonLd, JsonLd } from "@/lib/seo/json-ld";
@@ -22,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPost((await params).slug);
   if (!post) return {};
   return pageMetadata({
+    defaultImage: false,
     title: post.title.length > 48 ? `${post.title.slice(0, 45).trimEnd()}…` : post.title,
     description: post.description,
     path: `/blog/${post.slug}`,
@@ -46,6 +48,7 @@ export default async function BlogPostPage({ params }: Props) {
         eyebrow={category}
         title={post.title}
         intro={post.description}
+        image={blogCovers[post.slug]}
         crumbs={[
           { name: "Blog", path: "/blog" },
           { name: category, path: `/blog/category/${post.category}` },

@@ -30,6 +30,15 @@ const nextConfig: NextConfig = {
     // Inline the (small, Tailwind-purged) CSS so it no longer blocks first render (P2-21).
     inlineCss: true,
   },
+  // Social images for dynamic routes render on request: ship the font, logo and photo
+  // backgrounds they read (lib/seo/og-image.tsx) with those functions.
+  outputFileTracingIncludes: {
+    "/**/opengraph-image*": [
+      "./assets/fonts/**",
+      "./public/images/og/*-1200.jpg",
+      "./public/images/brand/globalmed-logo-stacked.png",
+    ],
+  },
   // A stray lockfile higher up the tree would otherwise be picked as the workspace root.
   outputFileTracingRoot: path.resolve(__dirname),
   async headers() {

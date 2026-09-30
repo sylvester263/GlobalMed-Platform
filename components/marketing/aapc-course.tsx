@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AapcRegistrationForm } from "@/components/marketing/aapc-registration-form";
 import { CourseCoversTabs } from "@/components/marketing/course-covers-tabs";
 import { FaqList, PageHero, Section } from "@/components/marketing/sections";
+import { heroImages } from "@/content/images";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { approvedWording } from "@/content/aapc";
@@ -20,6 +21,12 @@ import type { Faq } from "@/lib/content/schema";
 import { aapcCourseJsonLd, JsonLd } from "@/lib/seo/json-ld";
 import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
+
+const courseHeroImages = {
+  cpc: heroImages.courseCpc,
+  cpb: heroImages.courseCpb,
+  "cpc-cpb": heroImages.courseCpcCpb,
+} as const;
 
 const eyebrowClass = "font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase";
 
@@ -241,12 +248,14 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
         eyebrow={aapcCourseFacts.badge}
         title={course.title}
         intro={course.summary}
+        image={courseHeroImages[course.slug]}
         crumbs={[
           { name: "Education", path: aapcCertificationPath },
           { name: course.credential, path },
         ]}
       >
-        <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:items-end">
+        {/* Beside the hero photo the facts and price stack until there's room for both. */}
+        <div className="grid gap-6 wide:grid-cols-[1.2fr_1fr] wide:items-end">
           <div className="flex flex-col gap-4">
             {course.bestValue && <BestValue className="self-start" />}
             <dl className="grid gap-x-6 gap-y-2 text-sm sm:grid-cols-[auto_1fr]">

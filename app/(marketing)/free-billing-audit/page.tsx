@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import { AuditForm } from "@/components/marketing/audit-form";
 import { PageHero, Section, StatsStrip } from "@/components/marketing/sections";
+import { heroImages } from "@/content/images";
 import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -44,6 +45,7 @@ export default function FreeBillingAuditPage() {
         eyebrow="Free billing audit"
         title="Find out where your practice is losing revenue"
         intro="Tell us about your practice. We'll review a sample of your claims, denials and AR, then show you what we'd fix — at no cost and with no obligation."
+        image={heroImages.freeBillingAudit}
         crumbs={[{ name: "Free billing audit", path: "/free-billing-audit" }]}
       />
       <Section

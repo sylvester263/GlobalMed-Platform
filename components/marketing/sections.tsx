@@ -1,4 +1,5 @@
 import { ArrowRight, Clock, PlayCircle } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 
@@ -21,6 +22,7 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { StatBlock } from "@/components/ui/stat-block";
 import { companyStats } from "@/content/company";
+import type { SiteImage } from "@/content/images";
 import { categoryLabels, levelLabels } from "@/lib/content/catalog";
 import type { Course, Faq } from "@/lib/content/schema";
 import { breadcrumbJsonLd, faqJsonLd, JsonLd } from "@/lib/seo/json-ld";
@@ -34,12 +36,17 @@ const usd = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-/** Page heading band with breadcrumbs (and BreadcrumbList JSON-LD). */
+/**
+ * Page heading band with breadcrumbs (and BreadcrumbList JSON-LD). With an `image`, the text
+ * sits left and the photo right (about 45%) from 1024px; below that the photo comes first.
+ * The photo is the page's largest above-the-fold element, so it loads with priority.
+ */
 export function PageHero({
   eyebrow,
   title,
   intro,
   crumbs,
+  image,
   children,
   className,
 }: {
@@ -47,6 +54,7 @@ export function PageHero({
   title: string;
   intro?: string;
   crumbs?: Crumb[];
+  image?: SiteImage;
   children?: React.ReactNode;
   className?: string;
 }) {
@@ -79,17 +87,40 @@ export function PageHero({
             <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, ...crumbs])} />
           </>
         )}
-        <div className="flex max-w-3xl flex-col gap-4">
-          {eyebrow && (
-            <p className="text-xs font-semibold tracking-[0.12em] text-teal-deep uppercase">
-              {eyebrow}
-            </p>
+        <div
+          className={cn(
+            image
+              ? "grid gap-8 lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] lg:items-center lg:gap-12 wide:gap-16"
+              : "contents",
           )}
-          <h1 className="text-3xl lg:text-4xl">{title}</h1>
-          <ClaimLine trigger="mount" ticks={8} className="max-w-sm" />
-          {intro && <p className="max-w-prose text-lg text-muted-foreground">{intro}</p>}
+        >
+          <div className={cn("flex flex-col gap-6", !image && "contents")}>
+            <div className="flex max-w-3xl flex-col gap-4">
+              {eyebrow && (
+                <p className="text-xs font-semibold tracking-[0.12em] text-teal-deep uppercase">
+                  {eyebrow}
+                </p>
+              )}
+              <h1 className="text-3xl lg:text-4xl">{title}</h1>
+              <ClaimLine trigger="mount" ticks={8} className="max-w-sm" />
+              {intro && <p className="max-w-prose text-lg text-muted-foreground">{intro}</p>}
+            </div>
+            {children}
+          </div>
+          {image && (
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              priority
+              sizes="(min-width: 1920px) 800px, (min-width: 1024px) 42vw, calc(100vw - 40px)"
+              style={{ aspectRatio: `${image.width} / ${image.height}` }}
+              className="order-first h-auto w-full rounded-2xl object-cover shadow-sm lg:order-none"
+              data-hero-image
+            />
+          )}
         </div>
-        {children}
       </div>
     </section>
   );

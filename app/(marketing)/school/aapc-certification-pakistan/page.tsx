@@ -6,6 +6,7 @@ import { AapcCourseCard, AapcRegisterBand } from "@/components/marketing/aapc-co
 import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
 import { ClaimJourneySection } from "@/components/marketing/home/claim-journey";
 import { FaqList, PageHero, Section } from "@/components/marketing/sections";
+import { heroImages } from "@/content/images";
 import { buttonVariants } from "@/components/ui/button";
 import { aapcFaqs, aapcHero, aapcSteps } from "@/content/aapc";
 import { aapcCourseFacts, formatUsdPrice, getAapcCourses, type AapcCourse } from "@/data/courses";
@@ -14,6 +15,7 @@ import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata({
+  defaultImage: false,
   title: "AAPC Certification in Pakistan: CPC® and CPB®",
   description:
     "AAPC's CPC®, CPB® and dual courses, taught live online by AAPC faculty. Register in Pakistan with GlobalMed Transcriptions, AAPC's Strategic Partner.",
@@ -82,6 +84,7 @@ export default function AapcCertificationPage() {
         eyebrow="AAPC's Strategic Partner in Pakistan"
         title={aapcHero.title}
         intro={aapcHero.intro}
+        image={heroImages.aapcCertification}
         crumbs={[{ name: "Education", path: aapcCertificationPath }]}
       >
         <div className="flex flex-col gap-3 sm:flex-row">

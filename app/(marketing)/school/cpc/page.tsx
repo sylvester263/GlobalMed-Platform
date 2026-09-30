@@ -10,6 +10,7 @@ const course = getAapcCourse("cpc");
 
 export const metadata: Metadata = course
   ? pageMetadata({
+      defaultImage: false,
       title: course.metaTitle,
       description: course.metaDescription,
       path: aapcCoursePath(course.slug),

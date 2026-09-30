@@ -17,8 +17,8 @@ export const heroSlides = [
     id: "company",
     headline: "The Leading Transcription and Billing Company in Pakistan",
     body: "Serving hospitals and clinics in the USA, Canada, UK, Australia and Saudi Arabia since 2007.",
-    image: "/images/slider/slide-1.jpg",
-    imageAlt: "",
+    image: "/images/slider/slide-1.webp",
+    imageAlt: "GlobalMed team members with headsets working at their desks in a bright office",
     placeholder: "Slide 1 image",
     actions: [
       { label: "Our Services", href: "/services" },
@@ -29,8 +29,8 @@ export const heroSlides = [
     id: "billing-coding",
     headline: "Medical Billing and Coding",
     body: "Accurate coding and clean claims that get providers paid faster.",
-    image: "/images/slider/slide-2.jpg",
-    imageAlt: "",
+    image: "/images/slider/slide-2.webp",
+    imageAlt: "Billing desk with a laptop, a monitor showing charts and a stack of reference books",
     placeholder: "Slide 2 image",
     actions: [
       { label: "Explore Billing & Coding", href: "/services" },
@@ -41,8 +41,8 @@ export const heroSlides = [
     id: "aapc",
     headline: "AAPC Certification with GlobalMed Transcriptions",
     body: "GlobalMed Transcriptions, Strategic Partner of AAPC in Pakistan for Medical Billing and Coding.",
-    image: "/images/slider/slide-3.jpg",
-    imageAlt: "",
+    image: "/images/slider/slide-3.webp",
+    imageAlt: "Two students following an online class on their laptops at a shared desk",
     placeholder: "Slide 3 image",
     actions: [
       { label: "AAPC Certification in Pakistan", href: "/education/aapc-certification-pakistan" },

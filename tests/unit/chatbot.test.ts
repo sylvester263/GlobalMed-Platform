@@ -249,3 +249,17 @@ describe("knowledge base: page text from the live site", () => {
     expect(text).not.toMatch(/Menu|Breadcrumb|Duplicate|alert|© 2026/);
   });
 });
+
+describe("streaming through the hosting CDN", () => {
+  it("pads each flush to 2 KB with a comment the parser ignores", async () => {
+    const { encodeSse, parseSse, SSE_FLUSH_BYTES } = await import("@/lib/ai/sse");
+    const chunk = encodeSse("delta", { text: "USD 1,050" }, SSE_FLUSH_BYTES);
+    expect(new TextEncoder().encode(chunk).length).toBeGreaterThanOrEqual(SSE_FLUSH_BYTES);
+    const { events, rest } = parseSse(chunk + encodeSse("done", { status: "bot" }));
+    expect(events).toEqual([
+      { event: "delta", data: { text: "USD 1,050" } },
+      { event: "done", data: { status: "bot" } },
+    ]);
+    expect(rest).toBe("");
+  });
+});

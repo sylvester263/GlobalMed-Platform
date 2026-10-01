@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { respond, type ChatEvent } from "@/lib/ai/engine";
+import { encodeSse, SSE_FLUSH_BYTES } from "@/lib/ai/sse";
 import {
   createConversation,
   getChatSettings,
@@ -26,8 +27,8 @@ const bodySchema = z.object({
 });
 
 /**
- * Streaming headers. Hosting proxies (nginx/LiteSpeed on Hostinger) buffer responses unless
- * told not to: X-Accel-Buffering: no and Cache-Control: no-transform keep events flowing.
+ * Streaming headers: X-Accel-Buffering: no and Cache-Control: no-transform stop nginx-style
+ * proxies buffering. Hostinger's CDN ignores them, so flushes are also padded (lib/ai/sse.ts).
  */
 const sseHeaders = {
   "Content-Type": "text/event-stream; charset=utf-8",
@@ -40,9 +41,8 @@ function json(status: number, error: string) {
   return Response.json({ error }, { status, headers: { "Cache-Control": "no-store" } });
 }
 
-function sse(event: string, data: unknown): string {
-  return `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
-}
+/** Text parts are merged and sent at most this often, so padding stays small per reply. */
+const DELTA_FLUSH_MS = 120;
 
 /** POST /api/chat — one visitor message, answered as server-sent events (docs/09 §2). */
 export async function POST(request: Request) {
@@ -83,14 +83,30 @@ export async function POST(request: Request) {
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       const send = (event: string, data: unknown) =>
-        controller.enqueue(encoder.encode(sse(event, data)));
+        controller.enqueue(encoder.encode(encodeSse(event, data, SSE_FLUSH_BYTES)));
+      let pending = "";
+      let lastFlush = 0;
+      const flush = () => {
+        if (pending) send("delta", { text: pending });
+        pending = "";
+        lastFlush = Date.now();
+      };
+
       send("meta", { conversationId: current.id, token: newToken, status: current.status });
       try {
         for await (const event of respond(current, message, settings)) {
+          if (event.type === "delta") {
+            pending += event.text;
+            if (Date.now() - lastFlush >= DELTA_FLUSH_MS) flush();
+            continue;
+          }
+          flush();
           const { type, ...data } = event as ChatEvent;
           send(type, data);
         }
+        flush();
       } catch {
+        flush();
         send("error", { message: "Something went wrong. Please try again or use WhatsApp." });
       } finally {
         controller.close();

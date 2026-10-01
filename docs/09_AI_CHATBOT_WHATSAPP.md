@@ -150,7 +150,13 @@ Instead of caching answers, the questions that must be exact (prices, packages, 
 - `GET /api/chat/stream-check`: five ticks 400ms apart, to check that the hosting streams.
 - `POST /api/admin/kb-sync` (header `x-kb-sync-secret`): rebuilds the knowledge base; `npm run kb:sync` calls it.
 
-**Streaming on our hosting:** the SSE responses send `Content-Type: text/event-stream`, `Cache-Control: no-cache, no-transform`, `Connection: keep-alive` and `X-Accel-Buffering: no`. Results of the live check are in pm/SESSION_LOG.md (session 016).
+**Streaming on our hosting** (tested live on 2026-10-01 with `/api/chat/stream-check`):
+- The SSE responses send `Content-Type: text/event-stream`, `Cache-Control: no-cache, no-transform`, `Connection: keep-alive` and `X-Accel-Buffering: no`.
+- **Finding:** Hostinger's CDN (`Server: hcdn`) strips `X-Accel-Buffering` and still holds the whole response. All five ticks arrived together after about 3s. Switching to `text/plain` didn't help.
+- **What works:** it flushes once about 1.5–2 KB has built up. With 1.5 KB or more of padding per event, the ticks arrived about 400ms apart, as sent.
+- **Fix:** `/api/chat` merges text parts into flushes at most every 120ms and pads each flush to 2 KB with an SSE comment (`encodeSse`, `SSE_FLUSH_BYTES` in `lib/ai/sse.ts`). Clients ignore comments.
+- **Cost:** a typical reply adds at most about 50 KB.
+- **Alternative:** if Hostinger lets the CDN be bypassed for `/api/*`, padding can be turned off by setting `SSE_FLUSH_BYTES` to 0.
 
 **Knowledge base** (`lib/ai/kb.ts`)
 - **Re-sync from website / `npm run kb:sync`:**

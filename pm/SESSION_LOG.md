@@ -456,6 +456,12 @@ Newest entry at the bottom. One entry per Claude Code session.
   - Tests: 38 chatbot unit tests + 21 question-set tests (180 unit total); E2E 258 passed / 58 skipped on the production build (chat widget, keyboard, 360px, lazy load, fail-closed); dry-run conversation E2E 8 passed (CPC price, PHI refusal, handoff + agent reply, course lead); the Sales inbox round trip is written but needs Supabase (E2E_SUPABASE). Question set: 16 pass, 0 fail, 4 blocked on the LLM key (pm/CHATBOT_TEST_QUESTIONS.md). Lighthouse mobile Home 86 / About 86, desktop 99 / 100, A/BP/SEO 100, CLS 0; first-load JS +1 kB.
   - Screenshots: pm/screenshots/2026-10-01/chatbot/ (open, answer, handoff at 1440 and 390; taken on the local dry-run dev server).
   - The dry-run dev server was stopped by the system for low memory after the tests; not restarted.
+  - Streaming on the live hosting:
+    - `/api/chat/stream-check` showed Hostinger's CDN (hcdn) strips X-Accel-Buffering and buffers the whole response: 5 ticks arrived at once after ~3s.
+    - Padding each flush with ≥1.5 KB made the ticks arrive 400ms apart, as sent.
+    - `/api/chat` now merges text parts (≤ every 120ms) and pads each flush to 2 KB with an SSE comment.
+    - Documented in docs/09 §10.
+    - The full live chat stream can only be watched once the keys are set: `/api/chat` correctly returns 503 now.
 - **Files touched (Phase 7A):** lib/ai/*, app/api/chat/*, app/api/admin/kb-sync, app/(dashboard)/dashboard/admin/chatbot/*, app/(dashboard)/dashboard/sales/inbox/*, components/marketing/chat/chat-widget.tsx, components/marketing/help-button.tsx, components/dashboard/chatbot/*, supabase/migrations/0006_chatbot.sql, lib/db/types.ts, lib/server-env.ts, lib/security/rate-limit.ts, config/features.ts, app/globals.css, .env.example, package.json, scripts/kb-sync.mjs, tests/{unit,e2e,audit}/chat*, docs/09, pm/*
 - **Next:** client adds the LLM key + Supabase/Upstash/Turnstile/Resend on the hosting → apply migrations 0001–0006 → Re-sync from website → run the question set on the live site and the Sales inbox E2E. Phase 7B WhatsApp once the Meta inputs arrive.
 - **Blockers:** LLM key, Supabase org invite, Upstash/Turnstile/Resend keys; Phase 7B: Meta Business verification, WhatsApp number, token, app secret, templates (pm/CLIENT_INPUTS_NEEDED.md).

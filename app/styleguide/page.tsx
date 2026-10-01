@@ -6,6 +6,7 @@ import { CertificatePreview } from "@/components/lms/certificate-preview";
 import { VideoPlayerShell } from "@/components/lms/video-player-shell";
 import { PricingBlock } from "@/components/marketing/pricing-block";
 import { Testimonial } from "@/components/marketing/testimonial";
+import { UpdateCard } from "@/components/marketing/updates/update-card";
 import { ClaimLine } from "@/components/motion/claim-line";
 import { PathwayLine } from "@/components/motion/pathway-line";
 import {
@@ -41,6 +42,56 @@ import {
   TableDemo,
 } from "./_components/interactive-demos";
 import { MotionLab } from "./_components/motion-lab";
+
+/** Sample updates for the card demo (not real news). */
+const sampleUpdates = [
+  {
+    id: "sample-1",
+    slug: "sample-batch",
+    title: "Sample: registrations open for the next CPC® and CPB® batch",
+    summary: "Sample short text: contact us for the start date, fees and package inclusions.",
+    bodyMd: null,
+    category: "batch" as const,
+    imagePath: null,
+    linkUrl: "/education/aapc-certification-pakistan#register",
+    linkLabel: "Register Now",
+    publishAt: "2026-10-02T05:00:00Z",
+    expiresAt: null,
+    pinned: true,
+    status: "published" as const,
+  },
+  {
+    id: "sample-2",
+    slug: "sample-company",
+    title: "Sample: GlobalMed Transcriptions is AAPC's Strategic Partner in Pakistan",
+    summary: "Sample short text for a company news item without an image or a button.",
+    bodyMd: null,
+    category: "company" as const,
+    imagePath: null,
+    linkUrl: null,
+    linkLabel: null,
+    publishAt: "2026-09-28T05:00:00Z",
+    expiresAt: null,
+    pinned: false,
+    status: "published" as const,
+  },
+  {
+    id: "sample-3",
+    slug: "sample-event",
+    title: "Sample: free webinar on denial management",
+    summary:
+      "Sample short text at full length to check equal card heights: a longer description that wraps over several lines and still keeps the button aligned at the bottom of the card.",
+    bodyMd: null,
+    category: "events" as const,
+    imagePath: null,
+    linkUrl: "/contact",
+    linkLabel: "Book a seat",
+    publishAt: "2026-09-20T05:00:00Z",
+    expiresAt: null,
+    pinned: false,
+    status: "published" as const,
+  },
+];
 
 export const metadata: Metadata = {
   title: "Styleguide",
@@ -504,6 +555,25 @@ export default function StyleguidePage() {
             />
           </div>
         </div>
+      </Section>
+
+      <Section
+        id="updates"
+        title="Update cards"
+        description="Home 'Latest Updates' and /updates (sample data; live updates come from the dashboard)."
+      >
+        <ul className="grid gap-grid md:grid-cols-2 lg:grid-cols-3">
+          {sampleUpdates.map((update, i) => (
+            <li key={update.id} className="flex">
+              <div className="w-full">
+                <UpdateCard
+                  update={update}
+                  imageUrl={i === 0 ? "/images/services/medical-transcription.webp" : null}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
       </Section>
 
       <Section

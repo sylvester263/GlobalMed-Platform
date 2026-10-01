@@ -230,3 +230,27 @@ export function articleJsonLd(input: {
     publisher: { "@id": orgId },
   };
 }
+
+/** schema.org NewsArticle for an update (/updates, 2026-10-02). */
+export function newsArticleJsonLd(input: {
+  title: string;
+  description: string;
+  path: string;
+  publishedAt: string;
+  modifiedAt?: string;
+  image?: string | null;
+}): JsonLdObject {
+  return {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: input.title.slice(0, 110),
+    description: input.description,
+    url: absoluteUrl(input.path),
+    mainEntityOfPage: absoluteUrl(input.path),
+    datePublished: input.publishedAt,
+    dateModified: input.modifiedAt ?? input.publishedAt,
+    ...(input.image ? { image: [input.image] } : {}),
+    author: { "@type": "Organization", name: site.name },
+    publisher: { "@id": orgId },
+  };
+}

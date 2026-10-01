@@ -78,6 +78,7 @@ describe("helpers", () => {
     expect(formatUpdateDate("2026-10-02T10:00:00Z")).toBe("2 Oct 2026");
     // 21:00 UTC on 1 Oct is already 2 Oct in Lahore.
     expect(formatUpdateDate("2026-10-01T21:00:00Z")).toBe("2 Oct 2026");
+    expect(formatUpdateDate("2026-09-28T05:00:00Z")).toBe("28 Sep 2026");
   });
 
   it("paginates 12 per page and clamps the page", () => {

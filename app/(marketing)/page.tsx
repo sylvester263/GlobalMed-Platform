@@ -24,6 +24,7 @@ import { DeferredClaimJourneySection } from "@/components/defer/islands";
 import { HeroSlider } from "@/components/marketing/home/hero-slider";
 import { ServicesOverview } from "@/components/marketing/home/services-overview";
 import { CtaBand, FaqList, Section, StatsStrip } from "@/components/marketing/sections";
+import { LatestUpdates } from "@/components/marketing/updates/latest-updates";
 import { companyFacts } from "@/content/company";
 import { ServiceIcon } from "@/components/marketing/service-icon";
 import { Testimonial } from "@/components/marketing/testimonial";
@@ -50,6 +51,10 @@ import { cn } from "@/lib/utils";
 
 const description =
   "Medical transcription, billing and coding services since 2007, and AAPC's Strategic Partner in Pakistan for CPC® and CPB® online courses.";
+
+// Updates are scheduled and expire on their own: rebuild the page at most every 60s, so a
+// change shows within a minute even without a dashboard save (which revalidates at once).
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   ...pageMetadata({
@@ -203,6 +208,9 @@ export default function HomePage() {
           </div>
         </div>
       </Section>
+
+      {/* 4a. Latest Updates (2026-10-02): live updates from the dashboard, hidden when none. */}
+      <LatestUpdates />
 
       {/* 4b. Previous "Why register through GlobalMed" (hidden, features.whyRegisterLegacy). */}
       {features.whyRegisterLegacy && (

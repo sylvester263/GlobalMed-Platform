@@ -73,14 +73,18 @@ export function paginate<T>(list: T[], page: number, perPage = UPDATES_PER_PAGE)
   return { items: list.slice((current - 1) * perPage, current * perPage), page: current, pages };
 }
 
-/** "2 Oct 2026" (Pakistan time). */
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/** "2 Oct 2026" (Pakistan time; three-letter months, so September is "Sep"). */
 export function formatUpdateDate(iso: string): string {
-  return new Intl.DateTimeFormat("en-GB", {
+  const parts = new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
-    month: "short",
+    month: "numeric",
     year: "numeric",
     timeZone: "Asia/Karachi",
-  }).format(new Date(iso));
+  }).formatToParts(new Date(iso));
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  return `${Number(get("day"))} ${months[Number(get("month")) - 1]} ${get("year")}`;
 }
 
 /** URL-safe slug from a title; `taken` adds -2, -3… until it is unique. */

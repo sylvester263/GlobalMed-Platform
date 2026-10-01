@@ -14,6 +14,7 @@ const footerLinks = [
   { label: "About Us", href: "/about" },
   { label: "Education", href: aapcCertificationPath },
   { label: "Services", href: "/services" },
+  { label: "Updates", href: "/updates" },
   { label: "Terms and Policies", href: "/legal/terms" },
   { label: "Privacy Policy", href: "/legal/privacy" },
   { label: "Careers", href: "/careers" },

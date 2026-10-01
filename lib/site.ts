@@ -182,6 +182,7 @@ const resourcesNav: NavGroup = {
   label: "Resources",
   href: "/blog",
   links: shown([
+    { label: "Updates", href: "/updates", description: "News, batch dates and announcements" },
     { label: "Blog", href: "/blog", description: "Billing and coding insights" },
     {
       label: "Guides & downloads",
@@ -234,6 +235,7 @@ export const footerNav: { title: string; links: NavLink[] }[] = [
     links: shown([
       { label: "About Us", href: "/about" },
       { label: "Services", href: "/services" },
+      { label: "Updates", href: "/updates" },
       { label: "Blog", href: "/blog" },
       { label: "Careers / Transcriptionists", href: "/careers" },
       { label: "Contact Us", href: "/contact" },

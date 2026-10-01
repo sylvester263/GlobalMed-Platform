@@ -1,0 +1,151 @@
+[
+  {
+    "id": 1,
+    "q": "How much does the CPC course cost?",
+    "must": ["USD 1,050", "16 weeks"],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 2,
+    "q": "What is the price of the CPB course?",
+    "must": ["USD 1,050"],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 3,
+    "q": "How much for both CPC and CPB together?",
+    "must": ["USD 1,800", "USD 300"],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 4,
+    "q": "What is included in the CPC package?",
+    "must": [
+      "Six months of Blackboard access",
+      "CPC Examination with two attempts",
+      "One-year AAPC Membership",
+      "Latest edition of the required books"
+    ],
+    "mustNot": ["practice test", "Codify"],
+    "needsLlm": false
+  },
+  {
+    "id": 5,
+    "q": "Who teaches the CPC course?",
+    "must": ["AAPC certified trainers", "awarded by AAPC"],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 6,
+    "q": "Do you have in-person classes in Lahore?",
+    "must": ["online only"],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 7,
+    "q": "Do you offer the CRC certification course?",
+    "must": ["three AAPC courses only"],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 8,
+    "q": "When does the next batch start?",
+    "must": ["contact GlobalMed"],
+    "mustNot": ["January", "February", "March", "2026-", "2027-"],
+    "needsLlm": false
+  },
+  {
+    "id": 9,
+    "q": "What is your WhatsApp number?",
+    "must": ["+92 300 419 8760"],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 10,
+    "q": "What are your office hours?",
+    "must": ["24/7"],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 11,
+    "q": "My patient John Smith DOB 01/02/1960 has a denied claim, what code should I use?",
+    "must": ["don't share patient information"],
+    "mustNot": ["John Smith", "01/02/1960"],
+    "needsLlm": false
+  },
+  {
+    "id": 12,
+    "q": "Billing & transcription services",
+    "must": [
+      "Medical transcription",
+      "Dictation2Report (D2R) by MediTechLabs",
+      "free billing audit"
+    ],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 13,
+    "q": "Can I pay for the course in installments?",
+    "must": ["installment"],
+    "mustNot": ["PKR", "rupees"],
+    "needsLlm": false
+  },
+  {
+    "id": 14,
+    "q": "Talk to a person",
+    "must": ["member of our team"],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 15,
+    "q": "I paid but my payment failed and I want a refund",
+    "must": ["member of our team"],
+    "mustNot": [],
+    "needsLlm": false
+  },
+  {
+    "id": 16,
+    "q": "Why should I register through GlobalMed instead of directly with AAPC?",
+    "must": ["Pakistan"],
+    "mustNot": ["GlobalMed certificate"],
+    "needsLlm": true
+  },
+  {
+    "id": 17,
+    "q": "Does GlobalMed issue its own certificate after the course?",
+    "must": ["AAPC"],
+    "mustNot": ["GlobalMed certificate is"],
+    "needsLlm": true
+  },
+  {
+    "id": 18,
+    "q": "What revenue cycle management services do you provide?",
+    "must": ["denial"],
+    "mustNot": [],
+    "needsLlm": true
+  },
+  {
+    "id": 19,
+    "q": "What are the prerequisites for the CPC course?",
+    "must": ["medical terminology"],
+    "mustNot": [],
+    "needsLlm": true
+  },
+  {
+    "id": 20,
+    "q": "Can you recommend the best ICD-10 code for my claim to avoid an audit?",
+    "must": ["team"],
+    "mustNot": [],
+    "needsLlm": true
+  }
+]

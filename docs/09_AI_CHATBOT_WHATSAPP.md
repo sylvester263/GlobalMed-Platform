@@ -108,3 +108,89 @@ Floating button bottom-right, opens panel; greeting + 3 quick replies (Billing s
 
 ## 9. Limits & cost control
 Rate limit 20 messages / 10 min per visitor; max tokens per reply; conversation history trimmed to last 10 turns; cache identical FAQ answers 24h.
+
+Instead of caching answers, the questions that must be exact (prices, packages, contact, delivery, who teaches, installments, batch dates) are answered from the site data without calling the model (§10), so they cost nothing and can't drift.
+
+## 10. Implementation (Phase 7A, website — 2026-10-01)
+
+**Engine** (`lib/ai/`)
+- `provider.ts`: AI SDK adapter for OpenAI, Anthropic and Gemini.
+  - `generate()` streams; `embed()` / `embedMany()` return 1536 dimensions, matching `kb_chunks.embedding`.
+  - Defaults: `gpt-4o-mini`, `claude-haiku-4-5`, `gemini-2.5-flash`. Embeddings: `text-embedding-3-small` or `gemini-embedding-001`.
+  - Anthropic has no embeddings, so set `EMBEDDING_PROVIDER` + `EMBEDDING_API_KEY` (OpenAI or Gemini).
+- `guardrails.ts`, the deterministic layer that runs before and after the model:
+  - Patient information is refused. A placeholder is stored in its place, never the text.
+  - Exact scripted answers: prices, packages, contact and hours, online-only delivery, "GlobalMed doesn't teach or certify", courses that aren't offered, installments, the upcoming batch.
+  - Every model reply is checked. A USD amount outside {1,050 · 1,800 · 2,100 · 300}, rupee amounts, retired package items, GlobalMed certificates, in-person training or hidden offerings → the reply is replaced by the safe fallback.
+- `prompts.ts` + `knowledge.ts`: the system prompt with §4. It includes a pinned knowledge document built from `data/courses.ts`, `content/home.ts` (Why register), `content/home-services.ts`, `content/aapc.ts` and `lib/site.ts`.
+- `rag.ts`: embed the question → `match_kb` top 5 (similarity ≥ 0.25) → context.
+- `engine.ts`: the order is:
+  1. Patient-information check
+  2. Handed-off chats stay with the person
+  3. Lead capture
+  4. Quick replies
+  5. Handoff triggers
+  6. Scripted answers
+  7. RAG + LLM, with reply checks and the `[[unsure]]` marker
+- **Low confidence:** two unsure or rejected answers in a row hand the chat to a person.
+- **Limits:** history is the last 10 turns; each reply is capped at 400 tokens.
+- **Lead capture** (`lead-flow.ts`): name → email or WhatsApp → (services: practice → specialty). It saves a `leads` row with source `chatbot` and `details.conversationId`, and emails the sales inbox (`storeLead`).
+- `store.ts`: Supabase with the service role, after the visitor's token is checked.
+  - The widget holds a random token; only its SHA-256 is stored.
+  - In local dry run only (`FORMS_DRY_RUN=true`, never production), chats are kept in memory so the widget can be tested without a database.
+
+**API**
+- `POST /api/chat`: streams server-sent events: `meta` → `delta`… → (`replace`) → `done`.
+  - Input is validated with zod.
+  - Turnstile is checked on the first message only.
+  - Rate limits: 20 messages / 10 min per visitor and 60 per IP (Upstash; in-memory without it).
+  - Fails closed: 503 without a database, 403 without a Turnstile secret in production.
+- `GET /api/chat/messages`: the widget polls every 4s while a person has the chat. Visitors can't read the chat tables, so realtime is for staff only.
+- `GET /api/chat/config`: the greeting and quick replies from admin settings.
+- `GET /api/chat/stream-check`: five ticks 400ms apart, to check that the hosting streams.
+- `POST /api/admin/kb-sync` (header `x-kb-sync-secret`): rebuilds the knowledge base; `npm run kb:sync` calls it.
+
+**Streaming on our hosting:** the SSE responses send `Content-Type: text/event-stream`, `Cache-Control: no-cache, no-transform`, `Connection: keep-alive` and `X-Accel-Buffering: no`. Results of the live check are in pm/SESSION_LOG.md (session 016).
+
+**Knowledge base** (`lib/ai/kb.ts`)
+- **Re-sync from website / `npm run kb:sync`:**
+  - Stores the pinned site-data document.
+  - Fetches the live home, About, AAPC Certification, CPC®, CPB®, CPC® + CPB®, Services, FAQ, Contact and Privacy pages.
+  - Takes the `<main>` text of each (`extract.ts`), chunks it (≈800 tokens, 100 overlap) and embeds it.
+- Hidden courses aren't rendered, so they are never indexed.
+- **Admin documents:** add or edit, and every save re-embeds.
+- **Delete:** a soft delete (`deleted_at`), with restore available.
+- Migration `0006_chatbot.sql` adds the new columns, `match_kb` that skips deleted documents, and realtime on the chat tables.
+
+**Widget** (`components/marketing/chat/chat-widget.tsx`)
+- The help button (same look and position) loads it on the first click. The old menu stays behind `features.chatbotWidget`.
+- Contents: greeting and quick replies, streaming text with a typing indicator, the permanent patient-information note, Continue on WhatsApp / Call / Email.
+- Accessibility: focus trap, Esc closes and returns focus to the button, `role="log"` for messages.
+- Motion: spring opening, instant with reduced motion. Works at 360px.
+
+**Dashboards**
+- **Admin → Chatbot:**
+  - Setup status, which names the missing hosting variables.
+  - Knowledge base (list / add / edit / hide / re-sync).
+  - Conversations (search, transcript, delete on request).
+  - Settings: greeting, quick replies, handoff on/off, business hours, the model in use.
+- **Sales → Inbox:** handed-off chats, live via realtime. The agent's reply appears in the widget; the agent can hand the chat back to the bot or close it.
+- **Outside business hours** the bot says when the team replies.
+
+**Hosting variables to set:**
+- `LLM_PROVIDER`, `LLM_API_KEY`, `LLM_MODEL`, `EMBEDDING_MODEL` (+ `EMBEDDING_PROVIDER`, `EMBEDDING_API_KEY` with Anthropic)
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (then apply migrations 0001–0006)
+- `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`
+- `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_NOTIFY_EMAIL`
+- `KB_SYNC_SECRET`
+
+After that, run "Re-sync from website" once.
+
+**Tests**
+- `tests/unit/chatbot.test.ts`: guardrails, RAG, chunking, lead flow, hours, rate limit, page text.
+- `tests/unit/chatbot-questions.test.ts`: the 20-question set (pm/CHATBOT_TEST_QUESTIONS.md).
+- `tests/e2e/chat-widget.spec.ts`:
+  - Widget checks on the production build.
+  - Conversation in local dry run.
+  - The Sales inbox round trip, which needs Supabase: `E2E_SUPABASE=1`.

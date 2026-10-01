@@ -14,12 +14,21 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Meta Business Manager + WhatsApp Business number (also enables the site's click-to-chat buttons: NEXT_PUBLIC_WHATSAPP_NUMBER)
 - ⬜ Cloudflare Turnstile keys and Upstash Redis (public forms stay closed without them)
 - ⬜ Resend newsletter segment + sales inbox for lead notifications (RESEND_SEGMENT_ID, ADMIN_NOTIFY_EMAIL)
-- ⬜ LLM provider choice + API key with billing enabled
+- ⬜ LLM provider choice + API key with billing enabled — **the website chatbot is built and waits on this** (2026-10-01). Add on the hosting: `LLM_PROVIDER` (openai | anthropic | gemini), `LLM_API_KEY`, `LLM_MODEL` (optional), `EMBEDDING_MODEL` (text-embedding-3-small or gemini-embedding-001); with Anthropic also `EMBEDDING_PROVIDER` + `EMBEDDING_API_KEY` (OpenAI or Gemini), and `KB_SYNC_SECRET`. The chatbot also needs Supabase, Upstash, Turnstile and Resend (below).
 - ⬜ Google Analytics / Search Console / GTM access
 - ⬜ Google Cloud OAuth client for "Sign in with Google" (docs/16 §3)
 - ⬜ Email of the first admin (owner) account (docs/16 §6)
 - ⬜ GitHub repository (client-owned, SylJo Tech as maintainer) so the code can be pushed and CI can run
 - ⬜ Sentry organisation/project (or approval to use SylJo Tech's) → SENTRY_DSN, NEXT_PUBLIC_SENTRY_DSN
+
+## WhatsApp chatbot (Phase 7B — not built yet)
+- ⬜ Meta Business verification for GlobalMed Transcriptions (business documents in Meta Business Manager)
+- ⬜ A WhatsApp Business number not used in the WhatsApp app (or migrated from it); confirm whether it is +92 300 419 8760
+- ⬜ WhatsApp Business Account ID and Phone number ID (→ `WHATSAPP_BUSINESS_ACCOUNT_ID`, `WHATSAPP_PHONE_NUMBER_ID`)
+- ⬜ A permanent System User access token with whatsapp_business_messaging (→ `WHATSAPP_ACCESS_TOKEN`)
+- ⬜ App secret of the Meta app (→ `WHATSAPP_APP_SECRET`, webhook signature) and a verify token we choose together (→ `WHATSAPP_VERIFY_TOKEN`)
+- ⬜ Message templates to submit for approval: welcome, lead follow-up, AAPC registration follow-up ("our team will help you complete your AAPC enrollment") — wording to approve (docs/09 §7)
+- ⬜ Who answers WhatsApp handoffs, and the business hours to show outside them
 
 ## Brand
 - ✅ Logo supplied (logonew.png → public/logo.png, 2026-09-24); an SVG version is still welcome for print and certificates

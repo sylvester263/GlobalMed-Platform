@@ -220,3 +220,15 @@
   - `content-visibility: auto` (`cv-auto`) on below-the-fold sections of Home and About, the footer and shared bands.
   - GSAP removed (unused since ADR-028); `sharp` declared; `@next/bundle-analyzer` (`ANALYZE=true npm run build`).
 - Consequences: first-load JS home 278 → 138 kB, About 213 → 134, AAPC 250 → 146, CPC® 244 → 146. New interactive sections should go through `deferHydration` unless they are above the fold. Tests that read `innerText` of lazily rendered sections must scroll to them or use textContent.
+
+## ADR-034: Website chatbot — AI SDK adapter, deterministic answers first, polling for visitors
+- Date: 2026-10-01 · Status: accepted
+- Context: Phase 7A (docs/09). The client supplies the LLM key (provider not chosen yet). Answers about prices, packages and who teaches must be exact, and the bot must never mention hidden courses or GlobalMed certificates. No Supabase project, LLM, Upstash or Turnstile keys exist yet, and our hosting may buffer streamed responses.
+- Decision:
+  - `ai` (AI SDK v7) + `@ai-sdk/openai|anthropic|google` behind `lib/ai/provider.ts`; the provider is chosen by `LLM_PROVIDER`. Embeddings are fixed at 1536 dimensions (matches the 0001 `vector(1536)`); Anthropic needs `EMBEDDING_PROVIDER` / `EMBEDDING_API_KEY`.
+  - A deterministic layer (`lib/ai/guardrails.ts`) answers prices, packages, contact, delivery, who teaches/certifies, installments and batch dates from the site data before the model is called, refuses patient information (placeholder stored, never the text), and checks every model reply (unknown USD amounts, rupees, retired or hidden offerings → safe fallback). The bot works for those questions before any key is set.
+  - Streaming as server-sent events with anti-buffering headers; `/api/chat/stream-check` tests the hosting.
+  - Visitors never read the chat tables: the widget holds a random token (SHA-256 stored) and polls `/api/chat/messages` during handoff; staff get Supabase realtime under RLS.
+  - Local dry run keeps chats in memory so the widget is testable without a database; production fails closed.
+  - Lead/handoff links: leads carry `details.conversationId` (no new FK).
+- Consequences: three new runtime dependencies (server-only, not in any page bundle). The widget loads on the first click, so page weight is unchanged. Polling adds a request every 4s only while a chat is with a person. Changing the embedding model to another size needs a migration.

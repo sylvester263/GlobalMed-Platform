@@ -181,6 +181,15 @@ export function scriptedAnswer(text: string): ScriptedAnswer | null {
     };
   }
 
+  // Installments: GlobalMed facilitates plans; never quote amounts or schedules (docs/09 §3.2a).
+  if (/\b(instal+ments?|pay in parts|payment plans?|pay monthly|easy payments?)\b/.test(t)) {
+    return {
+      intent: "course",
+      text: `Yes — GlobalMed can facilitate installment plans when needed. Our team will explain the options for your course. ${registerLine}`,
+      quickReplies: coursePrompt,
+    };
+  }
+
   const asksPrice =
     /\b(price|prices|cost|costs|fee|fees|how much|charges?|usd|dollars?|pkr|rupees|rs\.?|discount|cheaper)\b/.test(
       t,

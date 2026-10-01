@@ -1,6 +1,6 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-10-01 · Current phase: **5 — Payments & enrollment** (card checkout built but hidden: AAPC registration form replaces it, ADR-026) · Overall: **43%**
+Last updated: 2026-10-01 · Current phase: **7A — AI chatbot (website)** built, waiting for the client's LLM key and the Supabase / Upstash / Turnstile / Resend accounts (Phase 5 card checkout built but hidden, ADR-026) · Overall: **48%**
 
 | Phase | Status | % |
 |---|---|---|
@@ -11,7 +11,7 @@ Last updated: 2026-10-01 · Current phase: **5 — Payments & enrollment** (card
 | 4 LMS core | 🟨 Built and tested without Supabase/Bunny; signing formats + webhook verification pending (docs/17 §4) | 90 |
 | 5 Payments & enrollment | 🟨 Card checkout + webhook built; manual payments next | 30 |
 | 6 Quizzes, exams, certificates | ⬜ | 0 |
-| 7 AI chatbot + WhatsApp | ⬜ | 0 |
+| 7 AI chatbot + WhatsApp | 🟨 7A website chatbot built and tested; live answers wait on the LLM key + Supabase; 7B WhatsApp not started (client inputs) | 55 |
 | 8 CRM, analytics, marketing | ⬜ | 0 |
 | 9 QA & launch | ⬜ | 0 |
 
@@ -61,7 +61,7 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [x] P2-17 MG-3 scroll-scrubbed claim journey
 - [ ] P2-18 MG-4 to MG-8 service & trust animations — 🟨 MG-4, MG-6, MG-7, MG-8 done; MG-5 icon animations need the Lottie icon set
 - [ ] P2-19 MG-9 to MG-13 school & course animations — 🟨 MG-9, MG-11 done; MG-10 static until asset; MG-12 needs practice logos; MG-13 needs AAPC permission
-- [ ] P2-20 MG-14 to MG-18 forms, verify, page transitions, menu, chat launcher — 🟨 MG-14–17 done; MG-18 moves to P7-4 with the chat widget
+- [x] P2-20 MG-14 to MG-18 forms, verify, page transitions, menu, chat launcher — MG-18 done with the chat widget (P7-4, 2026-10-01)
 - [x] P2-22 Client review 2026-09-25: hero slider, Education rename (/education, ADR-024), AAPC Certification page, AAPC instructors band, credentials section, About rewrite, expanded footer — images/numbers pending client
 - [x] P2-23 Business-model correction (ADR-026): AAPC partner only, 3 AAPC courses, registration form, GlobalMed education hidden behind flags; chatbot knowledge (docs/09) and wording sweep done
 - [x] P2-24 AAPC course pages with confirmed packages and prices (CPC® USD 1,050 · CPB® USD 1,050 · CPC® + CPB® USD 1,800 over 16 weeks since 2026-09-29), comparison table, 10 FAQs, registration consent, public login links hidden
@@ -112,14 +112,14 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [ ] P6-7 DM-4 quiz feedback, DM-5 exam timer states, DM-6 exam-passed moment
 
 ## Phase 7 — AI chatbot + WhatsApp
-- [ ] P7-1 LLM provider adapter
-- [ ] P7-2 KB admin + chunk/embed pipeline
-- [ ] P7-3 /api/chat streaming + guardrails
-- [ ] P7-4 Web widget
-- [ ] P7-5 Lead capture from chat
-- [ ] P7-6 WhatsApp webhook + replies
-- [ ] P7-7 Handoff inbox (realtime)
-- [ ] P7-8 WhatsApp templates approved
+- [x] P7-1 LLM provider adapter — OpenAI / Anthropic / Gemini (AI SDK), streaming + 1536-dim embeddings; live once LLM_PROVIDER / LLM_API_KEY are set
+- [x] P7-2 KB admin + chunk/embed pipeline — re-sync from the live site, `npm run kb:sync`, add / edit / soft-delete; embeds once Supabase + the embedding key are set
+- [x] P7-3 /api/chat streaming + guardrails — SSE, zod, Turnstile, 20 msgs / 10 min, 10 turns, token cap; scripted exact answers + reply checks (ADR-034)
+- [x] P7-4 Web widget — replaces the help menu (flag `chatbotWidget`); MG-18 chat launcher done with it
+- [x] P7-5 Lead capture from chat — course / service / handoff leads, source "chatbot", email to sales
+- [ ] P7-6 WhatsApp webhook + replies — 7B, waits on Meta Business verification and the WhatsApp number (pm/CLIENT_INPUTS_NEEDED.md)
+- [x] P7-7 Handoff inbox (realtime) — Sales → Inbox, agent replies appear in the widget; verified end to end once Supabase is linked (E2E_SUPABASE)
+- [ ] P7-8 WhatsApp templates approved — 7B (client)
 
 ## Phase 8 — CRM, analytics, marketing
 - [ ] P8-1 Leads pipeline (kanban + table)

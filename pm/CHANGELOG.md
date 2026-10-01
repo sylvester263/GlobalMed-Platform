@@ -4,6 +4,7 @@ Format: Keep a Changelog · Semantic Versioning
 
 ## [Unreleased]
 ### Added
+- Phase 7A website chatbot: AI provider adapter (OpenAI / Anthropic / Gemini), RAG knowledge base synced from the live site, guardrails with exact scripted answers, streaming `/api/chat`, chat widget behind the help button, lead capture (source "chatbot"), human handoff to a live Sales inbox, Admin → Chatbot (knowledge base, conversations, settings); answers from the model start once the client's LLM key and Supabase are set (2026-10-01)
 - Project documentation pack (2026-09-24)
 - Motion design spec docs/15, /motion command, motion tasks across phases (2026-09-24)
 - Phase 0 foundation: Next.js 15 app, tooling, CI, Supabase clients, Sentry, security headers (2026-09-24)

@@ -510,6 +510,13 @@ Newest entry at the bottom. One entry per Claude Code session.
   - Controls row 16px above the stats card: dots left (aligned with the text), pause/prev/next right; phones: dots centred, pause on the right, prev/next hidden (swipe + dots).
   - `slider-lockup.mjs` now hit-tests the centre of every visible button and control on every slide (`elementFromPoint`) and checks 44px targets: 0 problems at 7 widths. `stats-overlap.mjs`: 0 problems.
 
+- **Done (stats animation):**
+  - `CountUp`: only the number animates; prefix/suffix sit outside it. While counting, the number is padded with figure spaces to the final length, so the text keeps one width: the "+" stays fixed (measured 496–497px while counting 0 → 470) and there's no layout shift (right-aligning instead caused CLS 0.001–0.003).
+  - 1.2s ease-out, once, starts when visible (immediately if visible on load); reduced motion shows the final number.
+  - Hover (pointer only; items aren't links, so not focusable), shared by the home card and the About strip: lift 4px, #EEF6FC, 16px radius, number #3A73C2, 3px #51ACE3 underline growing from the centre, 200ms; the card's shadow strengthens. Reduced motion: colour only.
+  - Item padding offset in the card so it stays 144px on desktop (72px overlap = half).
+  - New `tests/e2e/stats-card.spec.ts` (count-up, +, hover styles, About, reduced motion): 4 passed. Audits 0 problems, CLS 0.
+
 ---
 ### Session NNN — <title>
 - **Date:**

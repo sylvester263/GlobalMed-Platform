@@ -34,11 +34,19 @@ export function CountUp({
   const liveRef = useRef<HTMLSpanElement>(null);
   const reduced = usePrefersReducedMotion();
 
+  // Only the number animates; the prefix and suffix ("+") sit outside it and never move.
   const format = useMemo(() => {
     const nf = new Intl.NumberFormat("en-US", { maximumFractionDigits: decimals });
-    return (n: number) => `${prefix}${nf.format(n)}${suffix}`;
-  }, [decimals, prefix, suffix]);
-  const finalText = format(value);
+    return (n: number) => nf.format(n);
+  }, [decimals]);
+  const finalNumber = format(value);
+  // While counting, pad with figure spaces (digit-wide in tabular figures) to the final
+  // number's length: the text keeps one width, so the digits sit right-aligned against the
+  // suffix and nothing moves (no layout shift).
+  const padded = useMemo(
+    () => (n: number) => format(n).padStart(finalNumber.length, "\u2007"),
+    [format, finalNumber],
+  );
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -54,7 +62,7 @@ export function CountUp({
         const start = performance.now();
         const tick = (now: number) => {
           const t = Math.min(1, (now - start) / duration);
-          node.textContent = format(value * easeOutCubic(t));
+          node.textContent = padded(value * easeOutCubic(t));
           if (t < 1) frame = requestAnimationFrame(tick);
         };
         frame = requestAnimationFrame(tick);
@@ -62,24 +70,27 @@ export function CountUp({
       // Start just before it's visible so the reset to zero is never seen.
       { rootMargin: "0px 0px 60px 0px" },
     );
-    node.textContent = format(0);
+    node.textContent = padded(0);
     observer.observe(wrapper);
     return () => {
       observer.disconnect();
       cancelAnimationFrame(frame);
       node.textContent = format(value);
     };
-  }, [reduced, value, format]);
+  }, [reduced, value, format, padded]);
 
   return (
-    <span ref={wrapperRef} className={cn("inline-grid tabular-nums", className)}>
-      <span className="sr-only">{finalText}</span>
-      <span aria-hidden="true" className="invisible col-start-1 row-start-1">
-        {finalText}
+    <span ref={wrapperRef} className={cn("inline-flex tabular-nums", className)}>
+      <span className="sr-only">{`${prefix}${finalNumber}${suffix}`}</span>
+      {prefix && <span aria-hidden="true">{prefix}</span>}
+      {/* The final number reserves the width, so the suffix stays fixed. */}
+      <span aria-hidden="true" className="inline-grid">
+        <span className="invisible col-start-1 row-start-1">{finalNumber}</span>
+        <span ref={liveRef} className="col-start-1 row-start-1">
+          {finalNumber}
+        </span>
       </span>
-      <span ref={liveRef} aria-hidden="true" className="col-start-1 row-start-1">
-        {finalText}
-      </span>
+      {suffix && <span aria-hidden="true">{suffix}</span>}
     </span>
   );
 }

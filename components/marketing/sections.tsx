@@ -285,6 +285,17 @@ export function CourseCard({
 type Stat = { label: string; value: number; suffix: string; decimals: number };
 
 /**
+ * Stat item hover (home card and About strip, 2026-10-02), pointer devices only (Tailwind's
+ * hover variant needs a hovering pointer): lifts 4px onto #EEF6FC with a 16px radius, the
+ * number turns #3A73C2 and a 3px sky underline grows from its centre, 200ms. Items aren't
+ * links, so they aren't focusable. Reduced motion: no lift and no growth, colour only.
+ */
+const statItemClass =
+  "group/stat rounded-2xl px-4 py-3 transition-[translate,background-color] duration-200 ease-out hover:-translate-y-1 hover:bg-surface-soft motion-reduce:transition-colors motion-reduce:hover:translate-y-0";
+const statValueClass =
+  "relative w-fit transition-colors duration-200 ease-out group-hover/stat:text-mid-blue after:absolute after:-bottom-1 after:left-1/2 after:h-[3px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-sky after:transition-[width] after:duration-200 after:ease-out group-hover/stat:after:w-full motion-reduce:after:transition-none";
+
+/**
  * Per-cell layout of the overlapping stats card (five facts): 5 columns with dividers from
  * 1024px, 3 + 2 on tablets, 2 columns on phones with the last item full width.
  */
@@ -292,8 +303,8 @@ const overlapCells = [
   "",
   "md:border-l",
   "md:border-l",
-  "md:col-span-3 md:border-t md:pt-6 lg:col-span-1 lg:border-t-0 lg:border-l lg:pt-0",
-  "col-span-2 md:col-span-3 md:border-t md:border-l md:pt-6 lg:col-span-1 lg:border-t-0 lg:pt-0",
+  "md:col-span-3 md:border-t md:pt-3 lg:col-span-1 lg:border-t-0 lg:border-l lg:pt-0",
+  "col-span-2 md:col-span-3 md:border-t md:border-l md:pt-3 lg:col-span-1 lg:border-t-0 lg:pt-0",
 ];
 
 /**
@@ -328,7 +339,7 @@ export function StatsStrip({
         <div className="band-y container-fluid">
           <ul
             className={cn(
-              "-mt-8 grid grid-cols-2 gap-y-6 rounded-[20px] bg-card px-4 py-6 shadow-[0_20px_50px_rgb(23_38_92/0.14)] md:-mt-16 md:grid-cols-6 md:px-6 md:py-8 lg:-mt-[72px] lg:grid-cols-5",
+              "-mt-8 grid grid-cols-2 gap-y-2 rounded-[20px] bg-card px-2 py-3 shadow-[0_20px_50px_rgb(23_38_92/0.14)] transition-shadow duration-200 ease-out hover:shadow-[0_24px_60px_rgb(23_38_92/0.2)] md:-mt-16 md:grid-cols-6 md:px-4 md:py-5 lg:-mt-[72px] lg:grid-cols-5",
               stats.length !== 5 && "md:grid-cols-3",
             )}
           >
@@ -336,7 +347,7 @@ export function StatsStrip({
               <li
                 key={stat.label}
                 className={cn(
-                  "flex justify-center border-[#D9E3F0] px-3 md:col-span-2 lg:col-span-1",
+                  "flex justify-center border-[#D9E3F0] px-1 md:col-span-2 lg:col-span-1",
                   stats.length === 5 && overlapCells[i],
                 )}
               >
@@ -346,8 +357,8 @@ export function StatsStrip({
                   suffix={stat.suffix}
                   decimals={stat.decimals}
                   illustrative={!confirmed}
-                  className="items-center text-center"
-                  valueClassName="text-navy lg:text-4xl"
+                  className={cn("items-center text-center", statItemClass)}
+                  valueClassName={cn("text-navy lg:text-4xl", statValueClass)}
                 />
               </li>
             ))}
@@ -372,6 +383,8 @@ export function StatsStrip({
             suffix={stat.suffix}
             decimals={stat.decimals}
             illustrative={!confirmed}
+            className={cn("-mx-4 -my-3", statItemClass)}
+            valueClassName={statValueClass}
           />
         ))}
       </div>

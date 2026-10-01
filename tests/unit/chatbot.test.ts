@@ -280,3 +280,40 @@ describe("company facts (one source for home, About and the chatbot)", () => {
     expect(pinnedKnowledge()).toContain("Years in Healthcare 25+");
   });
 });
+
+describe("updates in the chatbot (2026-10-02)", () => {
+  const batchUpdate = {
+    id: "u1",
+    slug: "next-batch",
+    title: "Next CPC® batch starts 15 November",
+    summary: "Registrations are open until 10 November.",
+    bodyMd: null,
+    category: "batch" as const,
+    imagePath: null,
+    linkUrl: null,
+    linkLabel: null,
+    publishAt: "2026-10-02T05:00:00Z",
+    expiresAt: null,
+    pinned: false,
+    status: "published" as const,
+  };
+
+  it("answers 'when is the next batch?' from the latest batch update", () => {
+    const answer = scriptedAnswer("When is the next batch?", { batchUpdate });
+    expect(answer?.text).toContain("Next CPC® batch starts 15 November");
+    expect(answer?.text).toContain("2 Oct 2026");
+  });
+
+  it("without a batch update it still points to the team", () => {
+    expect(scriptedAnswer("When does the next batch start?")?.text).toMatch(/contact GlobalMed/);
+  });
+
+  it("puts live updates into the system prompt", () => {
+    const prompt = buildSystemPrompt({
+      context: "",
+      updates: "- 2 Oct 2026 · Batch & Enrollment: Next batch",
+    });
+    expect(prompt).toContain("LATEST UPDATES");
+    expect(prompt).toContain("Next batch");
+  });
+});

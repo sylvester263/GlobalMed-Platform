@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
+import { syncUpdatesDocument } from "@/lib/ai/kb";
 import { authorize } from "@/lib/auth/session";
 import { createClient } from "@/lib/db/server";
 import { storeUpdateImage } from "@/lib/updates/images";
@@ -29,12 +30,15 @@ function staff() {
   return authorize(["admin", "sales"]);
 }
 
-/** Refreshes every page that shows updates. */
-function refreshPages(slug?: string) {
+/** Refreshes every page that shows updates, and the chatbot's copy of them. */
+async function refreshPages(slug?: string) {
   revalidatePath("/");
   revalidatePath("/updates");
   if (slug) revalidatePath(`/updates/${slug}`);
   revalidatePath("/sitemap.xml");
+  // Re-embed the live updates for the chatbot; a failure (e.g. no embedding key yet) must
+  // not undo the save.
+  await syncUpdatesDocument().catch(() => 0);
 }
 
 export async function saveUpdate(input: unknown, imagePath?: string | null): Promise<UpdateResult> {
@@ -78,7 +82,7 @@ export async function saveUpdate(input: unknown, imagePath?: string | null): Pro
       .select("id, slug")
       .single();
     if (error || !row) return { ok: false, message: "Could not save the update." };
-    refreshPages(row.slug);
+    await refreshPages(row.slug);
     return { ok: true, id: row.id, message: savedMessage(data.status, data.publishAt) };
   }
 
@@ -93,7 +97,7 @@ export async function saveUpdate(input: unknown, imagePath?: string | null): Pro
     .select("id, slug")
     .single();
   if (error || !row) return { ok: false, message: "Could not save the update." };
-  refreshPages(row.slug);
+  await refreshPages(row.slug);
   return { ok: true, id: row.id, message: savedMessage(data.status, data.publishAt) };
 }
 
@@ -123,7 +127,7 @@ export async function setUpdateStatus(
     .select("slug")
     .single();
   if (error || !row) return { ok: false, message: "Could not update it." };
-  refreshPages(row.slug);
+  await refreshPages(row.slug);
   return {
     ok: true,
     message: status === "published" ? "Published." : "Unpublished: removed from the site.",
@@ -141,7 +145,7 @@ export async function setUpdatePinned(id: string, pinned: boolean): Promise<Upda
     .select("slug")
     .single();
   if (error || !row) return { ok: false, message: "Could not update it." };
-  refreshPages(row.slug);
+  await refreshPages(row.slug);
   return { ok: true, message: pinned ? "Pinned: shown first." : "Unpinned." };
 }
 

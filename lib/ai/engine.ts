@@ -29,6 +29,8 @@ import {
   type ConversationStatus,
 } from "@/lib/ai/store";
 import { sendEmail } from "@/lib/email/send";
+import { getLiveUpdates } from "@/lib/updates/data";
+import { updatesKnowledge, type Update } from "@/lib/updates/logic";
 import { LeadNotification } from "@/lib/email/templates/lead-notification";
 import { storeLead } from "@/lib/leads/store";
 import { absoluteUrl } from "@/lib/seo/metadata";
@@ -150,9 +152,13 @@ async function handOff(
 async function* streamModel(
   history: ChatTurn[],
   question: string,
+  updates: Update[],
 ): AsyncGenerator<ChatEvent, { text: string; unsure: boolean; sources: unknown[] }> {
   const retrieved = await retrieve(question);
-  const system = buildSystemPrompt({ context: retrieved.context });
+  const system = buildSystemPrompt({
+    context: retrieved.context,
+    updates: updatesKnowledge(updates),
+  });
   let full = "";
   let shown = 0;
   try {
@@ -282,7 +288,10 @@ export async function* respond(
   // 6. Exact answers from the site data.
   const quickCourse =
     text === settings.quickReplies[0] ? "What courses do you offer and their prices?" : text;
-  const scripted = scriptedAnswer(quickCourse);
+  const updates = await getLiveUpdates().catch(() => []);
+  const scripted = scriptedAnswer(quickCourse, {
+    batchUpdate: updates.find((u) => u.category === "batch"),
+  });
   if (scripted) {
     await updateConversation(conversation.id, { lowConfidenceStreak: 0 });
     yield* say(
@@ -319,7 +328,7 @@ export async function* respond(
     .slice(-MAX_TURNS * 2)
     .map((m) => ({ role: m.role === "user" ? "user" : "assistant", content: m.content }));
 
-  const stream = streamModel(history, text);
+  const stream = streamModel(history, text, updates);
   let next = await stream.next();
   while (!next.done) {
     yield next.value;

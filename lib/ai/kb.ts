@@ -7,6 +7,8 @@ import { embedMany, isEmbeddingConfigured, toPgVector } from "@/lib/ai/provider"
 import { createAdminClient } from "@/lib/db/admin";
 import { isSupabaseConfigured, publicEnv } from "@/lib/env";
 import { serverEnv } from "@/lib/server-env";
+import { getLiveUpdates } from "@/lib/updates/data";
+import { updatesKnowledge } from "@/lib/updates/logic";
 import { aapcCertificationPath } from "@/lib/site";
 
 /**
@@ -77,7 +79,7 @@ async function upsertBySlug(input: {
   slug: string;
   title: string;
   body: string;
-  kind: "site" | "pinned";
+  kind: "site" | "pinned" | "update";
   source: string;
 }): Promise<number> {
   const admin = db();
@@ -101,6 +103,30 @@ async function upsertBySlug(input: {
   return embedDocument(data.id);
 }
 
+export const UPDATES_SLUG = "updates:live";
+
+/**
+ * The live updates as one knowledge document (re-embedded whenever an update is saved,
+ * published, pinned or unpublished, and on re-sync). Hidden from the chatbot when none are live.
+ */
+export async function syncUpdatesDocument(): Promise<number> {
+  const text = updatesKnowledge(await getLiveUpdates());
+  if (!text) {
+    await db()
+      .from("kb_documents")
+      .update({ deleted_at: new Date().toISOString() })
+      .eq("slug", UPDATES_SLUG);
+    return 0;
+  }
+  return upsertBySlug({
+    slug: UPDATES_SLUG,
+    title: "Latest updates (news, batches, events)",
+    body: text,
+    kind: "update",
+    source: "/updates",
+  });
+}
+
 /** "Re-sync from website": fetches each live page, stores its text and re-embeds it. */
 export async function syncFromSite(baseUrl = publicEnv.NEXT_PUBLIC_SITE_URL): Promise<SyncReport> {
   const report: SyncReport = [];
@@ -115,6 +141,13 @@ export async function syncFromSite(baseUrl = publicEnv.NEXT_PUBLIC_SITE_URL): Pr
     report.push({ slug: PINNED_SLUG, title: "Site data", chunks });
   } catch (error) {
     report.push({ slug: PINNED_SLUG, title: "Site data", chunks: 0, error: String(error) });
+  }
+
+  try {
+    const chunks = await syncUpdatesDocument();
+    report.push({ slug: UPDATES_SLUG, title: "Latest updates", chunks });
+  } catch (error) {
+    report.push({ slug: UPDATES_SLUG, title: "Latest updates", chunks: 0, error: String(error) });
   }
 
   for (const page of sitePages) {

@@ -1,5 +1,6 @@
 import { allowedUsdAmounts, contactFacts } from "@/lib/ai/knowledge";
 import { formatUsdPrice, getAapcCourses, type AapcCourseSlug } from "@/data/courses";
+import { formatUpdateDate, type Update } from "@/lib/updates/logic";
 
 /**
  * Deterministic guardrails (docs/09 §4), applied before and after the LLM:
@@ -141,8 +142,13 @@ function packageLine(slug: AapcCourseSlug): string {
 /**
  * Answers that must be exact: prices, packages, contact details, delivery, who teaches and
  * certifies, and the courses that are not offered. Returns null for everything else.
+ * `batchUpdate` is the latest live "Batch & Enrollment" update (dashboard), if any: the batch
+ * answer then quotes it instead of only pointing to the team.
  */
-export function scriptedAnswer(text: string): ScriptedAnswer | null {
+export function scriptedAnswer(
+  text: string,
+  { batchUpdate }: { batchUpdate?: Update | null } = {},
+): ScriptedAnswer | null {
   const t = text.toLowerCase();
   const course = courseMentioned(t);
   const coursePrompt = [leadStarts.course, handoffReply];
@@ -223,7 +229,9 @@ export function scriptedAnswer(text: string): ScriptedAnswer | null {
   ) {
     return {
       intent: "course",
-      text: `For the date of the upcoming batch, fees and package inclusions, please contact GlobalMed — our team will confirm the details. ${registerLine}`,
+      text: batchUpdate
+        ? `Latest update (${formatUpdateDate(batchUpdate.publishAt)}): ${batchUpdate.title}. ${batchUpdate.summary} Our team can confirm the details. ${registerLine}`
+        : `For the date of the upcoming batch, fees and package inclusions, please contact GlobalMed — our team will confirm the details. ${registerLine}`,
       quickReplies: coursePrompt,
     };
   }

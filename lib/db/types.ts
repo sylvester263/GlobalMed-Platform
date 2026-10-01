@@ -774,6 +774,63 @@ export type Database = {
         };
         Relationships: [];
       };
+      updates: {
+        Row: {
+          id: string;
+          slug: string;
+          title: string;
+          summary: string;
+          body_md: string | null;
+          category: string;
+          image_path: string | null;
+          link_url: string | null;
+          link_label: string | null;
+          publish_at: string;
+          expires_at: string | null;
+          pinned: boolean;
+          status: string;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          title: string;
+          summary: string;
+          body_md?: string | null;
+          category: string;
+          image_path?: string | null;
+          link_url?: string | null;
+          link_label?: string | null;
+          publish_at?: string;
+          expires_at?: string | null;
+          pinned?: boolean;
+          status?: string;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          title?: string;
+          summary?: string;
+          body_md?: string | null;
+          category?: string;
+          image_path?: string | null;
+          link_url?: string | null;
+          link_label?: string | null;
+          publish_at?: string;
+          expires_at?: string | null;
+          pinned?: boolean;
+          status?: string;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       kb_documents: {
         Row: {
           id: string;

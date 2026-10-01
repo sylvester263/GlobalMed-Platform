@@ -27,7 +27,6 @@ export type Conversation = {
   handoffReason: string | null;
   lowConfidenceStreak: number;
   leadFlow: LeadFlow | null;
-  leadId: string | null;
   tokenHash: string | null;
   summary: string | null;
   createdAt: string;
@@ -42,7 +41,7 @@ export type StoredMessage = {
 };
 
 type ConversationPatch = Partial<
-  Pick<Conversation, "status" | "handoffReason" | "lowConfidenceStreak" | "leadFlow" | "leadId">
+  Pick<Conversation, "status" | "handoffReason" | "lowConfidenceStreak" | "leadFlow">
 > & { handoffAt?: string };
 
 export function hashToken(token: string): string {
@@ -91,7 +90,6 @@ type ConversationRow = {
   handoff_reason: string | null;
   low_confidence_streak: number;
   lead_flow: Json | null;
-  lead_id: string | null;
   visitor_token_hash: string | null;
   summary: string | null;
   created_at: string;
@@ -104,7 +102,6 @@ function toConversation(row: ConversationRow): Conversation {
     handoffReason: row.handoff_reason,
     lowConfidenceStreak: row.low_confidence_streak,
     leadFlow: (row.lead_flow as LeadFlow | null) ?? null,
-    leadId: row.lead_id,
     tokenHash: row.visitor_token_hash,
     summary: row.summary,
     createdAt: row.created_at,
@@ -112,7 +109,7 @@ function toConversation(row: ConversationRow): Conversation {
 }
 
 const conversationColumns =
-  "id, status, handoff_reason, low_confidence_streak, lead_flow, lead_id, visitor_token_hash, summary, created_at";
+  "id, status, handoff_reason, low_confidence_streak, lead_flow, visitor_token_hash, summary, created_at";
 
 // ---------- Conversations ----------
 
@@ -128,7 +125,6 @@ export async function createConversation(input: {
       handoffReason: null,
       lowConfidenceStreak: 0,
       leadFlow: null,
-      leadId: null,
       tokenHash: input.tokenHash,
       summary: input.summary,
       createdAt: new Date().toISOString(),
@@ -183,7 +179,6 @@ export async function updateConversation(id: string, patch: ConversationPatch): 
         low_confidence_streak: patch.lowConfidenceStreak,
       }),
       ...(patch.leadFlow !== undefined && { lead_flow: patch.leadFlow as Json }),
-      ...(patch.leadId !== undefined && { lead_id: patch.leadId }),
     })
     .eq("id", id);
 }

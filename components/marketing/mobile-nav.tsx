@@ -92,7 +92,7 @@ export function MobileNav({ open, onOpenChange, pathname }: MobileNavProps) {
                       href={link.href}
                       onClick={close}
                       aria-current={isActivePath(pathname, link.href) ? "page" : undefined}
-                      className="flex min-h-12 items-center rounded-md text-base font-semibold hover:bg-mint"
+                      className="flex min-h-12 items-center rounded-md text-base font-semibold hover:bg-mint aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8"
                     >
                       {link.label}
                     </Link>

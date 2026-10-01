@@ -204,18 +204,28 @@ const resourcesNav: NavGroup = {
 };
 
 const aboutLink: NavLink = { label: "About Us", href: "/about" };
-const specialtiesLink: NavLink = { label: "Specialties", href: "/specialties" };
+const specialtiesLink: FlaggedLink = {
+  label: "Specialties",
+  href: "/specialties",
+  flag: "navSpecialties",
+};
+const careersLink: NavLink = { label: "Careers", href: "/careers" };
 const contactLink: NavLink = { label: "Contact", href: "/contact" };
 
 export type NavItem = NavGroup | NavLink;
 
-/** Top navigation order (client review 2026-09-25): About Us · Education · then the rest. */
+/**
+ * Top navigation order (client review 2026-09-25; Careers replaced Specialties 2026-10-01):
+ * About Us · Education · Services · Resources · Careers · Contact. Specialties is hidden by
+ * `features.navSpecialties`; its pages stay live and linked from the service pages.
+ */
 export const primaryNav: NavItem[] = [
   aboutLink,
   educationNav,
   servicesNav,
   resourcesNav,
-  specialtiesLink,
+  ...shown([specialtiesLink]),
+  careersLink,
   contactLink,
 ];
 

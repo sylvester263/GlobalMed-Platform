@@ -130,6 +130,11 @@ export const features = {
    * (it always stays on each course page).
    */
   courseCardPriceNote: true,
+  /**
+   * Hidden at client request (2026-10-01) — the "Specialties" header link (desktop and mobile
+   * menu); "Careers" takes its place. The Specialties pages stay live. Set true to restore.
+   */
+  navSpecialties: false,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

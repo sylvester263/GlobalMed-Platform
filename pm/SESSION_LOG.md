@@ -444,6 +444,11 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Blockers:** none.
 - **Follow-up (same day):** client asked to restore the course card delivery note: `courseCardPriceNote: true`. Card audit 0 problems at 6 widths (note on every card, aligned, 24px to Package Includes); screenshots refreshed.
 
+### Session 016 — Nav: Careers replaces Specialties; Phase 7A chatbot
+- **Date:** 2026-10-01
+- **Done (step 1, nav):** header and mobile menu order About Us · Education · Services · Resources · Careers · Contact; Specialties link behind `navSpecialties: false` (pages live, still linked from service pages; footer unchanged). The active item's colour was nearly identical to the others (navy-hover vs navy), so the current page is now also underlined (desktop and mobile). E2E: new test (Careers active on /careers, keyboard, mobile menu, /specialties 200); public-site + visual audit 138 passed. Screenshots pm/screenshots/2026-10-01/nav-careers/.
+- **Files touched (step 1):** lib/site.ts, config/features.ts, components/marketing/{site-header,mega-menu,mobile-nav}.tsx, tests/e2e/public-site.spec.ts, pm/*
+
 ---
 ### Session NNN — <title>
 - **Date:**

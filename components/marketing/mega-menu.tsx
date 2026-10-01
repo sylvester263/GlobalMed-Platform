@@ -7,6 +7,9 @@ import { useEffect, useId, useRef, useState } from "react";
 import { isActivePath, isNavGroup, primaryNav } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
+/** The current page's item is underlined, not only recoloured (2026-10-01; WCAG 1.4.1). */
+const activeClass = "underline decoration-2 underline-offset-8";
+
 const triggerClass =
   "inline-flex h-11 cursor-pointer items-center gap-1 rounded-md px-3 text-sm font-semibold text-primary transition-colors hover:bg-mint aria-expanded:bg-mint";
 
@@ -62,7 +65,11 @@ export function MegaMenu({ pathname }: { pathname: string }) {
                 <Link
                   href={link.href}
                   aria-current={isActivePath(pathname, link.href) ? "page" : undefined}
-                  className={cn(triggerClass, "aria-[current=page]:text-teal-deep")}
+                  className={cn(
+                    triggerClass,
+                    "aria-[current=page]:text-teal-deep",
+                    isActivePath(pathname, link.href) && activeClass,
+                  )}
                 >
                   {link.label}
                 </Link>
@@ -82,7 +89,10 @@ export function MegaMenu({ pathname }: { pathname: string }) {
                 aria-expanded={expanded}
                 aria-controls={panelId}
                 onClick={() => setOpen(expanded ? null : group.label)}
-                className={cn(triggerClass, isActivePath(pathname, group.href) && "text-teal-deep")}
+                className={cn(
+                  triggerClass,
+                  isActivePath(pathname, group.href) && cn("text-teal-deep", activeClass),
+                )}
               >
                 {group.label}
                 <ChevronDown

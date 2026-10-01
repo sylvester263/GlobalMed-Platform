@@ -97,6 +97,33 @@ test.describe("navigation and SEO", () => {
     await expect(page.getByRole("navigation", { name: "Mobile" })).toBeVisible();
   });
 
+  test("Careers replaces Specialties: active on /careers, keyboard and mobile menu", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/careers");
+    const primary = page.getByRole("navigation", { name: "Primary" });
+    await expect(primary.getByRole("link", { name: "Specialties" })).toHaveCount(0);
+    const careers = primary.getByRole("link", { name: "Careers" });
+    await expect(careers).toHaveAttribute("aria-current", "page");
+    // Keyboard: the link is reachable with Tab and has a visible focus outline.
+    await careers.focus();
+    await expect(careers).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(primary.getByRole("link", { name: "Contact" })).toBeFocused();
+
+    await page.setViewportSize({ width: 360, height: 800 });
+    await page.getByRole("button", { name: "Open menu" }).click();
+    const mobile = page.getByRole("navigation", { name: "Mobile" });
+    await expect(mobile.getByRole("link", { name: "Specialties" })).toHaveCount(0);
+    await expect(mobile.getByRole("link", { name: "Careers" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    // The Specialties pages stay live.
+    expect((await page.request.get("/specialties")).status()).toBe(200);
+  });
+
   test("skip link moves to main content", async ({ page }) => {
     await page.goto("/");
     await page.keyboard.press("Tab");
@@ -249,7 +276,7 @@ test.describe("client review 2026-09-25", () => {
       /Education/,
       /Services/,
       /Resources/,
-      /Specialties/,
+      /Careers/,
       /Contact/,
     ]);
     await page.getByRole("button", { name: "Education" }).click();

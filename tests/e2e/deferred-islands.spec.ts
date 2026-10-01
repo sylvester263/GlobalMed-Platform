@@ -3,18 +3,20 @@ import { expect, test } from "@playwright/test";
 // Deferred code (2026-10-01 performance work): these load on first use or near the screen,
 // and must behave exactly as before.
 
-test("help button opens its menu on the first click and closes with Escape", async ({ page }) => {
+// Since Phase 7A (2026-10-01) the help button opens the chat panel (features.chatbotWidget);
+// the panel keeps the WhatsApp, call and email links of the old menu.
+test("help button opens the chat on the first click and closes with Escape", async ({ page }) => {
   await page.goto("/about");
   const button = page.getByRole("button", { name: "Help and support" });
   await button.click();
-  const menu = page.getByRole("menu");
-  await expect(menu).toBeVisible();
-  await expect(menu.getByRole("menuitem", { name: /Chat on WhatsApp/ })).toHaveAttribute(
+  const panel = page.getByRole("dialog", { name: "GlobalMed assistant" });
+  await expect(panel).toBeVisible();
+  await expect(panel.getByRole("link", { name: /Continue on WhatsApp/ })).toHaveAttribute(
     "href",
     "https://wa.me/923004198760",
   );
   await page.keyboard.press("Escape");
-  await expect(page.getByRole("menu")).toHaveCount(0);
+  await expect(panel).toBeHidden();
   await expect(page.getByRole("button", { name: "Help and support" })).toBeFocused();
 });
 
@@ -22,7 +24,7 @@ test("help button opens with the keyboard", async ({ page }) => {
   await page.goto("/about");
   await page.getByRole("button", { name: "Help and support" }).focus();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("menu")).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "GlobalMed assistant" })).toBeVisible();
 });
 
 test("registration form works once it is on screen", async ({ page }) => {

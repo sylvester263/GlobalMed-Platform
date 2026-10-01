@@ -20,7 +20,8 @@ export const leadStarts = {
   service: "Have the team contact me about services",
 } as const;
 
-export const handoffReply = "Talk to a person";
+export { handoffReply } from "@/lib/ai/defaults";
+import { handoffReply } from "@/lib/ai/defaults";
 
 const has = (text: string, pattern: RegExp) => pattern.test(text);
 

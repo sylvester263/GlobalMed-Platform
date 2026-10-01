@@ -135,6 +135,11 @@ export const features = {
    * menu); "Careers" takes its place. The Specialties pages stay live. Set true to restore.
    */
   navSpecialties: false,
+  /**
+   * Phase 7A (2026-10-01): the help button opens the website chat. Set false to bring back
+   * the previous help menu (WhatsApp, call, email), which is kept unchanged.
+   */
+  chatbotWidget: true,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

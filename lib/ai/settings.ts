@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { handoffReply } from "@/lib/ai/guardrails";
+import { defaultGreeting, defaultQuickReplies } from "@/lib/ai/defaults";
 
 /**
  * Chatbot settings (admin → Chatbot → Settings), stored in `settings` under the key
@@ -29,9 +29,8 @@ export const chatSettingsSchema = z.object({
 export type ChatSettings = z.infer<typeof chatSettingsSchema>;
 
 export const defaultChatSettings: ChatSettings = {
-  greeting:
-    "Hi! I'm GlobalMed's assistant. I can help with the AAPC CPC® and CPB® courses and our medical transcription and billing services. Please don't share patient information.",
-  quickReplies: ["CPC® / CPB® courses", "Billing & transcription services", handoffReply],
+  greeting: defaultGreeting,
+  quickReplies: defaultQuickReplies,
   handoffEnabled: true,
   // The site says "Open 24/7" (lib/site.ts).
   hours: { mode: "always" },

@@ -17,6 +17,10 @@ export const limits = {
   authReset: { requests: 5, windowSeconds: 3600 },
   authMfa: { requests: 10, windowSeconds: 300 },
   checkout: { requests: 10, windowSeconds: 600 },
+  // Chatbot (docs/09 §9): 20 messages / 10 min per visitor, and a looser per-IP ceiling.
+  chat: { requests: 20, windowSeconds: 600 },
+  chatIp: { requests: 60, windowSeconds: 600 },
+  chatPoll: { requests: 240, windowSeconds: 600 },
 } satisfies Record<string, Limit>;
 
 const redis =

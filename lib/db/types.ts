@@ -781,6 +781,13 @@ export type Database = {
           source: string | null;
           body: string;
           updated_at: string | null;
+          slug: string | null;
+          kind: string;
+          deleted_at: string | null;
+          embedded_at: string | null;
+          embedding_model: string | null;
+          created_by: string | null;
+          created_at: string;
         };
         Insert: {
           id?: string;
@@ -788,6 +795,13 @@ export type Database = {
           source?: string | null;
           body: string;
           updated_at?: string | null;
+          slug?: string | null;
+          kind?: string;
+          deleted_at?: string | null;
+          embedded_at?: string | null;
+          embedding_model?: string | null;
+          created_by?: string | null;
+          created_at?: string;
         };
         Update: {
           id?: string;
@@ -795,6 +809,13 @@ export type Database = {
           source?: string | null;
           body?: string;
           updated_at?: string | null;
+          slug?: string | null;
+          kind?: string;
+          deleted_at?: string | null;
+          embedded_at?: string | null;
+          embedding_model?: string | null;
+          created_by?: string | null;
+          created_at?: string;
         };
         Relationships: [];
       };
@@ -804,18 +825,21 @@ export type Database = {
           document_id: string;
           content: string;
           embedding: string | null;
+          chunk_index: number;
         };
         Insert: {
           id?: string;
           document_id: string;
           content: string;
           embedding?: string | null;
+          chunk_index?: number;
         };
         Update: {
           id?: string;
           document_id?: string;
           content?: string;
           embedding?: string | null;
+          chunk_index?: number;
         };
         Relationships: [];
       };
@@ -830,6 +854,13 @@ export type Database = {
           assigned_to: string | null;
           created_at: string;
           last_message_at: string | null;
+          status: string;
+          handoff_reason: string | null;
+          handoff_at: string | null;
+          low_confidence_streak: number;
+          visitor_token_hash: string | null;
+          lead_flow: Json | null;
+          summary: string | null;
         };
         Insert: {
           id?: string;
@@ -841,6 +872,13 @@ export type Database = {
           assigned_to?: string | null;
           created_at?: string;
           last_message_at?: string | null;
+          status?: string;
+          handoff_reason?: string | null;
+          handoff_at?: string | null;
+          low_confidence_streak?: number;
+          visitor_token_hash?: string | null;
+          lead_flow?: Json | null;
+          summary?: string | null;
         };
         Update: {
           id?: string;
@@ -852,6 +890,13 @@ export type Database = {
           assigned_to?: string | null;
           created_at?: string;
           last_message_at?: string | null;
+          status?: string;
+          handoff_reason?: string | null;
+          handoff_at?: string | null;
+          low_confidence_streak?: number;
+          visitor_token_hash?: string | null;
+          lead_flow?: Json | null;
+          summary?: string | null;
         };
         Relationships: [];
       };
@@ -862,6 +907,8 @@ export type Database = {
           role: string;
           content: string;
           created_at: string;
+          meta: Json;
+          author_id: string | null;
         };
         Insert: {
           id?: string;
@@ -869,6 +916,8 @@ export type Database = {
           role: string;
           content: string;
           created_at?: string;
+          meta?: Json;
+          author_id?: string | null;
         };
         Update: {
           id?: string;
@@ -876,6 +925,8 @@ export type Database = {
           role?: string;
           content?: string;
           created_at?: string;
+          meta?: Json;
+          author_id?: string | null;
         };
         Relationships: [];
       };
@@ -1158,7 +1209,13 @@ export type Database = {
       lesson_course: { Args: { l: string }; Returns: string };
       match_kb: {
         Args: { query_embedding: string; match_count?: number };
-        Returns: { id: string; content: string; similarity: number }[];
+        Returns: {
+          id: string;
+          document_id: string;
+          title: string;
+          content: string;
+          similarity: number;
+        }[];
       };
       verify_certificate: {
         Args: { p_code: string };

@@ -18,6 +18,16 @@ const serverEnvSchema = z.object({
   STRIPE_SECRET_KEY: optional,
   STRIPE_WEBHOOK_SECRET: optional,
   FORMS_DRY_RUN: z.enum(["true", "false"]).optional(),
+  // AI chatbot (docs/09). The client supplies the key; nothing is hard-coded.
+  LLM_PROVIDER: z.enum(["openai", "anthropic", "gemini"]).optional(),
+  LLM_API_KEY: optional,
+  LLM_MODEL: optional,
+  EMBEDDING_MODEL: optional,
+  // Anthropic has no embeddings API: with LLM_PROVIDER=anthropic, embeddings use this provider.
+  EMBEDDING_PROVIDER: z.enum(["openai", "gemini"]).optional(),
+  EMBEDDING_API_KEY: optional,
+  // Shared secret for `npm run kb:sync` (scripts/kb-sync.mjs → /api/admin/kb-sync).
+  KB_SYNC_SECRET: optional,
 });
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>;

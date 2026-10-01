@@ -42,16 +42,39 @@ for (const width of widths) {
       const buttons = slide.querySelector(".hero-slide-copy").lastElementChild;
       const controls = document.querySelector('[aria-label="Show slide 1 of 3"]').parentElement
         .parentElement;
+      const controlTops = [...controls.querySelectorAll("button")]
+        .filter((el) => el.offsetParent !== null)
+        .map((el) => el.getBoundingClientRect().top);
       const imgs = [...plate.querySelectorAll("img")].map((img) => ({
         h: img.getBoundingClientRect().height,
         loaded: img.complete && img.naturalWidth > 0,
       }));
+      // Nothing may cover a button or control: hit-test the centre of each visible one.
+      const hitTargets = [
+        ...slide.querySelectorAll(".hero-slide-copy a"),
+        ...controls.querySelectorAll("button"),
+      ].filter((el) => el.offsetParent !== null);
+      const covered = hitTargets
+        .filter((el) => {
+          const r = el.getBoundingClientRect();
+          const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+          return !el.contains(hit);
+        })
+        .map((el) => el.getAttribute("aria-label") ?? el.textContent.trim());
+      const smallTargets = hitTargets
+        .filter((el) => {
+          const r = el.getBoundingClientRect();
+          return r.width < 44 || r.height < 44;
+        })
+        .map((el) => el.getAttribute("aria-label") ?? el.textContent.trim());
       return {
+        covered,
+        smallTargets,
         plate: box(plate),
         h2: box(h2),
         p: box(p),
         buttons: box(buttons),
-        controlsTop: controls.getBoundingClientRect().top,
+        controlsTop: Math.min(...controlTops),
         imgs,
       };
     });
@@ -76,7 +99,12 @@ for (const width of widths) {
       issues.push(`slide ${n} text→buttons ${Math.round(m.buttons.top - m.p.bottom)}px`);
     if (Math.abs(m.plate.left - m.h2.left) > 0.5) issues.push(`slide ${n} lockup not left-aligned`);
     if (m.plate.bottom > m.h2.top) issues.push(`slide ${n} lockup overlaps headline`);
-    if (m.buttons.bottom > m.controlsTop) issues.push(`slide ${n} buttons overlap controls`);
+    if (m.buttons.bottom > m.controlsTop - 31)
+      issues.push(
+        `slide ${n} buttons only ${Math.round(m.controlsTop - m.buttons.bottom)}px above the controls`,
+      );
+    if (m.covered.length) issues.push(`slide ${n} covered: ${m.covered.join(", ")}`);
+    if (m.smallTargets.length) issues.push(`slide ${n} under 44px: ${m.smallTargets.join(", ")}`);
     if (m.imgs.some((img) => !img.loaded)) issues.push(`slide ${n} logo not loaded`);
     if (new Set(m.imgs.map((img) => Math.round(img.h))).size !== 1)
       issues.push(`slide ${n} logos differ in height`);

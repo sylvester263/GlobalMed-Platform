@@ -28,7 +28,7 @@ export type HeroSlide = {
  * Where the copy starts: the same top on every slide, so the lockup, headline, text and
  * buttons sit at the same height on all of them (no jump when slides change).
  */
-const copyTop = "pt-8 md:pt-12 lg:pt-[clamp(40px,9vh,88px)]";
+const copyTop = "pt-8 md:pt-12 lg:pt-20";
 
 const SWIPE_THRESHOLD = 50;
 const TICKS = 8;
@@ -69,7 +69,10 @@ export function HeroCarousel({
     <section
       aria-roledescription="carousel"
       aria-label="Highlights"
-      className={cn("relative isolate touch-pan-y overflow-hidden bg-navy text-white", heroHeight)}
+      className={cn(
+        "relative isolate grid touch-pan-y overflow-hidden bg-navy text-white",
+        heroHeight,
+      )}
       onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
       onPointerLeave={(e) => e.pointerType === "mouse" && setHovered(false)}
       onPointerDown={(e) => {
@@ -90,7 +93,10 @@ export function HeroCarousel({
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocusWithin(false);
       }}
     >
-      <div aria-live={running ? "off" : "polite"} className="absolute inset-0">
+      {/* Slides share one grid cell, so the hero is as tall as its tallest slide (never
+          shorter than heroHeight): text, buttons and controls can't run into each other on
+          short screens (2026-10-01). */}
+      <div aria-live={running ? "off" : "polite"} className="col-start-1 row-start-1 grid">
         {slides.map((slide, i) => {
           const isActive = i === active;
           return (
@@ -103,7 +109,7 @@ export function HeroCarousel({
               inert={!isActive}
               data-active={isActive || undefined}
               className={cn(
-                "hero-slide absolute inset-0",
+                "hero-slide relative col-start-1 row-start-1",
                 isActive ? "z-10 opacity-100" : "z-0 opacity-0",
               )}
             >
@@ -135,7 +141,14 @@ export function HeroCarousel({
                 aria-hidden="true"
                 className="absolute inset-0 bg-navy/75 lg:bg-transparent lg:bg-linear-to-r lg:from-navy/75 lg:from-55% lg:to-transparent"
               />
-              <div className={cn("relative container-fluid flex h-full flex-col", copyTop)}>
+              {/* Bottom padding = stats overlap + 16px + controls row (44px) + 32px: the buttons
+                  end at least 32px above the controls, and both stay above the stats card. */}
+              <div
+                className={cn(
+                  "relative container-fluid flex h-full flex-col pb-[124px] md:pb-[156px] lg:pb-[164px]",
+                  copyTop,
+                )}
+              >
                 <div className="hero-slide-copy flex max-w-2xl flex-col gap-5">
                   {lockup && <div aria-hidden="true" className={sliderLockupHeight} />}
                   {/* Headline → 20px → text → 32px → buttons, the same on every slide;
@@ -178,11 +191,11 @@ export function HeroCarousel({
       )}
 
       {/* Controls: claim-line progress (retired 2026-09-28, ADR-028), dots, previous/next
-          and pause. */}
+          and pause. One row below the buttons, 16px above the stats card (bottom offset = its
+          overlap + 16: 48 / 80 / 88px). Dots on the left in line with the text, pause/prev/next on the
+          right; phones: dots centred, pause on the right, prev/next hidden (swipe + dots). */}
       <div className="absolute inset-x-0 bottom-0 z-20">
-        {/* Bottom offset = the stats card's overlap + 24px (32 + 24 on phones, 64 + 24 on
-            tablets, 72 + 24 from 1024px), so the card never covers the controls (2026-10-01). */}
-        <div className="container-fluid flex flex-wrap items-center gap-x-4 gap-y-2 pb-14 md:pb-[88px] lg:pb-24">
+        <div className="relative container-fluid flex flex-wrap items-center justify-center gap-x-4 gap-y-2 pb-12 md:justify-start md:pb-20 lg:pb-[88px]">
           {features.claimLine ? (
             <div className="order-last w-full sm:order-none sm:w-56" aria-hidden="true">
               <svg
@@ -272,7 +285,7 @@ export function HeroCarousel({
             ))}
           </div>
 
-          <div className="ml-auto flex items-center gap-2">
+          <div className="absolute right-(--gutter) flex items-center gap-2 md:static md:ml-auto">
             {autoplay && (
               <button
                 type="button"
@@ -291,7 +304,7 @@ export function HeroCarousel({
               type="button"
               onClick={() => goTo(active - 1)}
               aria-label="Previous slide"
-              className="flex size-11 items-center justify-center rounded-full border border-white/60 hover:bg-white/10"
+              className="hidden size-11 items-center justify-center rounded-full border border-white/60 hover:bg-white/10 md:flex"
             >
               <ChevronLeft aria-hidden="true" className="size-5" />
             </button>
@@ -299,7 +312,7 @@ export function HeroCarousel({
               type="button"
               onClick={() => goTo(active + 1)}
               aria-label="Next slide"
-              className="flex size-11 items-center justify-center rounded-full border border-white/60 hover:bg-white/10"
+              className="hidden size-11 items-center justify-center rounded-full border border-white/60 hover:bg-white/10 md:flex"
             >
               <ChevronRight aria-hidden="true" className="size-5" />
             </button>

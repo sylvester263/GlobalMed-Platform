@@ -502,6 +502,14 @@ Newest entry at the bottom. One entry per Claude Code session.
   - Checks: `tests/audit/stats-overlap.mjs` and `slider-lockup.mjs` at 360/390/768/1024/1280/1440/1920 → 0 problems. Screenshots pm/screenshots/2026-10-01/stats-overlap/.
   - E2E 256 passed before test updates. home-services now expects the stats card between the hero and Our Services. about-story's fade check was flaky on live too (a fade paused at 0.999 while its content-visibility section was off screen); it now checks each block on screen. Both pass.
 
+### Session 018 — Hero controls, stats animation, top contact bar
+- **Date:** 2026-10-02
+- **Done (hero controls):**
+  - Slides now share one grid cell (no absolute stacking), so the hero is as tall as its tallest slide. Minimum heights per breakpoint (`hero-size.ts`) are the measured tallest slide + 8px, and the same box reserves the space before the deferred slider streams in (CLS 0). Desktop top padding fixed at 80px (was viewport-height based), so short laptop screens no longer push the buttons into the dots.
+  - Slide bottom padding = overlap + 16 + 44 (controls row) + 32: buttons end 40–44px above the controls at every width.
+  - Controls row 16px above the stats card: dots left (aligned with the text), pause/prev/next right; phones: dots centred, pause on the right, prev/next hidden (swipe + dots).
+  - `slider-lockup.mjs` now hit-tests the centre of every visible button and control on every slide (`elementFromPoint`) and checks 44px targets: 0 problems at 7 widths. `stats-overlap.mjs`: 0 problems.
+
 ---
 ### Session NNN — <title>
 - **Date:**

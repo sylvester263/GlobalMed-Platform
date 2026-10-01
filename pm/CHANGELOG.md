@@ -26,6 +26,7 @@ Format: Keep a Changelog · Semantic Versioning
 - Hosting documented as own hosting (Hostinger); live site URL in `.env.production`; `/api/health` shows the build commit (2026-10-01)
 
 ### Changed
+- Home hero: one controls row below the slide buttons and 16px above the stats card (dots left / controls right; phones: dots centred, pause only); slides share one grid cell so the hero grows instead of overlapping on short screens (2026-10-02)
 - Home: company facts card (same facts and component as About) overlaps the bottom of the hero; slider controls raised above it; slide text block kept together (headline → 20px → text → 32px → buttons); Years in Healthcare 25+ everywhere from one data source (2026-10-01)
 - Office address stored once in `data/site.ts` (4-line and one-line versions, JSON-LD parts): footer, Contact page, Privacy and Terms, llms.txt, JSON-LD and the chatbot all read it; footer contact items share one baseline (2026-10-01)
 - Footer: fine print "© 2026 GlobalMed Transcriptions. All rights reserved. · Designed & developed by SylJo Tech"; Google Play badge links to the GlobalMed app (new tab), App Store stays "Coming soon" (2026-10-01)

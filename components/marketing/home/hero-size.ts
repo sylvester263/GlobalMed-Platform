@@ -1,9 +1,10 @@
 /**
- * Home hero height per breakpoint. Used by the slider itself and by the box that reserves its
- * space in the server HTML (hero-slider.tsx): the slider streams in after the page shell
- * (deferred island), and the reserved box keeps the stats card and everything below from
- * moving when it arrives (CLS 0, 2026-10-01). Phones are taller so slide 1's buttons clear
- * the controls, which sit above the stats card's overlap.
+ * Home hero minimum height per breakpoint. The slides share one grid cell, so the hero grows
+ * if a slide needs more room; these minimums are the tallest slide measured in each range
+ * (2026-10-01) plus 8px, so in practice the height is fixed. The same classes reserve the
+ * hero's space in the server HTML (hero-slider.tsx): the slider streams in after the page
+ * shell (deferred island), and the reserved box keeps the stats card and everything below
+ * from moving when it arrives (CLS 0).
  */
 export const heroHeight =
-  "h-[704px] min-[390px]:h-[660px] sm:h-[560px] md:h-[520px] lg:h-[clamp(560px,80vh,640px)]";
+  "min-h-[720px] min-[390px]:min-h-[676px] sm:min-h-[556px] md:min-h-[548px] lg:min-h-[672px]";

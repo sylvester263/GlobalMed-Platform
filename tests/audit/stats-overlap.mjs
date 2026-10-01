@@ -1,6 +1,6 @@
 /**
  * Home stats card over the hero (2026-10-01). At each width: the card overlaps the bottom of
- * the hero (half its height, 72px, from 1024px; 64px on tablets; 32px on phones), the slider controls stay above the
+ * the hero (half its height, 72px, from 1024px; 64px on tablets; 32px on phones), the slider controls stay 16px above the
  * card and clickable, "Our Services" follows with normal section spacing (no empty band),
  * and loading the page causes no layout shift. Screenshots: node tests/audit/stats-overlap.mjs <dir>
  */
@@ -41,6 +41,7 @@ for (const width of [360, 390, 768, 1024, 1280, 1440, 1920]) {
     const ctlBottom = Math.max(...controlBoxes.map((r) => r.bottom));
     // Which element is on top at the centre of the "next" button and of a dot?
     const at = (el) => {
+      if (el.offsetParent === null) return true; // hidden (prev/next on phones)
       const r = box(el);
       const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
       return el.contains(hit);
@@ -73,7 +74,7 @@ for (const width of [360, 390, 768, 1024, 1280, 1440, 1920]) {
   // The section's white background must start at the hero's bottom (only the card overlaps).
   if (Math.abs(m.sectionTop - m.heroBottom) > 1)
     issues.push(`section starts ${Math.round(m.heroBottom - m.sectionTop)}px over the hero`);
-  if (m.controlsBottom > m.cardTop - 23)
+  if (m.controlsBottom > m.cardTop - 15)
     issues.push(`controls ${Math.round(m.cardTop - m.controlsBottom)}px above the card`);
   if (!m.nextOnTop || !m.dotOnTop) issues.push("controls covered");
   const join = width >= 1024 ? 96 : width >= 768 ? 64 : 48;

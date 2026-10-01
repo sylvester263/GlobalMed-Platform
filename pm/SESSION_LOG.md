@@ -462,6 +462,10 @@ Newest entry at the bottom. One entry per Claude Code session.
     - `/api/chat` now merges text parts (≤ every 120ms) and pads each flush to 2 KB with an SSE comment.
     - Documented in docs/09 §10.
     - The full live chat stream can only be watched once the keys are set: `/api/chat` correctly returns 503 now.
+  - Live check (381fd4e):
+    - Widget and help-button E2E against the live site: 8 passed, 5 skipped (dry-run and Supabase only).
+    - `/api/chat/config` 200; `/api/chat` 503 (fails closed); test hook 404 (dry run only); kb-sync 403 without the secret; /careers 200.
+    - Unrelated to the chatbot: the existing "registration form works once it is on screen" test fails on live. Clicking within ~4s of scrolling to the form uses the browser's own required-field check (submission still blocked). The form's validation takes over once its deferred code has loaded (ADR-033). The test assumes local speed; a follow-up could wait for hydration or load the form a little earlier.
 - **Files touched (Phase 7A):** lib/ai/*, app/api/chat/*, app/api/admin/kb-sync, app/(dashboard)/dashboard/admin/chatbot/*, app/(dashboard)/dashboard/sales/inbox/*, components/marketing/chat/chat-widget.tsx, components/marketing/help-button.tsx, components/dashboard/chatbot/*, supabase/migrations/0006_chatbot.sql, lib/db/types.ts, lib/server-env.ts, lib/security/rate-limit.ts, config/features.ts, app/globals.css, .env.example, package.json, scripts/kb-sync.mjs, tests/{unit,e2e,audit}/chat*, docs/09, pm/*
 - **Next:** client adds the LLM key + Supabase/Upstash/Turnstile/Resend on the hosting → apply migrations 0001–0006 → Re-sync from website → run the question set on the live site and the Sales inbox E2E. Phase 7B WhatsApp once the Meta inputs arrive.
 - **Blockers:** LLM key, Supabase org invite, Upstash/Turnstile/Resend keys; Phase 7B: Meta Business verification, WhatsApp number, token, app secret, templates (pm/CLIENT_INPUTS_NEEDED.md).

@@ -44,7 +44,16 @@ export function CountUp({
   // number's length: the text keeps one width, so the digits sit right-aligned against the
   // suffix and nothing moves (no layout shift).
   const padded = useMemo(
-    () => (n: number) => format(n).padStart(finalNumber.length, "\u2007"),
+    () => (n: number) => {
+      const text = format(n);
+      // Fill the missing leading characters with spaces of the same width as the final
+      // number's: figure space (U+2007) for a digit, punctuation space (U+2008) for , or .
+      const lead = finalNumber
+        .slice(0, Math.max(0, finalNumber.length - text.length))
+        .replace(/\d/g, "\u2007")
+        .replace(/[.,]/g, "\u2008");
+      return lead + text;
+    },
     [format, finalNumber],
   );
 

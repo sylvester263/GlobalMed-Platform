@@ -40,7 +40,7 @@ export function UpdateCard({
       )}
       <div className="flex flex-1 flex-col gap-3 p-6">
         <div className="flex flex-wrap items-center gap-2 text-sm">
-          <span className="rounded-full bg-surface-soft px-3 py-1 text-xs font-semibold text-mid-blue">
+          <span className="rounded-full bg-surface-soft px-3 py-1 text-xs font-semibold text-navy">
             {categoryLabel(update.category)}
           </span>
           <time dateTime={update.publishAt} className="text-muted-foreground">

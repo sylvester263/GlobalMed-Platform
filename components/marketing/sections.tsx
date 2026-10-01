@@ -371,7 +371,7 @@ export function StatsStrip({
     <section data-tone="white" aria-label="GlobalMed in numbers" className="border-y bg-card">
       <div
         className={cn(
-          "band-y container-fluid grid grid-cols-2 gap-8 py-10",
+          "band-y container-fluid grid grid-cols-2 gap-x-6 gap-y-8 py-10 sm:gap-8",
           stats.length === 5 ? "md:grid-cols-3 lg:grid-cols-5" : "lg:grid-cols-4",
         )}
       >
@@ -384,7 +384,9 @@ export function StatsStrip({
             decimals={stat.decimals}
             illustrative={!confirmed}
             className={cn("-mx-4 -my-3", statItemClass)}
-            valueClassName={statValueClass}
+            // 24px on phones: a long figure ("125,000+") must fit a 2-column phone grid
+            // even in the fallback serif (ADR-035).
+            valueClassName={cn("text-2xl sm:text-3xl", statValueClass)}
           />
         ))}
       </div>

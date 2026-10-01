@@ -125,10 +125,11 @@ export const features = {
    */
   footerTrademarkNote: false,
   /**
-   * Hidden at client request (2026-10-01) — the delivery note under the price on the course
-   * CARDS (home and AAPC page). It stays on each course page. Set true to restore.
+   * The delivery note under the price on the course CARDS (home and AAPC page). Hidden
+   * 2026-10-01, restored the same day at client request. Set false to hide it on the cards
+   * (it always stays on each course page).
    */
-  courseCardPriceNote: false,
+  courseCardPriceNote: true,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

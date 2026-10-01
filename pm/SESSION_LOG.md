@@ -442,6 +442,7 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Files touched:** config/features.ts, data/credentials.ts, docs/09_AI_CHATBOT_WHATSAPP.md, components/marketing/{aapc-course-card,footer-compact,site-footer,wordmark}.tsx, components/lms/certificate-preview.tsx, lib/seo/{json-ld,og-image}.tsx, app/(marketing)/page.tsx, app/(marketing)/school/aapc-certification-pakistan/page.tsx, tests/e2e/public-site.spec.ts, tests/audit/course-cards.mjs, pm/*
 - **Next:** remaining items of the 2026-10-01 gap brief; og/og-education placement.
 - **Blockers:** none.
+- **Follow-up (same day):** client asked to restore the course card delivery note: `courseCardPriceNote: true`. Card audit 0 problems at 6 widths (note on every card, aligned, 24px to Package Includes); screenshots refreshed.
 
 ---
 ### Session NNN — <title>

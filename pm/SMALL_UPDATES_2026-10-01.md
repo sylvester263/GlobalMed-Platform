@@ -14,7 +14,7 @@ LCCI title, footer line, course card note, horizontal logo site-wide, card align
 
 ## 2. Flags added (`config/features.ts`)
 - `footerTrademarkNote: false`: hides "CPC® and CPB® are registered trademarks of AAPC." (true restores it and the copyright at the start of the links row).
-- `courseCardPriceNote: false`: hides the delivery note on the course cards only.
+- `courseCardPriceNote`: hid the delivery note on the course cards only; **restored the same day at client request (now `true`)**.
 
 ## 3. Logo replacement list
 Searched for `globalmed-logo-stacked`, `globalmed-logo-stacked-on-white` and the `Wordmark` component.

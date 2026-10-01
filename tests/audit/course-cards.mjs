@@ -2,7 +2,7 @@
  * Course card alignment (2026-10-01): from 1024px the three AAPC course cards are equal height
  * and their sections (title, summary, facts, "Who it's for", price, "Package Includes",
  * buttons, "Course details") start at the same height. Also checks price → "Package Includes"
- * is 24px and that the delivery note is gone from the cards.
+ * is 24px and that every card shows the delivery note (restored 2026-10-01).
  * Screenshots: node tests/audit/course-cards.mjs <dir>
  */
 import { mkdirSync } from "node:fs";
@@ -52,7 +52,7 @@ for (const width of [360, 768, 1024, 1280, 1440, 1920]) {
     const issues = [];
     if (m.length !== 3) issues.push(`${m.length} cards`);
     m.forEach((c, i) => {
-      if (c.note) issues.push(`card ${i + 1} still shows the price note`);
+      if (!c.note) issues.push(`card ${i + 1} is missing the price note`);
       if (Math.abs(c.pkgGap - 24) > 0.5 && !(i === 2 && width < 1024))
         issues.push(`card ${i + 1} price → package ${Math.round(c.pkgGap)}px`);
     });
@@ -72,7 +72,13 @@ for (const width of [360, 768, 1024, 1280, 1440, 1920]) {
       await el.scrollIntoViewIfNeeded();
       const box = await el.boundingBox();
       await page.screenshot({
-        clip: { x: box.x - 16, y: box.y - 24, width: box.width + 32, height: box.height + 40 },
+        fullPage: true,
+        clip: {
+          x: box.x - 16,
+          y: box.y + (await page.evaluate(() => scrollY)) - 24,
+          width: box.width + 32,
+          height: box.height + 40,
+        },
         path: `${shotDir}/course-cards-${route === "/" ? "home" : "aapc"}-1440.png`,
       });
     }

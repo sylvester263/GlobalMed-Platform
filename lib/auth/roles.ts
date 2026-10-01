@@ -253,6 +253,13 @@ export const dashboardSections: Record<DashboardArea, DashboardSection[]> = {
       description: "Web and WhatsApp conversations handed to a person.",
     },
     {
+      slug: "updates",
+      label: "Updates",
+      icon: "content",
+      phase: 8,
+      description: "News and announcements on the home page and /updates.",
+    },
+    {
       slug: "reports",
       label: "Reports",
       icon: "reports",

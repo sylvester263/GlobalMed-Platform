@@ -123,6 +123,11 @@ describe("dashboard form validation", () => {
     expect(updateFormSchema.safeParse(valid).success).toBe(true);
   });
 
+  it("accepts the dates the form sends (toISOString, UTC)", () => {
+    const publishAt = new Date("2026-10-02T10:00:00+05:00").toISOString();
+    expect(updateFormSchema.safeParse({ ...valid, publishAt }).success).toBe(true);
+  });
+
   it("limits the short text to 280 characters", () => {
     expect(updateFormSchema.safeParse({ ...valid, summary: "x".repeat(281) }).success).toBe(false);
   });

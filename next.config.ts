@@ -45,6 +45,8 @@ const nextConfig: NextConfig = {
     // Was true (P2-21) while the CSS was small. At 125 kB it was inlined into every page twice
     // (a <style> tag and the RSC payload), doubling HTML size and main-thread work (ADR-031).
     inlineCss: false,
+    // Update images are uploaded through a server action (lib/updates/actions.ts): up to 5 MB.
+    serverActions: { bodySizeLimit: "6mb" },
   },
   // Social images for dynamic routes render on request: ship the font, logo and photo
   // backgrounds they read (lib/seo/og-image.tsx) with those functions.
@@ -52,7 +54,7 @@ const nextConfig: NextConfig = {
     "/**/opengraph-image*": [
       "./assets/fonts/**",
       "./public/images/og/*-1200.jpg",
-      "./public/images/brand/globalmed-logo-stacked.png",
+      "./public/images/brand/globalmed-logo-horizontal.png",
     ],
   },
   // A stray lockfile higher up the tree would otherwise be picked as the workspace root.

@@ -163,15 +163,18 @@ export default async function ServicePage({ params }: Props) {
         </Section>
       )}
 
-      <Section className="split-cols-reverse lg:grid lg:items-start">
-        <div className="flex flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
+      {/* FAQ in one column (2026-10-01): the list is short, so a side column left a tall empty space. */}
+      <Section className="gap-8">
+        <div className="flex max-w-5xl flex-col gap-4">
           <h2 className="text-2xl lg:text-3xl">Questions about {service.name.toLowerCase()}</h2>
-          <div className="flex items-start gap-3 rounded-lg bg-mint p-4 text-teal-deep">
+          <div className="flex items-start gap-3 rounded-2xl bg-mint p-4 text-teal-deep">
             <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0" />
             <p className="text-sm">{service.compliance}</p>
           </div>
         </div>
-        <FaqList faqs={service.faqs} />
+        <div className="max-w-5xl">
+          <FaqList faqs={service.faqs} />
+        </div>
       </Section>
 
       <CtaBand

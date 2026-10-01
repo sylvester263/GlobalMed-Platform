@@ -47,8 +47,8 @@ export function AboutStory() {
   const hasPhoto = publicAssetExists(story.founder.photo);
 
   return (
-    <div data-about-story>
-      <section aria-labelledby="our-story-title" className="bg-card">
+    <div data-about-story data-tone-group>
+      <section data-tone="white" aria-labelledby="our-story-title" className="bg-card">
         {/* Split grid (client, 2026-09-30): text 7 / photo 5 from 1280px, 60/40 at 1024–1279px,
             photo max 400px (380px at 1024–1279px); photo and heading + text are centred against
             each other (empty rows above and below the text absorb any difference)
@@ -91,7 +91,11 @@ export function AboutStory() {
         </FadeInView>
       </section>
 
-      <section aria-labelledby="documentation-title" className="bg-ledger cv-auto">
+      <section
+        data-tone="ledger"
+        aria-labelledby="documentation-title"
+        className="bg-ledger cv-auto"
+      >
         <FadeInView className={cn(band, "split")}>
           <div className="flex flex-col gap-4">
             <h2 id="documentation-title" className={heading}>
@@ -106,7 +110,11 @@ export function AboutStory() {
         </FadeInView>
       </section>
 
-      <section aria-labelledby="revenue-cycle-title" className="border-y bg-card cv-auto">
+      <section
+        data-tone="white"
+        aria-labelledby="revenue-cycle-title"
+        className="border-y bg-card cv-auto"
+      >
         <FadeInView className={cn(band, "split")}>
           <div className="flex flex-col gap-4">
             <h2 id="revenue-cycle-title" className={heading}>
@@ -125,7 +133,11 @@ export function AboutStory() {
         </FadeInView>
       </section>
 
-      <section aria-labelledby="workforce-title" className="bg-primary text-white cv-auto">
+      <section
+        data-tone="primary"
+        aria-labelledby="workforce-title"
+        className="bg-primary text-white cv-auto"
+      >
         <FadeInView className={cn(band, "split lg:items-center")}>
           <div className="flex flex-col gap-4">
             <h2 id="workforce-title" className={cn(heading, "text-white")}>
@@ -149,7 +161,7 @@ export function AboutStory() {
         </FadeInView>
       </section>
 
-      <section aria-label="Our purpose" className="bg-card cv-auto">
+      <section data-tone="white" aria-label="Our purpose" className="bg-card cv-auto">
         <FadeInView className={cn(band, "flex flex-col items-center gap-8 text-center")}>
           <span aria-hidden="true" className="block h-0.5 w-20 bg-sky" />
           <blockquote className="max-w-[60ch]">

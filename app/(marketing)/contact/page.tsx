@@ -30,7 +30,7 @@ export default function ContactPage() {
         crumbs={[{ name: "Contact", path: "/contact" }]}
       />
       <Section id="contact-form" className="split-cols-reverse lg:grid lg:items-start">
-        <div className="flex flex-col gap-8 lg:sticky lg:top-24 lg:self-start">
+        <div className="flex flex-col gap-8 lg:self-center">
           <ul className="flex flex-col gap-5">
             <li className="flex gap-3">
               <Phone aria-hidden="true" className="mt-1 size-5 shrink-0 text-teal" />

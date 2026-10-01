@@ -60,7 +60,7 @@ export function PageHero({
   className?: string;
 }) {
   return (
-    <section className={cn("border-b bg-ledger", className)}>
+    <section data-tone="ledger" className={cn("border-b bg-ledger", className)}>
       <div className="container-fluid flex flex-col gap-6 section-y">
         {crumbs && crumbs.length > 0 && (
           <>
@@ -153,6 +153,7 @@ export function Section({
   return (
     <section
       id={id}
+      data-tone={tone === "mint" ? "mint" : tone === "ink" ? "ink" : "white"}
       aria-labelledby={title ? headingId : undefined}
       className={cn(
         tone === "white" && "border-y bg-card",
@@ -213,7 +214,7 @@ export function CtaBand({
   secondary?: { href: string; label: string };
 }) {
   return (
-    <section className="bg-ink text-white cv-auto">
+    <section data-tone="ink" className="bg-ink text-white cv-auto">
       <div className="container-fluid flex flex-col items-start gap-4 section-y">
         <h2 className="max-w-3xl text-2xl text-white lg:text-3xl">{title}</h2>
         {body && <p className="max-w-prose text-white/80">{body}</p>}
@@ -295,10 +296,10 @@ export function StatsStrip({
   confirmed?: boolean;
 }) {
   return (
-    <section aria-label="GlobalMed in numbers" className="border-y bg-card">
+    <section data-tone="white" aria-label="GlobalMed in numbers" className="border-y bg-card">
       <div
         className={cn(
-          "container-fluid grid grid-cols-2 gap-8 py-10",
+          "band-y container-fluid grid grid-cols-2 gap-8 py-10",
           stats.length === 5 ? "md:grid-cols-3 lg:grid-cols-5" : "lg:grid-cols-4",
         )}
       >

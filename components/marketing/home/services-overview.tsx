@@ -66,7 +66,7 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
     >
       <div
         data-stack-text
-        className="flex flex-col gap-3 lg:self-start lg:p-[clamp(32px,4vw,72px)] lg:[&_p]:max-w-[65ch]"
+        className="flex flex-col gap-3 lg:self-center lg:p-[clamp(32px,4vw,72px)] lg:[&_p]:max-w-[65ch]"
       >
         {/* Decorative ordinal in the client's sky blue; the heading carries the meaning. Sky on
             white is under 3:1, so it stays decoration (WCAG 1.4.3 exemption): the digits are
@@ -157,7 +157,7 @@ export function ServicesOverview() {
   }));
 
   return (
-    <section id="services" aria-labelledby="services-title" className="bg-card">
+    <section id="services" data-tone="white" aria-labelledby="services-title" className="bg-card">
       <div className="container-fluid flex flex-col gap-10 section-y">
         {/* Full container width; from 1280px the AAPC note sits beside the lead (60/40). */}
         <div className="grid gap-4 xl:grid-cols-[3fr_2fr] xl:items-center xl:gap-12">

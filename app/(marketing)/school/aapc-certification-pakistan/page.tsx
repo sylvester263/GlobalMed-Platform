@@ -208,11 +208,12 @@ export default function AapcCertificationPage() {
         stages={aapcSteps}
       />
 
-      <Section className="split-cols-reverse lg:grid lg:items-start">
-        <h2 className="text-2xl lg:sticky lg:top-24 lg:self-start lg:text-3xl">
-          Questions about AAPC certification
-        </h2>
-        <FaqList faqs={aapcFaqs} />
+      {/* FAQ in one column (2026-10-01): the list is short, so a side column left a tall empty space. */}
+      <Section className="gap-8">
+        <h2 className="text-2xl lg:text-3xl">Questions about AAPC certification</h2>
+        <div className="max-w-5xl">
+          <FaqList faqs={aapcFaqs} />
+        </div>
       </Section>
 
       <AapcRegisterBand />

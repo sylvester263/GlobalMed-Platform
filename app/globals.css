@@ -362,6 +362,140 @@
   }
 }
 
+/*
+ * Adjacent sections with the same background (2026-10-01): they share their padding, so
+ * the space between their content is at most 96px (desktop), 64px (tablet), 48px (phone)
+ * instead of two full paddings. Every section says its background in `data-tone`; wrappers
+ * around sections (About's story, deferred islands) carry `data-tone-group` so the rule
+ * works across them. `.band-y` marks thin bands (stats) that join the same way.
+ */
+:root {
+  --section-join: 48px;
+}
+@media (min-width: 768px) {
+  :root {
+    --section-join: 64px;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --section-join: 96px;
+  }
+}
+section[data-tone="white"]:has(+ section[data-tone="white"]) > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="white"]:last-child):has(+ section[data-tone="white"])
+  > section[data-tone="white"]:last-child
+  > :is(.section-y, .band-y),
+section[data-tone="white"]:has(+ [data-tone-group] > section[data-tone="white"]:first-child)
+  > :is(.section-y, .band-y) {
+  padding-bottom: var(--section-join);
+}
+section[data-tone="white"] + section[data-tone="white"] > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="white"]:last-child)
+  + section[data-tone="white"]
+  > :is(.section-y, .band-y),
+section[data-tone="white"]
+  + [data-tone-group]
+  > section[data-tone="white"]:first-child
+  > :is(.section-y, .band-y) {
+  padding-top: 0;
+}
+section[data-tone="ledger"]:has(+ section[data-tone="ledger"]) > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="ledger"]:last-child):has(+ section[data-tone="ledger"])
+  > section[data-tone="ledger"]:last-child
+  > :is(.section-y, .band-y),
+section[data-tone="ledger"]:has(+ [data-tone-group] > section[data-tone="ledger"]:first-child)
+  > :is(.section-y, .band-y) {
+  padding-bottom: var(--section-join);
+}
+section[data-tone="ledger"] + section[data-tone="ledger"] > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="ledger"]:last-child)
+  + section[data-tone="ledger"]
+  > :is(.section-y, .band-y),
+section[data-tone="ledger"]
+  + [data-tone-group]
+  > section[data-tone="ledger"]:first-child
+  > :is(.section-y, .band-y) {
+  padding-top: 0;
+}
+section[data-tone="mint"]:has(+ section[data-tone="mint"]) > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="mint"]:last-child):has(+ section[data-tone="mint"])
+  > section[data-tone="mint"]:last-child
+  > :is(.section-y, .band-y),
+section[data-tone="mint"]:has(+ [data-tone-group] > section[data-tone="mint"]:first-child)
+  > :is(.section-y, .band-y) {
+  padding-bottom: var(--section-join);
+}
+section[data-tone="mint"] + section[data-tone="mint"] > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="mint"]:last-child)
+  + section[data-tone="mint"]
+  > :is(.section-y, .band-y),
+section[data-tone="mint"]
+  + [data-tone-group]
+  > section[data-tone="mint"]:first-child
+  > :is(.section-y, .band-y) {
+  padding-top: 0;
+}
+section[data-tone="ink"]:has(+ section[data-tone="ink"]) > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="ink"]:last-child):has(+ section[data-tone="ink"])
+  > section[data-tone="ink"]:last-child
+  > :is(.section-y, .band-y),
+section[data-tone="ink"]:has(+ [data-tone-group] > section[data-tone="ink"]:first-child)
+  > :is(.section-y, .band-y) {
+  padding-bottom: var(--section-join);
+}
+section[data-tone="ink"] + section[data-tone="ink"] > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="ink"]:last-child)
+  + section[data-tone="ink"]
+  > :is(.section-y, .band-y),
+section[data-tone="ink"]
+  + [data-tone-group]
+  > section[data-tone="ink"]:first-child
+  > :is(.section-y, .band-y) {
+  padding-top: 0;
+}
+section[data-tone="navy"]:has(+ section[data-tone="navy"]) > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="navy"]:last-child):has(+ section[data-tone="navy"])
+  > section[data-tone="navy"]:last-child
+  > :is(.section-y, .band-y),
+section[data-tone="navy"]:has(+ [data-tone-group] > section[data-tone="navy"]:first-child)
+  > :is(.section-y, .band-y) {
+  padding-bottom: var(--section-join);
+}
+section[data-tone="navy"] + section[data-tone="navy"] > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="navy"]:last-child)
+  + section[data-tone="navy"]
+  > :is(.section-y, .band-y),
+section[data-tone="navy"]
+  + [data-tone-group]
+  > section[data-tone="navy"]:first-child
+  > :is(.section-y, .band-y) {
+  padding-top: 0;
+}
+section[data-tone="primary"]:has(+ section[data-tone="primary"]) > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="primary"]:last-child):has(+ section[data-tone="primary"])
+  > section[data-tone="primary"]:last-child
+  > :is(.section-y, .band-y),
+section[data-tone="primary"]:has(+ [data-tone-group] > section[data-tone="primary"]:first-child)
+  > :is(.section-y, .band-y) {
+  padding-bottom: var(--section-join);
+}
+section[data-tone="primary"] + section[data-tone="primary"] > :is(.section-y, .band-y),
+[data-tone-group]:has(> section[data-tone="primary"]:last-child)
+  + section[data-tone="primary"]
+  > :is(.section-y, .band-y),
+section[data-tone="primary"]
+  + [data-tone-group]
+  > section[data-tone="primary"]:first-child
+  > :is(.section-y, .band-y) {
+  padding-top: 0;
+}
+/* Two white sections in a row: one divider line between them, not two. */
+section[data-tone="white"] + section[data-tone="white"],
+[data-tone-group]:has(> section[data-tone="white"]:last-child) + section[data-tone="white"] {
+  border-top-width: 0;
+}
+
 /* Phones: no paragraph under 16px (small print included). Unlayered, so it wins over the
    text-xs / text-sm utilities; 768px and up keep the smaller sizes. */
 @media (max-width: 767.98px) {

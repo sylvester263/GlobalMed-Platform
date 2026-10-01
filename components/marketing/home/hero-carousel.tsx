@@ -55,7 +55,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
     <section
       aria-roledescription="carousel"
       aria-label="Highlights"
-      className="relative isolate h-[560px] touch-pan-y overflow-hidden bg-navy text-white md:h-[520px] lg:h-[640px]"
+      className="relative isolate h-[560px] touch-pan-y overflow-hidden bg-navy text-white md:h-[520px] lg:h-[clamp(480px,80vh,640px)]"
       onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
       onPointerLeave={(e) => e.pointerType === "mouse" && setHovered(false)}
       onPointerDown={(e) => {

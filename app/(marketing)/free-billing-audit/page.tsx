@@ -49,7 +49,7 @@ export default function FreeBillingAuditPage() {
         crumbs={[{ name: "Free billing audit", path: "/free-billing-audit" }]}
       />
       <Section id="audit-form" className="split-cols-reverse lg:grid lg:items-start">
-        <div className="flex flex-col gap-8 lg:sticky lg:top-24 lg:self-start">
+        <div className="flex flex-col gap-8 lg:self-center">
           <div className="flex flex-col gap-4">
             <h2 className="text-2xl lg:text-3xl">What we review</h2>
             <ul className="flex flex-col gap-3">

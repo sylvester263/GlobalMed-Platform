@@ -160,7 +160,7 @@ function ClaimLineJourneySection({ id, title, intro, stages, children }: Journey
 
   const headingId = `${id}-title`;
   return (
-    <section id={id} aria-labelledby={headingId} className="bg-mint cv-auto">
+    <section id={id} data-tone="mint" aria-labelledby={headingId} className="bg-mint cv-auto">
       <div
         ref={wrapperRef}
         className="relative"
@@ -207,7 +207,7 @@ type JourneySectionProps = {
 function NumberedStepsSection({ id, title, intro, stages, children }: JourneySectionProps) {
   const headingId = `${id}-title`;
   return (
-    <section id={id} aria-labelledby={headingId} className="bg-mint cv-auto">
+    <section id={id} data-tone="mint" aria-labelledby={headingId} className="bg-mint cv-auto">
       <div className="container-fluid flex flex-col gap-10 section-y">
         <div className="flex max-w-3xl flex-col gap-3">
           <h2 id={headingId} className="text-2xl lg:text-3xl">

@@ -112,7 +112,7 @@ export function deferHydration<P extends object>(
     const Component = Lazy;
     return (
       // "load" islands don't need a box to observe, so they don't affect layout at all.
-      <div data-defer={name} className={when === "load" ? "contents" : undefined}>
+      <div data-defer={name} data-tone-group className={when === "load" ? "contents" : undefined}>
         <Suspense fallback={null}>
           <Component {...props} />
         </Suspense>

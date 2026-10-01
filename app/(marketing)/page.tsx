@@ -102,7 +102,11 @@ export default function HomePage() {
       <CredentialsSection />
 
       {/* 2. Partnership strip (MG-4 count-up) */}
-      <section aria-label="GlobalMed and AAPC partnership" className="bg-primary text-white">
+      <section
+        data-tone="primary"
+        aria-label="GlobalMed and AAPC partnership"
+        className="bg-primary text-white"
+      >
         <div className="container-fluid flex flex-col gap-10 section-y">
           <p className="max-w-4xl font-serif text-xl leading-snug font-semibold text-white lg:text-2xl">
             {approvedWording.partnership}
@@ -326,8 +330,9 @@ export default function HomePage() {
       )}
 
       {/* 9. FAQ (FaqList emits the FAQPage JSON-LD) */}
-      <Section deferRender tone="white" className="split-cols-reverse lg:grid lg:items-start">
-        <div className="flex flex-col gap-3 lg:sticky lg:top-24 lg:self-start">
+      {/* FAQ in one column (2026-10-01): the list is short, so a side column left a tall empty space. */}
+      <Section deferRender tone="white" className="gap-8">
+        <div className="flex flex-col gap-3">
           <h2 className="text-2xl lg:text-3xl">Questions about CPC® and CPB®</h2>
           <Link
             href="/faq"
@@ -336,7 +341,9 @@ export default function HomePage() {
             All FAQs
           </Link>
         </div>
-        <FaqList faqs={aapcFaqs} />
+        <div className="max-w-5xl">
+          <FaqList faqs={aapcFaqs} />
+        </div>
       </Section>
 
       {/* 10. Final CTA */}

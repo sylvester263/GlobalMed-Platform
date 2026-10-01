@@ -531,6 +531,16 @@ Newest entry at the bottom. One entry per Claude Code session.
   - Heading font now `display: "optional"` (ADR-035) → CLS 0.000 at all 7 widths in two full runs.
   - Lighthouse under machine load: CLS 0 on every run; performance scores noisy (desktop About 54/98/78 within one run), so no performance conclusion from this run.
 
+- **Done (social links):**
+  - `data/site.ts` social: Facebook, LinkedIn, Instagram set; YouTube and X empty (hidden). Shared `socialOrder` (Facebook, LinkedIn, Instagram, …) and `socialHoverClass` (rise 2px + 80% opacity; fade only with reduced motion) used by the top bar and the footer.
+  - Links open in a new tab with rel noopener noreferrer, aria-label "GlobalMed on Facebook / LinkedIn / Instagram".
+  - `lib/site.ts` `site.social` now reads the same links, so the Organization JSON-LD `sameAs` lists all three (and the hidden extended footer matches).
+  - Links opened in Chrome:
+    - Instagram → "Globalmed Transcriptions (@globalmedtranscriptions)" ✓.
+    - Facebook → "GlobalMed School of Medical Billing & Coding | Lahore" (a GlobalMed page, but the school brand). **Client to confirm** this is the page to link.
+    - LinkedIn → login wall (can't be checked without signing in); it is an /in/ (personal profile) URL, not /company/. **Client to confirm.**
+  - E2E: top-bar (incl. new social + sameAs tests), footer badges, public site: 35 passed. Screenshots pm/screenshots/2026-10-02/social/ (top bar and footer at 1920 and 390).
+
 ---
 ### Session NNN — <title>
 - **Date:**

@@ -58,8 +58,46 @@ test("phones: icons only, centred, 44px targets", async ({ page }) => {
     expect(box.height).toBeGreaterThanOrEqual(44);
     await expect(link.locator("span")).toHaveClass(/sr-only/);
   }
+  // Contact icons + social icons share one centred row.
   const first = (await links.first().boundingBox())!;
-  const last = (await links.last().boundingBox())!;
-  expect(Math.abs((first.x + last.x + last.width) / 2 - 180)).toBeLessThanOrEqual(2);
+  const social = page.getByRole("list", { name: "GlobalMed on social media" }).first();
+  const lastIcon = (await social.getByRole("link").last().boundingBox())!;
+  expect(Math.abs((first.x + lastIcon.x + lastIcon.width) / 2 - 180)).toBeLessThanOrEqual(2);
+  expect(first.y).toBe(lastIcon.y);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
+});
+
+// Social links (client, 2026-10-02): Facebook, LinkedIn, Instagram in the top bar and the
+// footer, same order, new tab; YouTube and X hidden; also in the Organization JSON-LD.
+const socials = [
+  ["Facebook", "https://www.facebook.com/GlobalMedPakistan/"],
+  ["LinkedIn", "https://www.linkedin.com/in/globalmed-transcriptions/"],
+  ["Instagram", "https://www.instagram.com/globalmedtranscriptions/"],
+] as const;
+
+for (const width of [1920, 390]) {
+  test(`social icons in the top bar and footer at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/about");
+    const lists = page.getByRole("list", { name: "GlobalMed on social media" });
+    await expect(lists).toHaveCount(2);
+    for (const list of await lists.all()) {
+      const links = list.getByRole("link");
+      await expect(links).toHaveCount(3);
+      for (const [i, [name, href]] of socials.entries()) {
+        const link = links.nth(i);
+        await expect(link).toHaveAccessibleName(`GlobalMed on ${name}`);
+        await expect(link).toHaveAttribute("href", href);
+        await expect(link).toHaveAttribute("target", "_blank");
+        await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+      }
+      await expect(list.getByRole("link", { name: /YouTube|GlobalMed on X/ })).toHaveCount(0);
+    }
+  });
+}
+
+test("Organization JSON-LD lists the social profiles in sameAs", async ({ page }) => {
+  await page.goto("/");
+  const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).join();
+  for (const [, href] of socials) expect(ld).toContain(href);
 });

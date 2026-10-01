@@ -1,17 +1,8 @@
 import { Mail, Phone } from "lucide-react";
 
-import { glyphs } from "@/components/marketing/social-icons";
-import { contactLinks, siteLinks, type SocialKey } from "@/data/site";
+import { glyphs, socialHoverClass } from "@/components/marketing/social-icons";
+import { contactLinks, siteLinks, socialOrder } from "@/data/site";
 import { cn } from "@/lib/utils";
-
-/** Facebook, LinkedIn and Instagram first, then any other network with a link. */
-const socialOrder: { key: SocialKey; label: string }[] = [
-  { key: "facebook", label: "Facebook" },
-  { key: "linkedin", label: "LinkedIn" },
-  { key: "instagram", label: "Instagram" },
-  { key: "youtube", label: "YouTube" },
-  { key: "x", label: "X" },
-];
 
 // 44px tap areas; navy on sky (#17265C on #51ACE3, 5.9:1).
 const itemClass =
@@ -53,8 +44,12 @@ export function TopBar() {
                   href={siteLinks.social[key]}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`GlobalMed on ${label} (opens in a new tab)`}
-                  className={cn(itemClass, "min-w-11 md:min-w-11")}
+                  aria-label={`GlobalMed on ${label}`}
+                  className={cn(
+                    itemClass,
+                    "min-w-11 hover:no-underline md:min-w-11",
+                    socialHoverClass,
+                  )}
                 >
                   <svg
                     viewBox="0 0 24 24"

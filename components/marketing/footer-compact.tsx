@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { glyphs } from "@/components/marketing/social-icons";
+import { glyphs, socialHoverClass } from "@/components/marketing/social-icons";
 import { features } from "@/config/features";
-import { address, siteLinks, type SocialKey } from "@/data/site";
+import { address, siteLinks, socialOrder } from "@/data/site";
 import { aapcCertificationPath, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -20,15 +20,6 @@ const footerLinks = [
   { label: "Contact Us", href: "/contact" },
   // No consent manager yet (P8-6): the cookie policy explains the cookies and how to opt out.
   { label: "Cookie Settings", href: "/legal/cookie-policy" },
-];
-
-/** Reference order: YouTube, Instagram, Facebook, X, LinkedIn. */
-const socialOrder: { key: SocialKey; label: string }[] = [
-  { key: "youtube", label: "YouTube" },
-  { key: "instagram", label: "Instagram" },
-  { key: "facebook", label: "Facebook" },
-  { key: "x", label: "X" },
-  { key: "linkedin", label: "LinkedIn" },
 ];
 
 /** Filled Instagram glyph for the compact footer (the extended footer's is outlined). */
@@ -273,11 +264,8 @@ export function CompactFooter() {
                     href={siteLinks.social[key]}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`GlobalMed on ${label} (opens in a new tab)`}
-                    className={cn(
-                      "flex p-[5px] text-white transition-colors hover:text-sky",
-                      focusRing,
-                    )}
+                    aria-label={`GlobalMed on ${label}`}
+                    className={cn("flex p-[5px] text-white", socialHoverClass, focusRing)}
                   >
                     <svg
                       viewBox="0 0 24 24"

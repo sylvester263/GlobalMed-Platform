@@ -4,6 +4,7 @@ Format: Keep a Changelog · Semantic Versioning
 
 ## [Unreleased]
 ### Added
+- Social links (Facebook, LinkedIn, Instagram) in the top bar, the footer and the Organization JSON-LD sameAs; one source in `data/site.ts`, same order and hover everywhere (2026-10-02)
 - Top contact bar above the main nav on every public page: email and mobile from `data/site.ts`, social icons when linked; scrolls away while the nav stays sticky; icons only on phones (2026-10-02)
 - Phase 7A website chatbot: AI provider adapter (OpenAI / Anthropic / Gemini), RAG knowledge base synced from the live site, guardrails with exact scripted answers, streaming `/api/chat`, chat widget behind the help button, lead capture (source "chatbot"), human handoff to a live Sales inbox, Admin → Chatbot (knowledge base, conversations, settings); answers from the model start once the client's LLM key and Supabase are set (2026-10-01)
 - Project documentation pack (2026-09-24)

@@ -27,17 +27,18 @@ export const contactLinks = {
 } as const;
 
 /**
- * Footer links the client fills in later (client, 2026-09-27). A social icon only shows once
- * its link is set; empty ones leave no gap.
+ * Links the client supplies (client, 2026-09-27). A social icon only shows once its link is
+ * set; empty ones leave no gap. The top bar, the footer and the Organization JSON-LD
+ * (sameAs) all read these.
  */
 export const siteLinks = {
-  /** [CLIENT TO CONFIRM] Social profile URLs. */
+  /** Social profile URLs (client, 2026-10-02). YouTube and X: none yet. */
   social: {
+    facebook: "https://www.facebook.com/GlobalMedPakistan/",
+    linkedin: "https://www.linkedin.com/in/globalmed-transcriptions/",
+    instagram: "https://www.instagram.com/globalmedtranscriptions/",
     youtube: "",
-    instagram: "",
-    facebook: "",
     x: "",
-    linkedin: "",
   },
   /**
    * GlobalMed mobile app store listings (client, 2026-09-28; Google Play supplied 2026-10-01).
@@ -52,3 +53,12 @@ export const siteLinks = {
 };
 
 export type SocialKey = keyof typeof siteLinks.social;
+
+/** Order of the social icons everywhere (client, 2026-10-02). */
+export const socialOrder: { key: SocialKey; label: string }[] = [
+  { key: "facebook", label: "Facebook" },
+  { key: "linkedin", label: "LinkedIn" },
+  { key: "instagram", label: "Instagram" },
+  { key: "youtube", label: "YouTube" },
+  { key: "x", label: "X" },
+];

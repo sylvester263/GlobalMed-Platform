@@ -1,6 +1,6 @@
 import { features, type FeatureFlag } from "@/config/features";
 import { aapcCoursePath, getAapcCourses } from "@/data/courses";
-import { address, contactLinks } from "@/data/site";
+import { address, contactLinks, siteLinks, socialOrder } from "@/data/site";
 import { publicEnv } from "@/lib/env";
 
 /**
@@ -40,13 +40,12 @@ export const site = {
     hoursUs: "Monday–Friday, 9am–6pm Eastern",
   },
   /** [CLIENT TO CONFIRM] Social profile links. An icon only shows once its href is filled in. */
-  social: [
-    { network: "facebook", label: "Facebook", href: "" },
-    { network: "instagram", label: "Instagram", href: "" },
-    { network: "linkedin", label: "LinkedIn", href: "" },
-    { network: "youtube", label: "YouTube", href: "" },
-    { network: "x", label: "X", href: "" },
-  ] as { network: SocialNetwork; label: string; href: string }[],
+  /** Social profiles, from data/site.ts (one source; empty links are filtered out). */
+  social: socialOrder.map(({ key, label }) => ({
+    network: key,
+    label,
+    href: siteLinks.social[key],
+  })) as { network: SocialNetwork; label: string; href: string }[],
   features: {
     /** AAPC partnership page and marks: only with AAPC's written permission (CLAUDE.md §5). */
     aapcPartnership: process.env.NEXT_PUBLIC_FEATURE_AAPC === "true",

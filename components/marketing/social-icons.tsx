@@ -1,5 +1,12 @@
 import { site, type SocialNetwork } from "@/lib/site";
 
+/**
+ * Hover style for social icons, the same in the top bar and the footer (2026-10-02): the icon
+ * rises 2px and fades to 80%. Reduced motion: fade only.
+ */
+export const socialHoverClass =
+  "transition-[opacity,translate] duration-200 ease-out hover:-translate-y-0.5 hover:opacity-80 motion-reduce:hover:translate-y-0";
+
 /** Simple brand glyphs (lucide-react ships no brand icons). 24 × 24, currentColor. */
 export const glyphs: Record<SocialNetwork, React.ReactNode> = {
   facebook: (

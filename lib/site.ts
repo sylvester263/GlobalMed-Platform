@@ -1,6 +1,6 @@
 import { features, type FeatureFlag } from "@/config/features";
 import { aapcCoursePath, getAapcCourses } from "@/data/courses";
-import { address } from "@/data/site";
+import { address, contactLinks } from "@/data/site";
 import { publicEnv } from "@/lib/env";
 
 /**
@@ -23,10 +23,10 @@ export const site = {
   // Supplied by the client on 2026-09-25. The footer, contact page, llms.txt and the
   // Organization/LocalBusiness JSON-LD all read these, so they always match.
   contact: {
-    email: "info@globalmedtranscriptions.com",
+    email: contactLinks.email,
     phone: "+92 42 3594 6342",
     phoneHref: "tel:+924235946342",
-    whatsappDisplay: "+92 300 419 8760",
+    whatsappDisplay: contactLinks.mobile.display,
     // NEXT_PUBLIC_WHATSAPP_NUMBER can override the client's number per environment.
     whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923004198760",
     hours: "Open 24/7",

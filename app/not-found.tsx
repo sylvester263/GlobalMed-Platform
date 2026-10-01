@@ -2,12 +2,14 @@ import Link from "next/link";
 
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
+import { TopBar } from "@/components/marketing/top-bar";
 import { ClaimLine } from "@/components/motion/claim-line";
 import { buttonVariants } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
     <div className="flex min-h-dvh flex-col">
+      <TopBar />
       <SiteHeader />
       <main id="main" className="flex-1 bg-ledger">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-(--gutter) section-y text-center">

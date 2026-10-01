@@ -17,6 +17,16 @@ export const address = {
 } as const;
 
 /**
+ * Email and mobile shown in the top contact bar, the footer and the contact page
+ * (2026-10-02). lib/site.ts reads them from here, so there is one copy.
+ */
+export const contactLinks = {
+  email: "info@globalmedtranscriptions.com",
+  /** Mobile / WhatsApp number. */
+  mobile: { display: "+92 300 419 8760", href: "tel:+923004198760" },
+} as const;
+
+/**
  * Footer links the client fills in later (client, 2026-09-27). A social icon only shows once
  * its link is set; empty ones leave no gap.
  */

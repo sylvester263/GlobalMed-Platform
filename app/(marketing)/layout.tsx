@@ -1,6 +1,7 @@
 import { HelpButton } from "@/components/marketing/help-button";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
+import { TopBar } from "@/components/marketing/top-bar";
 import { WhatsAppButton } from "@/components/marketing/whatsapp-button";
 import { features } from "@/config/features";
 import { JsonLd, organizationJsonLd } from "@/lib/seo/json-ld";
@@ -14,6 +15,8 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       >
         Skip to content
       </a>
+      {/* Scrolls away; the header below is sticky (2026-10-02). */}
+      <TopBar />
       <SiteHeader />
       <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
         {children}

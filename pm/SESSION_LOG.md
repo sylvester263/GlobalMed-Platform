@@ -517,6 +517,15 @@ Newest entry at the bottom. One entry per Claude Code session.
   - Item padding offset in the card so it stays 144px on desktop (72px overlap = half).
   - New `tests/e2e/stats-card.spec.ts` (count-up, +, hover styles, About, reduced motion): 4 passed. Audits 0 problems, CLS 0.
 
+- **Done (top contact bar):**
+  - `components/marketing/top-bar.tsx`: 44px sky (#51ACE3) bar above the sticky nav on every public page, including the 404 page.
+  - Left: mail icon + info@ (mailto) · divider rgba(23,38,92,0.25) · phone icon + +92 300 419 8760 (tel:+923004198760). Navy #17265C 15px (5.9:1 on sky), 44px targets.
+  - Right: social icons (Facebook, LinkedIn, Instagram, then YouTube/X) only when linked. **All social links in `data/site.ts` are still empty, so no icons show yet.**
+  - Email and mobile come from `data/site.ts` `contactLinks` (lib/site.ts now reads them too).
+  - The bar scrolls away; the nav stays sticky (scroll-padding 88px unchanged: anchors land at 88px, below the 65px nav).
+  - Phones: icons only, centred.
+  - New `tests/e2e/top-bar.spec.ts`: 8 passed. Full E2E: 270 passed, 58 skipped.
+
 ---
 ### Session NNN — <title>
 - **Date:**

@@ -285,16 +285,77 @@ export function CourseCard({
 type Stat = { label: string; value: number; suffix: string; decimals: number };
 
 /**
+ * Per-cell layout of the overlapping stats card (five facts): 5 columns with dividers from
+ * 1024px, 3 + 2 on tablets, 2 columns on phones with the last item full width.
+ */
+const overlapCells = [
+  "",
+  "md:border-l",
+  "md:border-l",
+  "md:col-span-3 md:border-t md:pt-6 lg:col-span-1 lg:border-t-0 lg:border-l lg:pt-0",
+  "col-span-2 md:col-span-3 md:border-t md:border-l md:pt-6 lg:col-span-1 lg:border-t-0 lg:pt-0",
+];
+
+/**
  * Trust strip (MG-4). Defaults to the company stats, which show "Illustrative" until the
  * client confirms them; pass `stats` (with `confirmed`) for client-supplied figures.
+ *
+ * `variant="overlap"` (home, 2026-10-01): a white card pulled up over the bottom of the hero
+ * (half its height from 768px, 32px on phones). It belongs to the section after the hero, so
+ * it scrolls with the page content, not with the slider; the slider's controls sit above the
+ * overlap (hero-carousel.tsx).
  */
 export function StatsStrip({
   stats = companyStats.items,
   confirmed = companyStats.confirmed,
+  variant = "strip",
 }: {
   stats?: Stat[];
   confirmed?: boolean;
+  variant?: "strip" | "overlap";
 }) {
+  if (variant === "overlap") {
+    return (
+      <section
+        data-tone="white"
+        aria-label="GlobalMed in numbers"
+        className="relative z-10 flow-root bg-card"
+      >
+        {/* band-y: joins the next white section's spacing (globals.css). Overlap: 32px on
+            phones, 64px on tablets, half the card (72px) from 1024px. flow-root keeps the
+            card's negative margin from collapsing through the section, so only the card (not
+            the section's white background) covers the hero. */}
+        <div className="band-y container-fluid">
+          <ul
+            className={cn(
+              "-mt-8 grid grid-cols-2 gap-y-6 rounded-[20px] bg-card px-4 py-6 shadow-[0_20px_50px_rgb(23_38_92/0.14)] md:-mt-16 md:grid-cols-6 md:px-6 md:py-8 lg:-mt-[72px] lg:grid-cols-5",
+              stats.length !== 5 && "md:grid-cols-3",
+            )}
+          >
+            {stats.map((stat, i) => (
+              <li
+                key={stat.label}
+                className={cn(
+                  "flex justify-center border-[#D9E3F0] px-3 md:col-span-2 lg:col-span-1",
+                  stats.length === 5 && overlapCells[i],
+                )}
+              >
+                <StatBlock
+                  label={stat.label}
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  decimals={stat.decimals}
+                  illustrative={!confirmed}
+                  className="items-center text-center"
+                  valueClassName="text-navy lg:text-4xl"
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    );
+  }
   return (
     <section data-tone="white" aria-label="GlobalMed in numbers" className="border-y bg-card">
       <div

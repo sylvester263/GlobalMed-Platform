@@ -213,6 +213,19 @@ export const guides = [
 ];
 
 /** About Us page copy, supplied by the client on 2026-09-25. */
+/**
+ * Company facts (client-confirmed), shown on the About page and in the home stats card
+ * (2026-10-01). One list, so both pages always match.
+ */
+export const companyFacts = [
+  { label: "Happy Clients", value: 55, suffix: "+", decimals: 0 },
+  { label: "Projects Completed", value: 470, suffix: "+", decimals: 0 },
+  { label: "Expert People", value: 100, suffix: "+", decimals: 0 },
+  { label: "Portfolios", value: 70, suffix: "+", decimals: 0 },
+  // 19+ until 2026-10-01 (client: 25+).
+  { label: "Years in Healthcare", value: 25, suffix: "+", decimals: 0 },
+];
+
 export const about = {
   title: "About GlobalMed Transcriptions",
   intro: "The leading medical transcription company in Pakistan, since 2007.",
@@ -248,11 +261,5 @@ export const about = {
   /** Second line of the Strategic Partnership block. */
   partnershipDetail: `${approvedWording.role} ${approvedWording.training} ${approvedWording.certification}`,
   /** Client-confirmed figures, so no "illustrative" label. */
-  facts: [
-    { label: "Happy Clients", value: 55, suffix: "+", decimals: 0 },
-    { label: "Projects Completed", value: 470, suffix: "+", decimals: 0 },
-    { label: "Expert People", value: 100, suffix: "+", decimals: 0 },
-    { label: "Portfolios", value: 70, suffix: "+", decimals: 0 },
-    { label: "Years in Healthcare", value: 19, suffix: "+", decimals: 0 },
-  ],
+  facts: companyFacts,
 };

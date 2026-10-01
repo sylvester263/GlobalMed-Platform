@@ -23,7 +23,8 @@ import { CredentialsSection } from "@/components/marketing/credentials-section";
 import { DeferredClaimJourneySection } from "@/components/defer/islands";
 import { HeroSlider } from "@/components/marketing/home/hero-slider";
 import { ServicesOverview } from "@/components/marketing/home/services-overview";
-import { CtaBand, FaqList, Section } from "@/components/marketing/sections";
+import { CtaBand, FaqList, Section, StatsStrip } from "@/components/marketing/sections";
+import { companyFacts } from "@/content/company";
 import { ServiceIcon } from "@/components/marketing/service-icon";
 import { Testimonial } from "@/components/marketing/testimonial";
 import { CountUp } from "@/components/motion/count-up";
@@ -95,6 +96,10 @@ export default function HomePage() {
         AAPC&apos;s Strategic Partner in Pakistan for Medical Billing and Coding
       </h1>
       <HeroSlider />
+
+      {/* 1-stats. Company facts card overlapping the bottom of the hero (client, 2026-10-01);
+          the same facts and component as the About page. */}
+      <StatsStrip variant="overlap" stats={companyFacts} confirmed />
 
       {/* 1-services. Our Services: sticky stacking cards (client, 2026-09-28). Also the target
           of the hero's services link (#services). */}

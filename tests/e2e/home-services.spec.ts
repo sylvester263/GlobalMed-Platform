@@ -60,11 +60,15 @@ test.describe("home services (desktop, motion allowed)", () => {
     await expect(
       section.locator("p.font-semibold", { hasText: "Partner with GlobalMed for medical" }),
     ).toHaveCount(1);
-    // Directly after the hero slider.
-    const afterHero = await section.evaluate(
-      (el) => el.previousElementSibling?.querySelector('[aria-label="Slide 1 of 3"]') !== null,
-    );
-    expect(afterHero).toBe(true);
+    // Right after the hero slider and the stats card that overlaps it (2026-10-01).
+    const order = await section.evaluate((el) => {
+      const stats = el.previousElementSibling;
+      return {
+        stats: stats?.getAttribute("aria-label"),
+        hero: stats?.previousElementSibling?.querySelector('[aria-label="Slide 1 of 3"]') !== null,
+      };
+    });
+    expect(order).toEqual({ stats: "GlobalMed in numbers", hero: true });
     await expect(
       page.getByRole("heading", { name: "Medical billing services for US practices" }),
     ).toHaveCount(0);

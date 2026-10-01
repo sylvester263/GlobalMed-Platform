@@ -486,6 +486,22 @@ Newest entry at the bottom. One entry per Claude Code session.
   - Footer contact row: the address now uses the same box as the three links (13px, same line height); text tops identical on each line at 1920/1280/768/390, clean wrapping without stray dividers.
   - Screenshots pm/screenshots/2026-10-01/address/.
 
+- **Done (home stats bar, years, slide gap):**
+  - `StatsStrip variant="overlap"` (same component and `companyFacts` as About):
+    - Placed after the hero; white card, 20px radius, the specified shadow, z-10.
+    - Overlap: 72px (half the 144px card) from 1024px, 64px on tablets, 32px on phones.
+    - Layout: 5 columns with #D9E3F0 dividers on desktop, 3 + 2 on tablets, 2 columns on phones (last item full width).
+    - Label above, navy serif number below; count-up once, static with reduced motion.
+    - `flow-root` stops the negative margin collapsing, so only the card (not the section's white background) covers the hero.
+    - Our Services follows at the normal joined spacing (48/64/96).
+  - Slider controls raised: bottom offset = overlap + 24px (56/88/96). Still keyboard accessible; dot clicks verified at every width.
+  - No hero "curtain"/pinned effect exists in the code. The card sits in normal flow with the content after the hero, so it scrolls with that content.
+  - Years in Healthcare 19+ → 25+: `content/company.ts` `companyFacts` is the one source (About `about.facts`, home card, chatbot pinned knowledge, docs/09).
+  - Slide text: the invisible headline/text sizers (from the earlier equal-height brief) were removed. Headline → 20px → text → 32px → buttons on every slide; headline at the same top under the fixed lockup; leftover space below the buttons. Phone hero +24/+40px (704/660) so slide 1's buttons clear the raised controls.
+  - CLS: the slider streams in after the page shell (deferred island), so with the card right below it the page jumped by a full screen (CLS 1.0). A box with the slider's height (`hero-size.ts`) now reserves its space → CLS 0.000 at all 7 widths; Lighthouse home mobile 86 / desktop 99, CLS 0.
+  - Checks: `tests/audit/stats-overlap.mjs` and `slider-lockup.mjs` at 360/390/768/1024/1280/1440/1920 → 0 problems. Screenshots pm/screenshots/2026-10-01/stats-overlap/.
+  - E2E 256 passed before test updates. home-services now expects the stats card between the hero and Our Services. about-story's fade check was flaky on live too (a fade paused at 0.999 while its content-visibility section was off screen); it now checks each block on screen. Both pass.
+
 ---
 ### Session NNN — <title>
 - **Date:**

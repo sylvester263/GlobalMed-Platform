@@ -1,7 +1,7 @@
 /**
  * Home slider lockup check (2026-10-01): on every slide and width the lockup sits at the same
- * place, the headline/text/buttons start at the same height, and nothing overlaps (lockup vs
- * headline, copy vs the slider controls). Screenshots: node tests/audit/slider-lockup.mjs <dir>
+ * place, the headline starts at the same height, the text block keeps fixed gaps, and nothing
+ * overlaps (lockup vs headline, copy vs the slider controls). Screenshots: node tests/audit/slider-lockup.mjs <dir>
  */
 import { mkdirSync } from "node:fs";
 
@@ -67,9 +67,13 @@ for (const width of widths) {
     for (const k of ["top", "left", "right"]) {
       if (Math.abs(m.plate[k] - a.plate[k]) > 0.5) issues.push(`slide ${n} lockup ${k} differs`);
     }
-    for (const k of ["h2", "p", "buttons"]) {
-      if (Math.abs(m[k].top - a[k].top) > 0.5) issues.push(`slide ${n} ${k} top differs`);
-    }
+    // 2026-10-01: headline at the same top on every slide; the text block stays together
+    // (headline → 20px → text → 32px → buttons), leftover space below the buttons.
+    if (Math.abs(m.h2.top - a.h2.top) > 0.5) issues.push(`slide ${n} headline top differs`);
+    if (Math.abs(m.p.top - m.h2.bottom - 20) > 1)
+      issues.push(`slide ${n} headline→text ${Math.round(m.p.top - m.h2.bottom)}px`);
+    if (Math.abs(m.buttons.top - m.p.bottom - 32) > 1)
+      issues.push(`slide ${n} text→buttons ${Math.round(m.buttons.top - m.p.bottom)}px`);
     if (Math.abs(m.plate.left - m.h2.left) > 0.5) issues.push(`slide ${n} lockup not left-aligned`);
     if (m.plate.bottom > m.h2.top) issues.push(`slide ${n} lockup overlaps headline`);
     if (m.buttons.bottom > m.controlsTop) issues.push(`slide ${n} buttons overlap controls`);

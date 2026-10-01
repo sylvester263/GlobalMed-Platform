@@ -1,4 +1,5 @@
 import { DeferredHeroCarousel } from "@/components/defer/islands";
+import { heroHeight } from "@/components/marketing/home/hero-size";
 import { SliderLockup } from "@/components/marketing/home/slider-lockup";
 import { heroSlides } from "@/content/home";
 import { publicAssetExists } from "@/lib/public-asset";
@@ -12,5 +13,10 @@ export function HeroSlider() {
     ...slide,
     hasImage: publicAssetExists(slide.image),
   }));
-  return <DeferredHeroCarousel slides={slides} lockup={<SliderLockup />} />;
+  // The box reserves the slider's height before it streams in, so nothing below moves.
+  return (
+    <div className={heroHeight}>
+      <DeferredHeroCarousel slides={slides} lockup={<SliderLockup />} />
+    </div>
+  );
 }

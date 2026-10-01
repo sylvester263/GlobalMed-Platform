@@ -271,3 +271,12 @@ describe("office address (single source)", () => {
     expect(pinnedKnowledge()).toContain(address.oneLine);
   });
 });
+
+describe("company facts (one source for home, About and the chatbot)", () => {
+  it("says 25+ years in healthcare", async () => {
+    const { companyFacts, about } = await import("@/content/company");
+    expect(about.facts).toBe(companyFacts);
+    expect(companyFacts.find((f) => f.label === "Years in Healthcare")?.value).toBe(25);
+    expect(pinnedKnowledge()).toContain("Years in Healthcare 25+");
+  });
+});

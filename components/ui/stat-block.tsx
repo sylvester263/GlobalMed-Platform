@@ -14,6 +14,8 @@ type StatBlockProps = {
   /** Mark figures that are examples, not real client data. */
   illustrative?: boolean;
   animate?: boolean;
+  /** Extra classes for the number (e.g. the home stats card's navy). */
+  valueClassName?: string;
   className?: string;
 };
 
@@ -27,6 +29,7 @@ export function StatBlock({
   delta,
   illustrative = false,
   animate = true,
+  valueClassName,
   className,
 }: StatBlockProps) {
   const formatted = `${prefix ?? ""}${value.toLocaleString("en-US", { maximumFractionDigits: decimals ?? 0 })}${suffix ?? ""}`;
@@ -37,7 +40,7 @@ export function StatBlock({
   return (
     <div className={cn("flex flex-col gap-1", className)}>
       <p className="text-sm font-semibold text-muted-foreground">{label}</p>
-      <p className="font-serif text-3xl font-semibold tracking-tight">
+      <p className={cn("font-serif text-3xl font-semibold tracking-tight", valueClassName)}>
         {animate ? (
           <CountUp value={value} decimals={decimals} prefix={prefix} suffix={suffix} />
         ) : (

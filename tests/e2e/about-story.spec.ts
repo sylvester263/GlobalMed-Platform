@@ -112,7 +112,17 @@ test.describe("about: Our Story", () => {
       expect(tooWide).toBe(0);
       // Everything faded in (sections below the fold render lazily, so give the one-time
       // fades time to finish) and stays visible after scrolling back up.
-      await expect.poll(async () => [...new Set(await storyOpacities(page))]).toEqual(["1"]);
+      // Sections are content-visibility: auto, and browsers pause a transition while its
+      // section is off screen; the fast scroll above can leave a fade at 0.999 until the
+      // section is seen again. So check each block on screen.
+      const blocks = page.locator("[data-about-story] section > div");
+      for (let i = 0; i < (await blocks.count()); i++) {
+        await blocks.nth(i).scrollIntoViewIfNeeded();
+        await expect
+          .poll(() => blocks.nth(i).evaluate((el) => getComputedStyle(el).opacity))
+          .toBe("1");
+      }
+      // And they stay visible after scrolling back up.
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.waitForTimeout(300);
       expect(new Set(await storyOpacities(page))).toEqual(new Set(["1"]));

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
+import { heroHeight } from "@/components/marketing/home/hero-size";
 import { sliderLockupHeight } from "@/components/marketing/home/slider-lockup-size";
 import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
 import { buttonVariants } from "@/components/ui/button";
@@ -68,7 +69,7 @@ export function HeroCarousel({
     <section
       aria-roledescription="carousel"
       aria-label="Highlights"
-      className="relative isolate h-[680px] touch-pan-y overflow-hidden bg-navy text-white min-[390px]:h-[620px] sm:h-[560px] md:h-[520px] lg:h-[clamp(560px,80vh,640px)]"
+      className={cn("relative isolate touch-pan-y overflow-hidden bg-navy text-white", heroHeight)}
       onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
       onPointerLeave={(e) => e.pointerType === "mouse" && setHovered(false)}
       onPointerDown={(e) => {
@@ -137,42 +138,11 @@ export function HeroCarousel({
               <div className={cn("relative container-fluid flex h-full flex-col", copyTop)}>
                 <div className="hero-slide-copy flex max-w-2xl flex-col gap-5">
                   {lockup && <div aria-hidden="true" className={sliderLockupHeight} />}
-                  {/* Every slide's headline and text cell also holds the other slides'
-                      (invisible), so it is as tall as the longest at any width and the text
-                      and buttons start at the same height on every slide. */}
-                  <div className="grid">
-                    <h2 className="col-start-1 row-start-1 text-3xl text-white lg:text-4xl">
-                      {slide.headline}
-                    </h2>
-                    {slides.map(
-                      (other) =>
-                        other.id !== slide.id && (
-                          <span
-                            key={other.id}
-                            aria-hidden="true"
-                            className="invisible col-start-1 row-start-1 font-serif text-3xl font-semibold tracking-tight text-balance lg:text-4xl"
-                          >
-                            {other.headline}
-                          </span>
-                        ),
-                    )}
-                  </div>
-                  <div className="grid max-w-prose">
-                    <p className="col-start-1 row-start-1 text-lg text-white/90">{slide.body}</p>
-                    {slides.map(
-                      (other) =>
-                        other.id !== slide.id && (
-                          <span
-                            key={other.id}
-                            aria-hidden="true"
-                            className="invisible col-start-1 row-start-1 text-lg"
-                          >
-                            {other.body}
-                          </span>
-                        ),
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  {/* Headline → 20px → text → 32px → buttons, the same on every slide;
+                      leftover space goes below the buttons (client, 2026-10-01). */}
+                  <h2 className="text-3xl text-white lg:text-4xl">{slide.headline}</h2>
+                  <p className="max-w-prose text-lg text-white/90">{slide.body}</p>
+                  <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     {slide.actions.map((action, j) => {
                       const external = action.href.startsWith("http");
                       return (
@@ -210,7 +180,9 @@ export function HeroCarousel({
       {/* Controls: claim-line progress (retired 2026-09-28, ADR-028), dots, previous/next
           and pause. */}
       <div className="absolute inset-x-0 bottom-0 z-20">
-        <div className="container-fluid flex flex-wrap items-center gap-x-4 gap-y-2 pb-5 lg:pb-8">
+        {/* Bottom offset = the stats card's overlap + 24px (32 + 24 on phones, 64 + 24 on
+            tablets, 72 + 24 from 1024px), so the card never covers the controls (2026-10-01). */}
+        <div className="container-fluid flex flex-wrap items-center gap-x-4 gap-y-2 pb-14 md:pb-[88px] lg:pb-24">
           {features.claimLine ? (
             <div className="order-last w-full sm:order-none sm:w-56" aria-hidden="true">
               <svg

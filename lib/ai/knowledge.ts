@@ -1,4 +1,5 @@
 import { approvedWording } from "@/content/aapc";
+import { companyFacts } from "@/content/company";
 import { whyRegister } from "@/content/home";
 import { serviceCards, servicesIntro } from "@/content/home-services";
 import { aapcCourseFacts, formatUsdPrice, getAapcCourses } from "@/data/courses";
@@ -64,6 +65,7 @@ export function pinnedKnowledge(): string {
     "## Company",
     `${site.name} ("GlobalMed"). ${approvedWording.partnership}`,
     servicesIntro.lead,
+    `In numbers: ${companyFacts.map((f) => `${f.label} ${f.value}${f.suffix}`).join(" · ")}.`,
     "",
     "## Contact",
     `Phone ${contactFacts.phone} · WhatsApp ${contactFacts.whatsapp} (${contactFacts.whatsappUrl}) · Email ${contactFacts.email} · ${contactFacts.hours}.`,

@@ -232,3 +232,9 @@
   - Local dry run keeps chats in memory so the widget is testable without a database; production fails closed.
   - Lead/handoff links: leads carry `details.conversationId` (no new FK).
 - Consequences: three new runtime dependencies (server-only, not in any page bundle). The widget loads on the first click, so page weight is unchanged. Polling adds a request every 4s only while a chat is with a person. Changing the embedding model to another size needs a migration.
+
+## ADR-035: Heading font loads with font-display: optional
+- Date: 2026-10-02 · Status: accepted
+- Context: the hero headlines are set in Source Serif 4 (next/font, preloaded, size-adjusted fallback). With `display: swap`, a late font swap re-wrapped the slide 1 headline at 360px (4 → 5 lines), moving the text and buttons below it (CLS 0.018 in the stats audit; reproduced whenever the font arrived after first paint).
+- Decision: Source Serif 4 uses `display: "optional"`; Public Sans (body) stays `swap`.
+- Consequences: on almost every visit the font is ready before first paint (it is preloaded). On a slow first visit, that page shows the size-matched serif fallback instead of swapping; the font is cached for the next page. CLS 0 at all audited widths.

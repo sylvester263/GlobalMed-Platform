@@ -12,10 +12,13 @@ const publicSans = Public_Sans({
   display: "swap",
 });
 
+// Headings: "optional" instead of "swap" (ADR-035). The font is preloaded and is almost
+// always ready before first paint; if it isn't, that page keeps the size-matched fallback
+// instead of swapping, because the swap re-wrapped hero headlines and moved the page (CLS).
 const sourceSerif = Source_Serif_4({
   variable: "--font-source-serif",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
 });
 
 const jetbrainsMono = JetBrains_Mono({

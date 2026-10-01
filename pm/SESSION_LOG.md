@@ -526,6 +526,11 @@ Newest entry at the bottom. One entry per Claude Code session.
   - Phones: icons only, centred.
   - New `tests/e2e/top-bar.spec.ts`: 8 passed. Full E2E: 270 passed, 58 skipped.
 
+- **Done (no layout shift):**
+  - The stats audit found CLS 0.018 at 360px. Traced: Source Serif 4 arrived after first paint and re-wrapped the slide 1 headline (fallback 4 lines → 5 lines).
+  - Heading font now `display: "optional"` (ADR-035) → CLS 0.000 at all 7 widths in two full runs.
+  - Lighthouse under machine load: CLS 0 on every run; performance scores noisy (desktop About 54/98/78 within one run), so no performance conclusion from this run.
+
 ---
 ### Session NNN — <title>
 - **Date:**

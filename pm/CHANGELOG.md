@@ -27,6 +27,7 @@ Format: Keep a Changelog · Semantic Versioning
 - Hosting documented as own hosting (Hostinger); live site URL in `.env.production`; `/api/health` shows the build commit (2026-10-01)
 
 ### Changed
+- Heading font (Source Serif 4) loads with font-display: optional so a late font can no longer re-wrap the hero headline and move the page (ADR-035) (2026-10-02)
 - Company facts (home card + About strip): count-up once (1.2s ease-out) with the "+" fixed; hover lifts the item onto #EEF6FC, number #3A73C2 with a growing sky underline, stronger card shadow; reduced motion shows final numbers and colour only (2026-10-02)
 - Home hero: one controls row below the slide buttons and 16px above the stats card (dots left / controls right; phones: dots centred, pause only); slides share one grid cell so the hero grows instead of overlapping on short screens (2026-10-02)
 - Home: company facts card (same facts and component as About) overlaps the bottom of the hero; slider controls raised above it; slide text block kept together (headline → 20px → text → 32px → buttons); Years in Healthcare 25+ everywhere from one data source (2026-10-01)

@@ -41,7 +41,7 @@ export async function ogImage({
 }): Promise<Response> {
   const [photo, logo, serif] = await Promise.all([
     dataUri(`public/images/${backgrounds[background]}`, "image/jpeg"),
-    dataUri("public/images/brand/globalmed-logo-stacked.png", "image/png"),
+    dataUri("public/images/brand/globalmed-logo-horizontal.png", "image/png"),
     readFile(join(process.cwd(), "assets/fonts/source-serif-4-latin-600.ttf")),
   ]);
   const fontSize = title.length > 60 ? 44 : title.length > 36 ? 52 : 60;
@@ -96,7 +96,7 @@ export async function ogImage({
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse needs a plain img */}
-          <img src={logo} width={100} height={120} alt="GlobalMed Transcriptions logo" />
+          <img src={logo} width={258} height={56} alt="GlobalMed Transcriptions logo" />
         </div>
         <div
           style={{

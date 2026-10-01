@@ -11,7 +11,12 @@ import {
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { AapcCourseCard, WhatsAppLink } from "@/components/marketing/aapc-course-card";
+import {
+  AapcCourseCard,
+  courseCardGrid,
+  courseCardRows,
+  WhatsAppLink,
+} from "@/components/marketing/aapc-course-card";
 import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
 import { aapcBandBackground } from "@/content/images";
 import { CredentialsSection } from "@/components/marketing/credentials-section";
@@ -137,9 +142,9 @@ export default function HomePage() {
         title="AAPC certification courses"
         intro={`${approvedWording.training} ${approvedWording.certification}`}
       >
-        <ul className="grid gap-grid lg:grid-cols-3 lg:items-stretch">
+        <ul className={courseCardGrid}>
           {getAapcCourses().map((course) => (
-            <li key={course.slug} className="flex">
+            <li key={course.slug} className={cn("flex", courseCardRows)}>
               <AapcCourseCard
                 course={course}
                 registerHref={`${aapcCertificationPath}?course=${course.slug}#register`}

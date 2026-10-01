@@ -56,7 +56,7 @@ export const credentials: Credential[] = [
   {
     id: "lcci",
     name: "LCCI",
-    meaning: "Member, The Lahore Chamber of Commerce & Industry",
+    meaning: "Corporate Member, The Lahore Chamber of Commerce & Industry",
     number: "Membership No. 94721 C",
     issuer: "Issued by The Lahore Chamber of Commerce & Industry",
     validity: "Member since 04/06/2018 · valid until 31 Mar 2027",

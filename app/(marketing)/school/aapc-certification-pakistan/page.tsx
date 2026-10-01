@@ -3,7 +3,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { AapcRegisterBand } from "@/components/marketing/aapc-course";
-import { AapcCourseCard } from "@/components/marketing/aapc-course-card";
+import {
+  AapcCourseCard,
+  courseCardGrid,
+  courseCardRows,
+} from "@/components/marketing/aapc-course-card";
 import { AapcInstructorsBand } from "@/components/marketing/aapc-instructors-band";
 import { DeferredClaimJourneySection } from "@/components/defer/islands";
 import { FaqList, PageHero, Section } from "@/components/marketing/sections";
@@ -122,9 +126,9 @@ export default function AapcCertificationPage() {
         title="AAPC courses available in Pakistan"
         intro="Three AAPC official courses, taught live online by AAPC faculty. Choose one credential, or both."
       >
-        <ul className="grid gap-grid lg:grid-cols-3 lg:items-stretch">
+        <ul className={courseCardGrid}>
           {courses.map((course) => (
-            <li key={course.slug} className="flex">
+            <li key={course.slug} className={cn("flex", courseCardRows)}>
               <AapcCourseCard course={course} registerHref={`?course=${course.slug}#register`} />
             </li>
           ))}

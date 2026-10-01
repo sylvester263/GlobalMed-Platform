@@ -431,6 +431,18 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** remaining items of the 2026-10-01 gap brief (verify remaining gaps, checks at 7 widths, before/after screenshots, report); og/og-education placement.
 - **Blockers:** none.
 
+### Session 015 — Small updates: LCCI, footer, course cards, horizontal logo
+- **Date:** 2026-10-01
+- **Done:** (details and the logo replacement list in pm/SMALL_UPDATES_2026-10-01.md)
+  - LCCI tile: "Corporate Member, The Lahore Chamber of Commerce & Industry" (data, About via the same data, docs/09 chatbot knowledge).
+  - Footer: trademark line hidden (`footerTrademarkNote`); fine print "© 2026 GlobalMed Transcriptions · Designed & developed by SylJo Tech"; copyright appears once.
+  - Course cards: delivery note hidden on cards only (`courseCardPriceNote`); 24px price → Package Includes; subgrid alignment of all sections across the three cards from 1024px, dual saving's space reserved, buttons on one line at the bottom, highlighted card without vertical offset.
+  - Horizontal GlobalMed logo everywhere the stacked logo was used (Wordmark, compact footer 44px on its plate, OG images, JSON-LD, certificate template); stacked files kept; favicons unchanged.
+  - Verified: course-cards audit 0 problems (6 widths, 2 pages), header logo at 360/768/1280/1920, slider check 0 problems, unit 121, E2E 252 passed (53 skipped by flag). Screenshots pm/screenshots/2026-10-01/small-updates/.
+- **Files touched:** config/features.ts, data/credentials.ts, docs/09_AI_CHATBOT_WHATSAPP.md, components/marketing/{aapc-course-card,footer-compact,site-footer,wordmark}.tsx, components/lms/certificate-preview.tsx, lib/seo/{json-ld,og-image}.tsx, app/(marketing)/page.tsx, app/(marketing)/school/aapc-certification-pakistan/page.tsx, tests/e2e/public-site.spec.ts, tests/audit/course-cards.mjs, pm/*
+- **Next:** remaining items of the 2026-10-01 gap brief; og/og-education placement.
+- **Blockers:** none.
+
 ---
 ### Session NNN — <title>
 - **Date:**

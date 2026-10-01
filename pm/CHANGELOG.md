@@ -25,6 +25,10 @@ Format: Keep a Changelog · Semantic Versioning
 - Hosting documented as own hosting (Hostinger); live site URL in `.env.production`; `/api/health` shows the build commit (2026-10-01)
 
 ### Changed
+- Official horizontal GlobalMed logo used everywhere the stacked logo was (header, footer at 44px on its plate, About lockup, auth/staff pages, dashboards, OG images, JSON-LD, certificate template); stacked files kept, favicons unchanged (2026-10-01)
+- Course cards: delivery note hidden on the cards (`courseCardPriceNote`, still on course pages); all sections aligned across the three cards with CSS subgrid, buttons on one line, highlighted card without vertical offset (2026-10-01)
+- Footer fine print "© 2026 GlobalMed Transcriptions · Designed & developed by SylJo Tech"; trademark line hidden (`footerTrademarkNote`) (2026-10-01)
+- LCCI credential: "Corporate Member, The Lahore Chamber of Commerce & Industry" (2026-10-01)
 - Home slider: the GlobalMed + AAPC lockup shows on all three slides in a fixed position (it no longer moves with slide changes), now with the official horizontal GlobalMed logo; headline, text and buttons start at the same height on every slide (2026-10-01)
 - Performance: first-load JS cut 40–50% on Home, About, AAPC and course pages (deferred hydration, no animation library on these pages, lazy menus/dialogs, lean providers, prefetch off for footer/lists, content-visibility); GSAP removed (2026-10-01)
 - UI/UX pass: spacing tokens (56/72/96 section padding, 24/32 grid gaps), 44px touch targets, 16px text on phones, anchor offsets, slider/band contrast, sticky comparison-table column; CSS no longer inlined (ADR-031) (2026-09-30)

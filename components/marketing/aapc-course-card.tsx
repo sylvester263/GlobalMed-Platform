@@ -3,14 +3,26 @@ import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import { features } from "@/config/features";
 import { coursePageContent } from "@/content/courses";
-import { aapcCourseFacts, aapcCoursePath, formatUsdPrice, type AapcCourse } from "@/data/courses";
+import {
+  aapcCourseFacts,
+  aapcCoursePath,
+  formatUsdPrice,
+  getAapcCourses,
+  type AapcCourse,
+} from "@/data/courses";
 import { cn } from "@/lib/utils";
 
 // The AAPC course card and its parts, in their own module so pages that only list courses
 // (home, AAPC page) don't pull the registration form into their bundle (2026-10-01).
 export const eyebrowClass =
   "font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase";
+
+/** The list of course cards: one row of three from 1024px, sharing eight row tracks. */
+export const courseCardGrid = "grid gap-grid lg:grid-cols-3 lg:gap-y-5";
+/** Each list item and card spans the eight tracks as a subgrid (see AapcCourseCard). */
+export const courseCardRows = "lg:row-span-8 lg:grid lg:grid-rows-subgrid";
 
 export function WhatsAppLink({ className }: { className?: string }) {
   return (
@@ -59,21 +71,50 @@ export function PackageIncludes({ course }: { course: AapcCourse }) {
   );
 }
 
+const savingToReserve = getAapcCourses().find((c) => c.priceSaving)?.priceSaving;
+
+/**
+ * Price and the dual course's saving. On the cards the delivery note is hidden
+ * (`features.courseCardPriceNote`) and the saving's line is reserved in every card (empty,
+ * aria-hidden), so all prices and "Package Includes" headings line up across the row.
+ */
+function Price({
+  course,
+  note,
+  reserveSaving = false,
+}: {
+  course: AapcCourse;
+  note: boolean;
+  reserveSaving?: boolean;
+}) {
+  return (
+    <div className="flex flex-col gap-1">
+      <p className="text-sm font-semibold text-muted-foreground">Price</p>
+      <p className="font-serif text-3xl font-semibold">{formatUsdPrice(course.priceUsd)}</p>
+      {course.priceSaving ? (
+        <p className="text-sm font-semibold text-success-ink">{course.priceSaving}</p>
+      ) : (
+        reserveSaving &&
+        savingToReserve && (
+          // The dual course's saving, invisible: exactly the same height at every width.
+          <span aria-hidden="true" className="invisible hidden text-sm font-semibold lg:block">
+            {savingToReserve}
+          </span>
+        )
+      )}
+      {note && <p className="mt-1 text-xs text-muted-foreground">{aapcCourseFacts.priceNote}</p>}
+    </div>
+  );
+}
+
 /**
  * Price, the dual course's saving, the delivery note that sits under every price, and the
- * course's "Package Includes" (cards on the home and AAPC pages, and each course page hero).
+ * course's "Package Includes" (each course page hero).
  */
 export function PriceBlock({ course }: { course: AapcCourse }) {
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-1">
-        <p className="text-sm font-semibold text-muted-foreground">Price</p>
-        <p className="font-serif text-3xl font-semibold">{formatUsdPrice(course.priceUsd)}</p>
-        {course.priceSaving && (
-          <p className="text-sm font-semibold text-success-ink">{course.priceSaving}</p>
-        )}
-        <p className="mt-1 text-xs text-muted-foreground">{aapcCourseFacts.priceNote}</p>
-      </div>
+      <Price course={course} note />
       <PackageIncludes course={course} />
     </div>
   );
@@ -121,8 +162,13 @@ export function CheckList({ items, className }: { items: string[]; className?: s
 }
 
 /**
- * One AAPC course card (client, 2026-09-26): official badge, facts, who it's for, price with
- * the delivery note, and Register Now / Ask on WhatsApp. The dual course is marked best value.
+ * One AAPC course card (client, 2026-09-26): official badge, facts, who it's for, price, and
+ * Register Now / Ask on WhatsApp. The dual course is marked best value.
+ *
+ * Alignment (2026-10-01): from 1024px the card is a subgrid spanning the row's eight tracks
+ * (`courseCardRows`; the list is `courseCardGrid`), so title, summary, facts, "Who it's for",
+ * price, "Package Includes", buttons and "Course details" line up across all three cards and
+ * the buttons sit on one line at the bottom. Below 1024px the cards stack.
  */
 export function AapcCourseCard({
   course,
@@ -139,8 +185,10 @@ export function AapcCourseCard({
   return (
     <article
       className={cn(
-        "relative flex h-full flex-col gap-5 rounded-2xl border bg-card p-6 shadow-sm",
-        course.bestValue && "border-2 border-primary shadow-md lg:-my-3 lg:py-9",
+        "relative flex w-full flex-col gap-5 rounded-2xl border bg-card p-6 shadow-sm",
+        courseCardRows,
+        // Highlighted with a 1px ring outside the 1px border: same padding and top as the others.
+        course.bestValue && "border-primary shadow-md ring-1 ring-primary",
       )}
     >
       {course.bestValue && <BestValue className="absolute -top-3.5 left-6" />}
@@ -150,21 +198,29 @@ export function AapcCourseCard({
         </Badge>
         <p className="font-serif text-3xl font-semibold text-primary">{course.credential}</p>
         <Heading className="text-lg leading-snug">{course.title}</Heading>
-        <p className="text-sm text-muted-foreground">{course.summary}</p>
       </div>
+      <p className="-mt-3 text-sm text-muted-foreground">{course.summary}</p>
       <CourseFacts course={course} />
       <div className="flex flex-col gap-2">
         <p className={eyebrowClass}>Who it&apos;s for</p>
         <CheckList items={who} className="text-sm" />
       </div>
-      <div className="mt-auto flex flex-col gap-4 border-t pt-4">
-        <PriceBlock course={course} />
+      <div className="mt-auto border-t pt-4 lg:mt-0">
+        <Price course={course} note={features.courseCardPriceNote} reserveSaving />
+      </div>
+      {/* Price (and saving) → 24px → "Package Includes". */}
+      <div className="mt-1">
+        <PackageIncludes course={course} />
+      </div>
+      <div className="flex flex-col gap-4 lg:justify-end">
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           <Link prefetch={false} href={registerHref} className={buttonVariants({ size: "lg" })}>
             Register Now <span className="sr-only">for {course.credential}</span>
           </Link>
           <WhatsAppLink className={buttonVariants({ size: "lg", variant: "secondary" })} />
         </div>
+      </div>
+      <div className="flex items-end">
         <Link
           prefetch={false}
           href={aapcCoursePath(course.slug)}

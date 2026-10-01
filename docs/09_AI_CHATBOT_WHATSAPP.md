@@ -29,6 +29,9 @@ When an admin edits a document: chunk (≈800 tokens, 100 overlap) → embed →
 - Phone: +92 42 3594 6342 · WhatsApp: +92 300 419 8760 · Email: info@globalmedtranscriptions.com · Hours: Open 24/7
 - Founded 2007 by Riaz Naveed. Medical transcription, billing and coding services for hospitals and clinics in the USA, Canada, UK, Australia and Saudi Arabia.
 - "GlobalMed Transcriptions, Strategic Partner of AAPC in Pakistan for Medical Billing and Coding."
+- **Registered, certified & compliant (source `data/credentials.ts`; home and About pages):**
+  - PSEB: Registered with Pakistan Software Export Board, No. Z-25-8395/23, valid Feb 2026 – Jan 2027.
+  - LCCI (2026-10-01): Corporate Member, The Lahore Chamber of Commerce & Industry. Membership No. 94721 C · Member since 04/06/2018 · valid until 31 Mar 2027 · Issued by The Lahore Chamber of Commerce & Industry.
 - **Our Story (client, 2026-09-29; source `content/about-story.ts`, About page):**
   - Legal name: GlobalMed Transcriptions (SMC) Pvt. Ltd. Founded in Pakistan in 2007. Founder & CEO: Riaz Naveed (experience in clinical laboratory work, medical transcription, quality assurance, and CPC and CPB training).
   - Purpose: to help healthcare professionals spend less time on documentation and more time caring for patients. Began as a medical transcription business.

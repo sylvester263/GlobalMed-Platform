@@ -3,25 +3,26 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * The client's official logo: the supplied stacked artwork, used everywhere at the client's
- * request (2026-09-27). The icon is the supplied icon file. Never recolour or redraw either.
- * (The horizontal lockup, public/images/brand/globalmed-logo-horizontal.png, and the older
- * public/logo.png are kept but no longer used.)
+ * The client's official logo: the horizontal artwork (icon + "GLOBALMED TRANSCRIPTIONS" side
+ * by side), used everywhere at the client's request (2026-10-01). The icon is the supplied icon
+ * file (collapsed sidebar; favicons and app icons). Never recolour or redraw either; size by
+ * height only. (The stacked artwork, globalmed-logo-stacked.png, used 2026-09-27 to 2026-10-01,
+ * and the older public/logo.png are kept but no longer used.)
  */
 const logo = {
-  src: "/images/brand/globalmed-logo-stacked.png",
-  width: 653,
-  height: 786,
+  src: "/images/brand/globalmed-logo-horizontal.png",
+  width: 800,
+  height: 174,
 } as const;
 const icon = { src: "/images/brand/globalmed-icon.png", width: 628, height: 628 } as const;
 
 const heights = {
-  /** Site header and auth pages: 56px (the header bar is 64px). */
-  header: "h-14",
-  /** Extended footer: 96px. */
-  footer: "h-24",
-  /** Dashboard sidebar, sheets, the course player bar and the hero lockup: 48px. */
-  compact: "h-12",
+  /** Site header and auth pages: 40px on phones, 44px from 768px (the header bar is 64px). */
+  header: "h-10 md:h-11",
+  /** Extended footer: 44px. */
+  footer: "h-11",
+  /** Dashboard sidebar, sheets, the course player bar and the About partner lockup: 36px. */
+  compact: "h-9",
 } as const;
 
 export function Wordmark({

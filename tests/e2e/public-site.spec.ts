@@ -289,7 +289,14 @@ test.describe("client review 2026-09-25", () => {
       "href",
       "tel:+924235946342",
     );
-    await expect(footer).toContainText("CPC® and CPB® are registered trademarks of AAPC.");
-    await expect(footer).toContainText("Designed & developed by SylJo Tech");
+    // 2026-10-01: trademark note hidden; the copyright appears once, in the fine print.
+    await expect(footer).not.toContainText("registered trademarks of AAPC");
+    await expect(footer.getByText(/© 2026 GlobalMed Transcriptions/)).toHaveCount(1);
+    await expect(footer).toContainText(
+      "© 2026 GlobalMed Transcriptions · Designed & developed by SylJo Tech",
+    );
+    await expect(
+      footer.getByRole("img", { name: "GlobalMed Transcriptions logo" }),
+    ).toHaveAttribute("src", /globalmed-logo-horizontal/);
   });
 });

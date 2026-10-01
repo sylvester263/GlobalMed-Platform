@@ -173,7 +173,9 @@ function ExtendedFooter() {
             </ul>
           </nav>
           <div className="flex flex-col gap-1 lg:items-end">
-            <p className="text-xs">CPC® and CPB® are registered trademarks of AAPC.</p>
+            {features.footerTrademarkNote && (
+              <p className="text-xs">CPC® and CPB® are registered trademarks of AAPC.</p>
+            )}
             <p>{site.credit}</p>
           </div>
         </div>

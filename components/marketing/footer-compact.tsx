@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { glyphs } from "@/components/marketing/social-icons";
+import { features } from "@/config/features";
 import { siteLinks, type SocialKey } from "@/data/site";
 import { aapcCertificationPath, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -184,11 +185,12 @@ export function CompactFooter() {
             )}
           >
             <Image
-              src="/images/brand/globalmed-logo-stacked.png"
+              src="/images/brand/globalmed-logo-horizontal.png"
               alt="GlobalMed Transcriptions logo"
-              width={653}
-              height={786}
-              className="h-[88px] w-auto"
+              width={800}
+              height={174}
+              sizes="203px"
+              className="h-11 w-auto"
             />
           </Link>
 
@@ -196,7 +198,10 @@ export function CompactFooter() {
             <SeparatedList
               className="text-[15px]"
               items={[
-                <span key="copy">© 2026 GlobalMed Transcriptions</span>,
+                // The copyright moved to the fine print (2026-10-01), so it appears once.
+                ...(features.footerTrademarkNote
+                  ? [<span key="copy">© 2026 GlobalMed Transcriptions</span>]
+                  : []),
                 ...footerLinks.map((link) => (
                   <Link prefetch={false} key={link.href} href={link.href} className={linkClass}>
                     {link.label}
@@ -236,7 +241,10 @@ export function CompactFooter() {
           </div>
 
           <p className="order-6 text-xs text-footer-fine md:order-none">
-            CPC® and CPB® are registered trademarks of AAPC. · {site.credit}
+            {features.footerTrademarkNote
+              ? "CPC® and CPB® are registered trademarks of AAPC."
+              : "© 2026 GlobalMed Transcriptions"}{" "}
+            · {site.credit}
           </p>
         </div>
 

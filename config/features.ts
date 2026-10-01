@@ -119,6 +119,16 @@ export const features = {
    * online, with two attempts included"). Set true to show the old practice-test lines.
    */
   practiceTestsMentions: false,
+  /**
+   * Hidden at client request (2026-10-01) — "CPC® and CPB® are registered trademarks of AAPC."
+   * in the footer fine print. Set true to restore.
+   */
+  footerTrademarkNote: false,
+  /**
+   * Hidden at client request (2026-10-01) — the delivery note under the price on the course
+   * CARDS (home and AAPC page). It stays on each course page. Set true to restore.
+   */
+  courseCardPriceNote: false,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

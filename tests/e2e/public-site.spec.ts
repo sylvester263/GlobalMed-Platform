@@ -320,7 +320,7 @@ test.describe("client review 2026-09-25", () => {
     await expect(footer).not.toContainText("registered trademarks of AAPC");
     await expect(footer.getByText(/© 2026 GlobalMed Transcriptions/)).toHaveCount(1);
     await expect(footer).toContainText(
-      "© 2026 GlobalMed Transcriptions · Designed & developed by SylJo Tech",
+      "© 2026 GlobalMed Transcriptions. All rights reserved. · Designed & developed by SylJo Tech",
     );
     await expect(
       footer.getByRole("img", { name: "GlobalMed Transcriptions logo" }),

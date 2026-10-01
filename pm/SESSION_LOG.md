@@ -470,6 +470,10 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** client adds the LLM key + Supabase/Upstash/Turnstile/Resend on the hosting → apply migrations 0001–0006 → Re-sync from website → run the question set on the live site and the Sales inbox E2E. Phase 7B WhatsApp once the Meta inputs arrive.
 - **Blockers:** LLM key, Supabase org invite, Upstash/Turnstile/Resend keys; Phase 7B: Meta Business verification, WhatsApp number, token, app secret, templates (pm/CLIENT_INPUTS_NEEDED.md).
 
+### Session 017 — Footer, address, home stats bar
+- **Date:** 2026-10-01
+- **Done (footer):** fine print "© 2026 GlobalMed Transcriptions. All rights reserved. · Designed & developed by SylJo Tech" (once). `data/site.ts` appLinks: Google Play set (the badge becomes a link, new tab, rel noopener noreferrer, aria-label "Download the GlobalMed app on Google Play"); App Store empty → "Coming soon". The Play link was opened: it loads "GlobalMed Transcriptions - Apps on Google Play". Footer badge + footer tests updated (7 passed); screenshots pm/screenshots/2026-10-01/footer-update/ (1920, 390).
+
 ---
 ### Session NNN — <title>
 - **Date:**

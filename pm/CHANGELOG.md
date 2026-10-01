@@ -26,6 +26,7 @@ Format: Keep a Changelog · Semantic Versioning
 - Hosting documented as own hosting (Hostinger); live site URL in `.env.production`; `/api/health` shows the build commit (2026-10-01)
 
 ### Changed
+- Footer: fine print "© 2026 GlobalMed Transcriptions. All rights reserved. · Designed & developed by SylJo Tech"; Google Play badge links to the GlobalMed app (new tab), App Store stays "Coming soon" (2026-10-01)
 - Header and mobile menu: "Careers" replaces "Specialties" (About Us · Education · Services · Resources · Careers · Contact); Specialties link hidden by `navSpecialties`, pages stay live; the current page's menu item is underlined (2026-10-01)
 - Course cards: delivery note "Training is delivered online by AAPC. GlobalMed Transcriptions is AAPC's Strategic Partner in Pakistan." restored at client request (`courseCardPriceNote: true`); it lines up across the three cards (2026-10-01)
 - Official horizontal GlobalMed logo used everywhere the stacked logo was (header, footer at 44px on its plate, About lockup, auth/staff pages, dashboards, OG images, JSON-LD, certificate template); stacked files kept, favicons unchanged (2026-10-01)

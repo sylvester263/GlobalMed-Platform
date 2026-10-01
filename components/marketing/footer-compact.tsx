@@ -243,7 +243,7 @@ export function CompactFooter() {
           <p className="order-6 text-xs text-footer-fine md:order-none">
             {features.footerTrademarkNote
               ? "CPC® and CPB® are registered trademarks of AAPC."
-              : "© 2026 GlobalMed Transcriptions"}{" "}
+              : "© 2026 GlobalMed Transcriptions. All rights reserved."}{" "}
             · {site.credit}
           </p>
         </div>

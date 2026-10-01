@@ -1,23 +1,34 @@
 import { expect, test } from "@playwright/test";
 
-// Footer App Store + Google Play badges (client, 2026-09-28). Both links are still empty in
-// data/site.ts, so both badges show as disabled "Coming soon" badges.
+// Footer App Store + Google Play badges (client, 2026-09-28). Google Play is linked
+// (2026-10-01); the App Store link is still empty, so that badge is a disabled "Coming soon".
 
 for (const width of [360, 768, 1280]) {
   test.describe(`footer badges at ${width}px`, () => {
     test.use({ viewport: { width, height: 800 } });
 
-    test("both official badges show, disabled, side by side", async ({ page }) => {
+    test("both official badges show side by side; Google Play links, App Store is coming soon", async ({
+      page,
+    }) => {
       await page.goto("/");
       const footer = page.locator("footer");
       const appStore = footer.getByRole("link", { name: "Download on the App Store" });
-      const googlePlay = footer.getByRole("link", { name: "Get it on Google Play" });
+      const googlePlay = footer.getByRole("link", {
+        name: "Download the GlobalMed app on Google Play",
+      });
       await appStore.scrollIntoViewIfNeeded();
+
+      await expect(appStore).toHaveAttribute("aria-disabled", "true");
+      await expect(appStore).not.toHaveAttribute("href");
+      await expect(googlePlay).toHaveAttribute(
+        "href",
+        "https://play.google.com/store/apps/details?id=com.globalmed_transcriptions.org",
+      );
+      await expect(googlePlay).toHaveAttribute("target", "_blank");
+      await expect(googlePlay).toHaveAttribute("rel", "noopener noreferrer");
 
       for (const badge of [appStore, googlePlay]) {
         await expect(badge).toBeVisible();
-        await expect(badge).toHaveAttribute("aria-disabled", "true");
-        await expect(badge).not.toHaveAttribute("href");
         const box = (await badge.boundingBox())!;
         expect(box.height).toBe(50);
         expect(box.width).toBeLessThanOrEqual(160);
@@ -41,7 +52,7 @@ for (const width of [360, 768, 1280]) {
 
     test("keyboard focus shows the Coming soon tooltip", async ({ page }) => {
       await page.goto("/");
-      const badge = page.locator("footer").getByRole("link", { name: "Get it on Google Play" });
+      const badge = page.locator("footer").getByRole("link", { name: "Download on the App Store" });
       await badge.focus();
       await expect(badge).toHaveAccessibleDescription("Coming soon");
       await expect(badge.getByRole("tooltip")).toHaveCSS("opacity", "1");

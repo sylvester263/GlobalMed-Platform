@@ -541,6 +541,45 @@ Newest entry at the bottom. One entry per Claude Code session.
     - LinkedIn → login wall (can't be checked without signing in); it is an /in/ (personal profile) URL, not /company/. **Client to confirm.**
   - E2E: top-bar (incl. new social + sameAs tests), footer badges, public site: 35 passed. Screenshots pm/screenshots/2026-10-02/social/ (top bar and footer at 1920 and 390).
 
+### Session 019 — Updates (news) section
+- **Date:** 2026-10-02
+- **Step 1 (check):** no news/updates/announcements section on any visible page. The blog (/blog) is 4 markdown files in content/blog and not editable from the dashboard (Admin → Content was a placeholder; a `posts` table exists but is unused). The brief placed the section "after Why register (before credentials)", but Credentials comes before Why register on the home page: placed right after Why register (before How it works).
+- **Done:**
+  - 2A: migration 0007. `updates` table (title, 280-char summary, markdown body, category, image, link + label, publish date, expiry, pinned, draft/published).
+    - RLS: public reads live only; admin/sales manage.
+    - Public WebP image bucket.
+    - kb kind "update".
+    - Two [CLIENT TO CONFIRM] drafts.
+    - `lib/updates/logic.ts`: live / scheduled / expired, pinned-first order, pagination, "2 Oct 2026" dates, slugs.
+    - Cookie-less anon client for cached pages.
+  - 2B: dashboard (Admin → Content → Updates and Sales → Updates, one shared list + form, phone-friendly).
+    - Save draft / publish (a future date schedules it); pin; expiry; unpublish instead of delete.
+    - Image upload resized to 1600×900 WebP.
+    - Every change revalidates /, /updates and the sitemap.
+    - Server-action limit raised to 6 MB; the share-image routes now ship the horizontal logo they use.
+  - 2C/D: public pages.
+    - Home "Latest Updates" after Why register: 3 latest live, pinned first, hidden when none; home revalidates every 60s, so scheduled/expired updates turn over on their own.
+    - Update card: same radius, hover and spacing as other cards; equal heights.
+    - /updates (category chips, 12 per page, empty state) and /updates/[slug] (updates with a full text).
+    - NewsArticle JSON-LD; share image = the update's photo as JPEG, or the default card with the title.
+    - Resources menu, both footers, sitemap.
+  - 2F: chatbot.
+    - Live updates go into every system prompt.
+    - "When is the next batch?" quotes the latest live Batch & Enrollment update.
+    - A "Latest updates" KB document is re-embedded on every change and on Re-sync.
+  - Tests:
+    - 16 unit tests for publish/expiry/order/dates/pagination/slugs/validation, plus 3 chatbot tests (202 unit total).
+    - `tests/e2e/updates.spec.ts`: empty states, menu, footer, sitemap, card layout at 360/768/1280/1920.
+    - Dashboard round trip (create → publish → pin → expire → unpublish → home + /updates) written, needs Supabase (`E2E_SUPABASE=1`).
+- **Fixed during the checks (full E2E 281 passed, 0 failed):**
+  - Regression from the stats commit (live since f07308c): count-up padding used figure spaces for every missing character, so a figure with a comma ("125,000+") was padded wider than itself. Now digits → figure space, , or . → punctuation space (same width).
+  - /services and /free-billing-audit overflowed 360px when the heading font fell back (ADR-035): the fallback serif is wider, and "125,000+" no longer fit a 144px column. Strip numbers are now 24px on phones (30px from 640px) with a 24px column gap.
+  - Category chip contrast 4.35:1 → navy text (AA).
+- **Not verifiable yet:** with no Supabase project linked there are no live updates, so the home section stays hidden and the dashboard can't be signed into. The card layout was checked with styleguide samples (/styleguide#updates).
+- **Files touched:** supabase/migrations/0007_updates.sql, lib/db/{types,anon}.ts, lib/updates/*, lib/validation/updates.ts, components/dashboard/updates/*, components/marketing/updates/*, app/(dashboard)/dashboard/{admin/content,sales/updates}/*, app/(marketing)/updates/*, app/(marketing)/page.tsx, app/sitemap.ts, lib/site.ts, lib/seo/json-ld.tsx, lib/auth/roles.ts, components/marketing/footer-compact.tsx, lib/ai/{guardrails,prompts,engine,kb}.ts, app/styleguide/page.tsx, next.config.ts, tests/*
+- **Next:** link Supabase (apply 0001–0007), sign in as sales, run the round-trip E2E; client edits and publishes the two drafts.
+- **Blockers:** Supabase org invite (P0-4).
+
 ---
 ### Session NNN — <title>
 - **Date:**

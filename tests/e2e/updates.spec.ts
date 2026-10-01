@@ -75,3 +75,66 @@ for (const width of [360, 768, 1280, 1920]) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
   });
 }
+
+test.describe("dashboard round trip (needs Supabase)", () => {
+  test.skip(!process.env.E2E_SUPABASE, "needs a linked Supabase project and a sales user");
+
+  test("create → publish → pin → expire → unpublish shows on the home page and /updates", async ({
+    page,
+  }) => {
+    test.setTimeout(240_000); // waits out a one-minute expiry
+    const title = `E2E update ${Date.now()}`;
+    await page.goto("/login?next=/dashboard/sales/updates/new");
+    await page.getByLabel("Email").fill(process.env.E2E_SALES_EMAIL ?? "");
+    await page.getByLabel("Password").fill(process.env.E2E_SALES_PASSWORD ?? "");
+    await page.getByRole("button", { name: /log in|sign in/i }).click();
+
+    // Create and publish.
+    await page.getByLabel("Title").fill(title);
+    await page.getByLabel("Short text").fill("Short text from the E2E test.");
+    await page.getByLabel("Category").selectOption("events");
+    await page.getByRole("button", { name: "Publish" }).click();
+    await expect(page.getByText(/Published/)).toBeVisible();
+    await expect(page).toHaveURL(/\/dashboard\/sales\/updates\/[0-9a-f-]{36}$/);
+    const editUrl = page.url();
+
+    await page.goto("/");
+    await expect(page.locator("#latest-updates")).toContainText(title);
+    await page.goto("/updates?category=events");
+    await expect(page.getByRole("heading", { name: title })).toBeVisible();
+
+    // Pin: first on the home page.
+    await page.goto("/dashboard/sales/updates");
+    const row = page.getByRole("listitem").filter({ hasText: title });
+    await row.getByRole("button", { name: "Pin" }).click();
+    await expect(row.getByText("Pinned")).toBeVisible();
+    await page.goto("/");
+    await expect(page.locator("#latest-updates article").first()).toContainText(title);
+
+    // Expire (expiry in the past is refused; set it a minute ahead and wait it out).
+    await page.goto(editUrl);
+    const soon = new Date(Date.now() + 65_000);
+    const pad = (n: number) => String(n).padStart(2, "0");
+    await page
+      .getByLabel("Expiry (optional)")
+      .fill(
+        `${soon.getFullYear()}-${pad(soon.getMonth() + 1)}-${pad(soon.getDate())}T${pad(soon.getHours())}:${pad(soon.getMinutes())}`,
+      );
+    await page.getByRole("button", { name: "Publish" }).click();
+    await expect(page.getByText(/Published|Scheduled/)).toBeVisible();
+    await page.waitForTimeout(75_000);
+    await page.goto(`/updates?category=events&t=${Date.now()}`);
+    await expect(page.getByRole("heading", { name: title })).toHaveCount(0);
+
+    // Unpublish (no delete): gone from the site, still in the dashboard as a draft.
+    await page.goto("/dashboard/sales/updates");
+    await page
+      .getByRole("listitem")
+      .filter({ hasText: title })
+      .getByRole("button", { name: "Unpublish" })
+      .click();
+    await expect(
+      page.getByRole("listitem").filter({ hasText: title }).getByText("Draft"),
+    ).toBeVisible();
+  });
+});

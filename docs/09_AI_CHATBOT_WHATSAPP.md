@@ -201,3 +201,8 @@ After that, run "Re-sync from website" once.
   - Widget checks on the production build.
   - Conversation in local dry run.
   - The Sales inbox round trip, which needs Supabase: `E2E_SUPABASE=1`.
+
+**Updates (2026-10-02):**
+- The live updates (Admin → Content → Updates) go into every system prompt, so their expiry is always respected. Batch dates may be stated only as written there.
+- "When is the next batch?" quotes the latest live Batch & Enrollment update when there is one.
+- A "Latest updates" knowledge document (kind `update`) is re-embedded on every save, publish, pin or unpublish, and on Re-sync.

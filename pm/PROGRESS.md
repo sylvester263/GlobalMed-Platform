@@ -12,7 +12,7 @@ Last updated: 2026-10-01 · Current phase: **7A — AI chatbot (website)** built
 | 5 Payments & enrollment | 🟨 Card checkout + webhook built; manual payments next | 30 |
 | 6 Quizzes, exams, certificates | ⬜ | 0 |
 | 7 AI chatbot + WhatsApp | 🟨 7A website chatbot built and tested; live answers wait on the LLM key + Supabase; 7B WhatsApp not started (client inputs) | 55 |
-| 8 CRM, analytics, marketing | ⬜ | 0 |
+| 8 CRM, analytics, marketing | 🟨 Updates (news) built; leads pipeline and lead detail built earlier; rest not started | 15 |
 | 9 QA & launch | ⬜ | 0 |
 
 Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
@@ -125,7 +125,7 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [ ] P8-1 Leads pipeline (kanban + table)
 - [ ] P8-2 Lead detail + notes + assign
 - [ ] P8-3 Admin KPIs + charts + daily_stats cron
-- [ ] P8-4 Content manager (pages, posts, testimonials, FAQs)
+- [ ] P8-4 Content manager (pages, posts, testimonials, FAQs) — 🟨 Updates done (2026-10-02): dashboard create/publish/schedule/pin/expire, home "Latest Updates", /updates, chatbot; live once Supabase is linked. Pages, blog, testimonials, FAQs still to do
 - [ ] P8-5 Landing pages /lp/*
 - [ ] P8-6 GTM/GA4/Pixel events + consent
 - [ ] P8-7 Audit log viewer

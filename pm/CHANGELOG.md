@@ -4,6 +4,7 @@ Format: Keep a Changelog · Semantic Versioning
 
 ## [Unreleased]
 ### Added
+- Updates (news / announcements): dashboard (Admin → Content → Updates, Sales → Updates) to create, publish, schedule, pin, expire and unpublish, with image upload (1600×900 WebP); home "Latest Updates" (3 latest, pinned first, hidden when none); /updates with category filter and pagination; /updates/[slug]; NewsArticle JSON-LD; Resources menu, footer, sitemap; the chatbot answers from live updates (2026-10-02)
 - Social links (Facebook, LinkedIn, Instagram) in the top bar, the footer and the Organization JSON-LD sameAs; one source in `data/site.ts`, same order and hover everywhere (2026-10-02)
 - Top contact bar above the main nav on every public page: email and mobile from `data/site.ts`, social icons when linked; scrolls away while the nav stays sticky; icons only on phones (2026-10-02)
 - Phase 7A website chatbot: AI provider adapter (OpenAI / Anthropic / Gemini), RAG knowledge base synced from the live site, guardrails with exact scripted answers, streaming `/api/chat`, chat widget behind the help button, lead capture (source "chatbot"), human handoff to a live Sales inbox, Admin → Chatbot (knowledge base, conversations, settings); answers from the model start once the client's LLM key and Supabase are set (2026-10-01)
@@ -28,6 +29,7 @@ Format: Keep a Changelog · Semantic Versioning
 - Hosting documented as own hosting (Hostinger); live site URL in `.env.production`; `/api/health` shows the build commit (2026-10-01)
 
 ### Changed
+- Fixed: count-up padding no longer widens figures with commas, and stats-strip numbers are 24px on phones, so /services and /free-billing-audit no longer scroll sideways at 360px; update category chip text is navy for AA contrast (2026-10-02)
 - Heading font (Source Serif 4) loads with font-display: optional so a late font can no longer re-wrap the hero headline and move the page (ADR-035) (2026-10-02)
 - Company facts (home card + About strip): count-up once (1.2s ease-out) with the "+" fixed; hover lifts the item onto #EEF6FC, number #3A73C2 with a growing sky underline, stronger card shadow; reduced motion shows final numbers and colour only (2026-10-02)
 - Home hero: one controls row below the slide buttons and 16px above the stats card (dots left / controls right; phones: dots centred, pause only); slides share one grid cell so the hero grows instead of overlapping on short screens (2026-10-02)

@@ -10,9 +10,14 @@ import { siteLinks } from "@/data/site";
 const [appStore, googlePlay] = appBadges;
 
 describe("footer app badges", () => {
-  it("has both store links in data/site.ts, App Store first", () => {
-    expect(Object.keys(siteLinks.appLinks)).toEqual(["appStore", "googlePlay"]);
+  it("has both store links in data/site.ts; badges show App Store first", () => {
+    expect(Object.keys(siteLinks.appLinks).sort()).toEqual(["appStore", "googlePlay"]);
     expect(appBadges.map((b) => b.key)).toEqual(["appStore", "googlePlay"]);
+    // Google Play supplied 2026-10-01; App Store still to come.
+    expect(siteLinks.appLinks.googlePlay).toBe(
+      "https://play.google.com/store/apps/details?id=com.globalmed_transcriptions.org",
+    );
+    expect(siteLinks.appLinks.appStore).toBe("");
   });
 
   it("renders an empty link as a disabled, non-link badge with a Coming soon tooltip", () => {

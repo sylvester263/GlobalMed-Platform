@@ -25,6 +25,7 @@ Format: Keep a Changelog · Semantic Versioning
 - Hosting documented as own hosting (Hostinger); live site URL in `.env.production`; `/api/health` shows the build commit (2026-10-01)
 
 ### Changed
+- Home slider: the GlobalMed + AAPC lockup shows on all three slides in a fixed position (it no longer moves with slide changes), now with the official horizontal GlobalMed logo; headline, text and buttons start at the same height on every slide (2026-10-01)
 - Performance: first-load JS cut 40–50% on Home, About, AAPC and course pages (deferred hydration, no animation library on these pages, lazy menus/dialogs, lean providers, prefetch off for footer/lists, content-visibility); GSAP removed (2026-10-01)
 - UI/UX pass: spacing tokens (56/72/96 section padding, 24/32 grid gaps), 44px touch targets, 16px text on phones, anchor offsets, slider/band contrast, sticky comparison-table column; CSS no longer inlined (ADR-031) (2026-09-30)
 - Fixed: pages with their own Open Graph data had no og:image (2026-09-30)

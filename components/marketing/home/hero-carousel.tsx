@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
+import { sliderLockupHeight } from "@/components/marketing/home/slider-lockup-size";
 import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
 import { buttonVariants } from "@/components/ui/button";
 import { features } from "@/config/features";
@@ -20,9 +21,13 @@ export type HeroSlide = {
   hasImage: boolean;
   placeholder: string;
   actions: { label: string; href: string }[];
-  /** Extra content above the headline (slide 3's logo lockup), rendered on the server. */
-  lockup?: React.ReactNode;
 };
+
+/**
+ * Where the copy starts: the same top on every slide, so the lockup, headline, text and
+ * buttons sit at the same height on all of them (no jump when slides change).
+ */
+const copyTop = "pt-8 md:pt-12 lg:pt-[clamp(40px,9vh,88px)]";
 
 const SWIPE_THRESHOLD = 50;
 const TICKS = 8;
@@ -36,8 +41,16 @@ const TICKS = 8;
  * inside, and the pause button all pause it (CSS animation-play-state). Reduced motion: no
  * autoplay (the fill animation is never applied, so it never ends) and a plain crossfade.
  * Slides are stacked at a fixed height, so changing slides causes no layout shift.
+ * The GlobalMed + AAPC lockup (server-rendered, passed in) is drawn once above the slides,
+ * so it does not move or fade with them; each slide keeps an empty space of its height.
  */
-export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
+export function HeroCarousel({
+  slides,
+  lockup,
+}: {
+  slides: HeroSlide[];
+  lockup?: React.ReactNode;
+}) {
   const reduced = usePrefersReducedMotion();
   const [active, setActive] = useState(0);
   const [userPaused, setUserPaused] = useState(false);
@@ -55,7 +68,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
     <section
       aria-roledescription="carousel"
       aria-label="Highlights"
-      className="relative isolate h-[560px] touch-pan-y overflow-hidden bg-navy text-white md:h-[520px] lg:h-[clamp(480px,80vh,640px)]"
+      className="relative isolate h-[680px] touch-pan-y overflow-hidden bg-navy text-white min-[390px]:h-[620px] sm:h-[560px] md:h-[520px] lg:h-[clamp(560px,80vh,640px)]"
       onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
       onPointerLeave={(e) => e.pointerType === "mouse" && setHovered(false)}
       onPointerDown={(e) => {
@@ -121,11 +134,44 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                 aria-hidden="true"
                 className="absolute inset-0 bg-navy/75 lg:bg-transparent lg:bg-linear-to-r lg:from-navy/75 lg:from-55% lg:to-transparent"
               />
-              <div className="relative container-fluid flex h-full flex-col justify-center gap-5 pt-10 pb-24 lg:pb-20">
+              <div className={cn("relative container-fluid flex h-full flex-col", copyTop)}>
                 <div className="hero-slide-copy flex max-w-2xl flex-col gap-5">
-                  {slide.lockup}
-                  <h2 className="text-3xl text-white lg:text-4xl">{slide.headline}</h2>
-                  <p className="max-w-prose text-lg text-white/90">{slide.body}</p>
+                  {lockup && <div aria-hidden="true" className={sliderLockupHeight} />}
+                  {/* Every slide's headline and text cell also holds the other slides'
+                      (invisible), so it is as tall as the longest at any width and the text
+                      and buttons start at the same height on every slide. */}
+                  <div className="grid">
+                    <h2 className="col-start-1 row-start-1 text-3xl text-white lg:text-4xl">
+                      {slide.headline}
+                    </h2>
+                    {slides.map(
+                      (other) =>
+                        other.id !== slide.id && (
+                          <span
+                            key={other.id}
+                            aria-hidden="true"
+                            className="invisible col-start-1 row-start-1 font-serif text-3xl font-semibold tracking-tight text-balance lg:text-4xl"
+                          >
+                            {other.headline}
+                          </span>
+                        ),
+                    )}
+                  </div>
+                  <div className="grid max-w-prose">
+                    <p className="col-start-1 row-start-1 text-lg text-white/90">{slide.body}</p>
+                    {slides.map(
+                      (other) =>
+                        other.id !== slide.id && (
+                          <span
+                            key={other.id}
+                            aria-hidden="true"
+                            className="invisible col-start-1 row-start-1 text-lg"
+                          >
+                            {other.body}
+                          </span>
+                        ),
+                    )}
+                  </div>
                   <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     {slide.actions.map((action, j) => {
                       const external = action.href.startsWith("http");
@@ -154,6 +200,12 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
           );
         })}
       </div>
+
+      {lockup && (
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[15]">
+          <div className={cn("container-fluid", copyTop)}>{lockup}</div>
+        </div>
+      )}
 
       {/* Controls: claim-line progress (retired 2026-09-28, ADR-028), dots, previous/next
           and pause. */}

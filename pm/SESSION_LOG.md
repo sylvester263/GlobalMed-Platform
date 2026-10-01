@@ -419,6 +419,18 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** Home and About mobile to 90 (Contact nav prefetch, mega menu on hover, hosting cache/CDN), then re-measure with PageSpeed Insights; client's regenerated images ("images replaced: <IDs>").
 - **Blockers:** Vercel project deletion and domain connection are client actions.
 
+### Session 014 — Hero slider lockup on all three slides
+- **Date:** 2026-10-01
+- **Done:**
+  - GlobalMed + AAPC lockup now on slides 1, 2 and 3: one shared server component (`SliderLockup`), drawn once above the slides so it stays fixed while slides change (no fade, no movement).
+  - Official horizontal GlobalMed logo (public/images/brand/globalmed-logo-horizontal.png, original artwork) | 1px #D9E3F0 divider (20px each side) | AAPC logo on a white 12px-radius plate, padding 14px 20px; both logos 40px (≥1024px), 34px (768px), 28px (phones); alt texts and the plate's aria-label as specified. About keeps its own PartnerLockup unchanged.
+  - Copy starts at the same top on every slide; each headline and text cell reserves the height of the longest one (invisible copies, aria-hidden), so headline, text and buttons sit at the same height on all slides at every width. Slider height on phones raised to 620px (680px under 390px) so the buttons clear the controls; desktop minimum 560px.
+  - Checked with tests/audit/slider-lockup.mjs at 360, 390, 768, 1024, 1280, 1440, 1920: lockup position identical across slides, left-aligned with the headline, 20px above it, no overlap with the headline or the controls, headline/text/buttons tops identical — 0 problems. Reduced motion: slides still fade, lockup static. Overlay and text colours unchanged (contrast unchanged). E2E: 86 passed, 4 skipped.
+  - Screenshots: pm/screenshots/2026-10-01/slider-lockup/ (slides 1–3 at 1920 and 390).
+- **Files touched:** components/marketing/home/{slider-lockup.tsx,slider-lockup-size.ts,hero-slider.tsx,hero-carousel.tsx}, tests/audit/slider-lockup.mjs, pm/SESSION_LOG.md, pm/CHANGELOG.md, pm/screenshots/2026-10-01/slider-lockup/*
+- **Next:** remaining items of the 2026-10-01 gap brief (verify remaining gaps, checks at 7 widths, before/after screenshots, report); og/og-education placement.
+- **Blockers:** none.
+
 ---
 ### Session NNN — <title>
 - **Date:**

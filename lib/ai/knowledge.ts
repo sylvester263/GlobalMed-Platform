@@ -2,6 +2,7 @@ import { approvedWording } from "@/content/aapc";
 import { whyRegister } from "@/content/home";
 import { serviceCards, servicesIntro } from "@/content/home-services";
 import { aapcCourseFacts, formatUsdPrice, getAapcCourses } from "@/data/courses";
+import { address } from "@/data/site";
 import { aapcCertificationPath, site } from "@/lib/site";
 
 /**
@@ -16,6 +17,7 @@ export const contactFacts = {
   whatsappUrl: aapcCourseFacts.whatsappUrl,
   email: site.contact.email,
   hours: site.contact.hours,
+  address: address.oneLine,
   registerUrl: `${aapcCertificationPath}#register`,
   auditUrl: "/free-billing-audit",
   contactUrl: "/contact",
@@ -65,6 +67,7 @@ export function pinnedKnowledge(): string {
     "",
     "## Contact",
     `Phone ${contactFacts.phone} · WhatsApp ${contactFacts.whatsapp} (${contactFacts.whatsappUrl}) · Email ${contactFacts.email} · ${contactFacts.hours}.`,
+    `Office address: ${contactFacts.address}.`,
     "",
     "## AAPC training: who does what",
     approvedWording.role,

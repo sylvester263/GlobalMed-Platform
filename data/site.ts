@@ -1,4 +1,22 @@
 /**
+ * The office address (client, 2026-10-01): the only copy on the site. The footer, Contact page,
+ * llms.txt, legal pages ({{address}} in content/legal), JSON-LD and the chatbot knowledge all
+ * read it from here.
+ */
+export const address = {
+  lines: ["44 Dilkusha Garden", "Near S Block Ext.", "Model Town, Lahore", "PO Box 54700"],
+  oneLine: "44 Dilkusha Garden, Near S Block Ext., Model Town, Lahore, PO Box 54700",
+  /** Structured parts for schema.org PostalAddress. */
+  postal: {
+    streetAddress: "44 Dilkusha Garden, Near S Block Ext., Model Town",
+    addressLocality: "Lahore",
+    addressRegion: "Punjab",
+    postalCode: "54700",
+    addressCountry: "PK",
+  },
+} as const;
+
+/**
  * Footer links the client fills in later (client, 2026-09-27). A social icon only shows once
  * its link is set; empty ones leave no gap.
  */

@@ -1,5 +1,6 @@
 import { features, type FeatureFlag } from "@/config/features";
 import { aapcCoursePath, getAapcCourses } from "@/data/courses";
+import { address } from "@/data/site";
 import { publicEnv } from "@/lib/env";
 
 /**
@@ -29,14 +30,8 @@ export const site = {
     // NEXT_PUBLIC_WHATSAPP_NUMBER can override the client's number per environment.
     whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923004198760",
     hours: "Open 24/7",
-    address: {
-      street: "44 Dilkusha Garden, Near S Block Ext., Model Town",
-      city: "Lahore",
-      region: "Punjab",
-      postalCode: "54700",
-      poBox: "PO Box 54700",
-      country: "PK",
-    },
+    /** The office address lives in data/site.ts (single source, 2026-10-01). */
+    address,
     // [CLIENT TO CONFIRM] A US line and US/PK hours were placeholders before the client
     // supplied the details above. Kept here, hidden while `usLineConfirmed` is false.
     usLineConfirmed: false,
@@ -61,7 +56,8 @@ export const site = {
 export type SocialNetwork = "facebook" | "instagram" | "linkedin" | "youtube" | "x";
 
 /** One-line postal address, as printed in the footer and on the contact page. */
-export const postalAddress = `${site.contact.address.street}, ${site.contact.address.city}, ${site.contact.address.poBox}, Pakistan`;
+/** One-line office address (data/site.ts). */
+export const postalAddress = address.oneLine;
 
 /** Education routes live at /education (the old /school URLs still render the same pages). */
 export const educationBase = "/education";

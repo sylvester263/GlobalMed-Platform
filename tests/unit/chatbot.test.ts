@@ -263,3 +263,11 @@ describe("streaming through the hosting CDN", () => {
     expect(rest).toBe("");
   });
 });
+
+describe("office address (single source)", () => {
+  it("answers where the office is from data/site.ts", async () => {
+    const { address } = await import("@/data/site");
+    expect(scriptedAnswer("What is your office address?")?.text).toContain(address.oneLine);
+    expect(pinnedKnowledge()).toContain(address.oneLine);
+  });
+});

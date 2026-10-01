@@ -25,7 +25,7 @@ Sources: service pages, the three AAPC course pages, the training FAQs, policies
 When an admin edits a document: chunk (≈800 tokens, 100 overlap) → embed → replace the chunks.
 
 ### 3.1 Company facts (client-confirmed)
-- Address: 44 Dilkusha Garden, Near S Block Ext., Model Town, Lahore, PO Box 54700, Pakistan
+- Address (single source `data/site.ts`, 2026-10-01): 44 Dilkusha Garden, Near S Block Ext., Model Town, Lahore, PO Box 54700
 - Phone: +92 42 3594 6342 · WhatsApp: +92 300 419 8760 · Email: info@globalmedtranscriptions.com · Hours: Open 24/7
 - Founded 2007 by Riaz Naveed. Medical transcription, billing and coding services for hospitals and clinics in the USA, Canada, UK, Australia and Saudi Arabia.
 - "GlobalMed Transcriptions, Strategic Partner of AAPC in Pakistan for Medical Billing and Coding."

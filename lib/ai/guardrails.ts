@@ -228,15 +228,17 @@ export function scriptedAnswer(text: string): ScriptedAnswer | null {
     };
   }
 
+  const asksAddress = /\b(address|office|located|location|where are you|visit)\b/.test(t);
   if (
-    /\b(phone|number|call|whatsapp|email|e-mail|contact (details|info)|address|hours|open|timing|reach you)\b/.test(
+    asksAddress ||
+    (/\b(phone|number|call|whatsapp|email|e-mail|contact (details|info)|hours|open|timing|reach you)\b/.test(
       t,
     ) &&
-    !/\bcall me\b/.test(t)
+      !/\bcall me\b/.test(t))
   ) {
     return {
       intent: "other",
-      text: `You can reach GlobalMed by phone ${contactFacts.phone}, WhatsApp ${contactFacts.whatsapp} or email ${contactFacts.email}. We're ${contactFacts.hours.toLowerCase()}.`,
+      text: `You can reach GlobalMed by phone ${contactFacts.phone}, WhatsApp ${contactFacts.whatsapp} or email ${contactFacts.email}. We're ${contactFacts.hours.toLowerCase()}.${asksAddress ? ` Our office: ${contactFacts.address}.` : ""}`,
     };
   }
 

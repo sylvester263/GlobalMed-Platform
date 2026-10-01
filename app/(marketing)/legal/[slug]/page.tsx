@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Prose } from "@/components/marketing/prose";
 import { PageHero, Section } from "@/components/marketing/sections";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { address } from "@/data/site";
 import { getLegalPage, getLegalPages } from "@/lib/content/markdown";
 import { pageMetadata } from "@/lib/seo/metadata";
 
@@ -55,7 +56,7 @@ export default async function LegalPage({ params }: Props) {
             compliance advisers before launch.
           </AlertDescription>
         </Alert>
-        <Prose markdown={page.body} />
+        <Prose markdown={page.body.replaceAll("{{address}}", address.oneLine)} />
       </Section>
     </>
   );

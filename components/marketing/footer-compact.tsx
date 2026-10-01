@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { glyphs } from "@/components/marketing/social-icons";
 import { features } from "@/config/features";
-import { siteLinks, type SocialKey } from "@/data/site";
+import { address, siteLinks, type SocialKey } from "@/data/site";
 import { aapcCertificationPath, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -58,12 +58,18 @@ function SeparatedList({
     <div className="md:overflow-hidden">
       <ul
         className={cn(
-          "flex flex-wrap justify-center gap-x-4 gap-y-2 md:-ml-[13px] md:justify-start md:gap-x-0",
+          "flex flex-wrap items-center justify-center gap-x-4 gap-y-2 md:-ml-[13px] md:justify-start md:gap-x-0",
           className,
         )}
       >
         {items.map((item, i) => (
-          <li key={i} className={cn("md:border-l md:border-white/35 md:px-3", itemClassName)}>
+          <li
+            key={i}
+            className={cn(
+              "flex items-center md:border-l md:border-white/35 md:px-3",
+              itemClassName,
+            )}
+          >
             {item}
           </li>
         ))}
@@ -165,8 +171,12 @@ export function CompactFooter() {
   const whatsappUrl = `https://wa.me/${contact.whatsappNumber.replace(/\D/g, "")}`;
   const socials = socialOrder.filter((s) => siteLinks.social[s.key]);
   // 44px tap targets on phones and tablets; compact rows from 1024px (mouse).
+  // The address (plain text) uses the same box, so all four contact items share a baseline.
+  const itemBox =
+    "inline-flex min-h-11 items-center justify-center lg:min-h-6 lg:pointer-coarse:min-h-11";
   const linkClass = cn(
-    "inline-flex min-h-11 min-w-11 items-center justify-center hover:text-white hover:underline lg:min-h-6 lg:min-w-0 lg:pointer-coarse:min-h-11 lg:pointer-coarse:min-w-11",
+    itemBox,
+    "min-w-11 hover:text-white hover:underline lg:min-w-0 lg:pointer-coarse:min-w-11",
     focusRing,
   );
 
@@ -235,7 +245,9 @@ export function CompactFooter() {
                 >
                   {contact.email}
                 </a>,
-                <span key="addr">44 Dilkusha Garden, Model Town, Lahore</span>,
+                <span key="addr" className={itemBox}>
+                  {address.oneLine}
+                </span>,
               ]}
             />
           </div>

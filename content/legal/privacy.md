@@ -68,3 +68,5 @@ You can ask to access, correct or delete your personal information, or withdraw 
 ## Contact
 
 Email [CLIENT TO CONFIRM privacy contact] with any privacy question.
+
+Postal address: {{address}}

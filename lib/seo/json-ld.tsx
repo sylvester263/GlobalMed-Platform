@@ -17,16 +17,7 @@ export function JsonLd({ data }: { data: JsonLdObject | JsonLdObject[] }) {
 const orgId = `${site.url}#organization`;
 
 function postalAddressJsonLd(): JsonLdObject {
-  const { address } = site.contact;
-  return {
-    "@type": "PostalAddress",
-    streetAddress: address.street,
-    postOfficeBoxNumber: address.poBox,
-    addressLocality: address.city,
-    addressRegion: address.region,
-    postalCode: address.postalCode,
-    addressCountry: address.country,
-  };
+  return { "@type": "PostalAddress", ...site.contact.address.postal };
 }
 
 /** Organization + LocalBusiness: same NAP as the footer and contact page (lib/site.ts). */

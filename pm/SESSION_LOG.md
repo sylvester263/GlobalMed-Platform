@@ -474,6 +474,18 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Date:** 2026-10-01
 - **Done (footer):** fine print "© 2026 GlobalMed Transcriptions. All rights reserved. · Designed & developed by SylJo Tech" (once). `data/site.ts` appLinks: Google Play set (the badge becomes a link, new tab, rel noopener noreferrer, aria-label "Download the GlobalMed app on Google Play"); App Store empty → "Coming soon". The Play link was opened: it loads "GlobalMed Transcriptions - Apps on Google Play". Footer badge + footer tests updated (7 passed); screenshots pm/screenshots/2026-10-01/footer-update/ (1920, 390).
 
+- **Done (address):** `data/site.ts` `address` {lines, oneLine, postal}. Replaced:
+  - the hard-coded footer address (`footer-compact.tsx`, short "44 Dilkusha Garden, Model Town, Lahore" → oneLine);
+  - `lib/site.ts` contact.address (now the shared object) and `postalAddress` (→ oneLine; was "…, Pakistan"), used by the extended footer and llms.txt;
+  - the Contact page (4 lines, one per line);
+  - JSON-LD PostalAddress (streetAddress / addressLocality / addressRegion / postalCode / addressCountry as specified; postOfficeBoxNumber dropped);
+  - Privacy and Terms (`{{address}}` placeholder filled from the source; Terms gets a short Contact section);
+  - the chatbot (pinned knowledge, and the scripted contact answer now gives the office when asked);
+  - docs/09.
+  - No map link or embed exists. The registration success screen and the notification emails don't show an address, so nothing was added there.
+  - Footer contact row: the address now uses the same box as the three links (13px, same line height); text tops identical on each line at 1920/1280/768/390, clean wrapping without stray dividers.
+  - Screenshots pm/screenshots/2026-10-01/address/.
+
 ---
 ### Session NNN — <title>
 - **Date:**

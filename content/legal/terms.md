@@ -60,3 +60,7 @@ Content on this website is general information. It is not legal, compliance or b
 ## Changes and governing law
 
 We may update these terms and will post the new version here. Governing law: [CLIENT TO CONFIRM].
+
+## Contact
+
+Postal address: {{address}}

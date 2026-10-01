@@ -86,9 +86,11 @@ export default function ContactPage() {
               <div>
                 <p className="font-semibold">Office</p>
                 <address className="not-italic">
-                  {contact.address.street}
-                  <br />
-                  {contact.address.city}, {contact.address.poBox}, Pakistan
+                  {contact.address.lines.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
                 </address>
               </div>
             </li>

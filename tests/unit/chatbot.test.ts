@@ -231,3 +231,21 @@ describe("rate limit (20 messages / 10 min per visitor)", () => {
     expect(results[20]).toBe(false);
   });
 });
+
+describe("knowledge base: page text from the live site", () => {
+  it("keeps the main content and drops scripts, nav, forms and hidden sizers", async () => {
+    const { extractMainText } = await import("@/lib/ai/extract");
+    const html = `<html><body><header>Menu</header><main>
+      <nav>Breadcrumb</nav><h1>CPC&reg; course</h1>
+      <p>Price: USD 1,050 &amp; 16 weeks</p>
+      <span aria-hidden="true" class="invisible">Duplicate headline</span>
+      <ul><li>Six months of Blackboard access</li></ul>
+      <script>alert(1)</script><form><input name="x"></form>
+    </main><footer>© 2026</footer></body></html>`;
+    const text = extractMainText(html);
+    expect(text).toContain("CPC® course");
+    expect(text).toContain("Price: USD 1,050 & 16 weeks");
+    expect(text).toContain("• Six months of Blackboard access");
+    expect(text).not.toMatch(/Menu|Breadcrumb|Duplicate|alert|© 2026/);
+  });
+});

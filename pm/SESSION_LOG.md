@@ -621,6 +621,23 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** client sets the secret key + Hostinger env and changes the DB password; create admin/sales users; Auth site URL + redirect URLs (docs/16); run the E2E round trip.
 - **Blockers:** secret key; first users.
 
+### Session 022 — Admin accounts; chatbot test with the Anthropic key
+- **Date:** 2026-10-03
+- **Done:**
+  - Admin accounts on the client's Supabase project:
+    - rnaveed@globalmedtranscriptions.com and sylvesteryousaf59@gmail.com.
+    - Created through Supabase's public sign-up API, then email confirmed and `profiles.role = 'admin'` set with `supabase db query`.
+    - Password 123456789 at the user's request, set below the site's own 10-character rule (docs/11) after the risk was explained. Change it once setup is done.
+  - Chatbot with `LLM_PROVIDER=anthropic` (default model claude-haiku-4-5): 19/20 test questions pass (pm/CHATBOT_TEST_QUESTIONS.md). Q19 is a safe "not sure" because there's no embedding key.
+  - Fixed: model replies used markdown that the widget shows raw. The prompt now asks for plain text with • bullets, about 100 words; `toPlainText` strips leftover markdown, applied through the existing `replace` event. New unit test `tests/unit/chatbot-plain-text.test.ts`.
+- **Not working yet (env):**
+  - `.env.local` still has `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` blank, so sign-in is off and the chatbot uses the dry-run memory store (dev only).
+  - `.env.example` (tracked) holds the Supabase secret key and the Anthropic key. Kept out of every commit; the user is to blank it.
+  - Live: the Hostinger env vars, Turnstile keys (the chatbot's first message fails closed without them) and an embedding key are needed.
+- **Files touched:** lib/ai/{engine,prompts}.ts, tests/unit/chatbot-plain-text.test.ts, pm/{CHATBOT_TEST_QUESTIONS,SESSION_LOG}.md
+- **Next:** fill `.env.local` public Supabase values; log in as admin locally and live; Auth URLs (docs/16); embedding key + KB re-sync; Turnstile keys; handoff test with a sales user.
+- **Blockers:** env values (above).
+
 ---
 ### Session NNN — <title>
 - **Date:**

@@ -9,6 +9,14 @@ Twenty questions with the expected answer. Machine-readable copy: `tests/audit/c
 - **Scripted:** an exact answer built from the site data. Works without an LLM key and can never drift from the site.
 - **Model:** answered by the LLM with the knowledge base. Each one is BLOCKED until `LLM_PROVIDER` / `LLM_API_KEY` are set. Until then the bot gives the safe "contact our team" reply and never invents an answer.
 
+## Results: 2026-10-03, Anthropic key set (Claude Haiku 4.5, the default model)
+
+**19 pass · 1 fail · 0 blocked.** Local dev server, dry-run store (Supabase public settings not yet in `.env.local`), no embedding key.
+
+- 16, 18, 20 (model): pass. Answers are on-site facts only (pricing for Pakistan, installments, the RCM list, no final coding advice).
+- 19 (CPC prerequisites): **fail, expected.** The model says it isn't sure and offers the team; it does not invent anything. The answer is on the CPC page, but without an embedding key the bot can't search the site (Anthropic has no embeddings API). Fixed by adding `EMBEDDING_PROVIDER` (openai | gemini) + `EMBEDDING_API_KEY`, then a knowledge-base re-sync.
+- Found and fixed: the model used markdown (`**bold**`, "-" bullets), which the widget shows as raw symbols, and ran past 120 words. The prompt now asks for plain text with • bullets (about 100 words), and `toPlainText` (lib/ai/engine.ts) strips any markdown left in the final reply.
+
 ## Results: 2026-10-01, no LLM key yet
 
 **16 pass · 0 fail · 4 blocked (need the LLM key).**

@@ -183,6 +183,20 @@ async function* streamModel(
 }
 
 /**
+ * The widget and WhatsApp show plain text, so markdown the model slips in (bold, headings,
+ * "-" bullets) would show as raw symbols: strip it from the final reply.
+ */
+export function toPlainText(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/__(.+?)__/g, "$1")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/^\s*[-*]\s+/gm, "• ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+/**
  * One visitor message → the reply events. Order: patient-information check, handoff state,
  * lead capture, quick replies, handoff triggers, exact (scripted) answers, then RAG + LLM
  * with the reply checks.
@@ -337,8 +351,8 @@ export async function* respond(
   const { text: reply, unsure, sources } = next.value;
 
   const problems = reply ? replyProblems(reply) : ["empty reply"];
-  const finalText = problems.length ? safeFallback : reply;
-  if (problems.length) yield { type: "replace", text: finalText };
+  const finalText = problems.length ? safeFallback : toPlainText(reply);
+  if (finalText !== reply) yield { type: "replace", text: finalText };
 
   const lowConfidence = unsure || problems.length > 0;
   const streak = lowConfidence ? conversation.lowConfidenceStreak + 1 : 0;

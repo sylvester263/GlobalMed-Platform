@@ -580,6 +580,26 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** link Supabase (apply 0001–0007), sign in as sales, run the round-trip E2E; client edits and publishes the two drafts.
 - **Blockers:** Supabase org invite (P0-4).
 
+### Session 020 — Small raised ® mark; About subtitle
+- **Date:** 2026-10-03
+- **Done:**
+  - ® as a small superscript across the whole site, implemented once:
+    - `components/ui/reg.tsx`: `withReg(text)` splits on "®" and wraps each in `<sup class="reg">`; `<Reg>` for literal JSX text; an `inline` option styles it inline for React Email.
+    - `.reg` in app/globals.css: 0.5em, vertical-align super, line-height 0, 0.05em left margin, inherited weight.
+    - Applied where content and data strings render: PageHero (eyebrow, title, intro, breadcrumbs), Section, CTA band, course cards (credential, full name, summary, facts, saving, Package Includes, Who it's for), course pages (all sections, tabs, Other AAPC courses), comparison table (headers, rows, cells), footer price card, both footers (links + trademark line), mega menu and mobile nav, FAQ accordion, claim journey (How it works), home services, instructors band, About story, update cards, empty states, form field descriptions (course price line), chat widget (greeting, quick replies, answers), the lead notification email's HTML part.
+    - Markdown (blog, legal): a small rehype step in `Prose` after rehype-sanitize.
+    - Left plain on purpose: `<title>`, meta descriptions, JSON-LD, alt text, aria labels and screen-reader-only text, `<option>` labels in the course select (can't hold markup), plain-text email parts, OG images.
+  - About hero subtitle → "The leading medical transcription and billing company in Pakistan, since 2007." Also noted in docs/09 (chatbot knowledge). The About meta description doesn't use the sentence. The KB re-sync picks up the live About page.
+- **Checks:**
+  - Scan of all 41 sitemap pages (production build): 245 full-size ® before, 0 visible afterwards (the 12 left are screen-reader-only "Register Now for CPC®" / "Course details: CPC®" text).
+  - New `tests/e2e/reg-mark.spec.ts`: no full-size ® on 9 key pages, and the mark is half size, raised, line height 0.
+  - Chrome adds a space before a `<sup>` in accessible names ("View CPC ® & CPB ® Courses"); about-story.spec now matches either form.
+  - Full E2E before the test fix: 280 passed, 1 failed (that name lookup); after it, the affected specs 17/17. Unit 202 (the chatbot-questions hook times out under parallel load; it passes alone, 21/21). Lint, typecheck, build clean.
+  - Screenshots pm/screenshots/2026-10-03/reg/: course cards, CPC® + CPB® hero, About hero at 1920 and 390; no horizontal scroll at 390.
+- **Files touched:** components/ui/reg.tsx (new), app/globals.css, components/marketing/{sections,aapc-course-card,aapc-course,certification-price-card,course-covers-tabs,faq-accordion,mega-menu,mobile-nav,site-footer,footer-compact,about-story,aapc-instructors-band,prose}.tsx, components/marketing/{home/claim-journey,home/services-overview,updates/update-card,chat/chat-widget}.tsx, components/ui/{empty-state,form-field,choice-field}.tsx, lib/email/templates/lead-notification.tsx, app/(marketing)/{page,faq/page,updates/page,school/aapc-certification-pakistan/page}.tsx, content/company.ts, docs/09_AI_CHATBOT_WHATSAPP.md, tests/e2e/{reg-mark,about-story}.spec.ts
+- **Next:** client checks the live site; the About "Our Story" body still says "the leading medical transcription company in Pakistan" (a different sentence in the old story text, not shown while the new story is on). Change it too if the client wants.
+- **Blockers:** Supabase org invite (P0-4).
+
 ---
 ### Session NNN — <title>
 - **Date:**

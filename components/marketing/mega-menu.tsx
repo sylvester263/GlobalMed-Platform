@@ -4,6 +4,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
+import { withReg } from "@/components/ui/reg";
 import { isActivePath, isNavGroup, primaryNav } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -71,7 +72,7 @@ export function MegaMenu({ pathname }: { pathname: string }) {
                     isActivePath(pathname, link.href) && activeClass,
                   )}
                 >
-                  {link.label}
+                  {withReg(link.label)}
                 </Link>
               </li>
             );
@@ -117,9 +118,11 @@ export function MegaMenu({ pathname }: { pathname: string }) {
                           aria-current={pathname === link.href ? "page" : undefined}
                           className="flex flex-col gap-0.5 rounded-md p-3 text-sm hover:bg-mint focus:bg-mint aria-[current=page]:bg-mint"
                         >
-                          <span className="font-semibold">{link.label}</span>
+                          <span className="font-semibold">{withReg(link.label)}</span>
                           {link.description && (
-                            <span className="text-muted-foreground">{link.description}</span>
+                            <span className="text-muted-foreground">
+                              {withReg(link.description)}
+                            </span>
                           )}
                         </Link>
                       </li>
@@ -132,9 +135,11 @@ export function MegaMenu({ pathname }: { pathname: string }) {
                       className="flex flex-col justify-end gap-2 rounded-md bg-ink p-5 text-white"
                     >
                       <span className="font-serif text-lg font-semibold">
-                        {group.feature.label}
+                        {withReg(group.feature.label)}
                       </span>
-                      <span className="text-sm text-white/80">{group.feature.description}</span>
+                      <span className="text-sm text-white/80">
+                        {withReg(group.feature.description)}
+                      </span>
                       <span className="flex items-center gap-1 text-sm font-semibold text-teal-bright">
                         Learn more <ArrowRight aria-hidden="true" className="size-4" />
                       </span>

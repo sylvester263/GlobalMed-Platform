@@ -9,6 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { serviceCards, servicesIntro, type ServiceCard } from "@/content/home-services";
 import { publicAssetExists } from "@/lib/public-asset";
 import { cn } from "@/lib/utils";
+import { withReg } from "@/components/ui/reg";
 
 /** Card backgrounds in order: white, soft sky, white, navy (client, 2026-09-28). */
 const tones: StackCard["tone"][] = ["white", "soft", "white", "navy"];
@@ -40,7 +41,7 @@ function CardImage({ card, dark }: { card: ServiceCard; dark: boolean }) {
       )}
     >
       <span className="flex min-w-0 flex-col gap-1">
-        <span>Photo: {card.title}</span>
+        <span>Photo: {withReg(card.title)}</span>
         <span className="font-normal break-all">{card.image.src}</span>
       </span>
     </div>
@@ -77,7 +78,7 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
           className="block h-6 font-serif text-2xl leading-none font-semibold text-sky before:content-[attr(data-decorative-ordinal)]"
         />
         <h3 id={`${card.id}-title`} className={cn("text-2xl lg:text-3xl", dark && "text-white")}>
-          {card.title}
+          {withReg(card.title)}
         </h3>
         <ClaimLine
           trigger="static"
@@ -86,7 +87,7 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
         />
         {card.paragraphs.map((p) => (
           <p key={p} className={muted}>
-            {p}
+            {withReg(p)}
           </p>
         ))}
         {card.chips && (
@@ -96,14 +97,14 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
                 key={chip}
                 className="rounded-full bg-sky-soft px-3 py-1 text-sm font-semibold text-navy"
               >
-                {chip}
+                {withReg(chip)}
               </li>
             ))}
           </ul>
         )}
         {card.checklist && (
           <div className="flex flex-col gap-3">
-            <p className="font-semibold">{card.checklist.label}</p>
+            <p className="font-semibold">{withReg(card.checklist.label)}</p>
             <ul className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
               {card.checklist.items.map((item) => (
                 <li key={item} className="flex gap-2 text-sm">
@@ -111,7 +112,7 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
                     aria-hidden="true"
                     className={cn("mt-0.5 size-4 shrink-0", dark ? "text-sky" : "text-teal-deep")}
                   />
-                  {item}
+                  {withReg(item)}
                 </li>
               ))}
             </ul>
@@ -132,7 +133,7 @@ function CardContent({ card, index }: { card: ServiceCard; index: number }) {
                   "border-white! bg-transparent text-white hover:bg-white hover:text-navy",
               )}
             >
-              {cta.label}
+              {withReg(cta.label)}
               {i === 0 && <ArrowRight aria-hidden="true" />}
             </Link>
           ))}
@@ -161,12 +162,14 @@ export function ServicesOverview() {
       <div className="container-fluid flex flex-col gap-10 section-y">
         {/* Full container width; from 1280px the AAPC note sits beside the lead (60/40). */}
         <div className="grid gap-4 xl:grid-cols-[3fr_2fr] xl:items-center xl:gap-12">
-          <p className="max-w-[75ch] text-lg text-muted-foreground">{servicesIntro.lead}</p>
+          <p className="max-w-[75ch] text-lg text-muted-foreground">
+            {withReg(servicesIntro.lead)}
+          </p>
           <Link
             href={servicesIntro.note.href}
             className="group rounded-2xl border border-sky/40 bg-sky-soft p-5 text-ink transition-colors hover:border-sky focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
           >
-            {servicesIntro.note.text}
+            {withReg(servicesIntro.note.text)}
             <ArrowRight
               aria-hidden="true"
               className="ml-1 inline size-4 transition-transform group-hover:translate-x-1"
@@ -176,7 +179,7 @@ export function ServicesOverview() {
         {/* Heading sits directly above the card stack (client, 2026-09-30). */}
         <div className="flex flex-col gap-4">
           <h2 id="services-title" className="max-w-[28ch] text-2xl lg:text-3xl">
-            {servicesIntro.title}
+            {withReg(servicesIntro.title)}
           </h2>
           <ClaimLine trigger="inView" ticks={8} className="max-w-sm" />
         </div>

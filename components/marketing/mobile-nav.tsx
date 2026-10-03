@@ -12,6 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { buttonVariants } from "@/components/ui/button";
+import { withReg } from "@/components/ui/reg";
 import {
   Sheet,
   SheetContent,
@@ -64,7 +65,7 @@ export function MobileNav({ open, onOpenChange, pathname }: MobileNavProps) {
               <Accordion key={run.items[0]?.label}>
                 {run.items.map((group) => (
                   <AccordionItem key={group.label} value={group.label}>
-                    <AccordionTrigger>{group.label}</AccordionTrigger>
+                    <AccordionTrigger>{withReg(group.label)}</AccordionTrigger>
                     <AccordionContent>
                       <ul className="flex flex-col">
                         {group.links.map((link) => (
@@ -75,7 +76,7 @@ export function MobileNav({ open, onOpenChange, pathname }: MobileNavProps) {
                               aria-current={pathname === link.href ? "page" : undefined}
                               className="flex min-h-11 items-center rounded-md px-2 no-underline! hover:bg-mint aria-[current=page]:text-teal-deep"
                             >
-                              {link.label}
+                              {withReg(link.label)}
                             </Link>
                           </li>
                         ))}
@@ -94,7 +95,7 @@ export function MobileNav({ open, onOpenChange, pathname }: MobileNavProps) {
                       aria-current={isActivePath(pathname, link.href) ? "page" : undefined}
                       className="flex min-h-12 items-center rounded-md text-base font-semibold hover:bg-mint aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8"
                     >
-                      {link.label}
+                      {withReg(link.label)}
                     </Link>
                   </li>
                 ))}

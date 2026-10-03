@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { glyphs, socialHoverClass } from "@/components/marketing/social-icons";
+import { withReg } from "@/components/ui/reg";
 import { features } from "@/config/features";
 import { address, siteLinks, socialOrder } from "@/data/site";
 import { aapcCertificationPath, site } from "@/lib/site";
@@ -206,7 +207,7 @@ export function CompactFooter() {
                   : []),
                 ...footerLinks.map((link) => (
                   <Link prefetch={false} key={link.href} href={link.href} className={linkClass}>
-                    {link.label}
+                    {withReg(link.label)}
                   </Link>
                 )),
               ]}
@@ -246,7 +247,7 @@ export function CompactFooter() {
 
           <p className="order-6 text-xs text-footer-fine md:order-none">
             {features.footerTrademarkNote
-              ? "CPC® and CPB® are registered trademarks of AAPC."
+              ? withReg("CPC® and CPB® are registered trademarks of AAPC.")
               : "© 2026 GlobalMed Transcriptions. All rights reserved."}{" "}
             · {site.credit}
           </p>

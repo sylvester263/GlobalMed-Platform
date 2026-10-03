@@ -10,6 +10,7 @@ import { pageMetadata } from "@/lib/seo/metadata";
 import { getLiveUpdates, updateImageUrl } from "@/lib/updates/data";
 import { categoryLabel, isUpdateCategory, paginate, updateCategories } from "@/lib/updates/logic";
 import { cn } from "@/lib/utils";
+import { withReg } from "@/components/ui/reg";
 
 export const metadata: Metadata = pageMetadata({
   title: "Updates",
@@ -68,7 +69,7 @@ export default async function UpdatesPage({ searchParams }: Props) {
                         : "bg-card text-primary",
                     )}
                   >
-                    {c.label}
+                    {withReg(c.label)}
                   </Link>
                 </li>
               );

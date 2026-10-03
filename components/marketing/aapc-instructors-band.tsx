@@ -11,6 +11,7 @@ import type { SiteImage } from "@/content/images";
 import { publicAssetExists } from "@/lib/public-asset";
 import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { withReg } from "@/components/ui/reg";
 
 const pointIcons = [Video, ClipboardCheck, BadgeCheck] as const;
 
@@ -48,13 +49,13 @@ export function AapcInstructorsBand({
       >
         <div className="flex flex-col gap-4">
           <h2 id={headingId} className={cn("text-2xl lg:text-3xl", dark && "text-white")}>
-            {instructorsBand.title}
+            {withReg(instructorsBand.title)}
           </h2>
           <ClaimLine trigger="inView" ticks={8} className="max-w-xs" />
           <p
             className={cn("max-w-prose text-lg", dark ? "text-white/90" : "text-muted-foreground")}
           >
-            {instructorsBand.body}
+            {withReg(instructorsBand.body)}
           </p>
           <ul className="grid gap-3 sm:grid-cols-3">
             {instructorsBand.points.map((point, i) => {
@@ -78,7 +79,7 @@ export function AapcInstructorsBand({
               dark && "bg-sky text-ink hover:bg-white",
             )}
           >
-            {instructorsBand.cta} <ArrowRight aria-hidden="true" />
+            {withReg(instructorsBand.cta)} <ArrowRight aria-hidden="true" />
           </Link>
         </div>
         {/* Hidden at client request (2026-09-29): see features.instructorPhotos. */}

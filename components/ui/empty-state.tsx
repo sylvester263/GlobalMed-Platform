@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 
 import { ClaimLine } from "@/components/motion/claim-line";
 import { cn } from "@/lib/utils";
+import { withReg } from "@/components/ui/reg";
 
 type EmptyStateProps = {
   icon: LucideIcon;
@@ -25,8 +26,8 @@ export function EmptyState({ icon: Icon, title, description, action, className }
         <Icon aria-hidden="true" className="size-6" />
       </span>
       <div className="flex max-w-sm flex-col gap-1">
-        <h3 className="text-xl">{title}</h3>
-        <p className="text-muted-foreground">{description}</p>
+        <h3 className="text-xl">{withReg(title)}</h3>
+        <p className="text-muted-foreground">{withReg(description)}</p>
       </div>
       <ClaimLine ticks={5} filled={1} trigger="static" className="w-24" />
       {action}

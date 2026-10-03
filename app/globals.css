@@ -329,6 +329,14 @@
   * {
     @apply border-border;
   }
+  /* "®" as a small raised mark (components/ui/reg.tsx); line-height 0 keeps line spacing. */
+  .reg {
+    font-size: 0.5em;
+    vertical-align: super;
+    line-height: 0;
+    margin-left: 0.05em;
+    font-weight: inherit;
+  }
   html {
     @apply font-sans;
     -webkit-text-size-adjust: 100%;

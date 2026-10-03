@@ -12,6 +12,7 @@ import { CourseCoversTabs } from "@/components/marketing/course-covers-tabs";
 import { FaqList, PageHero, Section } from "@/components/marketing/sections";
 import { heroImages } from "@/content/images";
 import { buttonVariants } from "@/components/ui/button";
+import { withReg } from "@/components/ui/reg";
 import { approvedWording } from "@/content/aapc";
 import { coursePageContent, type CourseGroup } from "@/content/courses";
 import {
@@ -63,7 +64,7 @@ function GroupCards({ groups }: { groups: CourseGroup[] }) {
         >
           <h3 className="flex items-start gap-2 text-lg leading-snug">
             <CircleCheck aria-hidden="true" className="mt-1 size-5 shrink-0 text-sky" />
-            {group.title}
+            {withReg(group.title)}
           </h3>
           <CheckList items={group.items} className="text-sm" />
         </li>
@@ -86,9 +87,9 @@ export function AapcRegisterBand({ defaultCourse }: { defaultCourse?: AapcCourse
           <h2 id="register-title" className="text-2xl text-white lg:text-3xl">
             Register for AAPC Training
           </h2>
-          <p className="max-w-prose text-white/85">{approvedWording.role}</p>
+          <p className="max-w-prose text-white/85">{withReg(approvedWording.role)}</p>
           <p className="max-w-prose text-white/85">
-            {approvedWording.training} {approvedWording.certification}
+            {withReg(`${approvedWording.training} ${approvedWording.certification}`)}
           </p>
           <p className="max-w-prose text-sm text-white/75">
             Please don&apos;t include any patient information.
@@ -119,7 +120,7 @@ function CourseSection({
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="flex flex-col gap-5">
       <h2 id={`${id}-title`} className="text-2xl lg:text-3xl">
-        {title}
+        {withReg(title)}
       </h2>
       {children}
     </section>
@@ -210,7 +211,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
             <CourseSection id="what-is" title={content.intro.heading}>
               <div className="flex max-w-prose flex-col gap-4">
                 {content.intro.paragraphs.map((p) => (
-                  <p key={p.slice(0, 40)}>{p}</p>
+                  <p key={p.slice(0, 40)}>{withReg(p)}</p>
                 ))}
               </div>
               {content.intro.columns && (
@@ -220,8 +221,8 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
                       key={col.heading}
                       className="flex flex-col gap-3 rounded-2xl border bg-card p-6"
                     >
-                      <h3 className="text-xl">{col.heading}</h3>
-                      <p className="text-muted-foreground">{col.body}</p>
+                      <h3 className="text-xl">{withReg(col.heading)}</h3>
+                      <p className="text-muted-foreground">{withReg(col.body)}</p>
                     </div>
                   ))}
                 </div>
@@ -238,7 +239,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
                       className="flex items-start gap-3 rounded-2xl border bg-card p-4"
                     >
                       <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-sky" />
-                      <span>{item}</span>
+                      <span>{withReg(item)}</span>
                     </li>
                   ))}
                 </ul>
@@ -249,7 +250,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
               <div className={cn("grid gap-8", content.why.groups.length > 1 && "md:grid-cols-2")}>
                 {content.why.groups.map((group) => (
                   <div key={group.title ?? "why"} className="flex flex-col gap-3">
-                    {group.title && <h3 className="text-xl">{group.title}</h3>}
+                    {group.title && <h3 className="text-xl">{withReg(group.title)}</h3>}
                     <CheckList items={group.items} />
                   </div>
                 ))}
@@ -273,11 +274,11 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
               <CourseSection id="curriculum" title={content.curriculum.heading}>
                 <div className="flex max-w-prose flex-col gap-4">
                   {content.curriculum.paragraphs.map((p) => (
-                    <p key={p.slice(0, 40)}>{p}</p>
+                    <p key={p.slice(0, 40)}>{withReg(p)}</p>
                   ))}
                 </div>
                 <div className="flex flex-col gap-3">
-                  <h3 className="text-xl">{content.curriculum.objectivesHeading}</h3>
+                  <h3 className="text-xl">{withReg(content.curriculum.objectivesHeading)}</h3>
                   <CheckList items={content.curriculum.objectives} />
                 </div>
               </CourseSection>
@@ -291,7 +292,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
               <CourseSection id="experience" title={content.experience.heading}>
                 {content.experience.paragraphs.map((p) => (
                   <p key={p.slice(0, 40)} className="max-w-prose">
-                    {p}
+                    {withReg(p)}
                   </p>
                 ))}
               </CourseSection>
@@ -300,7 +301,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
             <CourseSection id="maintaining" title={content.maintaining.heading}>
               {content.maintaining.paragraphs.map((p) => (
                 <p key={p.slice(0, 40)} className="max-w-prose">
-                  {p}
+                  {withReg(p)}
                 </p>
               ))}
             </CourseSection>
@@ -308,7 +309,7 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
             <CourseSection id="opportunities" title={content.closing.heading}>
               <div className="flex max-w-prose flex-col gap-4">
                 {content.closing.paragraphs.map((p) => (
-                  <p key={p.slice(0, 40)}>{p}</p>
+                  <p key={p.slice(0, 40)}>{withReg(p)}</p>
                 ))}
               </div>
               <div className="mt-3 flex flex-col gap-3 sm:flex-row">
@@ -345,9 +346,9 @@ export function AapcCoursePage({ course, faqs }: { course: AapcCourse; faqs: Faq
                 className="group flex h-full flex-col gap-2 rounded-2xl border bg-card p-6 transition-colors hover:border-primary"
               >
                 <span className="font-serif text-2xl font-semibold text-primary">
-                  {other.credential}
+                  {withReg(other.credential)}
                 </span>
-                <span className="font-semibold group-hover:underline">{other.title}</span>
+                <span className="font-semibold group-hover:underline">{withReg(other.title)}</span>
                 <span className="text-sm text-muted-foreground">
                   {formatUsdPrice(other.priceUsd)} · {other.compare.duration}
                 </span>

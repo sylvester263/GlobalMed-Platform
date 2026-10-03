@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
+import { withReg } from "@/components/ui/reg";
 import { categoryLabel, formatUpdateDate, type Update } from "@/lib/updates/logic";
 import { cn } from "@/lib/utils";
 
@@ -50,13 +51,13 @@ export function UpdateCard({
         <Heading className="text-xl leading-snug">
           {detailHref ? (
             <Link href={detailHref} className="hover:underline">
-              {update.title}
+              {withReg(update.title)}
             </Link>
           ) : (
-            update.title
+            withReg(update.title)
           )}
         </Heading>
-        <p className="text-muted-foreground">{update.summary}</p>
+        <p className="text-muted-foreground">{withReg(update.summary)}</p>
         {update.linkUrl && update.linkLabel && (
           <Link
             href={update.linkUrl}
@@ -64,7 +65,7 @@ export function UpdateCard({
             {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             className={cn(buttonVariants({ variant: "secondary" }), "mt-auto self-start")}
           >
-            {update.linkLabel}
+            {withReg(update.linkLabel)}
             <ArrowRight aria-hidden="true" />
             {external && <span className="sr-only">(opens in a new tab)</span>}
           </Link>

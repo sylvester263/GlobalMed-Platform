@@ -2,6 +2,7 @@ import { ArrowRight, BadgeCheck } from "lucide-react";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
+import { withReg } from "@/components/ui/reg";
 import { formatUsdPrice, getAapcCourses } from "@/data/courses";
 import { cn } from "@/lib/utils";
 
@@ -47,7 +48,7 @@ export function CertificationPriceCard({
               <span
                 className={cn("text-sm font-semibold", onDark ? "text-white" : "text-foreground")}
               >
-                {shortNames[course.slug] ?? course.credential}
+                {withReg(shortNames[course.slug] ?? course.credential)}
               </span>
               <span
                 className={cn(
@@ -79,7 +80,7 @@ export function CertificationPriceCard({
           "self-start",
         )}
       >
-        {cta} <ArrowRight aria-hidden="true" />
+        {withReg(cta)} <ArrowRight aria-hidden="true" />
       </Link>
     </div>
   );

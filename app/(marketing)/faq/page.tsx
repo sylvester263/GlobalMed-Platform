@@ -4,6 +4,7 @@ import { CtaBand, FaqList, PageHero, Section } from "@/components/marketing/sect
 import { faqGroups } from "@/content/company";
 import { faqJsonLd, JsonLd } from "@/lib/seo/json-ld";
 import { pageMetadata } from "@/lib/seo/metadata";
+import { withReg } from "@/components/ui/reg";
 
 export const metadata: Metadata = pageMetadata({
   title: "Frequently Asked Questions",
@@ -28,7 +29,7 @@ export default function FaqPage() {
                   href={`#${g.id}`}
                   className="inline-flex h-11 items-center rounded-full border bg-card px-4 text-sm font-semibold hover:bg-mint"
                 >
-                  {g.title}
+                  {withReg(g.title)}
                 </a>
               </li>
             ))}

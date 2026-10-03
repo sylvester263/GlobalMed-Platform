@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import { withReg } from "@/components/ui/reg";
 import { features } from "@/config/features";
 import { coursePageContent } from "@/content/courses";
 import {
@@ -63,7 +64,7 @@ export function PackageIncludes({ course }: { course: AapcCourse }) {
         {course.packageIncludes.map((item) => (
           <li key={item} className="flex items-start gap-2">
             <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
-            <span>{item}</span>
+            <span>{withReg(item)}</span>
           </li>
         ))}
       </ul>
@@ -92,13 +93,13 @@ function Price({
       <p className="text-sm font-semibold text-muted-foreground">Price</p>
       <p className="font-serif text-3xl font-semibold">{formatUsdPrice(course.priceUsd)}</p>
       {course.priceSaving ? (
-        <p className="text-sm font-semibold text-success-ink">{course.priceSaving}</p>
+        <p className="text-sm font-semibold text-success-ink">{withReg(course.priceSaving)}</p>
       ) : (
         reserveSaving &&
         savingToReserve && (
           // The dual course's saving, invisible: exactly the same height at every width.
           <span aria-hidden="true" className="invisible hidden text-sm font-semibold lg:block">
-            {savingToReserve}
+            {withReg(savingToReserve)}
           </span>
         )
       )}
@@ -133,7 +134,7 @@ export function CourseFacts({ course }: { course: AapcCourse }) {
       {rows.map(([label, value]) => (
         <div key={label} className="flex flex-col">
           <dt className="font-semibold">{label}</dt>
-          <dd className="text-muted-foreground">{value}</dd>
+          <dd className="text-muted-foreground">{withReg(value)}</dd>
         </div>
       ))}
     </dl>
@@ -153,7 +154,7 @@ export function CheckList({ items, className }: { items: string[]; className?: s
                 : undefined
             }
           >
-            {item}
+            {withReg(item)}
           </span>
         </li>
       ))}
@@ -196,10 +197,12 @@ export function AapcCourseCard({
         <Badge variant="secondary" className="self-start">
           <BadgeCheck aria-hidden="true" /> {aapcCourseFacts.badge}
         </Badge>
-        <p className="font-serif text-3xl font-semibold text-primary">{course.credential}</p>
-        <Heading className="text-lg leading-snug">{course.title}</Heading>
+        <p className="font-serif text-3xl font-semibold text-primary">
+          {withReg(course.credential)}
+        </p>
+        <Heading className="text-lg leading-snug">{withReg(course.title)}</Heading>
       </div>
-      <p className="-mt-3 text-sm text-muted-foreground">{course.summary}</p>
+      <p className="-mt-3 text-sm text-muted-foreground">{withReg(course.summary)}</p>
       <CourseFacts course={course} />
       <div className="flex flex-col gap-2">
         <p className={eyebrowClass}>Who it&apos;s for</p>

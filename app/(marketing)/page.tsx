@@ -31,6 +31,7 @@ import { Testimonial } from "@/components/marketing/testimonial";
 import { CountUp } from "@/components/motion/count-up";
 import { StaggerGroup, StaggerItem } from "@/components/motion/stagger-group";
 import { buttonVariants } from "@/components/ui/button";
+import { Reg, withReg } from "@/components/ui/reg";
 import { features } from "@/config/features";
 import { aapcFaqs, aapcSteps, approvedWording } from "@/content/aapc";
 import {
@@ -124,7 +125,7 @@ export default function HomePage() {
       >
         <div className="container-fluid flex flex-col gap-10 section-y">
           <p className="max-w-4xl font-serif text-xl leading-snug font-semibold text-white lg:text-2xl">
-            {approvedWording.partnership}
+            {withReg(approvedWording.partnership)}
           </p>
           <p className="max-w-[75ch] text-white/85">{approvedWording.role}</p>
           {/* Hidden at client request — GlobalMed education plans are future scope. */}
@@ -135,7 +136,7 @@ export default function HomePage() {
                   <p className="font-serif text-3xl font-semibold tracking-tight text-sky">
                     <CountUp value={stat.value} suffix={stat.suffix} />
                   </p>
-                  <p className="text-sm font-semibold text-white/85">{stat.label}</p>
+                  <p className="text-sm font-semibold text-white/85">{withReg(stat.label)}</p>
                   {!partnership.confirmed && (
                     <p className="text-xs text-white/75">[CLIENT TO CONFIRM]</p>
                   )}
@@ -190,7 +191,8 @@ export default function HomePage() {
                 <Check aria-hidden="true" className="size-4 text-sky" strokeWidth={3} />
               </span>
               <p>
-                <strong className="font-semibold text-ink">{point.lead}</strong> — {point.rest}
+                <strong className="font-semibold text-ink">{withReg(point.lead)}</strong> —{" "}
+                {withReg(point.rest)}
               </p>
             </li>
           ))}
@@ -223,8 +225,8 @@ export default function HomePage() {
                   <span className="flex size-11 items-center justify-center rounded-md bg-mint text-teal-deep">
                     <Icon aria-hidden="true" className="size-5" />
                   </span>
-                  <h3 className="text-xl">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.body}</p>
+                  <h3 className="text-xl">{withReg(item.title)}</h3>
+                  <p className="text-muted-foreground">{withReg(item.body)}</p>
                 </StaggerItem>
               );
             })}
@@ -256,7 +258,7 @@ export default function HomePage() {
                 key={batch.title}
                 className="flex flex-col gap-5 rounded-2xl border bg-card p-6 shadow-sm"
               >
-                <h3 className="text-xl">{batch.title}</h3>
+                <h3 className="text-xl">{withReg(batch.title)}</h3>
                 <dl className="grid gap-3 text-sm">
                   <div className="flex items-start gap-2">
                     <CalendarDays aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky" />
@@ -351,7 +353,9 @@ export default function HomePage() {
       {/* FAQ in one column (2026-10-01): the list is short, so a side column left a tall empty space. */}
       <Section deferRender tone="white" className="gap-8">
         <div className="flex flex-col gap-3">
-          <h2 className="text-2xl lg:text-3xl">Questions about CPC® and CPB®</h2>
+          <h2 className="text-2xl lg:text-3xl">
+            <Reg>Questions about CPC® and CPB®</Reg>
+          </h2>
           <Link
             href="/faq"
             className={cn(buttonVariants({ variant: "link" }), "min-h-11 self-start")}

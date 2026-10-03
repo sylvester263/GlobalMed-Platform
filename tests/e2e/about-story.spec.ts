@@ -71,7 +71,8 @@ test.describe("about: Our Story", () => {
     await expect(founder).toHaveAttribute("width", "800");
     await expect(founder).toHaveAttribute("height", "1000");
 
-    await expect(story.getByRole("link", { name: "View CPC® & CPB® Courses" })).toHaveAttribute(
+    // Chrome puts a space before each <sup class="reg">® in accessible names.
+    await expect(story.getByRole("link", { name: /View CPC ?® & CPB ?® Courses/ })).toHaveAttribute(
       "href",
       "/education/aapc-certification-pakistan",
     );

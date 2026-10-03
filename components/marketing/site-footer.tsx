@@ -7,6 +7,7 @@ import { NewsletterForm } from "@/components/marketing/newsletter-form";
 import { SocialIcons } from "@/components/marketing/social-icons";
 import { Wordmark } from "@/components/marketing/wordmark";
 import { ClaimLine } from "@/components/motion/claim-line";
+import { Reg, withReg } from "@/components/ui/reg";
 import { features } from "@/config/features";
 import { aapcCertificationPath, footerNav, legalNav, postalAddress, site } from "@/lib/site";
 
@@ -44,7 +45,7 @@ function LinkList({ links }: { links: { label: string; href: string }[] }) {
       {links.map((link) => (
         <li key={link.href}>
           <Link href={link.href} className="hover:text-white hover:underline">
-            {link.label}
+            {withReg(link.label)}
           </Link>
         </li>
       ))}
@@ -166,7 +167,7 @@ function ExtendedFooter() {
               {legalNav.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="hover:text-white hover:underline">
-                    {link.label}
+                    {withReg(link.label)}
                   </Link>
                 </li>
               ))}
@@ -174,7 +175,9 @@ function ExtendedFooter() {
           </nav>
           <div className="flex flex-col gap-1 lg:items-end">
             {features.footerTrademarkNote && (
-              <p className="text-xs">CPC® and CPB® are registered trademarks of AAPC.</p>
+              <p className="text-xs">
+                <Reg>CPC® and CPB® are registered trademarks of AAPC.</Reg>
+              </p>
             )}
             <p>{site.credit}</p>
           </div>

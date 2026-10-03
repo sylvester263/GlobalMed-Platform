@@ -9,6 +9,7 @@ import { aboutStory } from "@/content/about-story";
 import { publicAssetExists } from "@/lib/public-asset";
 import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { withReg } from "@/components/ui/reg";
 
 const band = "container-fluid section-y";
 const heading = "text-2xl lg:text-3xl";
@@ -16,7 +17,7 @@ const heading = "text-2xl lg:text-3xl";
 function Paragraphs({ items, className }: { items: string[]; className?: string }) {
   return items.map((paragraph) => (
     <p key={paragraph.slice(0, 40)} className={cn("max-w-[75ch]", className)}>
-      {paragraph}
+      {withReg(paragraph)}
     </p>
   ));
 }
@@ -25,7 +26,7 @@ function Chips({ label, items }: { label: string; items: string[] }) {
   return (
     <div className="flex flex-col gap-3">
       <h3 className="font-sans text-sm font-semibold tracking-[0.12em] text-teal-deep uppercase">
-        {label}
+        {withReg(label)}
       </h3>
       <ul className="flex flex-wrap gap-2">
         {items.map((item) => (
@@ -33,7 +34,7 @@ function Chips({ label, items }: { label: string; items: string[] }) {
             key={item}
             className="rounded-full border border-sky/40 bg-white px-3 py-1.5 text-sm font-medium text-ink"
           >
-            {item}
+            {withReg(item)}
           </li>
         ))}
       </ul>
@@ -56,7 +57,7 @@ export function AboutStory() {
             the heading), then the text. */}
         <FadeInView className={cn(band, "split gap-y-0 lg:grid-rows-[1fr_auto_auto_1fr]")}>
           <h2 id="our-story-title" className={cn(heading, "lg:col-start-1 lg:row-start-2")}>
-            {story.title}
+            {withReg(story.title)}
           </h2>
           <figure className="mx-auto mt-8 flex w-full max-w-[360px] flex-col gap-3 lg:col-start-2 lg:row-span-4 lg:row-start-1 lg:mt-0 lg:mr-0 lg:ml-auto lg:max-w-[380px] lg:self-center xl:max-w-[400px]">
             <div className="rounded-2xl bg-ledger p-4 shadow-sm">
@@ -79,7 +80,9 @@ export function AboutStory() {
               )}
             </div>
             <figcaption className="flex flex-col items-start gap-2">
-              <span className="text-sm text-muted-foreground">{story.founder.caption}</span>
+              <span className="text-sm text-muted-foreground">
+                {withReg(story.founder.caption)}
+              </span>
               <span className="rounded-full bg-mint px-3 py-1 text-xs font-semibold text-ink">
                 {story.founder.badge}
               </span>
@@ -99,7 +102,7 @@ export function AboutStory() {
         <FadeInView className={cn(band, "split")}>
           <div className="flex flex-col gap-4">
             <h2 id="documentation-title" className={heading}>
-              {documentation.title}
+              {withReg(documentation.title)}
             </h2>
             <Paragraphs items={documentation.paragraphs} />
           </div>
@@ -118,7 +121,7 @@ export function AboutStory() {
         <FadeInView className={cn(band, "split")}>
           <div className="flex flex-col gap-4">
             <h2 id="revenue-cycle-title" className={heading}>
-              {revenueCycle.title}
+              {withReg(revenueCycle.title)}
             </h2>
             <Paragraphs items={revenueCycle.paragraphs} />
           </div>
@@ -141,7 +144,7 @@ export function AboutStory() {
         <FadeInView className={cn(band, "split lg:items-center")}>
           <div className="flex flex-col gap-4">
             <h2 id="workforce-title" className={cn(heading, "text-white")}>
-              {workforce.title}
+              {withReg(workforce.title)}
             </h2>
             <Paragraphs items={workforce.paragraphs} className="text-white/90" />
           </div>
@@ -155,7 +158,7 @@ export function AboutStory() {
                 "bg-sky text-ink hover:bg-white focus-visible:outline-white",
               )}
             >
-              {workforce.cta} <ArrowRight aria-hidden="true" />
+              {withReg(workforce.cta)} <ArrowRight aria-hidden="true" />
             </Link>
           </div>
         </FadeInView>

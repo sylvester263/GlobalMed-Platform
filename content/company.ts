@@ -228,7 +228,7 @@ export const companyFacts = [
 
 export const about = {
   title: "About GlobalMed Transcriptions",
-  intro: "The leading medical transcription company in Pakistan, since 2007.",
+  intro: "The leading medical transcription and billing company in Pakistan, since 2007.",
   story: [
     "GlobalMed Transcriptions Pvt. Ltd. was founded in 2007 by Mr. Riaz Naveed and is the leading medical transcription company in Pakistan. It began as a small company and, through hard work and dependable service, has grown into Pakistan's leading and fastest-growing transcription company.",
     "We provide medical transcription and editing services to hospitals and clinics in the USA, Canada, UK, Australia and Saudi Arabia, and are actively expanding to new countries.",

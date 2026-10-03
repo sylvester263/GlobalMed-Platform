@@ -2,6 +2,7 @@
 
 import { useId } from "react";
 
+import { withReg } from "@/components/ui/reg";
 import { cn } from "@/lib/utils";
 
 type ChoiceFieldProps = {
@@ -47,7 +48,7 @@ export function ChoiceField({
         <span id={labelId}>{label}</span>
         {description && (
           <span id={descriptionId} className="text-sm text-muted-foreground">
-            {description}
+            {withReg(description)}
           </span>
         )}
       </span>

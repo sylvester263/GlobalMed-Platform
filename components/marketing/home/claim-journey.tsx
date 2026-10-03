@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { FadeInOnce } from "@/components/motion/fade-in-once";
 import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
+import { withReg } from "@/components/ui/reg";
 import { features } from "@/config/features";
 import { cn } from "@/lib/utils";
 
@@ -80,10 +81,10 @@ function JourneyList({ stages, active }: { stages: Stage[]; active: number }) {
                   isActive && "text-teal-deep",
                 )}
               >
-                {s.stage}
+                {withReg(s.stage)}
               </h3>
-              {s.caption && <p className="text-foreground">{s.caption}</p>}
-              <p className="text-sm font-semibold text-muted-foreground">{s.stat}</p>
+              {s.caption && <p className="text-foreground">{withReg(s.caption)}</p>}
+              <p className="text-sm font-semibold text-muted-foreground">{withReg(s.stat)}</p>
             </li>
           );
         })}
@@ -176,9 +177,9 @@ function ClaimLineJourneySection({ id, title, intro, stages, children }: Journey
           >
             <div className="flex max-w-3xl flex-col gap-3">
               <h2 id={headingId} className="text-2xl lg:text-3xl">
-                {title}
+                {withReg(title)}
               </h2>
-              {intro && <p className="max-w-prose text-muted-foreground">{intro}</p>}
+              {intro && <p className="max-w-prose text-muted-foreground">{withReg(intro)}</p>}
             </div>
             <JourneyList stages={stages} active={active} />
             {children}
@@ -211,9 +212,9 @@ function NumberedStepsSection({ id, title, intro, stages, children }: JourneySec
       <div className="container-fluid flex flex-col gap-10 section-y">
         <div className="flex max-w-3xl flex-col gap-3">
           <h2 id={headingId} className="text-2xl lg:text-3xl">
-            {title}
+            {withReg(title)}
           </h2>
-          {intro && <p className="max-w-prose text-muted-foreground">{intro}</p>}
+          {intro && <p className="max-w-prose text-muted-foreground">{withReg(intro)}</p>}
         </div>
         <ol
           style={
@@ -232,10 +233,10 @@ function NumberedStepsSection({ id, title, intro, stages, children }: JourneySec
                 </span>
                 <h3 className="text-xl">
                   <span className="sr-only">Step {i + 1}: </span>
-                  {s.stage}
+                  {withReg(s.stage)}
                 </h3>
-                {s.caption && <p className="text-foreground">{s.caption}</p>}
-                <p className="text-sm font-semibold text-muted-foreground">{s.stat}</p>
+                {s.caption && <p className="text-foreground">{withReg(s.caption)}</p>}
+                <p className="text-sm font-semibold text-muted-foreground">{withReg(s.stat)}</p>
               </FadeInOnce>
             </li>
           ))}

@@ -7,6 +7,7 @@ import { Fragment, useCallback, useEffect, useId, useRef, useState } from "react
 import { Turnstile } from "@/components/marketing/turnstile";
 import { MotionFeatures } from "@/components/motion/motion-features";
 import { usePrefersReducedMotion } from "@/components/motion/motion-provider";
+import { withReg } from "@/components/ui/reg";
 import { defaultGreeting, defaultQuickReplies } from "@/lib/ai/defaults";
 import { parseSse } from "@/lib/ai/sse";
 import { track } from "@/lib/analytics";
@@ -73,7 +74,7 @@ function Linkified({ text }: { text: string }) {
         if (!part) return null;
         const isUrl = /^(https?:\/\/|wa\.me\/)/i.test(part);
         const isPath = /^\/[a-z0-9]/i.test(part);
-        if (!isUrl && !isPath) return <Fragment key={i}>{part}</Fragment>;
+        if (!isUrl && !isPath) return <Fragment key={i}>{withReg(part)}</Fragment>;
         const href = part.startsWith("wa.me") ? `https://${part}` : part.replace(/[.,]$/, "");
         const external = isUrl;
         return (
@@ -399,7 +400,7 @@ export function ChatWidget({ triggerClassName }: { triggerClassName: string }) {
               className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-4"
             >
               <li className="max-w-[88%] self-start rounded-2xl rounded-bl-sm bg-mint px-4 py-2 text-sm text-ink">
-                {greeting}
+                {withReg(greeting)}
               </li>
               {messages.map((msg) => (
                 <li
@@ -453,7 +454,7 @@ export function ChatWidget({ triggerClassName }: { triggerClassName: string }) {
                     onClick={() => void send(reply)}
                     className="min-h-11 rounded-full border border-primary px-3 text-sm font-semibold text-primary hover:bg-mint"
                   >
-                    {reply}
+                    {withReg(reply)}
                   </button>
                 ))}
               </div>

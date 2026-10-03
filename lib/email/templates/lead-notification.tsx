@@ -8,6 +8,7 @@ import {
   Section,
   Text,
 } from "@react-email/components";
+import { withReg } from "@/components/ui/reg";
 
 type LeadNotificationProps = {
   source: string;
@@ -41,7 +42,7 @@ export function LeadNotification({ source, fields, dashboardUrl }: LeadNotificat
           <Section>
             {fields.map((f) => (
               <Text key={f.label} style={{ margin: "8px 0" }}>
-                <strong>{f.label}:</strong> {f.value || "—"}
+                <strong>{f.label}:</strong> {withReg(f.value) || "—"}
               </Text>
             ))}
           </Section>

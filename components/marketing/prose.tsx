@@ -1,9 +1,37 @@
 import Link from "next/link";
 import Markdown, { type Components } from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
+import type { Element, ElementContent, Root } from "hast";
 import remarkGfm from "remark-gfm";
 
 import { cn } from "@/lib/utils";
+
+/** Wraps each "®" in `<sup class="reg">` (components/ui/reg.tsx), after sanitizing. */
+function rehypeReg() {
+  const visit = (node: Root | Element) => {
+    node.children = node.children.flatMap((child): ElementContent[] => {
+      if (child.type === "element") {
+        visit(child);
+        return [child];
+      }
+      if (child.type !== "text" || !child.value.includes("®")) return [child as ElementContent];
+      return child.value.split("®").flatMap((part, i): ElementContent[] => [
+        ...(i > 0
+          ? [
+              {
+                type: "element" as const,
+                tagName: "sup",
+                properties: { className: ["reg"] },
+                children: [{ type: "text" as const, value: "®" }],
+              },
+            ]
+          : []),
+        ...(part ? [{ type: "text" as const, value: part }] : []),
+      ]);
+    }) as typeof node.children;
+  };
+  return (tree: Root) => visit(tree);
+}
 
 const components: Components = {
   h2: ({ children }) => <h2 className="mt-12 mb-4 text-2xl first:mt-0">{children}</h2>,
@@ -64,7 +92,7 @@ export function Prose({ markdown, className }: { markdown: string; className?: s
     <div className={cn("max-w-prose text-base", className)}>
       <Markdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeSanitize]}
+        rehypePlugins={[rehypeSanitize, rehypeReg]}
         components={components}
       >
         {markdown}

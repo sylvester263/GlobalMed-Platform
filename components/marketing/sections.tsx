@@ -15,6 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { buttonVariants } from "@/components/ui/button";
+import { withReg } from "@/components/ui/reg";
 import { StatBlock } from "@/components/ui/stat-block";
 import { companyStats } from "@/content/company";
 import type { SiteImage } from "@/content/images";
@@ -76,10 +77,10 @@ export function PageHero({
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
                       {i === crumbs.length - 1 ? (
-                        <BreadcrumbPage>{crumb.name}</BreadcrumbPage>
+                        <BreadcrumbPage>{withReg(crumb.name)}</BreadcrumbPage>
                       ) : (
                         <BreadcrumbLink render={<Link href={crumb.path} />} className={crumbLink}>
-                          {crumb.name}
+                          {withReg(crumb.name)}
                         </BreadcrumbLink>
                       )}
                     </BreadcrumbItem>
@@ -101,12 +102,14 @@ export function PageHero({
             <div className="flex max-w-3xl flex-col gap-4">
               {eyebrow && (
                 <p className="text-xs font-semibold tracking-[0.12em] text-teal-deep uppercase">
-                  {eyebrow}
+                  {withReg(eyebrow)}
                 </p>
               )}
-              <h1 className="text-3xl lg:text-4xl">{title}</h1>
+              <h1 className="text-3xl lg:text-4xl">{withReg(title)}</h1>
               <ClaimLine trigger="mount" ticks={8} className="max-w-sm" />
-              {intro && <p className="max-w-prose text-lg text-muted-foreground">{intro}</p>}
+              {intro && (
+                <p className="max-w-prose text-lg text-muted-foreground">{withReg(intro)}</p>
+              )}
             </div>
             {children}
           </div>
@@ -169,7 +172,7 @@ export function Section({
               id={headingId}
               className={cn("text-2xl lg:text-3xl", tone === "ink" && "text-white")}
             >
-              {title}
+              {withReg(title)}
             </h2>
             {intro && (
               <p
@@ -178,7 +181,7 @@ export function Section({
                   tone === "ink" ? "text-white/80" : "text-muted-foreground",
                 )}
               >
-                {intro}
+                {withReg(intro)}
               </p>
             )}
           </div>
@@ -216,7 +219,7 @@ export function CtaBand({
   return (
     <section data-tone="ink" className="bg-ink text-white cv-auto">
       <div className="container-fluid flex flex-col items-start gap-4 section-y">
-        <h2 className="max-w-3xl text-2xl text-white lg:text-3xl">{title}</h2>
+        <h2 className="max-w-3xl text-2xl text-white lg:text-3xl">{withReg(title)}</h2>
         {body && <p className="max-w-prose text-white/80">{body}</p>}
         <ClaimLine trigger="inView" ticks={8} goldEnd className="max-w-md" />
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
@@ -260,10 +263,10 @@ export function CourseCard({
       </div>
       <Heading className="text-xl">
         <Link href={`/education/courses/${course.slug}`} className="after:absolute after:inset-0">
-          {course.title}
+          {withReg(course.title)}
         </Link>
       </Heading>
-      <p className="text-muted-foreground">{course.summary}</p>
+      <p className="text-muted-foreground">{withReg(course.summary)}</p>
       <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
         <li className="flex items-center gap-1.5">
           <Clock aria-hidden="true" className="size-4" /> {course.hours} hours

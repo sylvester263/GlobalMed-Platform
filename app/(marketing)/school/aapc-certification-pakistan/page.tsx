@@ -19,6 +19,7 @@ import { pageMetadata } from "@/lib/seo/metadata";
 import { features } from "@/config/features";
 import { aapcCertificationPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { withReg } from "@/components/ui/reg";
 
 export const metadata: Metadata = pageMetadata({
   defaultImage: false,
@@ -87,7 +88,7 @@ function CellValue({ value }: { value: Cell }) {
       </>
     );
   }
-  return <>{value}</>;
+  return <>{withReg(value)}</>;
 }
 
 /**
@@ -167,7 +168,7 @@ export default function AapcCertificationPage() {
                       course.bestValue && "bg-mint",
                     )}
                   >
-                    {course.credential}
+                    {withReg(course.credential)}
                     {course.bestValue && (
                       <span className="block font-sans text-xs font-semibold text-teal-deep">
                         Best value: two certifications
@@ -184,7 +185,7 @@ export default function AapcCertificationPage() {
                     scope="row"
                     className="sticky left-0 z-10 bg-card px-4 py-3 font-semibold whitespace-nowrap shadow-[1px_0_0_var(--border)] lg:px-6 lg:py-4"
                   >
-                    {row.label}
+                    {withReg(row.label)}
                   </th>
                   {courses.map((course) => (
                     <td

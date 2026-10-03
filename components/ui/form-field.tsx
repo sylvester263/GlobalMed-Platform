@@ -4,6 +4,7 @@ import { CircleAlert } from "lucide-react";
 import { useId } from "react";
 
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
+import { withReg } from "@/components/ui/reg";
 import { cn } from "@/lib/utils";
 
 export type FormControlProps = {
@@ -59,7 +60,7 @@ export function FormField({
       })}
       {description && (
         <FieldDescription id={descriptionId} className="text-sm text-muted-foreground">
-          {description}
+          {withReg(description)}
         </FieldDescription>
       )}
       {error && (

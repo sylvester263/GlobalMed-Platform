@@ -28,6 +28,7 @@ When an admin edits a document: chunk (≈800 tokens, 100 overlap) → embed →
 - Address (single source `data/site.ts`, 2026-10-01): 44 Dilkusha Garden, Near S Block Ext., Model Town, Lahore, PO Box 54700
 - Phone: +92 42 3594 6342 · WhatsApp: +92 300 419 8760 · Email: info@globalmedtranscriptions.com · Hours: Open 24/7
 - Founded 2007 by Riaz Naveed. Medical transcription, billing and coding services for hospitals and clinics in the USA, Canada, UK, Australia and Saudi Arabia.
+- About page tagline (2026-10-03): "The leading medical transcription and billing company in Pakistan, since 2007."
 - "GlobalMed Transcriptions, Strategic Partner of AAPC in Pakistan for Medical Billing and Coding."
 - In numbers (source `content/company.ts` `companyFacts`, home and About; updated 2026-10-01): Happy Clients 55+ · Projects Completed 470+ · Expert People 100+ · Portfolios 70+ · Years in Healthcare 25+.
 - **Registered, certified & compliant (source `data/credentials.ts`; home and About pages):**

@@ -1,6 +1,6 @@
 # PROGRESS — single source of truth
 
-Last updated: 2026-10-01 · Current phase: **7A — AI chatbot (website)** built, waiting for the client's LLM key and the Supabase / Upstash / Turnstile / Resend accounts (Phase 5 card checkout built but hidden, ADR-026) · Overall: **48%**
+Last updated: 2026-10-03 · Current phase: **7A — AI chatbot (website)** built, waiting for the client's LLM key and the Supabase / Upstash / Turnstile / Resend accounts (Phase 5 card checkout built but hidden, ADR-026) · Overall: **48%**
 
 | Phase | Status | % |
 |---|---|---|
@@ -21,7 +21,7 @@ Legend: ⬜ not started · 🟨 in progress · ✅ done · 🟥 blocked
 - [x] P0-1 Scaffold Next.js 15 + TS strict + Tailwind v4 + shadcn/ui
 - [x] P0-2 ESLint, Prettier, Husky, lint-staged, commitlint
 - [x] P0-3 Folder structure per docs/03 §5
-- [ ] P0-4 Supabase projects (staging/prod) linked; 0001_init.sql applied — 🟥 blocked: Supabase org invite
+- [x] P0-4 Supabase project linked (client org, `kdzqmiwhmpssefrawrex`, ap-southeast-1) and migrations 0001–0007 applied (2026-10-03). Still to do: secret key in `.env.local` and Hostinger, first admin/sales users, Auth URLs (docs/16)
 - [ ] P0-5 Generated DB types in lib/db/types.ts — 🟨 provisional types generated from the migration SQL; rerun `npm run db:types` after P0-4
 - [x] P0-6 Supabase SSR clients + middleware
 - [x] P0-7 .env.local + .env.example synced

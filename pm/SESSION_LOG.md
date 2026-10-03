@@ -600,6 +600,27 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** client checks the live site; the About "Our Story" body still says "the leading medical transcription company in Pakistan" (a different sentence in the old story text, not shown while the new story is on). Change it too if the client wants.
 - **Blockers:** Supabase org invite (P0-4).
 
+### Session 021 — Database on the client's Supabase project
+- **Date:** 2026-10-03
+- **Done:**
+  - Linked the client's project `kdzqmiwhmpssefrawrex` (ap-southeast-1). The developer was invited to the client org, then ran `supabase login` and `supabase link` in their own terminal. `supabase init` had already been done.
+  - Before pushing:
+    - The target had no user tables.
+    - Dry run listed exactly 0001–0007.
+    - Reviewed the SQL: the only `drop`s are `if exists` redefinitions of the migrations' own objects; RLS is on all 39 tables; users can't change their own role; `auth` and `storage` changes are additive only.
+  - First push failed with `gen_random_bytes(integer) does not exist`: Supabase keeps pgcrypto in the `extensions` schema, which isn't on the migration search path. Fixed in 0001 as `extensions.gen_random_bytes` (0001 had never been applied anywhere). The failed run rolled back.
+  - `supabase db push`: 0001–0007 applied; `migration list` shows all 7 on the remote; `db lint` reports no schema errors.
+  - `lib/db/types.ts` regenerated from the live schema: same tables, plus the pg_trgm helper functions. Typecheck and build clean.
+  - Smoke test (local production build against the live database): /, /updates (empty state), /login, /api/health all 200, with no Supabase errors in the log.
+- **Not done / needs the client:**
+  - The secret key is not set, so admin features, chatbot KB sync and update images can't work yet.
+  - No users yet, so the dashboard round trip (`E2E_SUPABASE=1`) can't run.
+  - Supabase advisors weren't fetched: the Supabase MCP has no project ref or token configured. Check Dashboard → Advisors.
+  - `vector` and `pg_trgm` are in `public` (the advisor may flag "extension in public"; low risk; moving them would need schema-qualified operators).
+- **Files touched:** supabase/migrations/0001_init.sql, lib/db/types.ts, pm/{PROGRESS,CLIENT_INPUTS_NEEDED,SESSION_LOG,CHANGELOG}.md
+- **Next:** client sets the secret key + Hostinger env and changes the DB password; create admin/sales users; Auth site URL + redirect URLs (docs/16); run the E2E round trip.
+- **Blockers:** secret key; first users.
+
 ---
 ### Session NNN — <title>
 - **Date:**

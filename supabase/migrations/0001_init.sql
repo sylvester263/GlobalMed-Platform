@@ -224,7 +224,7 @@ create table public.order_items (
 -- ---------- Certificates ----------
 create table public.certificates (
   id uuid primary key default gen_random_uuid(),
-  code text unique not null default upper(substr(encode(gen_random_bytes(8),'hex'),1,12)),
+  code text unique not null default upper(substr(encode(extensions.gen_random_bytes(8),'hex'),1,12)),
   user_id uuid not null references profiles(id),
   course_id uuid not null references courses(id),
   name_on_cert text not null,

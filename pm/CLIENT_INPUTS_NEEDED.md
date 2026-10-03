@@ -6,7 +6,10 @@ Status: ⬜ pending · 🟨 partial · ✅ received
 - ⬜ Domain registrar / DNS access for globalmedtranscriptions.com
 - ⬜ Current website admin access + list of important URLs (for redirects)
 - ✅ Hosting: own hosting (Hostinger), not Vercel (client, 2026-09-30). The old Vercel project global-med-platform(-tljk).vercel.app is still live: client to delete it, or add noindex + a redirect to the live domain
-- ⬜ Supabase organisation (invite SylJo Tech)
+- ✅ Supabase organisation invite; project linked and migrations 0001–0007 applied (2026-10-03)
+- ⬜ Supabase **secret key** (`sb_secret_…`, Settings → API Keys) → `SUPABASE_SERVICE_ROLE_KEY` in `.env.local` and the Hostinger panel, with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`; redeploy
+- ⬜ Change the Supabase database password (it was shared in chat on 2026-10-03)
+- ⬜ First admin and sales accounts (sign up, then set `profiles.role`)
 - ⬜ Bunny.net account + Stream library per environment (library ID, API key, CDN hostname, token-auth key; webhook set up per docs/17 §2)
 - ⬜ Stripe account (business verification started)
 - ⬜ Bank / JazzCash / Easypaisa details for manual payments

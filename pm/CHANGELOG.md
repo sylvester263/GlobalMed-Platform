@@ -29,6 +29,7 @@ Format: Keep a Changelog · Semantic Versioning
 - Hosting documented as own hosting (Hostinger); live site URL in `.env.production`; `/api/health` shows the build commit (2026-10-01)
 
 ### Changed
+- Turnstile is opt-in (ADR-036): without keys, chats and lead forms are no longer refused; rate limits plus a 500-a-day cap on chatbot model replies protect the site (2026-10-04)
 - "®" now renders as a small raised mark (half size, superscript, line height unchanged) everywhere it is visible: course cards, course heroes, comparison table, nav menu, footer, FAQ, forms, update cards, blog/legal Markdown, chat widget and the lead email. One helper, `withReg` / `<Reg>` in components/ui/reg.tsx (+ a rehype step in Prose); titles, meta, JSON-LD, alt text and plain-text emails keep the plain character (2026-10-03)
 - About hero subtitle: "The leading medical transcription and billing company in Pakistan, since 2007." (also in docs/09 chatbot knowledge) (2026-10-03)
 - Fixed: count-up padding no longer widens figures with commas, and stats-strip numbers are 24px on phones, so /services and /free-billing-audit no longer scroll sideways at 360px; update category chip text is navy for AA contrast (2026-10-02)

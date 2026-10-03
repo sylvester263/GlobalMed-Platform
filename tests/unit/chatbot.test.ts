@@ -232,6 +232,25 @@ describe("rate limit (20 messages / 10 min per visitor)", () => {
   });
 });
 
+describe("bot protection without Turnstile (ADR-036)", () => {
+  it("skips the Turnstile check when no secret key is set", async () => {
+    vi.resetModules();
+    vi.stubEnv("TURNSTILE_SECRET_KEY", "");
+    const { verifyTurnstile } = await import("@/lib/security/turnstile");
+    expect(await verifyTurnstile(undefined, "203.0.113.7")).toBe(true);
+    vi.unstubAllEnvs();
+  });
+
+  it("caps model replies at 500 a day across the site", async () => {
+    vi.resetModules();
+    const { checkRateLimit, limits } = await import("@/lib/security/rate-limit");
+    expect(limits.chatModelDaily).toEqual({ requests: 500, windowSeconds: 86_400 });
+    const site = `cap-${Date.now()}`;
+    for (let i = 0; i < 500; i++) await checkRateLimit("chatModelDaily", site);
+    expect(await checkRateLimit("chatModelDaily", site)).toBe(false);
+  });
+});
+
 describe("knowledge base: page text from the live site", () => {
   it("keeps the main content and drops scripts, nav, forms and hidden sizers", async () => {
     const { extractMainText } = await import("@/lib/ai/extract");

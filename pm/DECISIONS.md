@@ -238,3 +238,12 @@
 - Context: the hero headlines are set in Source Serif 4 (next/font, preloaded, size-adjusted fallback). With `display: swap`, a late font swap re-wrapped the slide 1 headline at 360px (4 → 5 lines), moving the text and buttons below it (CLS 0.018 in the stats audit; reproduced whenever the font arrived after first paint).
 - Decision: Source Serif 4 uses `display: "optional"`; Public Sans (body) stays `swap`.
 - Consequences: on almost every visit the font is ready before first paint (it is preloaded). On a slow first visit, that page shows the size-matched serif fallback instead of swapping; the font is cached for the next page. CLS 0 at all audited widths.
+
+## ADR-036: Turnstile is opt-in; rate limits and a daily model cap protect the chatbot
+- Date: 2026-10-04 · Status: accepted (client decision, after the trade-off was explained)
+- Context: `verifyTurnstile` failed closed without a secret key, so with no Cloudflare Turnstile keys the live site refused every new chat and every lead form (contact, free audit, AAPC registration). The client doesn't want Turnstile.
+- Decision:
+  - Without `TURNSTILE_SECRET_KEY` the check is skipped. With it set, tokens are verified as before (a missing or bad token fails), so adding the keys later turns it back on with no code change.
+  - Bot protection without it: the existing per-visitor and per-IP rate limits (chat 20 / 10 min per visitor, 60 per IP; lead forms 5 / 10 min per IP), plus a new site-wide cap of 500 LLM replies a day (`chatModelDaily`). Over the cap, scripted answers still work and everything else gets the "contact our team" reply.
+  - Form E2E tests only submit when no database is configured (`tests/e2e/env.ts`), so they never write leads into the client's project.
+- Consequences: a bot rotating IPs can send spam leads and use up the daily model allowance (at most about USD 2–3 a day with claude-haiku-4-5). Rate limits use per-process memory without Upstash: fine for one Node process on Hostinger; add Upstash if the site runs on several instances. Revisit if spam appears: add the Turnstile keys.

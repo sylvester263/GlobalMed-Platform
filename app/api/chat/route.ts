@@ -67,7 +67,7 @@ export async function POST(request: Request) {
     }
     if (conversation.status === "closed") return json(410, "closed");
   } else {
-    // Turnstile on the first message only (fails closed without a secret, except local dry run).
+    // Turnstile on the first message only, when configured (ADR-036).
     if (!(await verifyTurnstile(turnstileToken, ip))) return json(403, "verification_failed");
     newToken = newVisitorToken();
     conversation = await createConversation({

@@ -33,6 +33,7 @@ import { getLiveUpdates } from "@/lib/updates/data";
 import { updatesKnowledge, type Update } from "@/lib/updates/logic";
 import { LeadNotification } from "@/lib/email/templates/lead-notification";
 import { storeLead } from "@/lib/leads/store";
+import { checkRateLimit } from "@/lib/security/rate-limit";
 import { absoluteUrl } from "@/lib/seo/metadata";
 import { formsDryRun, serverEnv } from "@/lib/server-env";
 import { site } from "@/lib/site";
@@ -320,12 +321,17 @@ export async function* respond(
     return;
   }
 
-  // 7. No model yet: point to the team.
-  if (!isChatConfigured()) {
+  // 7. No model yet, or the site's daily model cap is used up (ADR-036): point to the team.
+  const modelBlocked = !isChatConfigured()
+    ? "not-configured"
+    : !(await checkRateLimit("chatModelDaily", "site"))
+      ? "daily-cap"
+      : null;
+  if (modelBlocked) {
     yield* say(
       conversation,
       notConfiguredReply,
-      { intent, model: "not-configured" },
+      { intent, model: modelBlocked },
       {
         status: conversation.status,
         quickReplies: followUps(intent) ?? [handoffReply],

@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 
 import { features } from "@/config/features";
 
+import { databaseConfigured } from "./env";
+
 test.describe("free billing audit form", () => {
   test("validates step 1 before continuing and moves focus to the first error", async ({
     page,
@@ -13,7 +15,11 @@ test.describe("free billing audit form", () => {
     await expect(page.getByText("Step 1 of 2")).toBeVisible();
   });
 
-  test("walks both steps and fails closed without Turnstile in production", async ({ page }) => {
+  test("walks both steps; without a database the server refuses to fake success", async ({
+    page,
+  }) => {
+    // With a real database this would store a real lead in the client's project.
+    test.skip(databaseConfigured, "would store a real lead in the client's database");
     await page.goto("/free-billing-audit");
     await page.getByLabel(/Practice name/).fill("Riverside Family Medicine");
     await page.getByLabel(/Main specialty/).fill("Family medicine");
@@ -28,9 +34,12 @@ test.describe("free billing audit form", () => {
     await page.getByLabel(/Best time to call/).selectOption("Morning (ET)");
     await page.getByRole("button", { name: "Book my free audit" }).click();
 
-    // `next start` is production: FORMS_DRY_RUN is ignored and Turnstile isn't configured,
-    // so the server must refuse rather than silently accept (docs/11 §4).
-    await expect(page.locator("[data-slot=alert]")).toContainText(/robot/i);
+    // `next start` is production: FORMS_DRY_RUN is ignored. Turnstile is opt-in (ADR-036), so
+    // the bot check passes, but with no database the lead can't be stored and the server must
+    // say so rather than show success.
+    const alert = page.locator("[data-slot=alert]");
+    await expect(alert).toContainText(/couldn't send your request/i);
+    await expect(alert).not.toContainText(/robot/i);
     await expect(page).toHaveURL(/\/free-billing-audit$/);
   });
 

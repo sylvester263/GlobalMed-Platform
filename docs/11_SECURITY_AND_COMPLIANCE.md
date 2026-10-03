@@ -20,7 +20,7 @@ Supabase Auth, email verification required before purchase, password rules (min 
 - [ ] Output encoding (React default; sanitize markdown with rehype-sanitize)
 - [ ] CSRF: Server Actions origin check (Next default) + SameSite cookies
 - [ ] Rate limits: login, signup, reset, lead forms, chat, webhooks
-- [ ] Turnstile on public forms
+- [ ] Turnstile on public forms (opt-in since ADR-036: on when `TURNSTILE_SECRET_KEY` is set; otherwise rate limits + the chatbot's daily model cap)
 - [ ] Security headers: CSP, HSTS, X-Frame-Options/frame-ancestors, Referrer-Policy, Permissions-Policy
 - [ ] File uploads: type + size checks, private buckets, signed URLs
 - [ ] Webhook signature verification (Stripe, Meta)

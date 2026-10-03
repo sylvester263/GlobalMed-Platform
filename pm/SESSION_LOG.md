@@ -638,6 +638,18 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** fill `.env.local` public Supabase values; log in as admin locally and live; Auth URLs (docs/16); embedding key + KB re-sync; Turnstile keys; handoff test with a sales user.
 - **Blockers:** env values (above).
 
+### Session 023 — Chatbot and forms work without Turnstile (ADR-036)
+- **Date:** 2026-10-04
+- **Done:**
+  - `verifyTurnstile` skips the check when no secret key is set; enforced as before when set. This fixes the live site refusing every new chat and every lead form without Turnstile keys.
+  - New `chatModelDaily` limit: 500 LLM replies a day across the site, checked before the model is called. Over the cap, scripted answers still work and other questions get the contact-the-team reply.
+  - E2E: form tests submit only when no database is configured (`tests/e2e/env.ts` loads .env.local like Next.js), so they never store real leads; expectations updated (no robot message; generic failure without a database).
+  - Unit tests for both behaviours.
+- **Checks:** typecheck, lint clean; chatbot unit tests 48 passed; public-site, registration-form, chat-widget E2E: 25 passed, 9 skipped (dev-only / database-only).
+- **Files touched:** lib/security/{turnstile,rate-limit}.ts, lib/ai/engine.ts, app/api/chat/route.ts, tests/unit/chatbot.test.ts, tests/e2e/{env.ts,public-site.spec.ts,registration-form.spec.ts}, pm/{DECISIONS,CHANGELOG,SESSION_LOG}.md, docs/11
+- **Next:** Hostinger env vars (Supabase URL + publishable key + secret key, LLM_PROVIDER, LLM_API_KEY), redeploy, live chat and form check; `.env.local` public Supabase values; clear `.env.example`.
+- **Blockers:** env values.
+
 ---
 ### Session NNN — <title>
 - **Date:**

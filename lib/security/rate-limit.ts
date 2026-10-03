@@ -21,6 +21,8 @@ export const limits = {
   chat: { requests: 20, windowSeconds: 600 },
   chatIp: { requests: 60, windowSeconds: 600 },
   chatPoll: { requests: 240, windowSeconds: 600 },
+  // Site-wide ceiling on LLM replies (ADR-036): bounds model cost without Turnstile.
+  chatModelDaily: { requests: 500, windowSeconds: 86_400 },
 } satisfies Record<string, Limit>;
 
 const redis =

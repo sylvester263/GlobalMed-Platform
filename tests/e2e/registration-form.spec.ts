@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { databaseConfigured } from "./env";
+
 // "Register for AAPC Training": Address replaces City (client, 2026-09-28).
 
 test.describe("AAPC registration form", () => {
@@ -41,11 +43,17 @@ test.describe("AAPC registration form", () => {
     await expect(error).toBeVisible();
     await expect(form.getByLabel(/^Address/)).toBeFocused();
 
-    // A valid address clears the error. `next start` is production and Turnstile isn't
-    // configured, so the server then refuses rather than silently accepting (docs/11 §4).
+    // A valid address clears the error.
     await form.getByLabel(/^Address/).fill("House 12, Street 4, Model Town, Lahore");
     await expect(form.getByText("38/250 characters")).toBeVisible();
+    await expect(error).toBeHidden();
+
+    // Submit only without a database (a real one would store a real registration). Turnstile
+    // is opt-in (ADR-036), so the server then refuses at storage rather than faking success.
+    if (databaseConfigured) return;
     await form.getByRole("button", { name: "Register Now" }).click();
-    await expect(form.locator("[data-slot=alert]")).toContainText(/robot/i);
+    const alert = form.locator("[data-slot=alert]");
+    await expect(alert).toContainText(/couldn't send your request/i);
+    await expect(alert).not.toContainText(/robot/i);
   });
 });

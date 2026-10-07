@@ -67,7 +67,7 @@
     "@next/bundle-analyzer": "^15.5.26",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^24.13.6",
+    "@types/node": "^26.6.4",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.1.1",

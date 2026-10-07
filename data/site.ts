@@ -52,6 +52,16 @@ export const siteLinks = {
   },
 };
 
+/**
+ * The doctor file-upload app (client, 2026-10-07): an external site. The top bar, the footer
+ * and the mobile menu link to it in a new tab. Staging URL until launch, then the real domain.
+ */
+export const doctorPortalUrl = "https://peachpuff-crow-921478.hostingersite.com/app/doctor-login";
+
+/** Accessible name for every Doctor Login link (it opens in a new tab). */
+export const doctorPortalAriaLabel =
+  "Doctor Login — secure file upload portal (opens in a new tab)";
+
 export type SocialKey = keyof typeof siteLinks.social;
 
 /** Order of the social icons everywhere (client, 2026-10-02). */

@@ -4,6 +4,7 @@ Format: Keep a Changelog · Semantic Versioning
 
 ## [Unreleased]
 ### Added
+- "Doctor Login" link to the external doctor file-upload app: a white pill with a lock icon in the top bar, plus a link in the footer and the mobile menu. Opens in a new tab. One URL in `data/site.ts` (2026-10-07)
 - Updates (news / announcements): dashboard (Admin → Content → Updates, Sales → Updates) to create, publish, schedule, pin, expire and unpublish, with image upload (1600×900 WebP); home "Latest Updates" (3 latest, pinned first, hidden when none); /updates with category filter and pagination; /updates/[slug]; NewsArticle JSON-LD; Resources menu, footer, sitemap; the chatbot answers from live updates (2026-10-02)
 - Social links (Facebook, LinkedIn, Instagram) in the top bar, the footer and the Organization JSON-LD sameAs; one source in `data/site.ts`, same order and hover everywhere (2026-10-02)
 - Top contact bar above the main nav on every public page: email and mobile from `data/site.ts`, social icons when linked; scrolls away while the nav stays sticky; icons only on phones (2026-10-02)

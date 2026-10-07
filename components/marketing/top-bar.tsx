@@ -1,7 +1,13 @@
-import { Mail, Phone } from "lucide-react";
+import { Lock, Mail, Phone } from "lucide-react";
 
 import { glyphs, socialHoverClass } from "@/components/marketing/social-icons";
-import { contactLinks, siteLinks, socialOrder } from "@/data/site";
+import {
+  contactLinks,
+  doctorPortalAriaLabel,
+  doctorPortalUrl,
+  siteLinks,
+  socialOrder,
+} from "@/data/site";
 import { cn } from "@/lib/utils";
 
 // 44px tap areas; navy on sky (#17265C on #51ACE3, 5.9:1).
@@ -10,8 +16,9 @@ const itemClass =
 
 /**
  * Top contact bar (client, 2026-10-02), above the main nav on every public page. It scrolls
- * away; the nav below stays sticky. Email and mobile on the left, social icons on the right
- * (only those with a link in data/site.ts). Phones: icons only, centred in one row.
+ * away; the nav below stays sticky. Email and mobile on the left; the Doctor Login pill
+ * (client, 2026-10-07) and social icons on the right (only those with a link in
+ * data/site.ts). Phones: icons and the pill, centred in one row.
  */
 export function TopBar() {
   const socials = socialOrder.filter((s) => siteLinks.social[s.key]);
@@ -36,34 +43,49 @@ export function TopBar() {
             </a>
           </li>
         </ul>
-        {socials.length > 0 && (
-          <ul aria-label="GlobalMed on social media" className="flex items-center">
-            {socials.map(({ key, label }) => (
-              <li key={key}>
-                <a
-                  href={siteLinks.social[key]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`GlobalMed on ${label}`}
-                  className={cn(
-                    itemClass,
-                    "min-w-11 hover:no-underline md:min-w-11",
-                    socialHoverClass,
-                  )}
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                    className="size-[18px]"
+        <div className="flex items-center gap-2">
+          {/* 32px white pill inside a 44px tap area; opens the doctor upload app in a new tab. */}
+          <a
+            href={doctorPortalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={doctorPortalAriaLabel}
+            className="group inline-flex min-h-11 items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-navy-deep"
+          >
+            <span className="inline-flex h-8 items-center gap-1.5 rounded-full bg-white px-3 text-sm font-semibold whitespace-nowrap text-navy-deep shadow-sm transition-colors group-hover:bg-navy-deep group-hover:text-white">
+              <Lock aria-hidden="true" className="size-4 shrink-0" />
+              Doctor Login
+            </span>
+          </a>
+          {socials.length > 0 && (
+            <ul aria-label="GlobalMed on social media" className="flex items-center">
+              {socials.map(({ key, label }) => (
+                <li key={key}>
+                  <a
+                    href={siteLinks.social[key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`GlobalMed on ${label}`}
+                    className={cn(
+                      itemClass,
+                      "min-w-11 hover:no-underline md:min-w-11",
+                      socialHoverClass,
+                    )}
                   >
-                    {glyphs[key]}
-                  </svg>
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      className="size-[18px]"
+                    >
+                      {glyphs[key]}
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );

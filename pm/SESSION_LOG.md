@@ -650,6 +650,19 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** Hostinger env vars (Supabase URL + publishable key + secret key, LLM_PROVIDER, LLM_API_KEY), redeploy, live chat and form check; `.env.local` public Supabase values; clear `.env.example`.
 - **Blockers:** env values.
 
+### Session 024 — Doctor Login link to the doctor file-upload app
+- **Date:** 2026-10-07
+- **Done:**
+  - `doctorPortalUrl` and `doctorPortalAriaLabel` in `data/site.ts`: one source. The URL is the staging Hostinger address until launch.
+  - Top bar, right side, before the social icons: white pill "Doctor Login" with a lock icon, navy text, 32px tall in a 44px tap area. It shows on phones too, in the same row.
+  - Compact footer links row: "Doctor Login" as the last link. Mobile menu: "Doctor Login" as the last item.
+  - All three open in a new tab (`target="_blank"`, `rel="noopener noreferrer"`) with the aria-label "Doctor Login — secure file upload portal (opens in a new tab)". Not in the main nav; the hidden Member Login flags are unchanged.
+- **Checks:** typecheck and lint clean. Checked at 1920 and 390 with no horizontal scroll at 390. Clicking the top bar link opens the doctor login page (title "ADMIN | Log in") in a new tab. Screenshots are in pm/screenshots/2026-10-07/.
+- **Note:** the doctor app's login page loads without its styles (console errors on that site). That has to be fixed in the upload app, not here.
+- **Files touched:** data/site.ts, components/marketing/{top-bar,footer-compact,mobile-nav}.tsx, pm/{SESSION_LOG,CHANGELOG}.md
+- **Next:** switch `doctorPortalUrl` to the real domain at launch.
+- **Blockers:** none.
+
 ---
 ### Session NNN — <title>
 - **Date:**

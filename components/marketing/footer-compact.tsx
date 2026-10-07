@@ -4,7 +4,13 @@ import Link from "next/link";
 import { glyphs, socialHoverClass } from "@/components/marketing/social-icons";
 import { withReg } from "@/components/ui/reg";
 import { features } from "@/config/features";
-import { address, siteLinks, socialOrder } from "@/data/site";
+import {
+  address,
+  doctorPortalAriaLabel,
+  doctorPortalUrl,
+  siteLinks,
+  socialOrder,
+} from "@/data/site";
 import { aapcCertificationPath, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -210,6 +216,16 @@ export function CompactFooter() {
                     {withReg(link.label)}
                   </Link>
                 )),
+                <a
+                  key="doctor-login"
+                  href={doctorPortalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={doctorPortalAriaLabel}
+                  className={linkClass}
+                >
+                  Doctor Login
+                </a>,
               ]}
             />
           </nav>

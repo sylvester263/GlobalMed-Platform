@@ -1,8 +1,10 @@
 "use client";
 
+import { Lock } from "lucide-react";
 import Link from "next/link";
 
 import { features } from "@/config/features";
+import { doctorPortalAriaLabel, doctorPortalUrl } from "@/data/site";
 
 import { Wordmark } from "@/components/marketing/wordmark";
 import {
@@ -120,6 +122,18 @@ export function MobileNav({ open, onOpenChange, pathname }: MobileNavProps) {
                 Log in
               </Link>
             )}
+            {/* Last item (client, 2026-10-07): the external doctor upload app, in a new tab. */}
+            <a
+              href={doctorPortalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={doctorPortalAriaLabel}
+              onClick={close}
+              className={buttonVariants({ size: "lg", variant: "outline" })}
+            >
+              <Lock aria-hidden="true" />
+              Doctor Login
+            </a>
           </div>
         </nav>
       </SheetContent>

@@ -69,6 +69,7 @@ Format: Keep a Changelog · Semantic Versioning
 - Fluid full-width desktop layout: shared container up to 1920px with responsive gutters, 75ch text, 4-column grids from 1440px, full-width "Our Services" cards with images flush to the edge (ADR-029) (2026-09-28)
 
 ### Fixed
+- Security: patched high-severity dependency advisories. @modelcontextprotocol/sdk 1.30.1 → 1.32.1, sharp 0.35.4 → 0.35.5 (bundled librsvg), source-map-js 1.2.1 → 1.2.2 (2026-10-08)
 - Migration 0001 calls `extensions.gen_random_bytes`, so it applies on Supabase, where pgcrypto lives in the `extensions` schema; all migrations applied to the client project (2026-10-03)
 - "How it works" no longer disappears when scrolling up (CSS sticky instead of GSAP pin; page transition leaves no transform) (2026-09-26)
 - Footer price contrast, AAPC comparison table clipping at 360px, home meta description length (2026-09-26)

@@ -287,6 +287,7 @@ test.describe("client review 2026-09-25", () => {
       /Resources/,
       /Careers/,
       /Contact/,
+      /Client Login/,
     ]);
     await page.getByRole("button", { name: "Education" }).click();
     const educationItem = items.filter({

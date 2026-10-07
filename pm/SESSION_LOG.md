@@ -677,6 +677,24 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** if the client still sees an arrow over the lockup, get a screenshot with the browser and width. Switch `doctorPortalUrl` to the real domain at launch.
 - **Blockers:** none.
 
+### Session 026 — Patch 3 high-severity dependency advisories
+- **Date:** 2026-10-08
+- **Done:**
+  - Traced each package with `npm ls`:
+    - `@modelcontextprotocol/sdk` 1.30.1 (GHSA-6qxp-vccf-f47h) is a transitive production dependency, pulled in by the `shadcn` CLI. The app never imports it. `shadcn` stays because `app/globals.css` imports `shadcn/tailwind.css`, so there was nothing to remove from package.json. `npm update` moved it to 1.32.1, still inside shadcn's `^1.26.0` range.
+    - `sharp` 0.35.4 (GHSA-wq5f-xc86-pv6w, bundled librsvg) is a direct dependency and is also used by `next`. Fixed in 0.35.5 (released 2026-09-27). Now `^0.35.5`, with the bundled libvips going from 1.3.3 to 1.3.4. Next dedupes to the same copy.
+    - `source-map-js` 1.2.1 (GHSA-68fv-2mgg-jv7q) is transitive through `@tailwindcss/postcss` (dev) and `postcss`. `npm update` moved it to 1.2.2, so no override was needed.
+  - SVG exposure was checked even though sharp is now patched. `images.dangerouslyAllowSVG` is not set, so it keeps the default of false. `scripts/optimize-images.mjs` only processes a fixed list of JPG sources. Update uploads (`lib/updates/images.ts`) accept JPG, PNG and WebP only.
+  - E2E `primary nav starts with About Us then Education` was stale since a5de456 (the nav gained "Client Login"). The expected list now includes it.
+- **Checks:**
+  - `npm audit`: all 3 target advisories are gone. Still open (no patched version, ADR-037): `braces` GHSA-vfj7-8cjw-p6xm, which `fast-glob` pulls in through the shadcn CLI, ts-morph and eslint-config-next.
+  - Lint clean, apart from 2 warnings in the git-ignored local `.playwright-mcp/` scratch scripts. Typecheck clean.
+  - Vitest: 206 passed. Playwright: 290 passed, 59 skipped, 1 stale test fixed and re-run green. `next build` passes.
+  - On a local production server: `/_next/image` returns AVIF 200 for the slider and the services hero, and `/opengraph-image` returns a 200 JPEG. The optimize-images script runs and every row is ok.
+- **Files touched:** package.json, package-lock.json, tests/e2e/public-site.spec.ts, docs/14_DEPLOYMENT_DEVOPS.md, pm/{DECISIONS,CHANGELOG,SESSION_LOG}.md
+- **Next:** monthly dependency check (docs/14 §9). Re-check the `braces` advisory.
+- **Blockers:** none.
+
 ---
 ### Session NNN — <title>
 - **Date:**

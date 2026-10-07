@@ -247,3 +247,12 @@
   - Bot protection without it: the existing per-visitor and per-IP rate limits (chat 20 / 10 min per visitor, 60 per IP; lead forms 5 / 10 min per IP), plus a new site-wide cap of 500 LLM replies a day (`chatModelDaily`). Over the cap, scripted answers still work and everything else gets the "contact our team" reply.
   - Form E2E tests only submit when no database is configured (`tests/e2e/env.ts`), so they never write leads into the client's project.
 - Consequences: a bot rotating IPs can send spam leads and use up the daily model allowance (at most about USD 2–3 a day with claude-haiku-4-5). Rate limits use per-process memory without Upstash: fine for one Node process on Hostinger; add Upstash if the site runs on several instances. Revisit if spam appears: add the Turnstile keys.
+
+## ADR-037: Dependency advisories are patched by controlled updates; unpatched ones are recorded
+- Date: 2026-10-08 · Status: accepted
+- Context: the scanner raised 3 high alerts: @modelcontextprotocol/sdk 1.30.1, sharp 0.35.4 (bundled librsvg) and source-map-js 1.2.1. All three now have patched releases. `npm audit` also reports `braces` GHSA-vfj7-8cjw-p6xm (every version, no fix yet). `fast-glob`/`micromatch` pull it in through the shadcn CLI (via ts-morph) and eslint-config-next. npm's suggested "fix" is `npm audit fix --force`, which would downgrade shadcn to 1.0.0 and eslint-config-next to 14.
+- Decision:
+  - The 3 alerts are fixed with targeted updates: sharp `^0.35.5` (direct; Next dedupes to it), and `npm update` for the MCP SDK (1.32.1) and source-map-js (1.2.2). No overrides were needed. We don't use `audit fix --force`.
+  - `braces` stays an open alert. Exposure: it is only used by the shadcn CLI and the lint toolchain, which run on developer machines and in the build, matching glob patterns from our own config. No request or user input reaches it at runtime; the app's only use of `shadcn` is the `shadcn/tailwind.css` import, which is resolved at build time.
+  - SVG stays out of sharp: `images.dangerouslyAllowSVG` is left at its default (false), the optimize-images script only takes listed JPG sources, and update uploads accept JPG, PNG and WebP only.
+- Consequences: re-check `braces` weekly until a patched version ships, then `npm update braces`. Possible follow-up: move `shadcn` to devDependencies (its CSS import is resolved at build time, and Hostinger installs dev dependencies to build), which would take it out of `npm audit --omit=dev`. The monthly check is in docs/14 §9.

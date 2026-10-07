@@ -26,3 +26,15 @@ Domain stays with client registrar. A/CNAME records point at the hosting; Resend
 
 ## 8. Handover
 Admin user guide (PDF + short Loom videos), credentials transferred to client password manager, architecture docs (this pack), 30-day post-launch support window *(confirm in contract)*.
+
+## 9. Monthly dependency check
+On the first working day of each month (and whenever the scanner raises a high or critical alert):
+1. Run `npm audit --omit=dev` and `npm audit`, and note every high or critical alert.
+2. For each one, run `npm ls <pkg>` to find out whether it is direct or transitive, production or dev, and which package pulls it in.
+3. Fix it with our own controlled update:
+   - a direct dependency: `npm install <pkg>@<patched>`;
+   - a transitive one: `npm update <pkg>`;
+   - if the lockfile still resolves the vulnerable version, add an `overrides` entry.
+   Don't use `npm audit fix --force`: it can downgrade packages across major versions.
+4. Run lint, typecheck, `npm test`, `npm run test:e2e` and `next build`. Commit package.json and package-lock.json together (`fix(deps): …`), then deploy.
+5. When an alert has no patched version, record it in pm/DECISIONS.md with the exposure and the mitigation, and re-check it weekly.

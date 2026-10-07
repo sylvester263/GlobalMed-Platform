@@ -24,14 +24,14 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b bg-card">
-      <div className="container-fluid flex h-16 items-center justify-between gap-4">
-        <Link href="/" aria-label="GlobalMed home" className="rounded-md">
-          <Wordmark priority />
+      <div className="container-fluid flex h-16 items-center justify-between gap-2 xl:gap-4">
+        <Link href="/" aria-label="GlobalMed home" className="shrink-0 rounded-md">
+          <Wordmark priority className="lg:h-8 xl:h-11" />
         </Link>
 
         <MegaMenu pathname={pathname} />
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           {/* Hidden at client request — GlobalMed education plans are future scope. Staff still reach /login directly. */}
           {features.publicLogin && (
             <Link
@@ -46,7 +46,10 @@ export function SiteHeader() {
           )}
           <Link
             href="/free-billing-audit"
-            className={cn(buttonVariants({ size: "sm" }), "hidden h-12 px-5 sm:inline-flex")}
+            className={cn(
+              buttonVariants({ size: "sm" }),
+              "hidden h-12 px-5 sm:inline-flex lg:px-4 xl:px-5",
+            )}
           >
             Free billing audit
           </Link>

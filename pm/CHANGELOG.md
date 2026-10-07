@@ -30,6 +30,7 @@ Format: Keep a Changelog · Semantic Versioning
 - Hosting documented as own hosting (Hostinger); live site URL in `.env.production`; `/api/health` shows the build commit (2026-10-01)
 
 ### Changed
+- "Client Login" in the main nav after Contact, with a lock icon (desktop and mobile menu), linking to the client file-upload portal in a new tab. The footer link is renamed "Client Login"; the top-bar "Doctor Login" pill is hidden (`features.topbarDoctorLogin`). Between 1024 and 1279px the header logo, item padding and gaps are slightly smaller so the nav stays on one line (2026-10-07)
 - Turnstile is opt-in (ADR-036): without keys, chats and lead forms are no longer refused; rate limits plus a 500-a-day cap on chatbot model replies protect the site (2026-10-04)
 - "®" now renders as a small raised mark (half size, superscript, line height unchanged) everywhere it is visible: course cards, course heroes, comparison table, nav menu, footer, FAQ, forms, update cards, blog/legal Markdown, chat widget and the lead email. One helper, `withReg` / `<Reg>` in components/ui/reg.tsx (+ a rehype step in Prose); titles, meta, JSON-LD, alt text and plain-text emails keep the plain character (2026-10-03)
 - About hero subtitle: "The leading medical transcription and billing company in Pakistan, since 2007." (also in docs/09 chatbot knowledge) (2026-10-03)

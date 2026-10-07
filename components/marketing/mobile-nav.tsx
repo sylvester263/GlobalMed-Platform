@@ -4,7 +4,6 @@ import { Lock } from "lucide-react";
 import Link from "next/link";
 
 import { features } from "@/config/features";
-import { doctorPortalAriaLabel, doctorPortalUrl } from "@/data/site";
 
 import { Wordmark } from "@/components/marketing/wordmark";
 import {
@@ -91,14 +90,28 @@ export function MobileNav({ open, onOpenChange, pathname }: MobileNavProps) {
               <ul key={run.items[0]?.href} className="flex flex-col">
                 {run.items.map((link) => (
                   <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={close}
-                      aria-current={isActivePath(pathname, link.href) ? "page" : undefined}
-                      className="flex min-h-12 items-center rounded-md text-base font-semibold hover:bg-mint aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8"
-                    >
-                      {withReg(link.label)}
-                    </Link>
+                    {link.external ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={link.external.ariaLabel}
+                        onClick={close}
+                        className="flex min-h-12 items-center gap-2 rounded-md text-base font-semibold hover:bg-mint"
+                      >
+                        <Lock aria-hidden="true" className="size-4 shrink-0" />
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        onClick={close}
+                        aria-current={isActivePath(pathname, link.href) ? "page" : undefined}
+                        className="flex min-h-12 items-center rounded-md text-base font-semibold hover:bg-mint aria-[current=page]:underline aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8"
+                      >
+                        {withReg(link.label)}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -122,18 +135,6 @@ export function MobileNav({ open, onOpenChange, pathname }: MobileNavProps) {
                 Log in
               </Link>
             )}
-            {/* Last item (client, 2026-10-07): the external doctor upload app, in a new tab. */}
-            <a
-              href={doctorPortalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={doctorPortalAriaLabel}
-              onClick={close}
-              className={buttonVariants({ size: "lg", variant: "outline" })}
-            >
-              <Lock aria-hidden="true" />
-              Doctor Login
-            </a>
           </div>
         </nav>
       </SheetContent>

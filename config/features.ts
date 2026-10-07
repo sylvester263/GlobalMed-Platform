@@ -140,6 +140,11 @@ export const features = {
    * the previous help menu (WhatsApp, call, email), which is kept unchanged.
    */
   chatbotWidget: true,
+  /**
+   * Hidden at client request (2026-10-07) — "Client Login" moved into the main nav. The
+   * "Doctor Login" pill in the top contact bar. Set true to restore.
+   */
+  topbarDoctorLogin: false,
 } as const;
 
 export type FeatureFlag = keyof typeof features;

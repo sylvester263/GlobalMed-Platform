@@ -7,6 +7,7 @@ import { features } from "@/config/features";
 import {
   address,
   doctorPortalAriaLabel,
+  doctorPortalLabel,
   doctorPortalUrl,
   siteLinks,
   socialOrder,
@@ -217,14 +218,14 @@ export function CompactFooter() {
                   </Link>
                 )),
                 <a
-                  key="doctor-login"
+                  key="client-login"
                   href={doctorPortalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={doctorPortalAriaLabel}
                   className={linkClass}
                 >
-                  Doctor Login
+                  {doctorPortalLabel}
                 </a>,
               ]}
             />

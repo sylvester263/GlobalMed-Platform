@@ -663,6 +663,20 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** switch `doctorPortalUrl` to the real domain at launch.
 - **Blockers:** none.
 
+### Session 025 — "Client Login" in the main nav
+- **Date:** 2026-10-07
+- **Done:**
+  - `primaryNav` (lib/site.ts) gets "Client Login" after Contact. `NavLink.external` marks it: the desktop nav and the mobile menu render it as an `<a>` with a 16px lock icon, `target="_blank"`, `rel="noopener noreferrer"` and the aria-label "Client Login — secure file upload portal (opens in a new tab)". Same font, size, colour and hover/focus as the other nav items.
+  - `data/site.ts`: new `doctorPortalLabel = "Client Login"`; the aria-label text changed. `doctorPortalUrl` keeps its name and value.
+  - Top bar: the "Doctor Login" pill is hidden by the new `features.topbarDoctorLogin: false`, not deleted. Email, phone and social icons are unchanged.
+  - Footer link renamed "Client Login". The mobile menu's separate "Doctor Login" button is removed, because the link now appears after Contact.
+  - Header fit at 1024px: the new item made "About Us" wrap and squeezed the logo. Nav labels are now `whitespace-nowrap` and the logo and button group no longer shrink. Between 1024 and 1279px only: logo 32px tall, nav item padding 4px, header gap 8px, audit button padding 16px. From 1280px everything is as before.
+  - Slider arrows: already in the controls row under the buttons (bottom right). Measured at all six widths, locally and on the live site (commit 67c72a2): no control overlaps the lockup, headline or buttons. The prev/next arrows are hidden under 768px. No change was needed.
+- **Checks:** typecheck and lint clean. At 1920, 1440, 1280 and 1024 the nav sits on one row with no wrapped labels and no overflow past the gutter. At 768 and 390 there is no horizontal scroll and "Client Login" follows Contact in the menu. Clicking "Client Login" opens the portal ("ADMIN | Log in") in a new tab. Screenshots are in pm/screenshots/2026-10-07/client-login-*.png.
+- **Files touched:** lib/site.ts, data/site.ts, config/features.ts, components/marketing/{mega-menu,mobile-nav,site-header,top-bar,footer-compact}.tsx, pm/{SESSION_LOG,CHANGELOG}.md
+- **Next:** if the client still sees an arrow over the lockup, get a screenshot with the browser and width. Switch `doctorPortalUrl` to the real domain at launch.
+- **Blockers:** none.
+
 ---
 ### Session NNN — <title>
 - **Date:**

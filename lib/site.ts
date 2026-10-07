@@ -1,6 +1,14 @@
 import { features, type FeatureFlag } from "@/config/features";
 import { aapcCoursePath, getAapcCourses } from "@/data/courses";
-import { address, contactLinks, siteLinks, socialOrder } from "@/data/site";
+import {
+  address,
+  contactLinks,
+  doctorPortalAriaLabel,
+  doctorPortalLabel,
+  doctorPortalUrl,
+  siteLinks,
+  socialOrder,
+} from "@/data/site";
 import { publicEnv } from "@/lib/env";
 
 /**
@@ -62,7 +70,13 @@ export const postalAddress = address.oneLine;
 export const educationBase = "/education";
 export const aapcCertificationPath = `${educationBase}/aapc-certification-pakistan`;
 
-export type NavLink = { label: string; href: string; description?: string };
+export type NavLink = {
+  label: string;
+  href: string;
+  description?: string;
+  /** An external site: opens in a new tab with this accessible name and a lock icon. */
+  external?: { ariaLabel: string };
+};
 export type NavGroup = { label: string; href: string; links: NavLink[]; feature?: NavLink };
 
 /** A link that only shows while its feature flag is on (config/features.ts). */
@@ -207,13 +221,19 @@ const specialtiesLink: FlaggedLink = {
 };
 const careersLink: NavLink = { label: "Careers", href: "/careers" };
 const contactLink: NavLink = { label: "Contact", href: "/contact" };
+const clientLoginLink: NavLink = {
+  label: doctorPortalLabel,
+  href: doctorPortalUrl,
+  external: { ariaLabel: doctorPortalAriaLabel },
+};
 
 export type NavItem = NavGroup | NavLink;
 
 /**
  * Top navigation order (client review 2026-09-25; Careers replaced Specialties 2026-10-01):
- * About Us · Education · Services · Resources · Careers · Contact. Specialties is hidden by
- * `features.navSpecialties`; its pages stay live and linked from the service pages.
+ * About Us · Education · Services · Resources · Careers · Contact · Client Login (2026-10-07,
+ * the external upload portal). Specialties is hidden by `features.navSpecialties`; its pages
+ * stay live and linked from the service pages.
  */
 export const primaryNav: NavItem[] = [
   aboutLink,
@@ -223,6 +243,7 @@ export const primaryNav: NavItem[] = [
   ...shown([specialtiesLink]),
   careersLink,
   contactLink,
+  clientLoginLink,
 ];
 
 export function isNavGroup(item: NavItem): item is NavGroup {

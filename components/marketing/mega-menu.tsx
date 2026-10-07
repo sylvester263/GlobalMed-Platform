@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Lock } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 const activeClass = "underline decoration-2 underline-offset-8";
 
 const triggerClass =
-  "inline-flex h-11 cursor-pointer items-center gap-1 rounded-md px-3 text-sm font-semibold text-primary transition-colors hover:bg-mint aria-expanded:bg-mint";
+  "inline-flex h-11 cursor-pointer items-center gap-1 rounded-md px-1 text-sm font-semibold whitespace-nowrap text-primary transition-colors hover:bg-mint aria-expanded:bg-mint xl:px-3";
 
 /**
  * Desktop primary navigation using the WAI-ARIA disclosure pattern (buttons with
@@ -57,10 +57,26 @@ export function MegaMenu({ pathname }: { pathname: string }) {
 
   return (
     <nav ref={navRef} aria-label="Primary" className="hidden lg:block">
-      <ul className="flex items-center gap-1">
+      <ul className="flex items-center gap-0.5 xl:gap-1">
         {primaryNav.map((item) => {
           if (!isNavGroup(item)) {
             const link = item;
+            if (link.external) {
+              return (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={link.external.ariaLabel}
+                    className={cn(triggerClass, "gap-1.5")}
+                  >
+                    <Lock aria-hidden="true" className="size-4 shrink-0" />
+                    {link.label}
+                  </a>
+                </li>
+              );
+            }
             return (
               <li key={link.href}>
                 <Link

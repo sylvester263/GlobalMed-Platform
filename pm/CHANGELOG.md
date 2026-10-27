@@ -4,6 +4,7 @@ Format: Keep a Changelog · Semantic Versioning
 
 ## [Unreleased]
 ### Added
+- Maintenance mode: `MAINTENANCE_MODE=true` shows every visitor a branded Coming Soon page (503, Retry-After, noindex); `?preview=<MAINTENANCE_KEY>` gives the team a 24-hour preview of the real site; health, webhooks and static assets stay reachable (ADR-038, 2026-10-27)
 - "Doctor Login" link to the external doctor file-upload app: a white pill with a lock icon in the top bar, plus a link in the footer and the mobile menu. Opens in a new tab. One URL in `data/site.ts` (2026-10-07)
 - Updates (news / announcements): dashboard (Admin → Content → Updates, Sales → Updates) to create, publish, schedule, pin, expire and unpublish, with image upload (1600×900 WebP); home "Latest Updates" (3 latest, pinned first, hidden when none); /updates with category filter and pagination; /updates/[slug]; NewsArticle JSON-LD; Resources menu, footer, sitemap; the chatbot answers from live updates (2026-10-02)
 - Social links (Facebook, LinkedIn, Instagram) in the top bar, the footer and the Organization JSON-LD sameAs; one source in `data/site.ts`, same order and hover everywhere (2026-10-02)

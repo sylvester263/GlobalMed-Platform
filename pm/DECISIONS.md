@@ -256,3 +256,14 @@
   - `braces` stays an open alert. Exposure: it is only used by the shadcn CLI and the lint toolchain, which run on developer machines and in the build, matching glob patterns from our own config. No request or user input reaches it at runtime; the app's only use of `shadcn` is the `shadcn/tailwind.css` import, which is resolved at build time.
   - SVG stays out of sharp: `images.dangerouslyAllowSVG` is left at its default (false), the optimize-images script only takes listed JPG sources, and update uploads accept JPG, PNG and WebP only.
 - Consequences: re-check `braces` weekly until a patched version ships, then `npm update braces`. Possible follow-up: move `shadcn` to devDependencies (its CSS import is resolved at build time, and Hostinger installs dev dependencies to build), which would take it out of `npm audit --omit=dev`. The monthly check is in docs/14 §9.
+
+## ADR-038: Temporary maintenance mode in middleware, with a keyed team preview
+- Date: 2026-10-27 · Status: accepted
+- Context: the client wants the live site hidden behind a branded "Coming Soon" page until the signing ceremony, with the team still able to see the real site, and the switch back to live done without changing or deleting any page.
+- Decision:
+  - `MAINTENANCE_MODE` (`true`/`false`) and the secret `MAINTENANCE_KEY` are runtime env vars, read by middleware on each request (checked: a build made without them obeys them when the server starts with them). They live in the hosting panel, never in `.env.production`.
+  - The middleware matcher now covers every route except `/_next/static` and `/_next/image`. The Supabase session refresh still runs only on its old paths (`SESSION_PATH` in middleware.ts).
+  - In maintenance, visitors get a self-contained HTML page (lib/maintenance.ts): 503, `Retry-After: 3600`, `X-Robots-Tag: noindex, nofollow`, a robots meta tag and `Cache-Control: no-store`. It shows the logo, contact email and phone, and a Client Login link to the external portal.
+  - Exempt: `/api/health`, the Stripe, WhatsApp and Bunny webhooks, `robots.txt` and static asset files. Not exempt: `llms.txt` and the sitemap, because they describe the site.
+  - Preview: `?preview=<key>` (constant-time compare; preview is off when the key is unset or shorter than 16 chars) sets the httpOnly cookie `gm_preview` for 24h, holding SHA-256 of the key rather than the key itself, then 303-redirects to the same URL without the key. Rotating the key ends every preview. Previewed pages are sent with `private, no-store` and noindex, so a shared cache never stores the real site.
+- Consequences: middleware now runs on marketing pages too (an env check, plus a cookie check during maintenance). Turning maintenance off means setting `MAINTENANCE_MODE=false` in the panel and restarting/redeploying the app; how long that takes depends on Hostinger. Remove this once the site has launched for good, or keep it for future maintenance windows.

@@ -695,6 +695,18 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** monthly dependency check (docs/14 §9). Re-check the `braces` advisory.
 - **Blockers:** none.
 
+### Session 027 — Maintenance mode ("Coming Soon") for the signing ceremony
+- **Date:** 2026-10-27
+- **Done:**
+  - `MAINTENANCE_MODE` + `MAINTENANCE_KEY` (ADR-038). Middleware serves a branded Coming Soon page (navy, logo on a white plate, "Something new is coming", "GlobalMed Transcriptions — launching soon", email, phone, Client Login link) with 503, Retry-After 3600, noindex and no-store.
+  - `?preview=<key>` sets a 24h httpOnly cookie (SHA-256 of the key) and strips the key from the URL. Previewed pages are private, no-store and noindex.
+  - Still reachable: /api/health, webhooks, robots.txt, static assets. The Client Login portal is on another host, so maintenance cannot affect it.
+  - No page was changed or deleted. The Supabase session paths are unchanged (moved from the matcher into `SESSION_PATH`).
+- **Checks:** 8 new unit tests; Vitest 214 passed; typecheck and lint clean (the 2 warnings are in the ignored .playwright-mcp scratch files); `next build` passes. On a local production server started with the vars set at runtime: `/` and `/about` return 503, health 200, logo 200, llms.txt 503, a wrong key 503, the right key gives a 303 plus the cookie, and with the cookie pages are 200. Screenshots: pm/screenshots/2026-10-27/coming-soon-{360,1280}.png.
+- **Files touched:** middleware.ts, lib/maintenance.ts, tests/unit/maintenance.test.ts, .env.example, pm/{DECISIONS,CHANGELOG,SESSION_LOG}.md
+- **Next:** set `MAINTENANCE_MODE=true` and `MAINTENANCE_KEY` in the Hostinger panel, redeploy, check incognito and the preview link. At the ceremony: `MAINTENANCE_MODE=false` and redeploy.
+- **Blockers:** no Hostinger panel access from this session, so the env vars have to be set by the team.
+
 ---
 ### Session NNN — <title>
 - **Date:**

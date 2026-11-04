@@ -50,8 +50,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...staticPaths.map((p) => entry(p)),
     ...getServices().map((s) => entry(`/services/${s.slug}`)),
     ...getSpecialties().map((s) => entry(`/specialties/${s.slug}`)),
-    ...getCourses().map((c) => entry(`/education/courses/${c.slug}`)),
-    ...getPathways().map((p) => entry(`/education/pathways/${p.slug}`)),
+    ...(features.globalmedCourses
+      ? getCourses().map((c) => entry(`/education/courses/${c.slug}`))
+      : []),
+    ...(features.pathways ? getPathways().map((p) => entry(`/education/pathways/${p.slug}`)) : []),
     ...Object.keys(postCategories).map((c) => entry(`/blog/category/${c}`)),
     ...getPosts().map((p) => entry(`/blog/${p.slug}`, p.publishedAt)),
     ...getLegalPages().map((p) => entry(`/legal/${p.slug}`, p.updatedAt)),

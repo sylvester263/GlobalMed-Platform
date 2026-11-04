@@ -267,3 +267,13 @@
   - Exempt: `/api/health`, the Stripe, WhatsApp and Bunny webhooks, `robots.txt` and static asset files. Not exempt: `llms.txt` and the sitemap, because they describe the site.
   - Preview: `?preview=<key>` (constant-time compare; preview is off when the key is unset or shorter than 16 chars) sets the httpOnly cookie `gm_preview` for 24h, holding SHA-256 of the key rather than the key itself, then 303-redirects to the same URL without the key. Rotating the key ends every preview. Previewed pages are sent with `private, no-store` and noindex, so a shared cache never stores the real site.
 - Consequences: middleware now runs on marketing pages too (an env check, plus a cookie check during maintenance). Turning maintenance off means setting `MAINTENANCE_MODE=false` in the panel and restarting/redeploying the app; how long that takes depends on Hostinger. Remove this once the site has launched for good, or keep it for future maintenance windows.
+
+## ADR-039: Launch routing — one main host, old WordPress 301s, portal forward
+- Date: 2026-11-04 · Status: accepted
+- Context: go-live on https://globalmedtranscriptions.com. The domain already pointed at the Node app (apex and www both served it, SSL and HTTP→HTTPS on), but www did not redirect, old WordPress URLs would 404, and the doctor file-upload app (PHP, CodeIgniter) runs on a separate Hostinger site whose own `<base href>` is its hostingersite.com name, so it can't be mounted under /app on this Node app.
+- Decision:
+  - Main version is the apex (`NEXT_PUBLIC_SITE_URL`). Middleware 301s `www.` and any `*.hostingersite.com` host to it, path and query kept. Only those hosts move (localhost and unknown hosts are untouched) and `/api/` is skipped so webhooks and health checks are never bounced.
+  - `config/legacy-redirects.ts`: 301 (explicit `statusCode`, not Next's default 308) from every URL in the old site's own sitemaps to the closest new page. Theme demo pages go to /, /services or /about. Next strips the old trailing slash first (308), so old links take two hops.
+  - `/app` and `/app/:path*` 307 to the portal's current host; `doctorPortalUrl` (Client Login) is the live-domain address `https://globalmedtranscriptions.com/app/doctor-login`. Temporary on purpose: when the portal gets its own subdomain, only `doctorPortalOrigin` changes.
+  - The sitemap leaves out GlobalMed course and pathway pages while their flags are off (they only redirect).
+- Consequences: the old WordPress copy is still reachable on the portal's hostingersite.com name (Googlebot is disallowed there by its robots.txt); retire it or noindex it in WordPress. Follow-up: a `portal.` subdomain for the doctor app with its CodeIgniter `base_url` updated, then switch `doctorPortalOrigin`.

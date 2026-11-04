@@ -54,10 +54,10 @@ export const siteLinks = {
 
 /**
  * The client file-upload app (client, 2026-10-07): an external site. The main nav, the
- * mobile menu and the footer link to it in a new tab. Staging URL until launch, then the
- * real domain.
+ * mobile menu and the footer link to it in a new tab. The live-domain address forwards to
+ * wherever the app runs (config/legacy-redirects.ts).
  */
-export const doctorPortalUrl = "https://peachpuff-crow-921478.hostingersite.com/app/doctor-login";
+export const doctorPortalUrl = "https://globalmedtranscriptions.com/app/doctor-login";
 
 /** Visible label of every portal link (renamed from "Doctor Login", client 2026-10-07). */
 export const doctorPortalLabel = "Client Login";

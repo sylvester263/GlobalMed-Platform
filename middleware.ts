@@ -57,7 +57,25 @@ async function maintenance(request: NextRequest): Promise<Response> {
   return res;
 }
 
+/**
+ * One main address (launch, ADR-039): www and the temporary *.hostingersite.com name 301 to the
+ * host in NEXT_PUBLIC_SITE_URL. Only those hosts move, so localhost and unknown hosts are left
+ * alone. /api/ is skipped: webhooks and health checks must not be bounced.
+ */
+function canonicalRedirect(request: NextRequest): Response | null {
+  const site = process.env.NEXT_PUBLIC_SITE_URL;
+  if (!site || request.nextUrl.pathname.startsWith("/api/")) return null;
+  const canonical = new URL(site).host;
+  const forwarded = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  const host = (forwarded.split(",")[0] ?? "").trim().toLowerCase();
+  if (host !== `www.${canonical}` && !host.endsWith(".hostingersite.com")) return null;
+  const target = new URL(request.nextUrl.pathname + request.nextUrl.search, site);
+  return NextResponse.redirect(target, 301);
+}
+
 export async function middleware(request: NextRequest) {
+  const moved = canonicalRedirect(request);
+  if (moved) return moved;
   if (isMaintenanceMode() && !isMaintenanceExempt(request.nextUrl.pathname)) {
     return maintenance(request);
   }

@@ -7,6 +7,7 @@ import type { NextConfig } from "next";
 
 import { features } from "./config/features";
 import { hiddenRedirects } from "./config/hidden-routes";
+import { doctorPortalRedirects, legacyRedirects } from "./config/legacy-redirects";
 
 // CSP is added in Phase 9 (P9-3) once analytics, Bunny, Stripe and Turnstile origins are final.
 const securityHeaders = [
@@ -67,7 +68,7 @@ const nextConfig: NextConfig = {
   // Hidden education features (config/features.ts) redirect to the AAPC Certification page.
   // Redirects run before the rewrites below, so /school/... and /education/... are both covered.
   async redirects() {
-    return hiddenRedirects(features);
+    return [...legacyRedirects, ...doctorPortalRedirects, ...hiddenRedirects(features)];
   },
   async rewrites() {
     return [

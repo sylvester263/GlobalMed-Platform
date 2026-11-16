@@ -22,7 +22,19 @@ export const publicEnv = {
     process.env.NEXT_PUBLIC_SUPABASE_URL,
   ),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || undefined,
+  // GlobalMed's Meta Pixel (ADR-040). A pixel ID is public, so it has a default and the
+  // site tracks even if the Hostinger panel never sets it. Set "off" to disable it.
+  NEXT_PUBLIC_META_PIXEL_ID: metaPixelId(process.env.NEXT_PUBLIC_META_PIXEL_ID),
 } as const;
+
+function metaPixelId(value: string | undefined): string | undefined {
+  if (!value) return "973319445856589";
+  if (value === "off") return undefined;
+  if (!/^\d{10,20}$/.test(value)) {
+    throw new Error(`NEXT_PUBLIC_META_PIXEL_ID must be digits only, got "${value}".`);
+  }
+  return value;
+}
 
 export function isSupabaseConfigured(): boolean {
   return Boolean(publicEnv.NEXT_PUBLIC_SUPABASE_URL && publicEnv.NEXT_PUBLIC_SUPABASE_ANON_KEY);

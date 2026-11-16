@@ -707,6 +707,17 @@ Newest entry at the bottom. One entry per Claude Code session.
 - **Next:** set `MAINTENANCE_MODE=true` and `MAINTENANCE_KEY` in the Hostinger panel, redeploy, check incognito and the preview link. At the ceremony: `MAINTENANCE_MODE=false` and redeploy.
 - **Blockers:** no Hostinger panel access from this session, so the env vars have to be set by the team.
 
+### Session 028 — Meta Pixel on the public site
+- **Date:** 2026-11-16
+- **Done:**
+  - Meta Pixel `973319445856589` (ADR-040) for the AAPC course ad campaign (18 Nov – 17 Dec). `components/analytics/meta-pixel.tsx` loads Meta's snippet with `next/script` afterInteractive, keeps the `<noscript>` image and sends a PageView on every client-side navigation. Mounted in the marketing layout only; dashboards, login and the LMS are not tracked.
+  - `NEXT_PUBLIC_META_PIXEL_ID` read in `lib/env.ts`; defaults to the GlobalMed pixel when empty, `off` disables it.
+  - `track()` also sends Meta standard events (Lead, Contact, Subscribe, ViewContent, InitiateCheckout, Purchase) with allow-listed, non-personal params only. The AAPC registration form now reports Lead with source `aapc_registration`.
+- **Checks:** typecheck and lint clean; Vitest 223 passed (3 new). `next build` could not run here because the sandbox can't reach Google Fonts (environment, not code). On `next dev`: home HTML has the noscript pixel, `/login` has none; in Chromium `fbq` queue = init + PageView on load, a second PageView after navigating to /about, and fbevents.js is requested.
+- **Files touched:** components/analytics/meta-pixel.tsx, lib/analytics.ts, lib/env.ts, app/(marketing)/layout.tsx, tests/unit/meta-pixel.test.ts, .env.example, pm/{DECISIONS,CHANGELOG,SESSION_LOG}.md
+- **Next:** after deploy, confirm in Meta Events Manager (Test Events) or with the Meta Pixel Helper extension that PageView and Lead arrive; build the "website visitors 30 days" custom audience for the campaign's retargeting ad set.
+- **Blockers:** none.
+
 ---
 ### Session NNN — <title>
 - **Date:**

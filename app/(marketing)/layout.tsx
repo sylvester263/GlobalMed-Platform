@@ -1,9 +1,13 @@
+import { Suspense } from "react";
+
+import { MetaPixel } from "@/components/analytics/meta-pixel";
 import { HelpButton } from "@/components/marketing/help-button";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { TopBar } from "@/components/marketing/top-bar";
 import { WhatsAppButton } from "@/components/marketing/whatsapp-button";
 import { features } from "@/config/features";
+import { publicEnv } from "@/lib/env";
 import { JsonLd, organizationJsonLd } from "@/lib/seo/json-ld";
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -29,6 +33,12 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         <HelpButton />
       )}
       <JsonLd data={organizationJsonLd()} />
+      {/* Public pages only: dashboards and login are never tracked (ADR-040). */}
+      {publicEnv.NEXT_PUBLIC_META_PIXEL_ID ? (
+        <Suspense fallback={null}>
+          <MetaPixel pixelId={publicEnv.NEXT_PUBLIC_META_PIXEL_ID} />
+        </Suspense>
+      ) : null}
     </div>
   );
 }

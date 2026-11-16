@@ -277,3 +277,13 @@
   - `/app` and `/app/:path*` 307 to the portal's current host; `doctorPortalUrl` (Client Login) is the live-domain address `https://globalmedtranscriptions.com/app/doctor-login`. Temporary on purpose: when the portal gets its own subdomain, only `doctorPortalOrigin` changes.
   - The sitemap leaves out GlobalMed course and pathway pages while their flags are off (they only redirect).
 - Consequences: the old WordPress copy is still reachable on the portal's hostingersite.com name (Googlebot is disallowed there by its robots.txt); retire it or noindex it in WordPress. Follow-up: a `portal.` subdomain for the doctor app with its CodeIgniter `base_url` updated, then switch `doctorPortalOrigin`.
+
+## ADR-040: Meta Pixel on the public site
+- Date: 2026-11-16 · Status: accepted
+- Context: the Meta ad campaign (18 Nov – 17 Dec 2026) needs website visitors for retargeting and lead events for optimization. The GTM container and consent banner (P8-6) are not live yet.
+- Decision:
+  - Pixel `973319445856589` via `NEXT_PUBLIC_META_PIXEL_ID`. A pixel ID is public, so `lib/env.ts` defaults to it when the var is empty (the site tracks even if the Hostinger panel never sets it); `off` disables it.
+  - `components/analytics/meta-pixel.tsx` loads Meta's snippet with `next/script` `afterInteractive` (never blocks LCP), keeps the `<noscript>` image, and sends a PageView on every client-side navigation (the App Router doesn't reload pages).
+  - Mounted in `app/(marketing)/layout.tsx` only. Dashboards, login and the LMS are not tracked.
+  - `lib/analytics.ts` `track()` also sends Meta standard events: lead_submit and chat_lead → Lead, whatsapp_click → Contact, newsletter_signup → Subscribe, course_view → ViewContent, begin_checkout → InitiateCheckout, purchase → Purchase. Only allow-listed, non-personal params pass (source, placement, course, value, currency).
+- Consequences: when GTM and the consent banner arrive (P8-6), move the pixel behind consent or into GTM and drop this component. Server-side Conversions API is a later option.
